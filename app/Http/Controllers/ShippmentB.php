@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\ShippmentAImport;
+use App\Imports\ShippmentBImport;
 use App\Models\ShipB;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel; // Import this
@@ -19,33 +20,35 @@ class ShippmentB extends Controller
     }
 
     public function add(){
-        $lastRecord = ShipB::where('type', 'LIKE', '00%')->orderBy('type', 'desc')->first();
+        $lastRecord = ShipB::where('type', 'LIKE', 'B00%')->orderBy('type', 'desc')->first();
 
         if ($lastRecord) {
             // Extract the numeric part of the type and increment it by 1
             $lastTypeNumber = intval(substr($lastRecord->type, 2));
-            $newType = '00' . ($lastTypeNumber + 1);
+            $newType = 'B00' . ($lastTypeNumber + 1);
         } else {
             // If no previous record exists, start with '001'
-            $newType = '001';
+            $newType = 'B001';
         }
         return view('pegawai.shippmentb.add',compact('newType'));
     }
     public function storea(Request $request)
     {
         $validated = $request->validate([
-            'atribute' => 'required|unique:shippmenta,atribute',
-            'unicode' => 'required',
+            'atribute' => 'required',
+            'product' => 'required',
             'size' => 'required',
-            'weight' => 'required|integer',
+            'gros' => 'required',
+            'net' => 'required',
             'satuan_berat' => 'required',
             'destination' => 'required',
             'type' => 'required',
+            'manufactur' => 'required',
         ]);
 
         ShipB::create($validated);
 
-        return redirect()->route('pegawai.shippment-b')->with('success', 'Shippment added successfully');
+        return redirect()->route('pegawai.shipment-b')->with('success', 'Shippment added successfully');
     }
 
     public function edit($id)
@@ -58,13 +61,16 @@ class ShippmentB extends Controller
     // Update the specified resource in storage
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $back= ShipB::where('id', $id)->value('type');
         // Validate the incoming request
         $request->validate([
-            'atribute' => 'required', // Ignore current record's atribute
-            'unicode' => 'required',
+            'manufactur' => 'required',
+            'atribute' => 'required',
+            'product' => 'required',
             'size' => 'required',
-            'weight' => 'required|integer',
+            'gros' => 'required',
+            'net' => 'required',
             'satuan_berat' => 'required',
             'destination' => 'required',
             'type' => 'required',
@@ -97,29 +103,30 @@ class ShippmentB extends Controller
     }
 
     public function store(Request $request){
+        // dd($request->all());
+
         // Validasi file input
         $request->validate([
-            'shipmenta' => 'required|file|mimes:xlsx,xls|max:2048',
+            'shipmentb' => 'required|file|mimes:xlsx,xls|max:2048',
             'satuan_berat' => 'required'
         ]);
 
         // Find the last type in the database and increment it by 1
-        $lastRecord = ShipB::where('type', 'LIKE', '00%')->orderBy('type', 'desc')->first();
+        $lastRecord = ShipB::where('type', 'LIKE', 'B00%')->orderBy('type', 'desc')->first();
 
         if ($lastRecord) {
             // Extract the numeric part of the type and increment it by 1
             $lastTypeNumber = intval(substr($lastRecord->type, 2));
-            $newType = '00' . ($lastTypeNumber + 1);
+            $newType = 'B00' . ($lastTypeNumber + 1);
         } else {
             // If no previous record exists, start with '001'
-            $newType = '001';
+            $newType = 'B001';
         }
 
 
         // Proses file Excel (misalnya, menggunakan Laravel Excel)
-        Excel::import(new ShippmentAImport($request->satuan_berat,$newType),$request->file('shipmenta'));
+        Excel::import(new ShippmentBImport($request->satuan_berat,$newType),$request->file('shipmentb'));
 ;
-        // dd($request->all());
 
         return redirect()->route('pegawai.shipment-b')->with('success', 'Data berhasil ditambahkan');
     }

@@ -77,8 +77,8 @@
         .footer {
             text-align: left;
             font-weight: bold;
-            font-size: 15px;
-            margin-top: 1.2cm;
+            font-size: 18px;
+            margin-top:0.9cm;
         }
 
         .page-break {
@@ -94,18 +94,27 @@
             <div class="header">SHIPPING MARK</div>
             <div class="details">
                 <div class="row">
-                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.79cm;" class="label">{{$d->unicode}}</div>
+                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.2cm;weight:70%" class="label1">{{$d->manufactur}}</div>
                 </div>
                 <div class="row">
-                    <div class="label">SIZE & GRADE</div>
+                    <div class="label">DESTINATION</div>
+                    <div style="margin-left:-2em;" class="value">: {{$d->destination}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">PRODUCT</div>
+                    <div style="margin-left:-2em;" class="value">: {{$d->product}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">SIZE</div>
                     <div style="margin-left:-2em;" class="value">: {{$d->size}}</div>
                 </div>
                 <div class="row">
-                    <div class="label">WEIGHT</div>
-                    <div class="value">: {{$d->weight}} {{$d->satuan_berat}}</div>
+                    <div class="label">GROSS WEGIHT</div>
+                    <div style="margin-left:-2em;" class="value">: {{$d->gros}} {{$d->satuan_berat}}</div>
                 </div>
                 <div class="row">
-                    <div style="font-weight: bold; font-size: 18px; margin-top: 0.9cm;" class="label">{{$d->destination}}</div>
+                    <div class="label">NET WEIGHT</div>
+                    <div class="value">: {{$d->net}} {{$d->satuan_berat}}</div>
                 </div>
             </div>
             <div class="footer">MADE IN INDONESIA</div>

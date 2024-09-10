@@ -40,7 +40,10 @@ Shippment || Pegawai
                        </div>
                     </div>
                     <div class="iq-card-body">
-                       <p>All data of Shippment type A</p>
+                       <p>All data of Shippment type A <a href="{{ route('download.file', ['file' => 'ShippmentA.xlsx']) }}">
+                        Download Template
+                    </a>
+                    </p>
                        <table class="table">
                           <thead>
                              <tr>

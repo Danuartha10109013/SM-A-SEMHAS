@@ -5,19 +5,24 @@ Shippment || Pegawai
 
 @section('content')
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Create Shippment A</h1>
+        <h1 class="text-center mb-4">Create Shippment B</h1>
 
         <div class="card shadow p-4">
-            <form action="{{ route('pegawai.shipment-a-store') }}" method="POST">
+            <form action="{{ route('pegawai.shipment-b-store') }}" method="POST">
                 @csrf
+                <div class="mb-3">
+                    <label for="manufactur" class="form-label">Manufactur</label>
+                    <input type="text" name="manufactur" id="manufactur" class="form-control" required>
+                </div>
+
                 <div class="mb-3">
                     <label for="atribute" class="form-label">Atribute</label>
                     <input type="text" name="atribute" id="atribute" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="unicode" class="form-label">Unicode</label>
-                    <input type="text" name="unicode" id="unicode" class="form-control" required>
+                    <label for="product" class="form-label">Product</label>
+                    <input type="text" name="product" id="product" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
@@ -26,8 +31,13 @@ Shippment || Pegawai
                 </div>
 
                 <div class="mb-3">
-                    <label for="weight" class="form-label">Weight</label>
-                    <input type="text" name="weight" id="weight" class="form-control" required>
+                    <label for="gros" class="form-label">Gros</label>
+                    <input type="number" name="gros" id="gros" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="net" class="form-label">Net</label>
+                    <input type="number" name="net" id="net" class="form-control" required>
                 </div>
 
                 <div class="mb-3">

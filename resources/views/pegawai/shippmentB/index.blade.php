@@ -14,12 +14,12 @@ Shippment || Pegawai
                         </div>
                     @endif
                     <!-- Tombol Tambah Data di sebelah kiri -->
-                    <a class="btn btn-primary" href="{{route('pegawai.shipment-a-add')}}">Tambah Data</a>
+                    <a class="btn btn-primary" href="{{route('pegawai.shipment-b-add')}}">Tambah Data</a>
                 
                     <!-- Form Upload File Excel di sebelah kanan -->
-                    <form action="{{ route('pegawai.add-shippmenta-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    <form action="{{ route('pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
                         @csrf
-                        <input type="file" name="shipmenta" >
+                        <input type="file" name="shipmentb" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
                             <option value="KG">KG</option>
                             <option value="LBS">LBS</option>
@@ -36,11 +36,13 @@ Shippment || Pegawai
                  <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
                        <div class="iq-header-title">
-                          <h4 class="card-title">Shippment A</h4>
+                          <h4 class="card-title">Shippment B</h4>
                        </div>
                     </div>
                     <div class="iq-card-body">
-                       <p>All data of Shippment type A</p>
+                       <p>All data of Shippment type B <a href="{{ route('download.file', ['file' => 'ShippmentB.xlsx']) }}">
+                        Download Template
+                    </a> </p>
                        <table class="table">
                           <thead>
                              <tr>
@@ -59,7 +61,7 @@ Shippment || Pegawai
                                     <tr>
                                         <th>{{$loop->iteration}}</th>
                                         <td>{{$d->type}}</td>
-                                        <td class="mr-2" ><a class="btn btn-primary" href="{{route('pegawai.shipment-a-show',$d->type)}}"><i class="ri-eye-line"></i>Show</a>
+                                        <td class="mr-2" ><a class="btn btn-primary" href="{{route('pegawai.shipment-b-show',$d->type)}}"><i class="ri-eye-line"></i>Show</a>
                                     </tr>
                                 @endforeach
                             @endif

@@ -10,6 +10,7 @@ class ShipB extends Model
     protected $table = 'shippmentb';
     protected $fillable = [
         'atribute',
+        'manufactur',
         'product',
         'size',
         'gros',
@@ -17,7 +18,6 @@ class ShipB extends Model
         'satuan_berat',
         'destination',
         'type',
-
     ];
 
 }

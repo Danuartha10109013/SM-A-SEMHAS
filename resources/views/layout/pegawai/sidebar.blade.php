@@ -31,8 +31,9 @@
           </li>
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Sippment</span></li>
           
-          <li><a href="todo.html" class="iq-waves-effect" aria-expanded="false"><i class="ri-chat-check-line"></i><span>Todo</span></a></li>
-          <li>
+          <li><a href="{{route('pegawai.shipment-a')}}" class="iq-waves-effect" aria-expanded="false"><i class="ri-chat-check-line"></i><span>SHIPPMENT A</span></a></li>
+          <li><a href="{{route('pegawai.shipment-b')}}" class="iq-waves-effect" aria-expanded="false"><i class="ri-chat-check-line"></i><span>SHIPPMENT B</span></a></li>
+          {{-- <li>
              <a href="#userinfo" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="ri-user-line"></i><span>User</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
              <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                 <li><a href="profile.html"><i class="ri-profile-line"></i>User Profile</a></li>
@@ -43,7 +44,7 @@
           </li>
           <li><a href="calendar.html" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Calendar</span></a></li>
           <li><a href="chat.html" class="iq-waves-effect"><i class="ri-message-line"></i><span>Chat</span></a></li>
-          
+           --}}
           
        </ul>
     </nav>

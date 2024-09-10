@@ -94,7 +94,7 @@
             <div class="header">SHIPPING MARK</div>
             <div class="details">
                 <div class="row">
-                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.79cm;" class="label">{{$d->unicode}}</div>
+                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.79cm;" class="label1">{{$d->unicode}}</div>
                 </div>
                 <div class="row">
                     <div class="label">SIZE & GRADE</div>
@@ -105,7 +105,7 @@
                     <div class="value">: {{$d->weight}} {{$d->satuan_berat}}</div>
                 </div>
                 <div class="row">
-                    <div style="font-weight: bold; font-size: 18px; margin-top: 0.9cm;" class="label">{{$d->destination}}</div>
+                    <div style="font-weight: bold; font-size: 18px; margin-top: 0.9cm;" class="label1">{{$d->destination}}</div>
                 </div>
             </div>
             <div class="footer">MADE IN INDONESIA</div>

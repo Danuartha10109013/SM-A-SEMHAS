@@ -11,6 +11,19 @@ Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+use Illuminate\Support\Facades\Response;
+
+Route::get('/download/{file}', function($file) {
+    $filePath = public_path($file);
+
+    if (file_exists($filePath)) {
+        return Response::download($filePath);
+    } else {
+        abort(404, 'File not found.');
+    }
+})->name('download.file');
+
+
 
 Route::middleware([AutoLogout::class])->group(function () {
 

@@ -5,21 +5,26 @@
 
 @section('content')
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Edit Shippment A</h1>
+        <h1 class="text-center mb-4">Edit Shippment B</h1>
 
         <div class="card shadow p-4">
-            <form action="{{ route('pegawai.shipment-a-update', $shippmentA->id) }}" method="POST">
+            <form action="{{ route('pegawai.shipment-b-update', $shippmentA->id) }}" method="POST">
                 @csrf
                 @method('PUT') <!-- This is used to specify that this request should be treated as PUT -->
                 
                 <div class="mb-3">
-                    <label for="atribute" class="form-label">Atribute</label>
-                    <input type="text" name="atribute" id="atribute" class="form-control" value="{{ $shippmentA->atribute }}" required>
+                    <label for="manufactur" class="form-label">Manufactur</label>
+                    <input type="text" name="manufactur" id="manufactur" class="form-control" value="{{ $shippmentA->manufactur }}" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="unicode" class="form-label">Unicode</label>
-                    <input type="text" name="unicode" id="unicode" class="form-control" value="{{ $shippmentA->unicode }}" required>
+                    <label for="atribute" class="form-label">Atribute</label>
+                    <input type="text" name="atribute" id="atribute" class="form-control" value="{{ $shippmentA->atribute }}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="product" class="form-label">Product</label>
+                    <input type="text" name="product" id="product" class="form-control" value="{{ $shippmentA->product }}" required>
                 </div>
 
                 <div class="mb-3">
@@ -28,8 +33,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="weight" class="form-label">Weight</label>
-                    <input type="number" name="weight" id="weight" class="form-control" value="{{ $shippmentA->weight }}" required>
+                    <label for="gros" class="form-label">Gros Weight</label>
+                    <input type="number" name="gros" id="gros" class="form-control" value="{{ $shippmentA->gros }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="net" class="form-label">Net Weight</label>
+                    <input type="number" name="net" id="net" class="form-control" value="{{ $shippmentA->net }}" required>
                 </div>
 
                 <div class="mb-3">

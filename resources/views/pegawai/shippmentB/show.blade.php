@@ -17,9 +17,9 @@ Shippment || Pegawai
                     <a class="btn btn-primary" href="">Tambah Data</a>
                 
                     <!-- Form Upload File Excel di sebelah kanan -->
-                    <form action="{{ route('pegawai.add-shippmenta-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    <form action="{{ route('pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
                         @csrf
-                        <input type="file" name="shipmenta" >
+                        <input type="file" name="shipmentb" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
                             <option value="KG">KG</option>
                             <option value="LBS">LBS</option>
@@ -36,23 +36,25 @@ Shippment || Pegawai
                  <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
                        <div class="iq-header-title">
-                          <h4 class="card-title">Shippment A</h4>
+                          <h4 class="card-title">Shippment B</h4>
                         </div>
                     </div>
                     <div class="iq-card-body">
-                        <p>All data of Shippment type A</p>
+                        <p>All data of Shippment type B</p>
                         
                             
-                        <a href="{{route('pegawai.shipment-a-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
-                       <table class="table">
+                        <a href="{{route('pegawai.shipment-b-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
+                       <table class="table table-responsive">
                           <thead>
                              <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Manufactur</th>
                                 <th scope="col">Atribute</th>
-                                <th scope="col">Unique Code</th>
-                                <th scope="col">Size & Grade</th>
-                                <th scope="col">Weight</th>
                                 <th scope="col">Destination</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Gross</th>
+                                <th scope="col">Nett</th>
                                 <th scope="col">Satuan Berat</th>
                                 <th>Action</th>
                              </tr>
@@ -66,15 +68,19 @@ Shippment || Pegawai
                                 @foreach ($data as $d)
                                     <tr>
                                         <th>{{$loop->iteration}}</th>
+                                        <td>{{$d->manufactur}}</td>
                                         <td>{{$d->atribute}}</td>
-                                        <td>{{$d->unicode}}</td>
-                                        <td>{{$d->size}}</td>
-                                        <td>{{$d->weight}}</td>
                                         <td>{{$d->destination}}</td>
+                                        <td>{{$d->product}}</td>
+                                        <td>{{$d->size}}</td>
+                                        <td>{{$d->gros}}</td>
+                                        <td>{{$d->net}}</td>
                                         <td>{{$d->satuan_berat}}</td>
-                                        <td><a href="{{route('pegawai.shipment-a-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
-                                        <a href="{{route('pegawai.shipment-a-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
-                                        <a href="{{route('pegawai.shipment-a-delete', $d->id)}}" class="btn btn-danger text-center"><i class="ri-delete-bin-line"></i></a></td>
+                                        <td>
+                                            <a href="{{route('pegawai.shipment-b-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
+                                            <a href="{{route('pegawai.shipment-b-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
+                                            <a href="{{route('pegawai.shipment-b-delete', $d->id)}}" class="btn btn-danger mr-2 mb-2 text-center"><i class="ri-delete-bin-line"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif

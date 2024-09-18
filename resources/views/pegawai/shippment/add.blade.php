@@ -10,6 +10,7 @@ Shippment || Pegawai
         <div class="card shadow p-4">
             <form action="{{ route('pegawai.shipment-a-store') }}" method="POST">
                 @csrf
+                @method('POST')
                 <div class="mb-3">
                     <label for="atribute" class="form-label">Atribute</label>
                     <input type="text" name="atribute" id="atribute" class="form-control" required>
@@ -33,7 +34,7 @@ Shippment || Pegawai
                 <div class="mb-3">
                     <label for="satuan_berat" class="form-label">Satuan Berat</label>
                     <select class="form-control" name="satuan_berat" id="">
-                        <option value="KG">KG</option>
+                        <option value="KGS">KGS</option>
                         <option value="LBS">LBS</option>
                         <option value="MT">MT</option>
                     </select>
@@ -45,8 +46,8 @@ Shippment || Pegawai
                 </div>
 
                 <div class="mb-3">
-                    <label for="type" class="form-label">Collection</label>
-                    <input type="text" name="type" id="type" class="form-control" value="{{$newType}}" readonly>
+                    <label for="type" class="form-label">No SO</label>
+                    <input type="text" name="type" id="type" class="form-control" >
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Save New Shiping Mark</button>

@@ -8,13 +8,21 @@ Shippment || Pegawai
         <h1 class="text-center mb-4">Create Shippment B</h1>
 
         <div class="card shadow p-4">
-            <form action="{{ route('pegawai.shipment-b-store') }}" method="POST">
+            <form action="{{ route('pegawai.shipment-c-store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="manufactur" class="form-label">Manufactur</label>
                     <input type="text" name="manufactur" id="manufactur" class="form-control" required>
                 </div>
 
+                <div class="mb-3">
+                    <label for="atribute" class="form-label">Unicode</label>
+                    <input type="text" name="unicode" id="atribute" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="atribute" class="form-label">Pod</label>
+                    <input type="text" name="pod" id="atribute" class="form-control" required>
+                </div>
                 <div class="mb-3">
                     <label for="atribute" class="form-label">Atribute</label>
                     <input type="text" name="atribute" id="atribute" class="form-control" required>
@@ -47,11 +55,6 @@ Shippment || Pegawai
                         <option value="LBS">LBS</option>
                         <option value="MT">MT</option>
                     </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="destination" class="form-label">Destination</label>
-                    <input type="text" name="destination" id="destination" class="form-control" required>
                 </div>
 
                 <div class="mb-3">

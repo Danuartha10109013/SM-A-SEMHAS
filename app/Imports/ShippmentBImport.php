@@ -46,7 +46,7 @@ class ShippmentBImport implements ToCollection,ToModel
                 $shipa->destination = $row[5];
                 $shipa->manufactur = $row[6];
                 $shipa->satuan_berat = $this->satuan_berat;
-                $shipa->type = $this->newType;
+                $shipa->type = $row[7];
                 $shipa->save();
 
 

@@ -94,11 +94,11 @@
             <div class="header">SHIPPING MARK</div>
             <div class="details">
                 <div class="row">
-                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.2cm;weight:70%" class="label1">{{$d->manufactur}}</div>
+                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.2cm;weight:70%" class="label1">{{$d->unicode}}</div>
                 </div>
                 <div class="row">
-                    <div class="label">DESTINATION</div>
-                    <div style="margin-left:-2em;" class="value">: {{$d->destination}}</div>
+                    <div class="label">POD</div>
+                    <div style="margin-left:-2em;" class="value">: {{$d->pod}}</div>
                 </div>
                 <div class="row">
                     <div class="label">PRODUCT</div>

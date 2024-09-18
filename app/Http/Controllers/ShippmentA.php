@@ -21,18 +21,11 @@ class ShippmentA extends Controller
     public function add(){
         $lastRecord = ShipA::where('type', 'LIKE', '00%')->orderBy('type', 'desc')->first();
 
-        if ($lastRecord) {
-            // Extract the numeric part of the type and increment it by 1
-            $lastTypeNumber = intval(substr($lastRecord->type, 2));
-            $newType = '00' . ($lastTypeNumber + 1);
-        } else {
-            // If no previous record exists, start with '001'
-            $newType = '001';
-        }
-        return view('pegawai.shippment.add',compact('newType'));
+        return view('pegawai.shippment.add');
     }
     public function storea(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'atribute' => 'required|unique:shippmenta,atribute',
             'unicode' => 'required',
@@ -45,7 +38,7 @@ class ShippmentA extends Controller
 
         ShipA::create($validated);
 
-        return redirect()->route('pegawai.shippment-a')->with('success', 'Shippment added successfully');
+        return redirect()->route('pegawai.shipment-a')->with('success', 'Shippment added successfully');
     }
 
     public function edit($id)

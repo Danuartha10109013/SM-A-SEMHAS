@@ -8,13 +8,13 @@
         <h1 class="text-center mb-4">Edit Shippment B</h1>
 
         <div class="card shadow p-4">
-            <form action="{{ route('pegawai.shipment-b-update', $shippmentA->id) }}" method="POST">
+            <form action="{{ route('pegawai.shipment-c-update', $shippmentA->id) }}" method="POST">
                 @csrf
                 @method('PUT') <!-- This is used to specify that this request should be treated as PUT -->
                 
                 <div class="mb-3">
-                    <label for="manufactur" class="form-label">Manufactur</label>
-                    <input type="text" name="manufactur" id="manufactur" class="form-control" value="{{ $shippmentA->manufactur }}" required>
+                    <label for="manufactur" class="form-label">Unicode</label>
+                    <input type="text" name="unicode" id="manufactur" class="form-control" value="{{ $shippmentA->unicode }}" required>
                 </div>
 
                 <div class="mb-3">
@@ -22,6 +22,11 @@
                     <input type="text" name="atribute" id="atribute" class="form-control" value="{{ $shippmentA->atribute }}" readonly>
                 </div>
 
+                <div class="mb-3">
+                    <label for="atribute" class="form-label">Pod</label>
+                    <input type="text" name="pod" id="atribute" class="form-control" value="{{ $shippmentA->pod }}" required>
+                </div>
+                
                 <div class="mb-3">
                     <label for="product" class="form-label">Product</label>
                     <input type="text" name="product" id="product" class="form-control" value="{{ $shippmentA->product }}" required>
@@ -45,15 +50,10 @@
                 <div class="mb-3">
                     <label for="satuan_berat" class="form-label">Satuan Berat</label>
                     <select class="form-control" name="satuan_berat" id="satuan_berat" required>
-                        <option value="KG" {{ $shippmentA->satuan_berat == 'KGS' ? 'selected' : '' }}>KGS</option>
+                        <option value="KG" {{ $shippmentA->satuan_berat == 'KG' ? 'selected' : '' }}>KG</option>
                         <option value="LBS" {{ $shippmentA->satuan_berat == 'LBS' ? 'selected' : '' }}>LBS</option>
                         <option value="MT" {{ $shippmentA->satuan_berat == 'MT' ? 'selected' : '' }}>MT</option>
                     </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="destination" class="form-label">Destination</label>
-                    <input type="text" name="destination" id="destination" class="form-control" value="{{ $shippmentA->destination }}" required>
                 </div>
 
                 <div class="mb-3">

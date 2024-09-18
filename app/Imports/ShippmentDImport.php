@@ -2,15 +2,17 @@
 
 namespace App\Imports;
 
-use App\Models\ShipA;
+use App\Models\ShipB;
+use App\Models\ShipD;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class ShippmentAImport implements ToCollection,ToModel
+class ShippmentDImport implements ToCollection,ToModel
 {
     private $current = 0;
     private $satuan_berat;
+    private $newType;
 
     /**
     * @param Collection $collection
@@ -18,13 +20,14 @@ class ShippmentAImport implements ToCollection,ToModel
     public function __construct($satuan_berat,$newType)
     {
         $this->satuan_berat = $satuan_berat;
+        $this->newType = $newType;
     }
     public function collection(Collection $collection)
     {
         // $this->current++;
         // // Mengabaikan baris header jika perlu
         // if ($this->current > 1) {
-        //     dd($collection);
+            // dd($collection);
         // }
     }
     public function model(array $row)
@@ -32,17 +35,15 @@ class ShippmentAImport implements ToCollection,ToModel
         $this->current++;
         // Mengabaikan baris header jika perlu
         if ($this->current > 1) {
-            $count = ShipA::where('atribute', $row[0])->count();
-            // dd($count);
+            $count = ShipB::where('atribute', $row[0])->count();
+            // dd($row);
             if (empty($count)) {
-                $shipa = new ShipA;
+                $shipa = new ShipD;
                 $shipa->atribute = $row[0];
                 $shipa->unicode = $row[1];
-                $shipa->size = $row[2];
-                $shipa->weight = $row[3];
-                $shipa->destination = $row[4];
-                $shipa->satuan_berat = $this->satuan_berat;
-                $shipa->type = $row[5];
+                $shipa->destination = $row[2];
+                $shipa->size = $row[3];
+                $shipa->type = $row[4];
                 $shipa->save();
 
 

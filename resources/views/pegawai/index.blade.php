@@ -10,10 +10,10 @@ Dashboard || Pegawai
              <div class="iq-card-body">
                      <div class="d-flex d-flex align-items-center justify-content-between">
                         <div>
-                            <h2>352</h2>
-                            <p class="fontsize-sm m-0">Total Shipp</p>
+                            <h2>{{$a_count}}</h2>
+                            <p class="fontsize-sm m-0">Total Ship A</p>
                         </div>
-                        <div class="rounded-circle iq-card-icon dark-icon-light iq-bg-primary "> <i class="ri-inbox-fill"></i></div>
+                        <div class="rounded-circle iq-card-icon dark-icon-light iq-bg-primary "> <i class="fill">A</i></div>
                      </div>
              </div>
           </div>
@@ -24,10 +24,10 @@ Dashboard || Pegawai
              <div class="iq-card-body">
                 <div class="d-flex d-flex align-items-center justify-content-between">
                    <div>
-                       <h2>$37k</h2>
-                       <p class="fontsize-sm m-0">Shippment A</p>
+                    <h2>{{$b_count}}</h2>
+                    <p class="fontsize-sm m-0">Total Ship B</p>
                    </div>
-                   <div class="rounded-circle iq-card-icon iq-bg-danger"><i class="ri-radar-line"></i></div>
+                   <div class="rounded-circle iq-card-icon iq-bg-danger"><i >B</i></div>
                 </div>
               </div>
           </div>
@@ -37,10 +37,10 @@ Dashboard || Pegawai
              <div class="iq-card-body">
                 <div class="d-flex d-flex align-items-center justify-content-between">
                    <div>
-                       <h2>32%</h2>
-                       <p class="fontsize-sm m-0">Shippment B</p>
+                    <h2>{{$c_count}}</h2>
+                    <p class="fontsize-sm m-0">Total Ship C</p>
                    </div>
-                   <div class="rounded-circle iq-card-icon iq-bg-warning "><i class="ri-price-tag-3-line"></i></div>
+                   <div class="rounded-circle iq-card-icon iq-bg-warning "><i>C</i></div>
                 </div>
             </div>
           </div>
@@ -50,10 +50,10 @@ Dashboard || Pegawai
              <div class="iq-card-body">
                 <div class="d-flex d-flex align-items-center justify-content-between">
                    <div>
-                       <h2>27h</h2>
-                       <p class="fontsize-sm m-0">Payment</p>
+                    <h2>{{$d_count}}</h2>
+                    <p class="fontsize-sm m-0">Total Ship D</p>
                    </div>
-                   <div class="rounded-circle iq-card-icon iq-bg-info "><i class="ri-refund-line"></i></div>
+                   <div class="rounded-circle iq-card-icon iq-bg-info "><i>D</i></div>
                 </div>
             </div>
           </div>
@@ -67,10 +67,11 @@ Dashboard || Pegawai
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
                       <div>
+                        <img width="50%" src="{{asset('A.png')}}" alt="">
                           <h2>Shippment A</h2>
                           <p class="fontsize-sm m-0">Generate Shippping Mark Type A</p>
                       </div>
-                      <div class="rounded-circle iq-card-icon iq-bg-info "><i class="ri-refund-line"></i></div>
+                      <div class="rounded-circle iq-card-icon iq-bg-primary "><i class="ri-refund-line"></i></div>
                    </div>
                </div>
              </div>
@@ -84,8 +85,46 @@ Dashboard || Pegawai
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
                       <div>
+                        <img width="50%" src="{{asset('B.png')}}" alt="">
                           <h2>Shippment B</h2>
                           <p class="fontsize-sm m-0">Generate Shippping Mark Type B</p>
+                      </div>
+                      <div class="rounded-circle iq-card-icon iq-bg-danger "><i class="ri-refund-line"></i></div>
+                   </div>
+               </div>
+             </div>
+             </a>    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{route('pegawai.shipment-c')}}">
+            <div class="iq-card iq-card-block iq-card-stretch ">
+                <div class="iq-card-body">
+                   <div class="d-flex d-flex align-items-center justify-content-between">
+                      <div>
+                        <img width="50%" src="{{asset('C.png')}}" alt="">
+                          <h2>Shippment C</h2>
+                          <p class="fontsize-sm m-0">Generate Shippping Mark Type C</p>
+                      </div>
+                      <div class="rounded-circle iq-card-icon iq-bg-warning "><i class="ri-refund-line"></i></div>
+                   </div>
+               </div>
+             </div>
+             </a>    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{route('pegawai.shipment-d')}}">
+            <div class="iq-card iq-card-block iq-card-stretch ">
+                <div class="iq-card-body">
+                   <div class="d-flex d-flex align-items-center justify-content-between">
+                      <div>
+                        <img width="50%" src="{{asset('D.png')}}" alt="">
+
+                          <h2>Shippment D</h2>
+                          <p class="fontsize-sm m-0">Generate Shippping Mark Type D</p>
                       </div>
                       <div class="rounded-circle iq-card-icon iq-bg-info "><i class="ri-refund-line"></i></div>
                    </div>

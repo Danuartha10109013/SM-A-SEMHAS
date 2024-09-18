@@ -2,14 +2,14 @@
     <a href="index.html">
     <div class="iq-light-logo">
        <div class="iq-light-logo">
-          <img src="images/logo.gif" class="img-fluid" alt="">
+          <img src="{{asset('Logo TML.png')}}" class="img-fluid" alt="">
         </div>
           <div class="iq-dark-logo">
-             <img src="{{asset('vendor')}}/images/logo-dark.gif" class="img-fluid" alt="">
+             <img src="{{asset('Logo TML.png')}}" class="img-fluid" alt="">
           </div>
     </div>
     <div class="iq-dark-logo">
-       <img src="{{asset('vendor')}}/images/logo-dark.gif" class="img-fluid" alt="">
+       <img width="20%" src="{{asset('Logo TML.png')}}" class="img-fluid" alt="">
     </div>
     <span>Tml</span>
     </a>
@@ -31,8 +31,10 @@
           </li>
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Sippment</span></li>
           
-          <li><a href="{{route('pegawai.shipment-a')}}" class="iq-waves-effect" aria-expanded="false"><i class="ri-chat-check-line"></i><span>SHIPPMENT A</span></a></li>
-          <li><a href="{{route('pegawai.shipment-b')}}" class="iq-waves-effect" aria-expanded="false"><i class="ri-chat-check-line"></i><span>SHIPPMENT B</span></a></li>
+          <li><a href="{{route('pegawai.shipment-a')}}" class="iq-waves-effect iq-bg-primary" aria-expanded="false"><i>A</i><span>SHIPPMENT A</span></a></li>
+          <li><a href="{{route('pegawai.shipment-b')}}" class="iq-waves-effect iq-bg-danger" aria-expanded="false"><i>B</i><span>SHIPPMENT B</span></a></li>
+          <li><a href="{{route('pegawai.shipment-c')}}" class="iq-waves-effect iq-bg-warning" aria-expanded="false"><i>C</i><span>SHIPPMENT C</span></a></li>
+          <li><a href="{{route('pegawai.shipment-d')}}" class="iq-waves-effect iq-bg-info" aria-expanded="false"><i>D</i><span>SHIPPMENT D</span></a></li>
           {{-- <li>
              <a href="#userinfo" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="ri-user-line"></i><span>User</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
              <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">

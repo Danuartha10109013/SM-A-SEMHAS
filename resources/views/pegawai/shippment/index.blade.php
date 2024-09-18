@@ -21,7 +21,7 @@ Shippment || Pegawai
                         @csrf
                         <input type="file" name="shipmenta" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
-                            <option value="KG">KG</option>
+                            <option value="KGS">KGS</option>
                             <option value="LBS">LBS</option>
                             <option value="MT">MT</option>
                         </select>
@@ -48,7 +48,7 @@ Shippment || Pegawai
                           <thead>
                              <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Collection</th>
+                                <th scope="col">No SO</th>
                                 <th scope="col">Action</th>
                              </tr>
                           </thead>

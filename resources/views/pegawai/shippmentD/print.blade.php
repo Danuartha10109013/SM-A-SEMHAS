@@ -66,19 +66,20 @@
 
         .details .label {
             width: 20%;
-            font-weight: bold;
+            /* font-weight: bold; */
         }
 
         .details .value {
             width: 80%;
             text-align: left;
+            font-weight: bold;
         }
 
         .footer {
             text-align: left;
             font-weight: bold;
             font-size: 18px;
-            margin-top:0.8cm;
+            margin-top:2.1cm;
         }
 
         .page-break {
@@ -94,27 +95,15 @@
             <div class="header">SHIPPING MARK</div>
             <div class="details">
                 <div class="row">
-                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.2cm;weight:70%" class="label1">{{$d->manufactur}}</div>
+                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.2cm;weight:70%" class="label1">{{$d->unicode}}</div>
                 </div>
                 <div class="row">
-                    <div class="label">DESTINATION</div>
-                    <div style="margin-left:-2em;" class="value">: {{$d->destination}}</div>
+                    <div style="font-weight: bold; font-size: 18px; margin-bottom: 0.2cm;weight:70%" class="label1">{{$d->destination}}</div>
                 </div>
-                <div class="row">
-                    <div class="label">PRODUCT</div>
-                    <div style="margin-left:-2em;" class="value">: {{$d->product}}</div>
-                </div>
-                <div class="row">
-                    <div class="label">SIZE</div>
+
+                <div class="row" style="margin-top:0.8cm">
+                    <div class="label">SIZE - QUALITY</div>
                     <div style="margin-left:-2em;" class="value">: {{$d->size}}</div>
-                </div>
-                <div class="row">
-                    <div class="label">GROSS WEGIHT</div>
-                    <div style="margin-left:-2em;" class="value">: {{$d->gros}} {{$d->satuan_berat}}</div>
-                </div>
-                <div class="row">
-                    <div class="label">NET WEIGHT</div>
-                    <div class="value">: {{$d->net}} {{$d->satuan_berat}}</div>
                 </div>
             </div>
             <div class="footer">MADE IN INDONESIA</div>

@@ -4,6 +4,8 @@ use App\Http\Controllers\DashboardControlller;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ShippmentA;
 use App\Http\Controllers\ShippmentB;
+use App\Http\Controllers\ShippmentC;
+use App\Http\Controllers\ShippmentD;
 use App\Http\Middleware\AutoLogout;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +68,34 @@ Route::middleware([AutoLogout::class])->group(function () {
             Route::get('/print/{id}',[ShippmentB::class,'print'])->name('shipment-b-print');
             Route::get('/printone/{id}',[ShippmentB::class,'printone'])->name('shipment-b-printone');
             Route::post('/add-excel-a',[ShippmentB::class,'store'])->name('add-shippmentb-excel');
+        });
+        //C
+        Route::prefix('ShipmentC')->group(function () {
+            Route::get('/',[ShippmentC::class,'index'])->name('shipment-c');
+            Route::get('/add',[ShippmentC::class,'add'])->name('shipment-c-add');
+            Route::post('/store',[ShippmentC::class,'storea'])->name('shipment-c-store');
+            Route::get('/edit/{id}',[ShippmentC::class,'edit'])->name('shipment-c-edit');
+            Route::put('/update/{id}',[ShippmentC::class,'update'])->name('shipment-c-update');
+            Route::get('/delete/{id}',[ShippmentC::class,'destroy'])->name('shipment-c-delete');
+            Route::delete('/deleteA/{type}',[ShippmentC::class,'destroyA'])->name('shipment-c-deleteA');
+            Route::get('/show/{id}',[ShippmentC::class,'show'])->name('shipment-c-show');
+            Route::get('/print/{id}',[ShippmentC::class,'print'])->name('shipment-c-print');
+            Route::get('/printone/{id}',[ShippmentC::class,'printone'])->name('shipment-c-printone');
+            Route::post('/add-excel-a',[ShippmentC::class,'store'])->name('add-shippmentc-excel');
+        });
+        //D
+        Route::prefix('ShipmentD')->group(function () {
+            Route::get('/',[ShippmentD::class,'index'])->name('shipment-d');
+            Route::get('/add',[ShippmentD::class,'add'])->name('shipment-d-add');
+            Route::post('/store',[ShippmentD::class,'storea'])->name('shipment-d-store');
+            Route::get('/edit/{id}',[ShippmentD::class,'edit'])->name('shipment-d-edit');
+            Route::put('/update/{id}',[ShippmentD::class,'update'])->name('shipment-d-update');
+            Route::get('/delete/{id}',[ShippmentD::class,'destroy'])->name('shipment-d-delete');
+            Route::delete('/deleteA/{type}',[ShippmentD::class,'destroyA'])->name('shipment-d-deleteA');
+            Route::get('/show/{id}',[ShippmentD::class,'show'])->name('shipment-d-show');
+            Route::get('/print/{id}',[ShippmentD::class,'print'])->name('shipment-d-print');
+            Route::get('/printone/{id}',[ShippmentD::class,'printone'])->name('shipment-d-printone');
+            Route::post('/add-excel-a',[ShippmentD::class,'store'])->name('add-shippmentd-excel');
         });
 
 

@@ -24,4 +24,11 @@ class DashboardControlller extends Controller
         // dd($data);
         return view('pegawai.index', compact('a_count','b_count','c_count','d_count', 'total','totalcolection'));
     }
+
+    public function fcindex(){
+        $user = 'a';
+        $form = 'a';
+        $response = 'a';
+        return view('Form-Check.index',compact('user','form','response'));
+    }
 }

@@ -8,7 +8,7 @@ Shippment || Pegawai
         <h1 class="text-center mb-4">Create Shippment A</h1>
 
         <div class="card shadow p-4">
-            <form action="{{ route('pegawai.shipment-a-store') }}" method="POST">
+            <form action="{{ route('Ship-Mark.pegawai.shipment-a-store') }}" method="POST">
                 @csrf
                 @method('POST')
                 <div class="mb-3">

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\Return_;
 
 class LoginController extends Controller
 {
@@ -43,15 +44,42 @@ class LoginController extends Controller
     // Autentikasi berhasil
     Auth::login($user);
 
-    // Cek peran pengguna setelah login berhasil
-    if ($user->role == 0) {
-        return redirect()->route('admin.dashboard');
-    } elseif ($user->role == 1) {
-        return redirect()->route('pegawai.dashboard');
+    // Check user type
+    switch ($user->type) {
+        case "Ship-Mark":
+            // Check user role
+            if ($user->role == 0) {
+                return redirect()->route('Ship-Mark.admin.dashboard');
+            } elseif ($user->role == 1) {
+                return redirect()->route('Ship-Mark.pegawai.dashboard');
+            }
+            break;
+    
+        case "Form-Check":
+            if ($user->role == 0 ) {
+                return redirect()->route('Form-Check.admin.dashboard');
+            }
+            elseif($user->role == 1){
+                return view('welcome');
+            }
+            break;
+        case "else":
+            // Both types have the same logic, so combine them
+            if ($user->role == 0 ) {
+                return view('welcome');
+            }
+            elseif($user->role == 1){
+                return view('welcome');
+            }
+            break;
+    
+        default:
+        return redirect()->route('login')->with('error', 'Type of user is not found');
     }
-
-    // Redirect ke halaman dashboard default jika role tidak dikenali
-    return redirect()->route('dashboard')->with('success', 'Login berhasil.');
+    
+    // Redirect to login if role is not recognized or any other case
+    return redirect()->route('login')->with('error', 'Login Gagal.');
+    
 }
 
 

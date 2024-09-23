@@ -17,7 +17,7 @@ Shippment || Pegawai
                     <a class="btn btn-primary" href="">Tambah Data</a>
                 
                     <!-- Form Upload File Excel di sebelah kanan -->
-                    <form action="{{ route('pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    <form action="{{ route('Ship-Mark.pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
                         @csrf
                         <input type="file" name="shipmentb" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
@@ -43,7 +43,7 @@ Shippment || Pegawai
                         <p>All data of Shippment type C</p>
                         
                             
-                        <a href="{{route('pegawai.shipment-c-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
+                        <a href="{{route('Ship-Mark.pegawai.shipment-c-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
                        <table class="table table-responsive">
                           <thead>
                              <tr>
@@ -77,9 +77,9 @@ Shippment || Pegawai
                                         <td>{{$d->net}}</td>
                                         <td>{{$d->satuan_berat}}</td>
                                         <td>
-                                            <a href="{{route('pegawai.shipment-c-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
-                                            <a href="{{route('pegawai.shipment-c-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
-                                            <a href="{{route('pegawai.shipment-c-delete', $d->id)}}" class="btn btn-danger mr-2 mb-2 text-center"><i class="ri-delete-bin-line"></i></a>
+                                            <a href="{{route('Ship-Mark.pegawai.shipment-c-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
+                                            <a href="{{route('Ship-Mark.pegawai.shipment-c-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
+                                            <a href="{{route('Ship-Mark.pegawai.shipment-c-delete', $d->id)}}" class="btn btn-danger mr-2 mb-2 text-center"><i class="ri-delete-bin-line"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'role' => '0',
             'status' => '1',
+            'type' => 'Ship-Mark',
             'email_verified_at' => now(),
             'password' => Hash::make('admin'), // You can use bcrypt or Hash facade
             'remember_token' => Str::random(10),
@@ -32,8 +33,35 @@ class UserSeeder extends Seeder
             'email' => 'admin1@example.com',
             'role' => '1',
             'status' => '1',
+            'type' => 'Ship-Mark',
             'email_verified_at' => now(),
             'password' => Hash::make('admin1'), // You can use bcrypt or Hash facade
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Admin Form Check',
+            'username' => 'adminfc',
+            'email' => 'fc@example.com',
+            'role' => '0',
+            'status' => '1',
+            'type' => 'Form-Check',
+            'email_verified_at' => now(),
+            'password' => Hash::make('fcadmin'), // You can use bcrypt or Hash facade
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Pegawai Form Check',
+            'username' => 'pegawaifc',
+            'email' => 'fc1@example.com',
+            'role' => '0',
+            'status' => '1',
+            'type' => 'Form-Check',
+            'email_verified_at' => now(),
+            'password' => Hash::make('fcpegawai'), // You can use bcrypt or Hash facade
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),

@@ -1,6 +1,6 @@
 @extends('layout.pegawai.main')
 @section('title')
-Shippment || Pegawai 
+Shippment B || Pegawai 
 @endsection
 @section('content')
         <div class="container-fluid">
@@ -14,10 +14,10 @@ Shippment || Pegawai
                         </div>
                     @endif
                     <!-- Tombol Tambah Data di sebelah kiri -->
-                    <a class="btn btn-primary" href="{{route('pegawai.shipment-b-add')}}">Tambah Data</a>
+                    <a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-b-add')}}">Tambah Data</a>
                 
                     <!-- Form Upload File Excel di sebelah kanan -->
-                    <form action="{{ route('pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    <form action="{{ route('Ship-Mark.pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
                         @csrf
                         <input type="file" name="shipmentb" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
@@ -61,7 +61,7 @@ Shippment || Pegawai
                                     <tr>
                                         <th>{{$loop->iteration}}</th>
                                         <td>{{$d->type}}</td>
-                                        <td class="mr-2" ><a class="btn btn-primary" href="{{route('pegawai.shipment-b-show',$d->type)}}"><i class="ri-eye-line"></i>Show</a>
+                                        <td class="mr-2" ><a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-b-show',$d->type)}}"><i class="ri-eye-line"></i>Show</a>
                                     </tr>
                                 @endforeach
                             @endif

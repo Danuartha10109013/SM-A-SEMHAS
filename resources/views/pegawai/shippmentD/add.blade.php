@@ -8,7 +8,7 @@ Shippment || Pegawai
         <h1 class="text-center mb-4">Create Shippment D</h1>
 
         <div class="card shadow p-4">
-            <form action="{{ route('pegawai.shipment-d-store') }}" method="POST">
+            <form action="{{ route('Ship-Mark.pegawai.shipment-d-store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="manufactur" class="form-label">Unicode</label>

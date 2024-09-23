@@ -62,7 +62,7 @@ Dashboard || Pegawai
 
     <div class="row">
         <div class="col-md-12">
-            <a href="{{route('pegawai.shipment-a')}}">
+            <a href="{{route('Ship-Mark.pegawai.shipment-a')}}">
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
@@ -80,7 +80,7 @@ Dashboard || Pegawai
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href="{{route('pegawai.shipment-b')}}">
+            <a href="{{route('Ship-Mark.pegawai.shipment-b')}}">
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
@@ -98,7 +98,7 @@ Dashboard || Pegawai
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href="{{route('pegawai.shipment-c')}}">
+            <a href="{{route('Ship-Mark.pegawai.shipment-c')}}">
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
@@ -116,7 +116,7 @@ Dashboard || Pegawai
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href="{{route('pegawai.shipment-d')}}">
+            <a href="{{route('Ship-Mark.pegawai.shipment-d')}}">
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">

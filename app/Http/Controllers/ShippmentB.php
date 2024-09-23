@@ -48,7 +48,7 @@ class ShippmentB extends Controller
 
         ShipB::create($validated);
 
-        return redirect()->route('pegawai.shipment-b')->with('success', 'Shippment added successfully');
+        return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Shippment added successfully');
     }
 
     public function edit($id)
@@ -80,7 +80,7 @@ class ShippmentB extends Controller
         $shippmentA = ShipB::findOrFail($id);
         $shippmentA->update($request->all());
 
-        return redirect()->route('pegawai.shipment-b-show',$back)->with('success', 'ShippmentA updated successfully');
+        return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'ShippmentA updated successfully');
     }
 
     public function show($id){
@@ -128,7 +128,7 @@ class ShippmentB extends Controller
         Excel::import(new ShippmentBImport($request->satuan_berat,$newType),$request->file('shipmentb'));
 ;
 
-        return redirect()->route('pegawai.shipment-b')->with('success', 'Data berhasil ditambahkan');
+        return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Data berhasil ditambahkan');
     }
 
     public function destroy($id)
@@ -137,7 +137,7 @@ class ShippmentB extends Controller
         $shippmenta = ShipB::findOrFail($id);
         $shippmenta->delete();
 
-        return redirect()->route('pegawai.shipment-b-show',$back)->with('success', 'Shippmenta deleted successfully');
+        return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'Shippmenta deleted successfully');
     }
     public function destroyA($type)
     {
@@ -146,6 +146,6 @@ class ShippmentB extends Controller
         $shippmenta = ShipB::findOrFail($type);
         $shippmenta->delete();
 
-        return redirect()->route('pegawai.shipment-b')->with('success', 'Shippmenta deleted successfully');
+        return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Shippmenta deleted successfully');
     }
 }

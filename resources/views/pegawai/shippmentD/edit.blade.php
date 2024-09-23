@@ -8,7 +8,7 @@
         <h1 class="text-center mb-4">Edit Shippment D</h1>
 
         <div class="card shadow p-4">
-            <form action="{{ route('pegawai.shipment-d-update', $shippmentA->id) }}" method="POST">
+            <form action="{{ route('Ship-Mark.pegawai.shipment-d-update', $shippmentA->id) }}" method="POST">
                 @csrf
                 @method('PUT') <!-- This is used to specify that this request should be treated as PUT -->
 

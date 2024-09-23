@@ -49,9 +49,9 @@ NOTE: This file contains the styling for responsive Template.
 	body.sidebar-main-active .iq-sidebar:hover .iq-menu li.menu-open > a { border-radius: 8px 8px 0 0; }
 	body.sidebar-main-active .iq-sidebar:hover, body.sidebar-main-active .iq-sidebar:hover .iq-sidebar-logo { width: 260px; }
 	body.sidebar-main-active .iq-sidebar:hover .iq-sidebar-menu .iq-menu li a span, body.sidebar-main-active .iq-sidebar:hover .iq-sidebar-logo a span, body.sidebar-main-active .iq-sidebar:hover .iq-sidebar-menu .iq-menu li a .badge, body.sidebar-main-active .iq-sidebar:hover .iq-menu-bt { opacity: 1; display: inline-block; }
-	.iq-right-fixed { position: fixed; left: auto; right: 0; top: 0; width: 320px; background: var(--iq-card-bg); z-index: 99; height: 100%; }
-	body.sidebar-main-active.right-column-fixed .iq-top-navbar { margin-right: 320px; width: calc(100% - 460px); }
-	body.sidebar-main-active.right-column-fixed .content-page, body.sidebar-main-active.right-column-fixed .iq-footer { margin-left: 80px; margin-right: 320px; }
+	.iq-right-fixed { position: fixed; left: auto; right: 0; top: 0; width: 200px; background: var(--iq-card-bg); z-index: 99; height: 100%; }
+	body.sidebar-main-active.right-column-fixed .iq-top-navbar { margin-right: 280px; width: calc(100% - 460px); }
+	body.sidebar-main-active.right-column-fixed .content-page, body.sidebar-main-active.right-column-fixed .iq-footer { margin-left: 80px; margin-right: 200px; }
 	body.sidebar-main-active.right-column-fixed .iq-top-navbar.fixed-header { width: calc(100% - 400px); }
 	body.sidebar-main-active .iq-sidebar .iq-sidebar-menu .iq-menu li ul.iq-submenu.iq-submenu-data li a { padding-left: 15px; }
 	body.sidebar-main-active .iq-sidebar:hover .iq-sidebar-menu .iq-menu li ul.iq-submenu.iq-submenu-data li a { padding-left: 50px; }

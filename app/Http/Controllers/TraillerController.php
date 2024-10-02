@@ -4,143 +4,103 @@ namespace App\Http\Controllers;
 
 use App\Models\TraillerM;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TraillerController extends Controller
 {
     public function index() {
-        $data = TraillerM::paginate(10); // 10 items per page
-        return view('Form-Check.pages.forklift.index', compact('data'));
+        if(Auth::user()->role == 0){
+            $data = TraillerM::paginate(10); // 10 items per page
+
+        }else{
+            $data = TraillerM::where('user_id', Auth::user()->id)->paginate(10); // 10 items per page
+
+        }
+        return view('Form-Check.pages.trailler.index', compact('data'));
     }
     
 
     public function add (){
-        return view('Form-Check.pages.forklift.add');
+        return view('Form-Check.pages.trailler.add');
     }
-    public function create (Request $request){
-        // dd($request->all());
-        // Validate the form data - fields without "ket_" are required, "ket_" fields are optional
-        $validatedData = $request->validate([
-            'user_id' => 'required|integer',
-            'shift_leader' => 'required|string|max:255',
-            'jenis_forklift' => 'required|string|max:255',
-            'shift' => 'required|string|max:255',
-            'date' => 'required|date',
-            'awal' => 'required|string|max:255',
-            'horn' => 'required|string|max:255',
-            'mundur' => 'required|string|max:255',
-            'sein' => 'required|string|max:255',
-            'rotating' => 'required|string|max:255',
-            'stop' => 'required|string|max:255',
-            'utama' => 'required|string|max:255',
-            'connector' => 'required|string|max:255',
-            'accu' => 'required|string|max:255',
-            'parking' => 'required|string|max:255',
-            'brake' => 'required|string|max:255',
-            'akhir' => 'required|string|max:255',
-            'oil' => 'required|string|max:255',
-            'raulic' => 'required|string|max:255',
-            'chain' => 'required|string|max:255',
-            'allhose' => 'required|string|max:255',
-            'steering' => 'required|string|max:255',
-            'belts' => 'required|string|max:255',
-            'cooland' => 'required|string|max:255',
-            'transmisi' => 'required|string|max:255',
-            'ban' => 'required|string|max:255',
-            'fork' => 'required|string|max:255',
-            'teba' => 'required|string|max:255',
-            'catatan' => 'nullable|string|max:1000',
-            'mtc' => 'nullable|string|max:255',
+    public function create(Request $request)
+{
+    // dd($request->all());
+    $validatedData = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'shift_leader' => 'nullable|string',
+        'mtc_name' => 'nullable|string',
+        'jenis_forklift' => 'nullable|string',
+        'date' => 'nullable|date',
+        'carrier' => 'nullable|string',
+        'rantai' => 'nullable|string',
+        'ban' => 'nullable|string',
+        'cadangan' => 'nullable|string',
+        'sein' => 'nullable|string',
+        'rotating' => 'nullable|string',
+        'stop' => 'nullable|string',
+        'utama' => 'nullable|string',
+        'kota' => 'nullable|string',
+        'connector' => 'nullable|string',
+        'accu' => 'nullable|string',
+        'coolant' => 'nullable|string',
+        'parking' => 'nullable|string',
+        'brake' => 'nullable|string',
+        'horn' => 'nullable|string',
+        'mundur' => 'nullable|string',
+        'clamp' => 'nullable|string',
+        'terpal' => 'nullable|string',
+        'rantai_pe' => 'nullable|string',
+        'ganjal' => 'nullable|string',
+        'pallet' => 'nullable|string',
+        'apar' => 'nullable|string',
+        'p3k' => 'nullable|string',
+        'fancing' => 'nullable|string',
+        'triangle' => 'nullable|string',
+        'tools' => 'nullable|string',
+        'catatan' => 'nullable|string',
+        
+        // Nullable ket fields
+        'ket_carrier' => 'nullable|string',
+        'ket_rantai' => 'nullable|string',
+        'ket_ban' => 'nullable|string',
+        'ket_cadangan' => 'nullable|string',
+        'ket_sein' => 'nullable|string',
+        'ket_rotating' => 'nullable|string',
+        'ket_stop' => 'nullable|string',
+        'ket_utama' => 'nullable|string',
+        'ket_kota' => 'nullable|string',
+        'ket_connector' => 'nullable|string',
+        'ket_accu' => 'nullable|string',
+        'ket_coolant' => 'nullable|string',
+        'ket_parking' => 'nullable|string',
+        'ket_brake' => 'nullable|string',
+        'ket_horn' => 'nullable|string',
+        'ket_mundur' => 'nullable|string',
+        'ket_clamp' => 'nullable|string',
+        'ket_terpal' => 'nullable|string',
+        'ket_rantai_pe' => 'nullable|string',
+        'ket_ganjal' => 'nullable|string',
+        'ket_pallet' => 'nullable|string',
+        'ket_apar' => 'nullable|string',
+        'ket_p3k' => 'nullable|string',
+        'ket_fancing' => 'nullable|string',
+        'ket_triangle' => 'nullable|string',
+        'ket_tools' => 'nullable|string',
+    ]);
 
-            // "ket_" fields are optional
-            'ket_awal' => 'nullable|string|max:255',
-            'ket_horn' => 'nullable|string|max:255',
-            'ket_mundur' => 'nullable|string|max:255',
-            'ket_sein' => 'nullable|string|max:255',
-            'ket_rotating' => 'nullable|string|max:255',
-            'ket_stop' => 'nullable|string|max:255',
-            'ket_utama' => 'nullable|string|max:255',
-            'ket_connector' => 'nullable|string|max:255',
-            'ket_acuu' => 'nullable|string|max:255',
-            'ket_parking' => 'nullable|string|max:255',
-            'ket_brake' => 'nullable|string|max:255',
-            'ket_oil' => 'nullable|string|max:255',
-            'ket_raulic' => 'nullable|string|max:255',
-            'ket_chain' => 'nullable|string|max:255',
-            'ket_allhose' => 'nullable|string|max:255',
-            'ket_steering' => 'nullable|string|max:255',
-            'ket_belts' => 'nullable|string|max:255',
-            'ket_cooland' => 'nullable|string|max:255',
-            'ket_transmisi' => 'nullable|string|max:255',
-            'ket_ban' => 'nullable|string|max:255',
-            'ket_fork' => 'nullable|string|max:255',
-            'ket_teba' => 'nullable|string|max:255',
-        ]);
+    TraillerM::create($validatedData);
 
-        // Store the validated data
-        $checklist = new TraillerM;
-        $checklist->user_id = $request->user_id;
-        $checklist->shift_leader = $request->shift_leader;
-        $checklist->jenis_forklift = $request->jenis_forklift;
-        $checklist->shift = $request->shift;
-        $checklist->date = $request->date;
-        $checklist->awal = $request->awal;
-        $checklist->horn = $request->horn;
-        $checklist->mundur = $request->mundur;
-        $checklist->sein = $request->sein;
-        $checklist->rotating = $request->rotating;
-        $checklist->stop = $request->stop;
-        $checklist->utama = $request->utama;
-        $checklist->connector = $request->connector;
-        $checklist->accu = $request->accu;
-        $checklist->parking = $request->parking;
-        $checklist->brake = $request->brake;
-        $checklist->akhir = $request->akhir;
-        $checklist->oil = $request->oil;
-        $checklist->raulic = $request->raulic;
-        $checklist->chain = $request->chain;
-        $checklist->allhose = $request->allhose;
-        $checklist->steering = $request->steering;
-        $checklist->belts = $request->belts;
-        $checklist->cooland = $request->cooland;
-        $checklist->transmisi = $request->transmisi;
-        $checklist->ban = $request->ban;
-        $checklist->fork = $request->fork;
-        $checklist->teba = $request->teba;
-        $checklist->catatan = $request->catatan;
-        $checklist->mtc = $request->mtc;
+    if(Auth::user()->role == 0){
 
-        // Save the optional "ket_" fields
-        $checklist->ket_awal = $request->ket_awal;
-        $checklist->ket_horn = $request->ket_horn;
-        $checklist->ket_mundur = $request->ket_mundur;
-        $checklist->ket_sein = $request->ket_sein;
-        $checklist->ket_rotating = $request->ket_rotating;
-        $checklist->ket_stop = $request->ket_stop;
-        $checklist->ket_utama = $request->ket_utama;
-        $checklist->ket_connector = $request->ket_connector;
-        $checklist->ket_acuu = $request->ket_acuu;
-        $checklist->ket_parking = $request->ket_parking;
-        $checklist->ket_brake = $request->ket_brake;
-        $checklist->ket_oil = $request->ket_oil;
-        $checklist->ket_raulic = $request->ket_raulic;
-        $checklist->ket_chain = $request->ket_chain;
-        $checklist->ket_allhose = $request->ket_allhose;
-        $checklist->ket_steering = $request->ket_steering;
-        $checklist->ket_belts = $request->ket_belts;
-        $checklist->ket_cooland = $request->ket_cooland;
-        $checklist->ket_transmisi = $request->ket_transmisi;
-        $checklist->ket_ban = $request->ket_ban;
-        $checklist->ket_fork = $request->ket_fork;
-        $checklist->ket_teba = $request->ket_teba;
-
-        // Save the checklist to the database
-        $checklist->save();
-
-        return redirect()->route('Form-Check.admin.forklift')->with('succes', 'Submission complite');
+        return redirect()->route('Form-Check.admin.trailler')->with('success', 'Trailler record saved successfully.');
+    }else{
+        return redirect()->route('Form-Check.pegawai.trailler')->with('success', 'Trailler record saved successfully.');
     }
+}
 
     public function print($id){
         $data = TraillerM::FindOrFail($id);
-        return view('Form-Check.pages.forklift.print',compact('data'));
+        return view('Form-Check.pages.trailler.print',compact('data'));
     }
 }

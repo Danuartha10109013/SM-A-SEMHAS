@@ -27,26 +27,25 @@
        <ul id="iq-sidebar-toggle" class="iq-menu">
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
           <li class="active">
-             <a href="{{route('Ship-Mark.pegawai.dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
+            @if (Auth::user()->role == 0)
+               <a href="{{route('Ship-Mark.admin.dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
+            @else
+               <a href="{{route('Ship-Mark.pegawai.dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
+            @endif
           </li>
-          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Sippment</span></li>
-          
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Shippment</span></li>
+          @if (Auth::user()->role == 0)
+          <li><a href="{{route('Ship-Mark.admin.shipment-a')}}" class="iq-waves-effect iq-bg-primary" aria-expanded="false"><i>A</i><span>SHIPPMENT A</span></a></li>
+          <li><a href="{{route('Ship-Mark.admin.shipment-b')}}" class="iq-waves-effect iq-bg-danger" aria-expanded="false"><i>B</i><span>SHIPPMENT B</span></a></li>
+          <li><a href="{{route('Ship-Mark.admin.shipment-c')}}" class="iq-waves-effect iq-bg-warning" aria-expanded="false"><i>C</i><span>SHIPPMENT C</span></a></li>
+          <li><a href="{{route('Ship-Mark.admin.shipment-d')}}" class="iq-waves-effect iq-bg-info" aria-expanded="false"><i>D</i><span>SHIPPMENT D</span></a></li>
+          @else
           <li><a href="{{route('Ship-Mark.pegawai.shipment-a')}}" class="iq-waves-effect iq-bg-primary" aria-expanded="false"><i>A</i><span>SHIPPMENT A</span></a></li>
           <li><a href="{{route('Ship-Mark.pegawai.shipment-b')}}" class="iq-waves-effect iq-bg-danger" aria-expanded="false"><i>B</i><span>SHIPPMENT B</span></a></li>
           <li><a href="{{route('Ship-Mark.pegawai.shipment-c')}}" class="iq-waves-effect iq-bg-warning" aria-expanded="false"><i>C</i><span>SHIPPMENT C</span></a></li>
           <li><a href="{{route('Ship-Mark.pegawai.shipment-d')}}" class="iq-waves-effect iq-bg-info" aria-expanded="false"><i>D</i><span>SHIPPMENT D</span></a></li>
-          {{-- <li>
-             <a href="#userinfo" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="ri-user-line"></i><span>User</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-             <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                <li><a href="profile.html"><i class="ri-profile-line"></i>User Profile</a></li>
-                <li><a href="profile-edit.html"><i class="ri-file-edit-line"></i>User Edit</a></li>
-                <li><a href="add-user.html"><i class="ri-user-add-line"></i>User Add</a></li>
-                <li><a href="user-list.html"><i class="ri-file-list-line"></i>User List</a></li>
-             </ul>
-          </li>
-          <li><a href="calendar.html" class="iq-waves-effect"><i class="ri-calendar-2-line"></i><span>Calendar</span></a></li>
-          <li><a href="chat.html" class="iq-waves-effect"><i class="ri-message-line"></i><span>Chat</span></a></li>
-           --}}
+          @endif
+
           
        </ul>
     </nav>

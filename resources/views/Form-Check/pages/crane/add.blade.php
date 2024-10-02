@@ -33,7 +33,11 @@
                 <h4 class="card-title">From Daily Checklist Crane</h4>
                 <p class="card-description"> FORMULIR CRANE <br>
                     PENGISIAN FORMULIR DILAKUKAN AWAL SHIFT/SEBELUM DIGUNAKAN </p>
+        @if (Auth::user()->role == 0)
             <form action="{{route('Form-Check.admin.crane.create')}}" method="POST">
+        @else
+            <form action="{{route('Form-Check.pegawai.crane.create')}}" method="POST">
+        @endif
                 @method('POST')
                 @csrf
                 <div class="col-md-12">

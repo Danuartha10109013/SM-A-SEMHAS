@@ -26,7 +26,11 @@
           </ul>
         </nav>
       </div>
+      @if (Auth::user()->role == 0)
       <a href="{{ route('Form-Check.admin.crane.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+        @else
+      <a href="{{ route('Form-Check.pegawai.crane.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+      @endif
       <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -59,8 +63,17 @@
                         </td>
                         
                         <td>
+                          @if (Auth::user()->role == 0)
                            <a href="{{route('Form-Check.admin.crane.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
-                        </td>
+                           <form action="{{ route('Form-Check.admin.crane.destroy', $d->id) }}" method="POST" class="ml-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="badge badge-gradient-danger">Hapus</button>
+                        </form>
+                          @else
+                           <a href="{{route('Form-Check.pegawai.crane.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
+                          @endif
+                          </td>
                     </tr>
                     @endforeach
                     </tbody>

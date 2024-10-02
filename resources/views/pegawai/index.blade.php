@@ -1,6 +1,10 @@
 @extends('layout.pegawai.main')
 @section('title')
-Dashboard || Pegawai 
+   @if (Auth::user()->role == 0)
+   Dashboard || Admin 
+   @else
+   Dashboard || Pegawai 
+   @endif
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -62,7 +66,11 @@ Dashboard || Pegawai
 
     <div class="row">
         <div class="col-md-12">
-            <a href="{{route('Ship-Mark.pegawai.shipment-a')}}">
+         @if (Auth::user()->role == 0)
+         <a href="{{route('Ship-Mark.admin.shipment-a')}}">
+         @else
+         <a href="{{route('Ship-Mark.pegawai.shipment-a')}}">
+         @endif
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
@@ -80,7 +88,11 @@ Dashboard || Pegawai
     </div>
     <div class="row">
         <div class="col-md-12">
+         @if (Auth::user()->role == 0)
+            <a href="{{route('Ship-Mark.admin.shipment-b')}}">
+         @else
             <a href="{{route('Ship-Mark.pegawai.shipment-b')}}">
+         @endif
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
@@ -98,7 +110,11 @@ Dashboard || Pegawai
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href="{{route('Ship-Mark.pegawai.shipment-c')}}">
+            @if (Auth::user()->role == 0)
+            <a href="{{route('Ship-Mark.admin.shipment-c')}}">
+            @else
+               <a href="{{route('Ship-Mark.pegawai.shipment-c')}}">
+            @endif
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
@@ -116,7 +132,11 @@ Dashboard || Pegawai
     </div>
     <div class="row">
         <div class="col-md-12">
-            <a href="{{route('Ship-Mark.pegawai.shipment-d')}}">
+            @if (Auth::user()->role == 0)
+            <a href="{{route('Ship-Mark.admin.shipment-d')}}">
+            @else
+               <a href="{{route('Ship-Mark.pegawai.shipment-d')}}">
+            @endif
             <div class="iq-card iq-card-block iq-card-stretch ">
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">

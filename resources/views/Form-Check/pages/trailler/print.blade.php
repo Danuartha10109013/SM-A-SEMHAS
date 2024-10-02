@@ -165,7 +165,7 @@
         <h1>CRANE OPERATOR DAILY DATA</h1>
         <div class="text-start">
             <h2>HARI / TANGGAL: {{ $data->date }}</h2>
-            <h2>JENIS FORKLIFT: {{ $data->jenis_forklift }}</h2>
+            <h2>NO TRAILER/DRIVER: {{ $data->jenis_forklift }}</h2>
         </div>
     </div>
     <div class="end">
@@ -178,67 +178,84 @@
                 <th>NO</th>
                 <th>ITEM</th>
                 <th>STANDART</th>
-                <th>SHIFT 1</th>
-                <th>SHIFT 2</th>
-                <th>SHIFT 3</th>
+                <th>STATUS V/X/O</th>
+
                 <th>KETERANGAN</th>
             </tr>
         </thead>
         <tbody>
             @php
                 $items = [
-                    ['awal', 'Pengecekan Hour Meter Awal Shift', 'Level harus di atas L'],
-                    ['akhir', 'Pengecekan Hour Meter Akhir Shift', 'Level harus di atas L'],
-                    ['horn', 'Horn', 'Berfungsi normal'],
-                    ['mundur', 'Alarm Mundur', 'Berfungsi normal'],
-                    ['sein', 'Lampu Sein', 'Menyala'],
-                    ['rotating', 'Lampu Rotating', 'Ada dan menyala'],
-                    ['stop', 'Lampu Stop', 'Menyala kanan dan kiri'],
-                    ['utama', 'Lampu Utama', 'Menyala kanan dan kiri'],
-                    ['connector', 'Battery Connector', 'Connector harus kencang'],
-                    ['accu', 'Level Air Accu (H/L)', 'Level harus di atas L'],
+                    ['carrier', 'Pastikan kondisi Carrier Trailer bagus atau tidak', 'Bagian penghubung terlumasidan tidak ada yang menganjal'],
+                    ['rantai', 'Hook pengait rantai', 'Kondisi weldingan bagus'],
+                    ['ban', 'Kondisi Ban dalam keadaan baik', 'Ban tidak bocor,masih ada kembangan dan tidak retak'],
+                    ['cadangan','Ban cadangan', 'Ada dan kondisi baik',],
+                    ['sein', 'Lampu sein kanan dan kiri', 'Menyala jika di operasikan'],
+                    ['rotating', 'Lampu Rotating', 'Menyala jika di operasikan'],
+                    ['stop', 'Lampu Stop', 'Menyala jika di operasikan'],
+                    ['utama', 'Lampu Utama', 'Menyala jika di operasikan'],
+                    ['kota', 'Lampu Kota', 'Menyala jika di operasikan'],
+                    ['connector', 'Battery Connector', 'Kencang'],
+                    ['accu', 'Level Air Accu (H/L)', 'H'],
+                    ['coolant', 'Level Cooland (H/L)', 'H'],
                     ['parking', 'Brake Parking', 'Berfungsi normal'],
                     ['brake', 'Brake', 'Berfungsi normal'],
-                    ['oil', 'Engine Oil Level (H/L)', 'Level harus di atas L'],
-                    ['raulic', 'Hydraulic Oil Level (H/L)', 'Level harus di atas L'],
-                    ['chain', 'Kondisi Grease di Chain', 'Terlumasi grease'],
-                    ['allhose', 'Kebocoran Oli (All Hose)', 'Tidak ada kebocoran'],
-                    ['steering', 'Power Steering', 'Berfungsi normal'],
-                    ['belts', 'Kondisi Belts Engine', 'Visual tidak ada yang retak/putus'],
-                    ['cooland', 'Level Cooland (H/L)', 'Level harus di atas L'],
-                    ['transmisi', 'Level Oil Transmisi (H/L)', 'Level harus di atas L'],
-                    ['ban', 'Kondisi Ban', 'Masih terdapat kembangan dan tidak retak'],
-                    ['fork', 'Hydraulic Fork', 'Berfungsi normal'],
-                    ['teba', 'Tekanan Ban (Forklift 23 ton)', '900 Kpa (kgf/cm2)']
+                    ['horn', 'Horn', 'Berfungsi normal'],
+                    ['mundur', 'Alarm mundur', 'Berfungsi normal'],
+                    ['clamp', 'All U bolt clamp per', 'Kondisi baik tidak ada yang patah'],
                 ];
 
+                $items1 = [
+                    ['terpal','Terpal','Ada dan tidak sobek'],
+                    ['rantai_pe','Rante pengikat','Ada dan kondisi baik'],
+                    ['ganjal','Ganjal ban','Ada dan kondisi baik'],
+                    ['pallet','Ada dan kondisi baik','Palet/ganjalan coil + karet'],
+                    ['apar','Apar','Ada dan belum expired'],
+                    ['p3k','Kotak P3K','Ada dan lengkap'],
+                    ['fancing','Fancing/pembatas di atas Carrier','Ada dan kondisi baik'],
+                    ['triangle','Red triangle','Ada dan kondisi baik'],
+                    ['tools','Tools penggantian roda','Ada dan kondisi baik'],
+                ]
+
             @endphp
+            <tr>
+                <td></td>
+                <td><b>Equipment</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
             @foreach ($items as $key => $item)
                 <tr>
                     <td>{{ $key + 1 }}</td>
                     <td style="text-align: left">{{ $item[1] }}</td>
                     <td>{{ $item[2] }}</td>
-                    @if ($data->shift == 1)
-                        <td>{{ $data->{$item[0]} }}</td>
-                        <td></td>
-                        <td></td>
-                    @elseif ($data->shift == 2)
-                        <td></td>
-                        <td>{{ $data->{$item[0]} }}</td>
-                        <td></td>
-                    @elseif ($data->shift == 3)
-                        <td></td>
-                        <td></td>
-                        <td>{{ $data->{$item[0]} }}</td>
-                    @endif
+                    <td>{{ $data->{$item[0]} }}</td>    
                     <td>{{ $data->{"ket_{$item[0]}"} }}</td>
                 </tr>
+            @endforeach
+            <tr>
+                <td></td>
+                <td><b>Aksesoris</b></td>
+                <td></td>
+                <td></td>
+                <td></td>  
+            </tr>
+            @foreach ($items1 as $key => $item)
+            <tr>
+                <td>{{ $key + 1 }}</td>
+                <td style="text-align: left">{{ $item[1] }}</td>
+                <td>{{ $item[2] }}</td>
+                <td>{{ $data->{$item[0]} }}</td>    
+                <td>{{ $data->{"ket_{$item[0]}"} }}</td>
+            </tr>
             @endforeach
             <tr class="catatan-row">
                 <td colspan="5" style="border-style: none">
                     <p style="text-align: left"><span style="margin-right: 10px">Catatan:</span> {{ $data->catatan }}</p>
                 </td>
             </tr>
+            
         </tbody>
     </table>
 

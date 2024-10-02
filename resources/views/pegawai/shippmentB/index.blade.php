@@ -1,6 +1,10 @@
 @extends('layout.pegawai.main')
 @section('title')
+@if (Auth::user()->role == 0)
+Shippment B || Admin 
+@else
 Shippment B || Pegawai 
+@endif 
 @endsection
 @section('content')
         <div class="container-fluid">
@@ -14,10 +18,18 @@ Shippment B || Pegawai
                         </div>
                     @endif
                     <!-- Tombol Tambah Data di sebelah kiri -->
+                    @if (Auth::user()->role == 0)
+                    <a class="btn btn-primary" href="{{route('Ship-Mark.admin.shipment-b-add')}}">Tambah Data</a>
+                    @else
                     <a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-b-add')}}">Tambah Data</a>
+                    @endif
                 
                     <!-- Form Upload File Excel di sebelah kanan -->
+                    @if (Auth::user()->role == 0)
+                    <form action="{{ route('Ship-Mark.admin.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    @else
                     <form action="{{ route('Ship-Mark.pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    @endif
                         @csrf
                         <input type="file" name="shipmentb" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
@@ -61,7 +73,17 @@ Shippment B || Pegawai
                                     <tr>
                                         <th>{{$loop->iteration}}</th>
                                         <td>{{$d->type}}</td>
-                                        <td class="mr-2" ><a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-b-show',$d->type)}}"><i class="ri-eye-line"></i>Show</a>
+                                        <td>
+                                        @if (Auth::user()->role == 0)
+                                            <a class="btn btn-primary" href="{{route('Ship-Mark.admin.shipment-b-show',$d->type)}}">
+                                                <i class="ri-eye-line"></i>Show
+                                            </a>
+                                        @else
+                                            <a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-b-show',$d->type)}}">
+                                                <i class="ri-eye-line"></i>Show
+                                            </a>
+                                        @endif
+                                        </td> 
                                     </tr>
                                 @endforeach
                             @endif

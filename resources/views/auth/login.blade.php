@@ -4,7 +4,7 @@
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Login || Generate ShipMark</title>
+      <title>Login || Sistem Informasi Digital WH</title>
       <!-- Favicon -->
       <link rel="shortcut icon" href="{{asset('Logo TML.png')}}" />
       <!-- Bootstrap CSS -->
@@ -22,7 +22,7 @@
       <!-- loader END -->
         <!-- Sign in Start -->
         <section class="sign-in-page">
-            <div class="container bg-white mt-5 p-0">
+            <div class="container bg-white mt-5 p-5">
                 <div class="row no-gutters">
                     <div class="col-sm-6 align-self-center">
                         <div class="sign-in-from">
@@ -48,14 +48,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <a href="#" class="float-right">Forgot password?</a>
                                     <input type="password" name="password" class="form-control mb-0" id="exampleInputPassword1" placeholder="Password">
                                 </div>
                                 <div class="d-inline-block w-100">
-                                    <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Remember Me</label>
-                                    </div>
+                                    
                                     <button type="submit" class="btn btn-primary float-right">Sign in</button>
                                 </div>
 

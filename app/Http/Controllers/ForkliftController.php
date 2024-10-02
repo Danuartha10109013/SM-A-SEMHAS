@@ -3,19 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\CraneM;
+use App\Models\ForkliftM;
 use App\Models\TraillerM;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ForkliftController extends Controller
 {
     public function index() {
-        $data = TraillerM::paginate(10); // 10 items per page
-        return view('Form-Check.pages.trailler.index', compact('data'));
+        if(Auth::user()->role == 0){
+            $data = ForkliftM::paginate(10); // 10 items per page
+        }else{
+            $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
+        }
+        return view('Form-Check.pages.forklift.index', compact('data'));
     }
     
 
     public function add (){
-        return view('Form-Check.pages.trailler.add');
+        return view('Form-Check.pages.forklift.add');
     }
     public function create (Request $request){
         // dd($request->all());
@@ -54,6 +60,7 @@ class ForkliftController extends Controller
 
             // "ket_" fields are optional
             'ket_awal' => 'nullable|string|max:255',
+            'ket_akhir' => 'nullable|string|max:255',
             'ket_horn' => 'nullable|string|max:255',
             'ket_mundur' => 'nullable|string|max:255',
             'ket_sein' => 'nullable|string|max:255',
@@ -78,7 +85,7 @@ class ForkliftController extends Controller
         ]);
 
         // Store the validated data
-        $checklist = new TraillerM;
+        $checklist = new ForkliftM;
         $checklist->user_id = $request->user_id;
         $checklist->shift_leader = $request->shift_leader;
         $checklist->jenis_forklift = $request->jenis_forklift;
@@ -112,6 +119,7 @@ class ForkliftController extends Controller
 
         // Save the optional "ket_" fields
         $checklist->ket_awal = $request->ket_awal;
+        $checklist->ket_akhir = $request->ket_awal;
         $checklist->ket_horn = $request->ket_horn;
         $checklist->ket_mundur = $request->ket_mundur;
         $checklist->ket_sein = $request->ket_sein;
@@ -119,7 +127,7 @@ class ForkliftController extends Controller
         $checklist->ket_stop = $request->ket_stop;
         $checklist->ket_utama = $request->ket_utama;
         $checklist->ket_connector = $request->ket_connector;
-        $checklist->ket_acuu = $request->ket_acuu;
+        $checklist->ket_accu = $request->ket_accu;
         $checklist->ket_parking = $request->ket_parking;
         $checklist->ket_brake = $request->ket_brake;
         $checklist->ket_oil = $request->ket_oil;
@@ -137,15 +145,19 @@ class ForkliftController extends Controller
         // Save the checklist to the database
         $checklist->save();
 
-        return redirect()->route('Form-Check.admin.trailler')->with('succes', 'Submission complite');
+        return redirect()->route('Form-Check.admin.forklift')->with('succes', 'Submission complite');
     }
 
     public function print($id){
-        $data = TraillerM::FindOrFail($id);
-        return view('Form-Check.pages.trailler.print',compact('data'));
+        $data = ForkliftM::FindOrFail($id);
+        return view('Form-Check.pages.forklift.print',compact('data'));
     }
 
-
+    public function destroy($id){
+        $data = ForkliftM::find($id);
+        $data->delete();
+        return redirect()->back()->with('success', 'Data berhasil Dihapus');
+    }
 
 
 }

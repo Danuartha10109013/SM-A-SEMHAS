@@ -8,7 +8,11 @@ Shippment || Pegawai
         <h1 class="text-center mb-4">Create Shippment D</h1>
 
         <div class="card shadow p-4">
+            @if (Auth::user()->id == 0)
+            <form action="{{ route('Ship-Mark.admin.shipment-d-store') }}" method="POST">
+            @else
             <form action="{{ route('Ship-Mark.pegawai.shipment-d-store') }}" method="POST">
+            @endif
                 @csrf
                 <div class="mb-3">
                     <label for="manufactur" class="form-label">Unicode</label>

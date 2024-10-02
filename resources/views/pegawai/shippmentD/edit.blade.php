@@ -1,6 +1,10 @@
 @extends('layout.pegawai.main')
 @section('title')
-    Edit Shippment || Pegawai
+@if (Auth::user()->role == 0)
+Edit Shippment D || Admin 
+@else
+Edit Shippment D || Pegawai 
+@endif
 @endsection
 
 @section('content')
@@ -8,7 +12,11 @@
         <h1 class="text-center mb-4">Edit Shippment D</h1>
 
         <div class="card shadow p-4">
+            @if (Auth::user()->id == 0)
+            <form action="{{ route('Ship-Mark.admin.shipment-d-update', $shippmentA->id) }}" method="POST">
+            @else
             <form action="{{ route('Ship-Mark.pegawai.shipment-d-update', $shippmentA->id) }}" method="POST">
+            @endif
                 @csrf
                 @method('PUT') <!-- This is used to specify that this request should be treated as PUT -->
 

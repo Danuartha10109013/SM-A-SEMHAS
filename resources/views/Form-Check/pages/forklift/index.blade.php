@@ -1,6 +1,6 @@
 @extends('Form-Check.layout.main')
 @section('title')
-    Form Crane
+    Form Forklift
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)
@@ -26,7 +26,11 @@
           </ul>
         </nav>
       </div>
+      @if (Auth::user()->role == 0)
       <a href="{{ route('Form-Check.admin.forklift.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+      @else
+      <a href="{{ route('Form-Check.pegawai.forklift.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+      @endif
       <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -37,8 +41,7 @@
                     <thead>
                       <tr>
                         <th> No </th>
-                        <th> No/Type Forklift </th>
-                        <th> Shift </th>
+                        <th> NO TRAILER/DRIVER </th>
                         <th> Responden </th>
                         <th> Action </th>
                       </tr>
@@ -50,7 +53,6 @@
                           {{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}
                         </td>
                         <td> {{ $d->jenis_forklift }} </td>
-                        <td> {{ $d->shift }} </td>
                         <td>
                             @php
                                 $nama = \App\Models\User::where('id', $d->user_id)->value('name');
@@ -59,8 +61,27 @@
                         </td>
                         
                         <td>
-                           <a href="{{route('Form-Check.admin.forklift.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
-                        </td>
+                          <div class="d-flex justify-content-start align-items-center">
+                              @if (Auth::user()->role == 0)
+                                  <a href="{{ route('Form-Check.admin.forklift.print', $d->id) }}">
+                                      <label class="badge badge-gradient-success">Print</label>
+                                  </a>
+                                  <form action="{{ route('Form-Check.admin.forklift.destroy', $d->id) }}" method="POST" class="ml-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="badge badge-gradient-danger">Hapus</button>
+                                </form>
+                              @else
+                                  <a href="{{ route('Form-Check.pegawai.forklift.print', $d->id) }}">
+                                      <label class="badge badge-gradient-success">Print</label>
+                                  </a>
+                              @endif
+                             
+                          </div>
+                      </td>
+                      
+                      
+                      
                     </tr>
                     @endforeach
                     </tbody>

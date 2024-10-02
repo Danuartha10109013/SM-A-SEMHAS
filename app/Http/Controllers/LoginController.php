@@ -60,7 +60,7 @@ class LoginController extends Controller
                 return redirect()->route('Form-Check.admin.dashboard');
             }
             elseif($user->role == 1){
-                return view('welcome');
+                return redirect()->route('Form-Check.pegawai.dashboard');
             }
             break;
         case "else":

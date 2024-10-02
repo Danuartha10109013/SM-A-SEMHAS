@@ -26,7 +26,11 @@
           </ul>
         </nav>
       </div>
+      @if (Auth::user()->role == 0)
       <a href="{{ route('Form-Check.admin.trailler.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+      @else
+      <a href="{{ route('Form-Check.pegawai.trailler.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+      @endif
       <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -37,9 +41,9 @@
                     <thead>
                       <tr>
                         <th> No </th>
-                        <th> Jenis Crane </th>
-                        <th> Shift </th>
+                        <th> No Trailler </th>
                         <th> Responden </th>
+                        <th> Date </th>
                         <th> Action </th>
                       </tr>
                     </thead>
@@ -49,17 +53,27 @@
                         <td>
                           {{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}
                         </td>
-                        <td> {{ $d->jenis_trailler }} </td>
-                        <td> {{ $d->shift }} </td>
+                        <td> {{ $d->jenis_forklift }} </td>
                         <td>
                             @php
                                 $nama = \App\Models\User::where('id', $d->user_id)->value('name');
                             @endphp
                             {{ $nama }}
                         </td>
+                        <td> {{ $d->created_at }} </td>
                         
                         <td>
-                           <a href="{{route('Form-Check.admin.trailler.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
+                        @if (Auth::user()->role == 0)
+                        <a href="{{route('Form-Check.admin.trailler.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
+                        <form action="{{ route('Form-Check.admin.trailler.destroy', $d->id) }}" method="POST" class="ml-2">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="badge badge-gradient-danger">Hapus</button>
+                      </form>
+                        @else
+                        <a href="{{route('Form-Check.pegawai.trailler.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
+                        @endif
+
                         </td>
                     </tr>
                     @endforeach

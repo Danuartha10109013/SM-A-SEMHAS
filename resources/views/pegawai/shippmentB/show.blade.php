@@ -1,6 +1,10 @@
 @extends('layout.pegawai.main')
 @section('title')
-Shippment || Pegawai 
+@if (Auth::user()->role == 0)
+Shippment B || Admin 
+@else
+Shippment B || Pegawai 
+@endif
 @endsection
 @section('content')
         <div class="container-fluid">
@@ -77,9 +81,16 @@ Shippment || Pegawai
                                         <td>{{$d->net}}</td>
                                         <td>{{$d->satuan_berat}}</td>
                                         <td>
-                                            <a href="{{route('Ship-Mark.pegawai.shipment-b-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
-                                            <a href="{{route('Ship-Mark.pegawai.shipment-b-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
-                                            <a href="{{route('Ship-Mark.pegawai.shipment-b-delete', $d->id)}}" class="btn btn-danger mr-2 mb-2 text-center"><i class="ri-delete-bin-line"></i></a>
+                                            @if (Auth::user()->role == 0)
+                                                <a href="{{route('Ship-Mark.admin.shipment-b-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
+                                                <a href="{{route('Ship-Mark.admin.shipment-b-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
+                                                <a href="{{route('Ship-Mark.admin.shipment-b-delete', $d->id)}}" class="btn btn-danger text-center"><i class="ri-delete-bin-line"></i></a>
+                                            @else
+                                                <a href="{{route('Ship-Mark.pegawai.shipment-b-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
+                                                <a href="{{route('Ship-Mark.pegawai.shipment-b-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
+                                                <a href="{{route('Ship-Mark.pegawai.shipment-b-delete', $d->id)}}" class="btn btn-danger text-center"><i class="ri-delete-bin-line"></i></a>
+                                            @endif
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

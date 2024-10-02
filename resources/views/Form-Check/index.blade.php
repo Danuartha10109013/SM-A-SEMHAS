@@ -31,10 +31,10 @@
           <div class="card bg-gradient-danger card-img-holder text-white">
             <div class="card-body">
               <img src="{{asset('vendorfc/src/assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Total User <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+              <h4 class="font-weight-normal mb-3">Total Form <i class="mdi mdi-chart-line mdi-24px float-end"></i>
               </h4>
-              <h2 class="mb-5">{{$user}}</h2>
-              <h6 class="card-text">cc</h6>
+              <h2 class="mb-5">4</h2>
+              <h6 class="card-text">Crane, Forklift, Trailer, Material</h6>
             </div>
           </div>
         </div>
@@ -42,10 +42,10 @@
           <div class="card bg-gradient-info card-img-holder text-white">
             <div class="card-body">
               <img src="{{asset('vendorfc/src/assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Total Forms <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+              <h4 class="font-weight-normal mb-3">Total Response <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
               </h4>
               <h2 class="mb-5">{{$form}}</h2>
-              <h6 class="card-text">Decreased by 10%</h6>
+              <h6 class="card-text">Pegawai Responsne</h6>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <div class="card bg-gradient-success card-img-holder text-white">
             <div class="card-body">
               <img src="{{asset('vendorfc/src/assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Total Response <i class="mdi mdi-diamond mdi-24px float-end"></i>
+              <h4 class="font-weight-normal mb-3">Total Pegawai <i class="mdi mdi-diamond mdi-24px float-end"></i>
               </h4>
               <h2 class="mb-5">{{$response}}</h2>
               <h6 class="card-text">TML</h6>
@@ -66,16 +66,16 @@
         <div class="col-12 grid-margin">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Recent Tickets</h4>
+              <h4 class="card-title">Recent Response</h4>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th> Assignee </th>
-                      <th> Subject </th>
-                      <th> Status </th>
-                      <th> Last Update </th>
-                      <th> Tracking ID </th>
+                      <th> Responden </th>
+                      <th> Form </th>
+                      <th> Action </th>
+                      <th> Date </th>
+                      <th> Jenis </th>
                     </tr>
                   </thead>
                   <tbody>

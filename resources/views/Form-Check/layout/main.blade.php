@@ -25,6 +25,7 @@
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('vendorfc/src/assets/vendors/font-awesome/css/font-awesome.min.css')}}" />
     {{-- <link rel="stylesheet" href="{{asset('vendorfc/src/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}"> --}}
@@ -58,6 +59,38 @@
          <!-- TOP Nav Bar END -->
          <!-- Page Content  -->
          <div id="content-page iq-right-fixed" class="content-page">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
+            <!-- Error untuk validasi input form -->
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
             @yield('content')
          </div>
 
@@ -182,5 +215,8 @@
       <script async src="{{asset('vendor')}}/js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="{{asset('vendor')}}/js/custom.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
    </body>
 </html>

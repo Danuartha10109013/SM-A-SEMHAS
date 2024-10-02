@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\CraneM;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 class CraneController extends Controller
 {
     public function index() {
-        $data = CraneM::paginate(10); // 10 items per page
+        if(Auth::user()->role == 0){
+            $data = CraneM::paginate(10); // 10 items per page
+        }else{
+            $data = CraneM::where('user_id', Auth::user()->id)->paginate(10);
+        }
         return view('Form-Check.pages.crane.index', compact('data'));
     }
     
@@ -90,6 +95,12 @@ public function downloadReport($id)
     $pdf = PDF::loadView('Form-Check.pages.crane.print',compact('data'));
     
     return $pdf->download('Crane_Operator_Daily_Checklist.pdf');
+}
+
+public function destroy($id){
+    $data = CraneM::find($id);
+    $data->delete();
+    return redirect()->back()->with('success', 'Data berhasil Dihapus');
 }
 
 }

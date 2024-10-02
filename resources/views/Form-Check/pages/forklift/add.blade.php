@@ -1,6 +1,6 @@
 @extends('Form-Check.layout.main')
 @section('title')
-    Form Submission Crane
+    Form Submission Forklift
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)
@@ -16,7 +16,7 @@
         <h3 class="page-title">
           <span class="page-title-icon bg-gradient-primary text-white me-2">
             <i class="mdi mdi-home"></i>
-          </span> Add Submission Crane
+          </span> Add Submission Forklift
         </h3>
         <nav aria-label="breadcrumb">
           <ul class="breadcrumb">
@@ -30,15 +30,19 @@
       <div class="row stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">From Daily Checklist Crane</h4>
-                <p class="card-description"> FORMULIR CRANE <br>
+                <h4 class="card-title">From Daily Checklist Forklift</h4>
+                <p class="card-description"> FORMULIR FORKLIFT <br>
                     PENGISIAN FORMULIR DILAKUKAN AWAL SHIFT/SEBELUM DIGUNAKAN </p>
+            @if (Auth::user()->role == 0)
             <form action="{{route('Form-Check.admin.forklift.create')}}" method="POST">
+            @else
+            <form action="{{route('Form-Check.pegawai.forklift.create')}}" method="POST">
+            @endif
                 @method('POST')
                 @csrf
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputUsername1">NAMA OPERATOR CHEKLIST CRANE</label>
+                        <label for="exampleInputUsername1">NAMA OPERATOR CHEKLIST FORKLIFT</label>
                         <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
                         <input type="text" class="form-control" id="exampleInputUsername1" value="{{ Auth::user()->name }}" readonly>
                       </div>
@@ -72,14 +76,14 @@
                         <input type="Date" class="form-control" name="date" id="exampleInputEmail1" >
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Jam Checklist Crane</label>
+                        <label for="exampleInputPassword1">Jam Checklist Forklift</label>
                         <input type="time" class="form-control" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                       </div>
                 </div>
                 <p class="card-description"> JIKA KETERANGAN (X,O) HARAP SEGERA INFORMASI KE MAINTENANCE  </p>
                 <p>KETERANGAN: <br>
                     <b>V</b>: KONDISI BAIK <br>
-                    <b>X</b>: KONDISI TIDAK BAIK DAN CRANE TIDAK BISA DIGUNAKAN <br>
+                    <b>X</b>: KONDISI TIDAK BAIK DAN FORKLIFT TIDAK BISA DIGUNAKAN <br>
                     <b>O</b>: KONDISI TIDAK BAIK NAMUN MASIH BISA DIGUNAKAN</p>
                 <div class="row">
                     <div class="col-md-6">
@@ -108,13 +112,13 @@
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="horn" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="horn" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="horn" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="horn" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -137,13 +141,13 @@
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="mundur" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="mundur" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="mundur" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="mundur" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -166,13 +170,13 @@
                                 <b>MENYALA</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="sein" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="sein" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="sein" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="sein" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -195,13 +199,13 @@
                                 <b>ADA DAN MENYALA</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="rotating" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="rotating" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="rotating" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="rotating" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -224,13 +228,13 @@
                                 <b>MENYALA KANAN DAN KIRI</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="stop" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="stop" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="stop" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="stop" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -253,13 +257,13 @@
                                 <b>MENYALA KANAN DAN KIRI</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="utama" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="utama" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="utama" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="utama" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -282,13 +286,13 @@
                                 <b>KONTEKTOR HARUS KENCANG</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="connector" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="connector" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="connector" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="connector" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -326,7 +330,7 @@
                         </div>                       
                         <div class="form-group">
                             <label for="exampleInputPassword1">Keterangan Pengecekan Level Air Accu (H/L)</label>
-                            <input type="text" class="form-control" name="ket_acuu" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
+                            <input type="text" class="form-control" name="ket_accu" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
 
                         <div class="form-group p-3 border rounded bg-secondary">
@@ -335,13 +339,13 @@
                                 <b>LEVEL HARUS DIATAS L</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="parking" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="parking" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="parking" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="parking" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -364,13 +368,13 @@
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="brake" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="brake" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="brake" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="brake" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -406,7 +410,7 @@
                                     Keterangan Pengecekan Hour Meter <b>Akhir</b>
                                      
                                 </label>
-                                <input type="text" class="form-control" name="akhir" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
+                                <input type="text" class="form-control" name="ket_akhir" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                             </div>
 
                         <div class="form-group p-3 border rounded bg-secondary">
@@ -465,13 +469,13 @@
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="chain" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="chain" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="chain" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="chain" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -495,13 +499,13 @@
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="allhose" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="allhose" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="allhose" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="allhose" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -525,13 +529,13 @@
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="steering" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="steering" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="steering" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="steering" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -555,13 +559,13 @@
                                 <b>TIDAK ADA YANG RETAK/PUTUS</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="belts" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="belts" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="belts" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="belts" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -635,13 +639,13 @@
                                 <b>MASIH TERDAPAT KEMBANGAN DAN TIDAK RETAK</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="ban" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="ban" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="ban" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="ban" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -665,13 +669,13 @@
                                 <b>MASIH TERDAPAT KEMBANGAN DAN TIDAK RETAK</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="fork" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="fork" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="fork" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="fork" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
@@ -695,13 +699,13 @@
                                 <b>900 KPA (KGF/CM2)</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="teba" id="startX" value="x" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="teba" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="teba" id="startV" value="v" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="teba" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>

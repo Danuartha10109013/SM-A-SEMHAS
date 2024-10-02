@@ -27,93 +27,21 @@
        <ul id="iq-sidebar-toggle" class="iq-menu">
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
           <li class="active">
-             <a href="{{route('Form-Check.admin.dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
+             <a href="{{route('Form-Check.pegawai.dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
           </li>
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>From Checklist</span></li>
           
+          <li><a href="{{route('Form-Check.pegawai.crane')}}" class="iq-waves-effect" aria-expanded="false"><i class="mdi mdi-crane"></i><span>Crane</span></a></li>
+          <li><a href="{{route('Form-Check.pegawai.forklift')}}" class="iq-waves-effect" aria-expanded="false"><i class="mdi mdi-forklift"></i><span>Forklift</span></a></li>
+          <li><a href="{{route('Form-Check.pegawai.trailler')}}" class="iq-waves-effect" aria-expanded="false"><i class="mdi mdi-truck"></i><span>Trailler</span></a></li>
+          <li><a href="{{route('Form-Check.pegawai.eup')}}" class="iq-waves-effect" aria-expanded="false"><i class="mdi mdi-shipping-pallet"></i><span>EUP</span></a></li>
+          
           <li>
-             <a href="#crane" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="mdi mdi-crane"></i><span>Crane</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-             <ul id="crane" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                <li><a href="profile.html"><i class="ri-profile-line"></i>30 Ton</a></li>
-                <li><a href="profile.html"><i class="ri-profile-line"></i>10 Ton</a></li>
-                
-             </ul>
-          </li>
-          <li>
-            <a href="#forklift" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
-                <i class="mdi mdi-forklift"></i>
-                <span>Forklift</span>
-                <i class="ri-arrow-right-s-line iq-arrow-right"></i>
-            </a>
-            <ul id="forklift" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                <li>
-                    <a href="#forklift5" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
-                        <i class="mdi mdi-forklift"></i>
-                        <span>Forklift 5 ton</span>
-                        <i class="ri-arrow-right-s-line iq-arrow-right"></i>
-                    </a>
-                    <ul id="forklift5" class="iq-submenu collapse" data-parent="#forklift">
-                        <li>
-                            <a href="profile.html">
-                                <i class="ri-profile-line"></i>
-                                30 Ton
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        
-        
-          <li>
-             <a href="#userinfo" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="mdi mdi-truck"></i><span>Truck</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-             <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                <li><a href="profile.html"><i class="ri-profile-line"></i>30 Ton</a></li>
-
-                
-             </ul>
-          </li>
-          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>From Response</span></li>
-
-          <li>
-            <a href="#craneresponse" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="mdi mdi-crane"></i><span>Crane</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-            <ul id="craneresponse" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-               <li><a href="profile.html"><i class="ri-profile-line"></i>30 Ton</a></li>
-               
-            </ul>
-         </li>
-         <li>
-           <a href="#forkliftresponse" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
-               <i class="mdi mdi-forklift"></i>
-               <span>Forklift</span>
-               <i class="ri-arrow-right-s-line iq-arrow-right"></i>
-           </a>
-           <ul id="forkliftresponse" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-               <li>
-                   <a href="#forklift5response" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
-                       <i class="mdi mdi-forklift"></i>
-                       <span>Forklift 5 ton</span>
-                       <i class="ri-arrow-right-s-line iq-arrow-right"></i>
-                   </a>
-                   <ul id="forklift5response" class="iq-submenu collapse" data-parent="#forklift">
-                       <li>
-                           <a href="profile.html">
-                               <i class="ri-profile-line"></i>
-                               30 Ton
-                           </a>
-                       </li>
-                   </ul>
-               </li>
-           </ul>
-       </li>
-       
-       
-         <li>
-            <a href="#truckresponse" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="mdi mdi-truck"></i><span>Truck</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-            <ul id="truckresponse" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-               <li><a href="profile.html"><i class="ri-profile-line"></i>30 Ton</a></li>
-
-               
+            <a href="#userinfo" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="mdi mdi-warehouse"></i><span>Kedatangan Material</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+            <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+               <li><a href="{{route('Form-Check.pegawai.crc')}}"><i class="mdi mdi-barn"></i>CRC</a></li>
+               <li><a href="{{route('Form-Check.pegawai.ingot')}}"><i class="mdi mdi-gold"></i>INGOT</a></li>
+               <li><a href="{{route('Form-Check.pegawai.resin')}}"><i class="mdi mdi-barrel"></i>RESIN/ALKALI</a></li>
             </ul>
          </li>
           

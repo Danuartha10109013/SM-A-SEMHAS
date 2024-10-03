@@ -85,5 +85,10 @@ public function destroy($id){
     return redirect()->back()->with('success', 'Data berhasil Dihapus');
 }
 
+    public function show($id){
+        $submission = EupM::find($id);
+        return view('Form-Check.pages.eup.show',compact('submission'));
+    }
+
 }
     

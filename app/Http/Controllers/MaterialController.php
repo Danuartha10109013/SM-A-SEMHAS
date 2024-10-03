@@ -34,10 +34,11 @@ class MaterialController extends Controller
     }
     
     public function show_crc ($id){
-        $data = CrcM::find($id);
-        return view('Form-Check.pages.material.crc.show',compact('data'));
+        $submission = CrcM::find($id);
+        return view('Form-Check.pages.material.crc.show',compact('submission'));
     }
 
+    
     public function create_crc(Request $request)
     {
         

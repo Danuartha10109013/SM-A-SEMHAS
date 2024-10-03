@@ -73,6 +73,7 @@
                         
                         <td>
                           @if (Auth::user()->role == 0)
+                          <a href="{{route('Form-Check.admin.crc.show', $d->id)}}"> <label class="badge badge-gradient-primary">detail</label></a>
                            <a href="{{route('Form-Check.admin.crc.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
                            <form action="{{ route('Form-Check.admin.crc.destroy', $d->id) }}" method="POST" class="ml-2">
                             @csrf

@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <label class="badge badge-gradient-primary">
-                        <a style="color:white" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</a>
+                        <a style="text-decoration: none; font-size: 15px;color:white" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</a>
                     </label>
                     <h4 class="card-title">Daftar Pegawai</h4>
                     <div class="table-responsive">

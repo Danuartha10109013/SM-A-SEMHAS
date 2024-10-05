@@ -57,6 +57,7 @@ class LoginController extends Controller
     
         case "Form-Check":
             if ($user->role == 0 ) {
+                // return view('welcome')
                 return redirect()->route('Form-Check.admin.dashboard');
             }
             elseif($user->role == 1){
@@ -72,6 +73,15 @@ class LoginController extends Controller
                 return view('welcome');
             }
             break;
+            case "FC&SM":
+                if ($user->role == 0 ) {
+                    // return view('welcome')
+                    return redirect()->route('welcome');
+                }
+                elseif($user->role == 1){
+                    return redirect()->route('welcome');
+                }
+                break;
     
         default:
         return redirect()->route('login')->with('error', 'Type of user is not found');
@@ -107,5 +117,9 @@ public function logoutUserById($userId)
     }
 
     return redirect()->route('auth.login')->with('error', 'Pengguna tidak ditemukan');
+}
+
+public function welcome(){
+    return view('welcome');
 }
 }

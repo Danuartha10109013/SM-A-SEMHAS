@@ -91,6 +91,7 @@ class ShippmentA extends Controller
 
     public function store(Request $request){
         // Validasi file input
+        // dd($request->all());
         $request->validate([
             'shipmenta' => 'required|file|mimes:xlsx,xls|max:2048',
             'satuan_berat' => 'required'

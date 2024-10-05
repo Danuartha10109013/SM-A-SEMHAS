@@ -11,7 +11,9 @@ class CheckType
     {
         // Periksa apakah pengguna adalah pegawai (role = 1)
         if (Auth::check()) {
-            if (Auth::user()->type == "Ship-Mark"){
+            if (in_array(Auth::user()->type, ["Ship-Mark", "FC&SM"])) {
+
+            // if (Auth::user()->type == "Ship-Mark"){
                 return $next($request);
             }
             return response()->view('errors.custom', ['message' => 'Youre not should be in this section'], 403);

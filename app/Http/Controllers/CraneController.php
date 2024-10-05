@@ -2,21 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CraneExportExcel;
 use App\Models\CraneM;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class CraneController extends Controller
 {
-    public function index() {
-        if(Auth::user()->role == 0){
-            $data = CraneM::paginate(10); // 10 items per page
-        }else{
-            $data = CraneM::where('user_id', Auth::user()->id)->paginate(10);
+    public function index(Request $request) {
+        $searchTerm = $request->input('search');
+        $sort = $request->get('sort', 'id'); // Default sort by 'id'
+        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+    
+        // Fetch data with search and sorting applied
+        $query = CraneM::query();
+    
+        // Apply search if it exists
+        if ($searchTerm) {
+            $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
+            $query->whereIn('user_id', $results);
         }
-        return view('Form-Check.pages.crane.index', compact('data'));
+    
+        // Apply sorting
+        $data = $query->orderBy($sort, $direction)->paginate(10);
+    
+        return view('Form-Check.pages.crane.index', compact('data', 'searchTerm', 'sort', 'direction'));
     }
+    
+    
     
 
     public function add (){
@@ -101,6 +117,10 @@ public function destroy($id){
     $data = CraneM::find($id);
     $data->delete();
     return redirect()->back()->with('success', 'Data berhasil Dihapus');
+}
+
+public function exportexcel(){
+    return Excel::download(new CraneExportExcel,'Crane.xlsx');
 }
 
 }

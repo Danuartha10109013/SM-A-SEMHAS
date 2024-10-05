@@ -17,6 +17,7 @@ use App\Http\Middleware\AutoLogout;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/welcome', [LoginController::class, 'welcome'])->name('welcome');
 Route::post('/login', [LoginController::class, 'proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -198,6 +199,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/create', [CraneController::class, 'create'])->name('crane.create');
                 Route::get('/print/{id}', [CraneController::class, 'print'])->name('crane.print');
                 Route::delete('/destroy/{id}', [CraneController::class, 'destroy'])->name('crane.destroy');
+                Route::get('/export',[CraneController::class, 'exportexcel'])->name('crane.export');
 
 
             });

@@ -11,7 +11,9 @@ class CheckTypeFC
     {
         // Periksa apakah pengguna adalah pegawai (role = 1)
         if (Auth::check()) {
-            if (Auth::user()->type == "Form-Check"){
+            // if (Auth::user()->type == "Form-Check" OR "FC&SHP"){
+            if (in_array(Auth::user()->type, ["Form-Check", "FC&SM"])) {
+
                 return $next($request);
             }
             return response()->view('errors.custom', ['message' => 'Youre not should be in this section'], 403);

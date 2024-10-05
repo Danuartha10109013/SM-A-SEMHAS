@@ -19,16 +19,16 @@ Shippment A || Pegawai
                     @endif
                     <!-- Tombol Tambah Data di sebelah kiri -->
                     @if (Auth::user()->role == 0)
-                    <a class="btn btn-primary" href="{{route('Ship-Mark.admin.shipment-d-add')}}">Tambah Data</a>
+                    <a class="btn btn-primary" href="{{route('Ship-Mark.admin.shipment-a-add')}}">Tambah Data</a>
                     @else
-                    <a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-d-add')}}">Tambah Data</a>
+                    <a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-a-add')}}">Tambah Data</a>
                     @endif
                 
                     <!-- Form Upload File Excel di sebelah kanan -->
                     @if (Auth::user()->role == 0)
-                    <form action="{{ route('Ship-Mark.admin.add-shippmentd-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    <form action="{{ route('Ship-Mark.admin.add-shippmenta-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
                     @else
-                    <form action="{{ route('Ship-Mark.pegawai.add-shippmentd-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    <form action="{{ route('Ship-Mark.pegawai.add-shippmenta-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
                     @endif   
                     @csrf
                         <input type="file" name="shipmenta" >

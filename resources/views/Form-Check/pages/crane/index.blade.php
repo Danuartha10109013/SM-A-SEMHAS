@@ -26,65 +26,99 @@
           </ul>
         </nav>
       </div>
-      @if (Auth::user()->role == 0)
-      <a href="{{ route('Form-Check.admin.crane.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
-        @else
-      <a href="{{ route('Form-Check.pegawai.crane.add') }}" class="badge badge-gradient-primary mb-3" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
-      @endif
-      <div class="row">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex">
+            <a href="{{ Auth::user()->role == 0 ? route('Form-Check.admin.crane.add') : route('Form-Check.pegawai.crane.add') }}" 
+               class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+            <a href="{{ route('Form-Check.admin.crane.export') }}" 
+               class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+        </div>
+    
+        <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">
+            <input type="text" name="search" placeholder="Search here" class="form-control d-inline" style="width: auto; display: inline;" value="{{ $searchTerm }}">
+            <input type="hidden" name="sort" value="{{ $sort }}">
+            <input type="hidden" name="direction" value="{{ $direction }}">
+            <button style="border: none; padding: 0; cursor: pointer;" type="submit"> 
+                <label class="badge badge-gradient-danger" style="text-decoration: none;">Search</label>
+            </button>
+        </form>
+    </div>
+    
+    <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Recent Response</h4>
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th> No </th>
-                        <th> Jenis Crane </th>
-                        <th> Shift </th>
-                        <th> Responden </th>
-                        <th> Action </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $d)
-                      <tr>
-                        <td>
-                          {{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}
-                        </td>
-                        <td> {{ $d->jenis_crane }} </td>
-                        <td> {{ $d->shift }} </td>
-                        <td>
-                            @php
-                                $nama = \App\Models\User::where('id', $d->user_id)->value('name');
-                            @endphp
-                            {{ $nama }}
-                        </td>
-                        
-                        <td>
-                          @if (Auth::user()->role == 0)
-                           <a href="{{route('Form-Check.admin.crane.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
-                           <form action="{{ route('Form-Check.admin.crane.destroy', $d->id) }}" method="POST" class="ml-2">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="badge badge-gradient-danger">Hapus</button>
-                        </form>
-                          @else
-                           <a href="{{route('Form-Check.pegawai.crane.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
-                          @endif
-                          </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                  </table>
-                  <!-- Pagination Links -->
-                  {{ $data->links() }}
+                <div class="card-body">
+                    <h4 class="card-title">Recent Response</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>
+                                        <a href="{{ route('Form-Check.admin.crane', ['sort' => 'jenis_crane', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                            Jenis Crane<i class="fa-solid fa-arrows-up-down"></i>
+                                            @if ($sort === 'jenis_crane')
+                                                <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
+                                            @endif
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="{{ route('Form-Check.admin.crane', ['sort' => 'shift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                            Shift<i class="fa-solid fa-arrows-up-down"></i>
+                                            @if ($sort === 'shift')
+                                                <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
+                                            @endif
+                                        </a>
+                                    </th>
+                                    <th>Responden</th>
+                                    <th>
+                                        <a href="{{ route('Form-Check.admin.crane', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                            Date<i class="fa-solid fa-arrows-up-down"></i>
+                                            @if ($sort === 'date')
+                                                <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
+                                            @endif
+                                        </a>
+                                    </th>
+                                    <th class="text-truncate">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $d)
+                                    <tr>
+                                        <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
+                                        <td>{{ $d->jenis_crane }}</td>
+                                        <td>{{ $d->shift }}</td>
+                                        <td>{{ $d->user->name ?? 'Unknown' }}</td> <!-- Assuming you set up a relationship -->
+                                        <td>{{ $d->date }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                @if (Auth::user()->role == 0)
+                                                    <a href="{{ route('Form-Check.admin.crane.print', $d->id) }}" class="badge badge-gradient-success mr-2">Print</a>
+                                                    <form action="{{ route('Form-Check.admin.crane.destroy', $d->id) }}" method="POST" class="ml-2" style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="badge badge-gradient-danger" >
+                                                          <label for="" style="border: none; padding: 0; cursor: pointer;">Hapus</label>
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <a href="{{ route('Form-Check.pegawai.crane.print', $d->id) }}" class="badge badge-gradient-success">Print</a>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <!-- Pagination Links -->
+                        {{ $data->appends(request()->query())->links() }}
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-      </div>
+        </div>
+    </div>
+    
+    
     </div>
 </div>
 @endsection

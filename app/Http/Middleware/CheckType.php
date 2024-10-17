@@ -11,7 +11,7 @@ class CheckType
     {
         // Periksa apakah pengguna adalah pegawai (role = 1)
         if (Auth::check()) {
-            if (in_array(Auth::user()->type, ["Ship-Mark", "FC&SM"])) {
+            if (in_array(Auth::user()->type, ["Ship-Mark", "FC&SM","FC&SM&AD"])) {
 
             // if (Auth::user()->type == "Ship-Mark"){
                 return $next($request);

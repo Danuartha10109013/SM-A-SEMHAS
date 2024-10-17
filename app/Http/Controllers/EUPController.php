@@ -6,20 +6,37 @@ use App\Models\EupM;
 use App\Models\ForkliftM;
 use App\Models\Resin_imageM;
 use App\Models\ResinM;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EUPController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+        $searchTerm = $request->input('search');
+        $sort = $request->get('sort', 'id'); // Default sort by 'id'
+        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+    
+        // Fetch data with search and sorting applied
+        $query = EupM::query();
+    
+        // Apply search if it exists
+        if ($searchTerm) {
+            $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
+            $query->whereIn('user_id', $results);
+        }
+    
+        // Apply sorting
         if(Auth::user()->role == 0){
-            $data = EupM::paginate(10); // 10 items per page
+            // $data = ForkliftM::paginate(10); // 10 items per page
+            $data = $query->orderBy($sort, $direction)->paginate(10);
         }else{
-            $data = EupM::where('user_id', Auth::user()->id)->paginate(10);
+            $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+            // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
         }
         $suppliers = ['a','b'];
-        return view('Form-Check.pages.eup.index', compact('data','suppliers'));
+        return view('Form-Check.pages.eup.index', compact('data','suppliers', 'searchTerm', 'sort', 'direction'));
     }
 
     public function add (){

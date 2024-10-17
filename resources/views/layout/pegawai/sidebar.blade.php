@@ -1,5 +1,5 @@
 <div class="iq-sidebar-logo d-flex justify-content-between">
-    <a href="index.html">
+    <a href="{{route('welcome')}}">
     <div class="iq-light-logo">
        <div class="iq-light-logo">
           <img src="{{asset('Logo TML.png')}}" class="img-fluid" alt="">

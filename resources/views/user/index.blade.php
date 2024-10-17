@@ -37,9 +37,9 @@
                                     </td>
                                     <td> {{$d->email}} </td>
                                     <td>
-                                        <label class="badge badge-gradient-success"><a style="color: white" href="{{route('kelola-user.edit',$d->id)}}">Edit</a></label>
+                                        <label class="badge badge-gradient-success"><a style="color: white" href="{{route('Administrator.kelola-user.edit',$d->id)}}">Edit</a></label>
                                         <label class="badge badge-gradient-danger">
-                                          <form action="{{ route('kelola-user.delete', $d->id) }}" method="POST" style="display: inline;">
+                                          <form action="{{ route('Administrator.kelola-user.delete', $d->id) }}" method="POST" style="display: inline;">
                                               @csrf
                                               @method('DELETE')
                                               <button type="submit" style="border: none; background: none; color: inherit; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this user?');">
@@ -65,7 +65,7 @@
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('kelola-user.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('Administrator.kelola-user.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addUserModalLabel">Add User</h5>

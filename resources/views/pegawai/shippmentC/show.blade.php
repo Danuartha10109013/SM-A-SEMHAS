@@ -43,12 +43,19 @@ Shippment C || Pegawai
                           <h4 class="card-title">Shippment C</h4>
                         </div>
                     </div>
-                    <div class="iq-card-body">
-                        <p>All data of Shippment type C</p>
-                        
-                            
+                    <div class="iq-card-body d-flex justify-content-between align-items-center">
                         <a href="{{route('Ship-Mark.pegawai.shipment-c-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
-                       <table class="table table-responsive">
+                   
+                       <!-- Search Button aligned to the right -->
+                       <form class="form-inline" method="GET" action="{{route('Ship-Mark.admin.shipment-c-show',$id)}}">
+                           <div class="input-group">
+                               <input type="text" name="search" class="form-control" value="{{$search}}" placeholder="Search by Atribute">
+                               <div class="input-group-append">
+                                   <button class="btn btn-primary" type="submit">Search</button>
+                               </div>
+                           </div>
+                       </form>
+                   </div><table class="table table-responsive">
                           <thead>
                              <tr>
                                 <th scope="col">#</th>

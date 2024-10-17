@@ -3,20 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\TraillerM;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TraillerController extends Controller
 {
-    public function index() {
-        if(Auth::user()->role == 0){
-            $data = TraillerM::paginate(10); // 10 items per page
-
-        }else{
-            $data = TraillerM::where('user_id', Auth::user()->id)->paginate(10); // 10 items per page
-
+    public function index(Request $request) {
+        $searchTerm = $request->input('search');
+        $sort = $request->get('sort', 'id'); // Default sort by 'id'
+        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+    
+        // Fetch data with search and sorting applied
+        $query = TraillerM::query();
+    
+        // Apply search if it exists
+        if ($searchTerm) {
+            $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
+            $query->whereIn('user_id', $results);
         }
-        return view('Form-Check.pages.trailler.index', compact('data'));
+    
+        // Apply sorting
+        if(Auth::user()->role == 0){
+            // $data = ForkliftM::paginate(10); // 10 items per page
+            $data = $query->orderBy($sort, $direction)->paginate(10);
+        }else{
+            $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+            // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
+        }
+        return view('Form-Check.pages.trailler.index', compact('data', 'searchTerm', 'sort', 'direction'));
     }
     
 

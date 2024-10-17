@@ -35,6 +35,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('vendorfc/dist/assets/css/style.css')}}">
    </head>
+   
    <body class="sidebar-main-active right-column-fixed header-top-bgcolor">
       <!-- loader Start -->
       {{-- <div id="loading">
@@ -46,10 +47,18 @@
       <div class="wrapper">
          <!-- Sidebar  -->
          <div class="iq-sidebar">
-            @if (Auth::user()->role == 0)
-                @include('Form-Check.layout.admin.sidebar')
-            @elseif (Auth::user()->role == 1)
-                @include('Form-Check.layout.pegawai.sidebar')
+            @if (Auth::user()->type == 'Mapping')
+                @if (Auth::user()->role == 0)
+                    @include('Mapping-Container.layouts.section.sidebar')
+                @elseif (Auth::user()->role == 1)
+                    @include('Mapping-Container.layouts.section.sidebar')
+                @endif
+            @else
+                @if (Auth::user()->role == 0)
+                    @include('Form-Check.layout.admin.sidebar')
+                @elseif (Auth::user()->role == 1)
+                    @include('Form-Check.layout.pegawai.sidebar')
+                @endif
             @endif
          </div>
          <!-- TOP Nav Bar -->

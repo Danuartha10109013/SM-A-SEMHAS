@@ -10,6 +10,7 @@ use App\Models\IngotM;
 use App\Models\Resin_imageM;
 use App\Models\ResinM;
 use App\Models\TraillerM;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +20,29 @@ class MaterialController extends Controller
 {
 
     //CRC
-    public function index_crc() {
-        if(Auth::user()->role == 0){
-            $data = CrcM::paginate(10); // 10 items per page
-        }else{
-            $data = CrcM::where('user_id', Auth::user()->id)->paginate(10);
+    public function index_crc(Request $request) {
+        $searchTerm = $request->input('search');
+        $sort = $request->get('sort', 'id'); // Default sort by 'id'
+        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+    
+        // Fetch data with search and sorting applied
+        $query = CrcM::query();
+    
+        // Apply search if it exists
+        if ($searchTerm) {
+            $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
+            $query->whereIn('user_id', $results);
         }
-        return view('Form-Check.pages.material.crc.index', compact('data'));
+    
+        // Apply sorting
+        if(Auth::user()->role == 0){
+            // $data = ForkliftM::paginate(10); // 10 items per page
+            $data = $query->orderBy($sort, $direction)->paginate(10);
+        }else{
+            $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+            // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
+        }
+        return view('Form-Check.pages.material.crc.index', compact('data','searchTerm', 'sort', 'direction'));
     }
     
 
@@ -137,13 +154,29 @@ class MaterialController extends Controller
     }
 
     //INGOT
-    public function index_ingot() {
+    public function index_ingot(Request $request) {
+        $searchTerm = $request->input('search');
+        $sort = $request->get('sort', 'id'); // Default sort by 'id'
+        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+    
+        // Fetch data with search and sorting applied
+        $query = IngotM::query();
+    
+        // Apply search if it exists
+        if ($searchTerm) {
+            $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
+            $query->whereIn('user_id', $results);
+        }
+    
+        // Apply sorting
         if(Auth::user()->role == 0){
-            $data = IngotM::paginate(10); // 10 items per page
+            // $data = ForkliftM::paginate(10); // 10 items per page
+            $data = $query->orderBy($sort, $direction)->paginate(10);
         }else{
-            $data = IngotM::where('user_id', Auth::user()->id)->paginate(10);
-        } // 10 items per page
-        return view('Form-Check.pages.material.ingot.index', compact('data'));
+            $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+            // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
+        }
+        return view('Form-Check.pages.material.ingot.index', compact('data','searchTerm', 'sort', 'direction'));
     }
     
     public function add_ingot (){
@@ -251,13 +284,29 @@ class MaterialController extends Controller
     }
 
         //RESIN
-        public function index_resin() {
-            if(Auth::user()->role == 0){
-                $data = ResinM::paginate(10); // 10 items per page
-            }else{
-                $data = ResinM::where('user_id', Auth::user()->id)->paginate(10);
-            } // 10 items per page
-            return view('Form-Check.pages.material.resin.index', compact('data'));
+        public function index_resin(Request $request) {
+            $searchTerm = $request->input('search');
+        $sort = $request->get('sort', 'id'); // Default sort by 'id'
+        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+    
+        // Fetch data with search and sorting applied
+        $query = ResinM::query();
+    
+        // Apply search if it exists
+        if ($searchTerm) {
+            $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
+            $query->whereIn('user_id', $results);
+        }
+    
+        // Apply sorting
+        if(Auth::user()->role == 0){
+            // $data = ForkliftM::paginate(10); // 10 items per page
+            $data = $query->orderBy($sort, $direction)->paginate(10);
+        }else{
+            $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+            // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
+        }
+            return view('Form-Check.pages.material.resin.index', compact('data','searchTerm', 'sort', 'direction'));
         }
         
         public function add_resin (){

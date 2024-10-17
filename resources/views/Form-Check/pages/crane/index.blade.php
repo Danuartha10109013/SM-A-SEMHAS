@@ -35,7 +35,7 @@
         </div>
     
         <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">
-            <input type="text" name="search" placeholder="Search here" class="form-control d-inline" style="width: auto; display: inline;" value="{{ $searchTerm }}">
+            <input type="text" name="search" placeholder="Search By Responden" class="form-control d-inline" style="width: auto; display: inline;" value="{{ $searchTerm }}">
             <input type="hidden" name="sort" value="{{ $sort }}">
             <input type="hidden" name="direction" value="{{ $direction }}">
             <button style="border: none; padding: 0; cursor: pointer;" type="submit"> 

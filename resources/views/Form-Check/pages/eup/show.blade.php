@@ -36,7 +36,10 @@
 
                     <div class="mb-4">
                         <h5><b>Checker Pallet:</b></h5>
-                        <p>{{ $submission->user_id }}</p>
+                        @php
+                            $name = \App\Models\User::where('id',$submission->user_id)->value('name');
+                        @endphp
+                        <p>{{ $name }}</p>
                     </div>
                     <div class="mb-4">
                         <h5><b>Tanggal Pengecekan Pallet:</b></h5>

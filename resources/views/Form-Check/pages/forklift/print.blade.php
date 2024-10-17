@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{asset('Logo TML.png')}}" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crane Operator Daily Data - Print</title>
+    <title>Forklift Operator Daily Checklist - Print</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -90,9 +92,16 @@
         }
 
         .header {
-            margin-left: 150px; margin-top: -100px;margin-bottom: 40px;
+            margin-top: -100px;margin-bottom: 40px;
         }
+        .header h1{
+            text-align: center
+        }
+        .header h2{
+            margin-left: 150px; 
+            font-size: 11px
 
+        }
         .logo {
             margin-bottom: 20px;
         }
@@ -109,7 +118,6 @@
             }
 
             .header {
-                margin-left: 100px; 
                 margin-top: -70px;
                 margin-bottom: 10px;
             }
@@ -129,11 +137,13 @@
             }
 
             .header h1 {
+                text-align: center;
                 font-size: 14px;
             }
 
             .header h2 {
-                font-size: 12px;
+                margin-left: 100px; 
+                font-size: 10px;
             }
 
             .notes, .tabelin {
@@ -159,10 +169,10 @@
 <body>
 
     <div class="logo">
-        <img width="10%" src="{{asset('Logo TML.png')}}" alt="Logo">
+        <img width="10%" src="{{asset('Logo_TML.png')}}" alt="Logo">
     </div>
     <div class="header">
-        <h1>CRANE OPERATOR DAILY DATA</h1>
+        <h1>FORKLIFT OPERATOR DAILY CHECKLIST</h1>
         <div class="text-start">
             <h2>HARI / TANGGAL: {{ $data->date }}</h2>
             <h2>JENIS FORKLIFT: {{ $data->jenis_forklift }}</h2>

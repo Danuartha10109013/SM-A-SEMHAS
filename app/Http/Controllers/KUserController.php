@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Validator;
 class KUserController extends Controller
 {
     public function index (){
-        $bagian = Auth::user()->type;
-        $data = User::where('type', $bagian)->get();
+        // $bagian = Auth::user()->type;
+        // $data = User::where('type', $bagian)
+        // ->OrWhere('type', 'Form-Check')
+        // ->get();
+        $data= User::all();
         return view('user.index',compact('data'));
     }
 
@@ -57,12 +60,12 @@ class KUserController extends Controller
         
 
         // Redirect back with a success message
-        return redirect()->route('kelola-user')->with('success', 'User added successfully.');
+        return redirect()->route('Administrator.kelola-user')->with('success', 'User added successfully.');
     }
 
     public function edit($id){
         $data = User::find($id);
-        return view('user.edit',compact('data'));
+        return view('Administrator.user.edit',compact('data'));
     }
 
 
@@ -119,7 +122,7 @@ class KUserController extends Controller
         $user->save(); // Use save instead of update
 
         // Redirect back with success message
-        return redirect()->route('kelola-user')->with('success', 'User updated successfully!');
+        return redirect()->route('Administrator.kelola-user')->with('success', 'User updated successfully!');
     }
 
     public function destroy($id)
@@ -136,7 +139,7 @@ class KUserController extends Controller
         $user->delete();
 
         // Redirect back with a success message
-        return redirect()->route('kelola-user')->with('success', 'User deleted successfully!');
+        return redirect()->route('Administrator.kelola-user')->with('success', 'User deleted successfully!');
     }
 
 

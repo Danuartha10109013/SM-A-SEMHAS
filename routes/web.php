@@ -1,17 +1,26 @@
 <?php
 
+use App\Http\Controllers\CoilController;
 use App\Http\Controllers\CraneController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardControlller;
 use App\Http\Controllers\EUPController;
 use App\Http\Controllers\ForkliftController;
+use App\Http\Controllers\InputDataExcel;
 use App\Http\Controllers\KUserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MappingController;
+use App\Http\Controllers\MappingTrukController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\OpenPackController;
+use App\Http\Controllers\PListController;
+use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShippmentA;
 use App\Http\Controllers\ShippmentB;
 use App\Http\Controllers\ShippmentC;
 use App\Http\Controllers\ShippmentD;
+use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\TraillerController;
 use App\Http\Middleware\AutoLogout;
 use Illuminate\Support\Facades\Route;
@@ -40,16 +49,20 @@ Route::get('/download-report/{id}', [CraneController::class, 'downloadReport'])-
 Route::middleware([AutoLogout::class])->group(function () {
 
     //Profile 
-    Route::get('/profile/{id}',[ProfileController::class,'index'])->name('profile');
-    Route::put('/update/{id}',[ProfileController::class,'update'])->name('update-profile');
+    Route::prefix('profile')->group(function () {
+        Route::get('/{id}',[ProfileController::class,'index'])->name('profile');
+        Route::put('/update/{id}',[ProfileController::class,'update'])->name('update-profile');
+    });
 
-    //Kelola User
-    Route::get('k-user',[KUserController::class,'index'])->name('kelola-user');
-    Route::get('k-user/add',[KUserController::class,'add'])->name('kelola-user.add');
-    Route::post('k-user/store',[KUserController::class,'store'])->name('kelola-user.store');
-    Route::get('k-user/edit/{id}',[KUserController::class,'edit'])->name('kelola-user.edit');
-    Route::put('k-user/update/{id}',[KUserController::class,'update'])->name('kelola-user.update');
-    Route::delete('k-user/delete/{id}',[KUserController::class,'destroy'])->name('kelola-user.delete');
+    Route::group(['prefix' => 'Administrator', 'middleware' => ['Administrator'], 'as' => 'Administrator.'], function () {
+
+        Route::get('k-user',[KUserController::class,'index'])->name('kelola-user');
+        Route::get('k-user/add',[KUserController::class,'add'])->name('kelola-user.add');
+        Route::post('k-user/store',[KUserController::class,'store'])->name('kelola-user.store');
+        Route::get('k-user/edit/{id}',[KUserController::class,'edit'])->name('kelola-user.edit');
+        Route::put('k-user/update/{id}',[KUserController::class,'update'])->name('kelola-user.update');
+        Route::delete('k-user/delete/{id}',[KUserController::class,'destroy'])->name('kelola-user.delete');
+    });
 
     // Ship-Mark
     Route::group(['prefix' => 'Ship-Mark', 'middleware' => ['Ship-Mark'], 'as' => 'Ship-Mark.'], function () {
@@ -184,6 +197,55 @@ Route::middleware([AutoLogout::class])->group(function () {
         });
     });
 
+    // Mapping Container & Trailler
+    Route::group(['prefix' => 'Mapping', 'middleware' => ['Mapping'], 'as' => 'Mapping.'], function () {
+        //admin
+        Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+           
+            Route::prefix('shipment')->group(function () {
+                Route::get('/', [DashboardController::class, 'index'])->name('shipment');
+                Route::get('/shipment/{id}', [DashboardController::class, 'show'])->name('show-shipment');
+                Route::get('/delete/{id}', [DashboardController::class, 'destroy'])->name('delete-shipment');
+                Route::get('shipmentcreate', [DashboardController::class, 'create'])->name('create-shipment');
+                Route::post('shipmentcreated', [DashboardController::class, 'store'])->name('store-shipment');
+            });
+
+            
+            Route::prefix('mapping')->group(function () {
+                Route::get('/mapping/{id}', [MappingController::class, 'index'])->name('maping-shipment');
+                Route::get('/mapping-truk/{id}', [MappingTrukController::class, 'index'])->name('maping-shipment-truk');
+            });
+            Route::prefix('coil')->group(function () {
+                Route::get('/coil', [CoilController::class, 'indexs'])->name('coil');
+                Route::get('/coiling/{no_gs}', [CoilController::class, 'index'])->name('coiling');
+                Route::get('/tambah/coil/{no_gs}', [CoilController::class, 'create'])->name('tambahcoil');
+                Route::post('/tambah/coil/store', [CoilController::class, 'store'])->name('koil.store');
+            });
+            Route::prefix('mapping-truck')->group(function () {
+                Route::post('/store-truck/{no_gs}', [MappingTrukController ::class, 'store'])->name('store-data-truck');
+                Route::post('/store/{no_gs}', [MappingController::class, 'store'])->name('store-data');
+                // Route::get('/print/{id}', [PrintController::class, 'print'])->name('print');
+                Route::get('/print/{id}', [PrintController::class, 'view_pdf'])->name('print');
+                Route::get('/prints/{id}', [PrintController::class, 'print'])->name('prints-map');
+                Route::get('/prints-truck/{id}', [PrintController::class, 'printtruck'])->name('prints');
+            });
+            // Input Data Excelx
+            Route::prefix('input-excel')->group(function () {
+                Route::get('/input-excel', [InputDataExcel::class, 'index'])->name('input-excel');
+                Route::post('/upload-excel', [InputDataExcel::class, 'store'])->name('upload-excel');
+                Route::post('/upload-koil-excel', [InputDataExcel::class, 'storekoil'])->name('upload-koil-excel');
+            });
+            
+            
+
+        });
+        //pegawai
+        Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
+            Route::get('/',[DashboardController::class,'index'])->name('dashboard-mapping');
+        });
+    });
+             
+
     // Form-Check
     Route::group(['prefix' => 'Form-Check', 'middleware' => ['Form-Check'], 'as' => 'Form-Check.'], function () {
 
@@ -210,6 +272,8 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/create', [ForkliftController::class, 'create'])->name('forklift.create');
                 Route::get('/print/{id}', [ForkliftController::class, 'print'])->name('forklift.print');
                 Route::delete('/destroy/{id}', [ForkliftController::class, 'destroy'])->name('forklift.destroy');
+                Route::get('/export',[ForkliftController::class, 'exportexcel'])->name('forklift.export');
+
             });
 
             //trailler
@@ -330,13 +394,87 @@ Route::middleware([AutoLogout::class])->group(function () {
     // Open-Packing
     Route::group(['prefix' => 'Open-Packing', 'middleware' => ['Open-Packing'], 'as' => 'Open-Packing.'], function () {
 
-
+        
         Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
-
+            Route::get('/',[DashboardControlller::class, 'op_admin'])->name('dashboard');
+            Route::prefix('packing')->group(function () {
+                Route::get('/',[OpenPackController::class, 'index'])->name('packing');
+                Route::get('/add',[OpenPackController::class, 'add'])->name('packing.add');
+                Route::post('/store',[OpenPackController::class,'store'])->name('packing.store');
+                Route::get('/add-gm/{gm}',[OpenPackController::class, 'add_gm'])->name('packing.add.gm');
+                Route::post('/store/gm',[OpenPackController::class,'store_gm'])->name('packing.store.gm');
+                Route::get('/show/{gm}',[OpenPackController::class, 'show'])->name('packing.show');
+                Route::get('/edit/{id}',[OpenPackController::class, 'edit'])->name('packing.edit');
+                Route::get('/update',[OpenPackController::class, 'update'])->name('packing.update');
+                Route::get('/delete/{id}',[OpenPackController::class, 'delete'])->name('packing.delete');
+                Route::get('/print/{gm}',[OpenPackController::class, 'print'])->name('packing.print');
+            });
         });
         Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
+            Route::get('/',[DashboardControlller::class, 'op_pegawai'])->name('dashboard');
 
+            Route::prefix('packing')->group(function () {
+                Route::get('/',[OpenPackController::class, 'index'])->name('packing');
+                Route::get('/add',[OpenPackController::class, 'add'])->name('packing.add');
+                Route::post('/store',[OpenPackController::class,'store'])->name('packing.store');
+                Route::get('/add-gm/{gm}',[OpenPackController::class, 'add_gm'])->name('packing.add.gm');
+                Route::post('/store/gm',[OpenPackController::class,'store_gm'])->name('packing.store.gm');
+            });
         });
+    });
+    // Supply
+    Route::group(['prefix' => 'Supply', 'middleware' => ['Supply'], 'as' => 'Supply.'], function () {
+
+        
+        Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+            Route::get('/',[DashboardControlller::class, 'sp_admin'])->name('dashboard');
+            Route::prefix('supply')->group(function () {
+                Route::get('/',[SupplyController::class, 'index'])->name('supply');
+                Route::get('/add',[SupplyController::class, 'add'])->name('supply.add');
+                Route::post('/store',[SupplyController::class,'store'])->name('supply.store');
+                Route::get('/add-gm/{gm}',[SupplyController::class, 'add_gm'])->name('supply.add.gm');
+                Route::post('/store/gm',[SupplyController::class,'store_gm'])->name('supply.store.gm');
+                Route::get('/show/{gm}',[SupplyController::class, 'show'])->name('supply.show');
+                Route::get('/edit/{id}',[SupplyController::class, 'edit'])->name('supply.edit');
+                Route::get('/update',[SupplyController::class, 'update'])->name('supply.update');
+                Route::get('/delete/{id}',[SupplyController::class, 'delete'])->name('supply.delete');
+                Route::get('/print/{gm}',[SupplyController::class, 'print'])->name('supply.print');
+            });
+        });
+        Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
+            Route::get('/',[DashboardControlller::class, 'op_pegawai'])->name('dashboard');
+
+            Route::prefix('packing')->group(function () {
+                Route::get('/',[OpenPackController::class, 'index'])->name('packing');
+                Route::get('/add',[OpenPackController::class, 'add'])->name('packing.add');
+                Route::post('/store',[OpenPackController::class,'store'])->name('packing.store');
+                Route::get('/add-gm/{gm}',[OpenPackController::class, 'add_gm'])->name('packing.add.gm');
+                Route::post('/store/gm',[OpenPackController::class,'store_gm'])->name('packing.store.gm');
+            });
+        });
+    });
+
+    // Packing-List
+    Route::group(['prefix' => 'Packing-List', 'middleware' => ['Packing-List'], 'as' => 'Packing-List.'], function () {
+
+        
+        Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+            Route::get('/',[DashboardControlller::class, 'pl_admin'])->name('dashboard');
+            Route::prefix('list')->group(function () {
+                Route::get('/',[PListController::class, 'index'])->name('list');
+                Route::get('/add',[PListController::class, 'add'])->name('list.add');
+                Route::post('/store',[PListController::class,'store'])->name('list.store');
+                Route::get('/add-gm/{gm}',[PListController::class, 'add_gm'])->name('list.add.gm');
+                Route::post('/store/gm',[PListController::class,'store_gm'])->name('list.store.gm');
+                Route::get('/show/{gm}',[PListController::class, 'show'])->name('list.show');
+                Route::get('/edit/{id}',[PListController::class, 'edit'])->name('list.edit');
+                Route::get('/update',[PListController::class, 'update'])->name('list.update');
+                Route::get('/delete/{id}',[PListController::class, 'delete'])->name('list.delete');
+                Route::get('/print/{gm}',[PListController::class, 'print'])->name('list.print');
+
+            });
+        });
+
     });
 //endautologout
 });

@@ -14,54 +14,81 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        
         DB::table('users')->insert([
-            'name' => 'Admin User',
-            'username' => 'admin',
-            'email' => 'admin@example.com',
-            'role' => '0',
-            'status' => '1',
-            'type' => 'Ship-Mark',
-            'email_verified_at' => now(),
-            'password' => Hash::make('admin'), // You can use bcrypt or Hash facade
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        DB::table('users')->insert([
-            'name' => 'Admin User1',
-            'username' => 'admin1',
-            'email' => 'admin1@example.com',
+            'name' => 'Pegawai Open Packing ',
+            'username' => 'pegawaimp',
+            'email' => 'op1@example.com',
             'role' => '1',
             'status' => '1',
-            'type' => 'Ship-Mark',
+            'type' => 'Open-Packing',
             'email_verified_at' => now(),
-            'password' => Hash::make('admin1'), // You can use bcrypt or Hash facade
+            'password' => Hash::make('mppegawai'), // You can use bcrypt or Hash facade
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('users')->insert([
-            'name' => 'Admin Form Check',
-            'username' => 'adminfc',
-            'email' => 'fc@example.com',
+            'name' => 'Admin Open Packing ',
+            'username' => 'adminop',
+            'email' => 'op@example.com',
             'role' => '0',
             'status' => '1',
-            'type' => 'Form-Check',
+            'type' => 'Open-Packing',
             'email_verified_at' => now(),
-            'password' => Hash::make('fcadmin'), // You can use bcrypt or Hash facade
+            'password' => Hash::make('adminop'), // You can use bcrypt or Hash facade
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('users')->insert([
-            'name' => 'Pegawai Form Check',
-            'username' => 'pegawaifc',
-            'email' => 'fc1@example.com',
+            'name' => 'Pegawai Packing List ',
+            'username' => 'pegawaisp',
+            'email' => 'sp1@example.com',
+            'role' => '1',
+            'status' => '1',
+            'type' => 'Supply',
+            'email_verified_at' => now(),
+            'password' => Hash::make('pegawaisp'), // You can use bcrypt or Hash facade
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Admin Supply Bahan ',
+            'username' => 'adminsp',
+            'email' => 'sp@example.com',
             'role' => '0',
             'status' => '1',
-            'type' => 'Form-Check',
+            'type' => 'Supply',
             'email_verified_at' => now(),
-            'password' => Hash::make('fcpegawai'), // You can use bcrypt or Hash facade
+            'password' => Hash::make('adminsp'), // You can use bcrypt or Hash facade
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Pegawai Packing List ',
+            'username' => 'pegawaipl',
+            'email' => 'pl1@example.com',
+            'role' => '1',
+            'status' => '1',
+            'type' => 'PList',
+            'email_verified_at' => now(),
+            'password' => Hash::make('pegawaipl'), // You can use bcrypt or Hash facade
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Admin Packing List ',
+            'username' => 'adminpl',
+            'email' => 'pl@example.com',
+            'role' => '0',
+            'status' => '1',
+            'type' => 'PList',
+            'email_verified_at' => now(),
+            'password' => Hash::make('adminpl'), // You can use bcrypt or Hash facade
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),

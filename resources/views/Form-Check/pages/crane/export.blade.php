@@ -40,6 +40,7 @@
         <table>
             <thead>
                 <tr>
+                    <td>Date</td>
                     <td>Responden</td>
                     <td>Shift</td>
                     <td>Shift leader</td>
@@ -95,13 +96,14 @@
             <tbody>
                 @foreach ($data as $d)
                 <tr>
+                    <td>{{$d->created_at}}</td>
                     <td>
                         @php
                             $name = \App\Models\User::where('id', $d->user_id)->value('name');
                         @endphp
                         {{$name}}</td>
                     <td>{{$d->shift}}</td>
-                    <td>{{$d->shift_leader}}</td>
+                    <td class="warp">{{$d->shift_leader}}</td>
                     <td>{{$d->jenis_crane}}</td>
                     <td>{{$d->date}}</td>
                     <td>{{$d->start}}</td>

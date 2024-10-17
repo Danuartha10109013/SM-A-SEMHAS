@@ -15,103 +15,135 @@
       <link rel="stylesheet" href="{{asset('vendor')}}/css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="{{asset('vendor')}}/css/responsive.css">
+      <style>
+         body {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            height: 100vh;
+         }
+         .sign-in-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+         }
+         .sign-in-from {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+         }
+         .sign-in-from h1 {
+            color: #4e54c8;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+         }
+         .form-control {
+            border-radius: 50px;
+            padding: 10px 20px;
+            border: 1px solid #d3d3d3;
+         }
+         .form-control:focus {
+            box-shadow: none;
+            border-color: #4e54c8;
+         }
+         .btn-primary {
+            background-color: #4e54c8;
+            border-color: #4e54c8;
+            border-radius: 50px;
+            padding: 10px 30px;
+         }
+         .btn-primary:hover {
+            background-color: #8f94fb;
+            border-color: #8f94fb;
+         }
+         .sign-in-detail {
+            background: url('{{asset('login-background.jpg')}}') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 50px;
+            border-radius: 10px;
+         }
+         .sign-in-detail img {
+            max-width: 70%;
+            margin-bottom: 30px;
+         }
+         .slick-slider11 {
+            color: #fff;
+            text-align: center;
+         }
+         .alert {
+            border-radius: 50px;
+            padding: 15px;
+         }
+         @media (max-width: 768px) {
+            .sign-in-detail {
+               display: none;
+            }
+         }
+      </style>
    </head>
    <body>
-      <!-- loader Start -->
-
-      <!-- loader END -->
-        <!-- Sign in Start -->
-        <section class="sign-in-page">
-            <div class="container bg-white mt-5 p-5">
-                <div class="row no-gutters">
-                    <div class="col-sm-6 align-self-center">
+      <section class="sign-in-page">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-lg-8">
+                  <div class="row">
+                     <div class="col-sm-6 align-self-center">
                         <div class="sign-in-from">
-
-                            <h1 class="mb-0 dark-signin">Sign in</h1>
-                            @if (session('error'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ session('error') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            @elseif (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('success') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            @endif
-                            <p>Enter your email address and password to access admin panel.</p>
-                            <form method="POST" action="{{route('login-proses')}}" class="mt-4">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" name="email" class="form-control mb-0" id="exampleInputEmail1" placeholder="Enter email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" name="password" class="form-control mb-0" id="exampleInputPassword1" placeholder="Password">
-                                </div>
-                                <div class="d-inline-block w-100">
-                                    
-                                    <button type="submit" class="btn btn-primary float-right">Sign in</button>
-                                </div>
-
-                            </form>
+                           <h1>Sign in</h1>
+                           @if (session('error'))
+                              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 {{ session('error') }}
+                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                              </div>
+                           @elseif (session('success'))
+                              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                 {{ session('success') }}
+                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                              </div>
+                           @endif
+                           <p>Enter your email address and password to access admin panel.</p>
+                           <form method="POST" action="{{route('login-proses')}}" class="mt-4">
+                              @csrf
+                              <div class="form-group">
+                                 <label for="exampleInputEmail1">Email address</label>
+                                 <input type="email" name="email" class="form-control mb-3" id="exampleInputEmail1" placeholder="Enter email">
+                              </div>
+                              <div class="form-group">
+                                 <label for="exampleInputPassword1">Password</label>
+                                 <input type="password" name="password" class="form-control mb-3" id="exampleInputPassword1" placeholder="Password">
+                              </div>
+                              <button type="submit" class="btn btn-primary btn-block mt-4">Sign in</button>
+                           </form>
                         </div>
-                    </div>
-                    <div class="col-sm-6 text-center">
-                        <div class="sign-in-detail text-white">
-                            <div class="slick-slider11" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1" data-margin="0">
-                                <div class="item">
-                                    <img src="{{asset('Logo_TML.png')}}" class="img-fluid mb-4" alt="logo">
-                                    <h4 class="mb-1 text-white"></h4>
-                                    <p></p>
-                                </div>
-                                <div class="item">
-                                    <img src="{{asset('Logo TML.png')}}" class="img-fluid mb-4 mt-5" alt="logo">
-                                    <h4 class="mb-1 text-white">Tata Metal Lestari</h4>
-                                    <p></p>
-                                </div>
-                                <div class="item">
-                                    <img src="{{asset('Logo TML side.png')}}" class="img-fluid mt-5 mb-4" alt="logo">
-                                    <h4 class="mb-1 text-white">Tata Metal Lestari</h4>
-                                    <p>Memberikan Pelayanan Terbaik</p>
-                                </div>
-                            </div>
+                     </div>
+                     <div class="col-sm-6 text-center">
+                        <div class="sign-in-detail">
+                           <div class="slick-slider11">
+                              <div class="item">
+                                <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight: bolder;font-size: 20px">Sistem Informasi Digital Warehouse
+                                </p>
+                              </div>
+                              <div class="item mt-5">
+                                 <img src="{{asset('Logo_TML.png')}}" alt="logo">
+                              </div>
+                              
+                           </div>
                         </div>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </section>
-        <!-- Sign in END -->
+         </div>
+      </section>
       <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
       <script src="{{asset('vendor')}}/js/jquery.min.js"></script>
       <script src="{{asset('vendor')}}/js/popper.min.js"></script>
       <script src="{{asset('vendor')}}/js/bootstrap.min.js"></script>
-      <!-- Appear JavaScript -->
-      <script src="{{asset('vendor')}}/js/jquery.appear.js"></script>
-      <!-- Countdown JavaScript -->
-      <script src="{{asset('vendor')}}/js/countdown.min.js"></script>
-      <!-- Counterup JavaScript -->
-      <script src="{{asset('vendor')}}/js/waypoints.min.js"></script>
-      <script src="{{asset('vendor')}}/js/jquery.counterup.min.js"></script>
-      <!-- Wow JavaScript -->
-      <script src="{{asset('vendor')}}/js/wow.min.js"></script>
-      <!-- Apexcharts JavaScript -->
-      <script src="{{asset('vendor')}}/js/apexcharts.js"></script>
-      <!-- Slick JavaScript -->
       <script src="{{asset('vendor')}}/js/slick.min.js"></script>
-      <!-- Select2 JavaScript -->
-      <script src="{{asset('vendor')}}/js/select2.min.js"></script>
-      <!-- Owl Carousel JavaScript -->
-      <script src="{{asset('vendor')}}/js/owl.carousel.min.js"></script>
-      <!-- Magnific Popup JavaScript -->
-      <script src="{{asset('vendor')}}/js/jquery.magnific-popup.min.js"></script>
-      <!-- Smooth Scrollbar JavaScript -->
-      <script src="{{asset('vendor')}}/js/smooth-scrollbar.js"></script>
-      <!-- Chart Custom JavaScript -->
-      <script src="{{asset('vendor')}}/js/chart-custom.js"></script>
-      <!-- Custom JavaScript -->
-      <script src="{{asset('vendor')}}/js/custom.js"></script>
    </body>
 </html>

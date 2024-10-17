@@ -7,17 +7,22 @@ use App\Imports\ShippmentBImport;
 use App\Imports\ShippmentCImport;
 use App\Models\ShipC;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel; // Import this
 
 use function PHPSTORM_META\type;
 
 class ShippmentC extends Controller
 {
-    public function index(){
-        $data  = ShipC::select('type')->distinct()->get();
-        // dd($pembeda);
-        // $data = ShipC::where('type',$pembeda)->get();
-        return view('pegawai.shippmentc.index', compact('data'));
+    public function index(Request $request){
+        $search = $request->search;
+        if ($search) {
+            $data = ShipC::where('type', 'LIKE', '%' . $search . '%')->select('type')->distinct()->get();
+        } else {
+            // If no search query, retrieve distinct 'type' values
+            $data = ShipC::select('type')->distinct()->get();
+        }
+        return view('pegawai.shippmentc.index', compact('data','search'));
     }
 
     public function add(){
@@ -49,8 +54,14 @@ class ShippmentC extends Controller
         ]);
 
         ShipC::create($validated);
+        if(Auth::user()->role == 0){
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-c')->with('success', 'Shippment added successfully');
+            return redirect()->route('Ship-Mark.admin.shipment-c')->with('success', 'Shippment added successfully');
+        }else{
+            
+            return redirect()->route('Ship-Mark.pegawai.shipment-c')->with('success', 'Shippment added successfully');
+        }
+
     }
 
     public function edit($id)
@@ -82,13 +93,26 @@ class ShippmentC extends Controller
         $shippmentA = ShipC::findOrFail($id);
         $shippmentA->update($request->all());
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-c-show',$back)->with('success', 'ShippmentC updated successfully');
+        if(Auth::user()->role == 0){
+
+            return redirect()->route('Ship-Mark.admin.shipment-c-show',$back)->with('success', 'ShippmentC updated successfully');
+        }else{
+
+            return redirect()->route('Ship-Mark.pegawai.shipment-c-show',$back)->with('success', 'ShippmentC updated successfully');
+        }
+
     }
 
-    public function show($id){
-        $data = ShipC::where('type', $id)->get();
+    public function show(Request $request,$id){
+        $search = $request->search;
+        if ($search) {
+            $data = ShipC::where('type', $id)->where('atribute', 'LIKE', '%' . $search . '%')->get();
+        } else {
+            // If no search query, retrieve distinct 'type' values
+            $data = ShipC::where('type', $id)->get();
+        }
         $type= ShipC::select('type')->distinct()->where('type',$id)->value('type');
-        return view('pegawai.shippmentc.show', compact('data','type'));
+        return view('pegawai.shippmentc.show', compact('data','type','id','search'));
     }
 
     public function print($id){
@@ -130,7 +154,14 @@ class ShippmentC extends Controller
         Excel::import(new ShippmentCImport($request->satuan_berat,$newType),$request->file('shipmentb'));
 ;
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-c')->with('success', 'Data berhasil ditambahkan');
+        if(Auth::user()->role == 0){
+
+            return redirect()->route('Ship-Mark.admin.shipment-c')->with('success', 'Data berhasil ditambahkan');
+        }else{
+            return redirect()->route('Ship-Mark.pegawai.shipment-c')->with('success', 'Data berhasil ditambahkan');
+            
+        }
+
     }
 
     public function destroy($id)
@@ -139,7 +170,13 @@ class ShippmentC extends Controller
         $shippmenta = ShipC::findOrFail($id);
         $shippmenta->delete();
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-c-show',$back)->with('success', 'Shippmenta deleted successfully');
+        if(Auth::user()->role == 0){
+            return redirect()->route('Ship-Mark.admin.shipment-c-show',$back)->with('success', 'Shippmenta deleted successfully');
+        }else{
+
+            return redirect()->route('Ship-Mark.pegawai.shipment-c-show',$back)->with('success', 'Shippmenta deleted successfully');
+        }
+
     }
     public function destroyA($type)
     {
@@ -147,7 +184,11 @@ class ShippmentC extends Controller
 
         $shippmenta = ShipC::findOrFail($type);
         $shippmenta->delete();
+        if(Auth::user()->role == 0){
+            return redirect()->route('Ship-Mark.admin.shipment-c')->with('success', 'Shippmenta deleted successfully');
+        }else{
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-c')->with('success', 'Shippmenta deleted successfully');
+            return redirect()->route('Ship-Mark.pegawai.shipment-c')->with('success', 'Shippmenta deleted successfully');
+        }
     }
 }

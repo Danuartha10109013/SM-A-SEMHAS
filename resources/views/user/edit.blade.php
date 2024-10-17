@@ -14,7 +14,7 @@ Kelola User @if(Auth::user()->role == 0)
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <form action="{{ route('kelola-user.update', $data->id) }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('Administrator.kelola-user.update', $data->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="modal-header">
@@ -50,7 +50,7 @@ Kelola User @if(Auth::user()->role == 0)
           </div>
           <small class="mb-3" style="color: red;">Biarkan kosong jiak tidak diperlukan</small>
         </div>
-          <a href="{{route('kelola-user')}}" class="btn btn-secondary mt-3">Close</a>
+          <a href="{{route('Administrator.kelola-user')}}" class="btn btn-secondary mt-3">Close</a>
           <button type="submit" class="btn btn-primary mt-3">Update User</button>
       </form>
     </div>

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{asset('Logo TML.png')}}" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crane Operator Daily Data - Print</title>
     <style>
@@ -11,13 +13,19 @@
             margin: 10px;
         }
 
+        .header {
+            margin-top: -100px;
+            margin-bottom: 40px;
+        }
         .header h1 {
+            text-align: center;
             font-size: 14px;
             text-transform: uppercase;
             margin-bottom: 5px;
         }
 
         .header h2 {
+            margin-left: 150px; 
             font-size: 10px;
         }
 
@@ -89,9 +97,7 @@
             vertical-align: top; /* Align text to the top */
         }
 
-        .header {
-            margin-left: 150px; margin-top: -100px;margin-bottom: 40px;
-        }
+        
         .logo {
             margin-bottom: 20px
         }
@@ -104,7 +110,10 @@
                 display: none;
             }
             .header{
-            margin-left: 100px; margin-top: -70px;margin-bottom: 10px;
+            /* margin-left: 100px;  */
+            text-align: center;
+            margin-top: -70px;
+            margin-bottom: 10px;
             }
             .logo {
             margin-bottom: 0px;
@@ -121,13 +130,14 @@
             }
 
             .header h1 {
+                text-align: center;
                 font-size: 14px;
             }
 
             .header h2 {
-                font-size: 12px;
+                margin-left: 100px; 
+                font-size: 10px;
             }
-
             .notes, .tabelin {
                 font-size: 10px;
             }
@@ -151,7 +161,7 @@
 <body>
 
     <div class="logo">
-        <img style="" width="10%" src="{{asset('Logo TML.png')}}" alt="Logo">
+        <img style="" width="10%" src="{{asset('Logo_TML.png')}}" alt="Logo">
     </div>
     <div style="" class="header">
         <h1>CRANE OPERATOR DAILY DATA</h1>

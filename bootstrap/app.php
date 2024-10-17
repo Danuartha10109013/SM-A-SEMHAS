@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Middleware\Adminmiddleware;
+use App\Http\Middleware\CheckList;
+use App\Http\Middleware\CheckSupp;
 use App\Http\Middleware\CheckType;
+use App\Http\Middleware\CheckTypeADM;
 use App\Http\Middleware\CheckTypeFC;
+use App\Http\Middleware\CheckTypeMM;
 use App\Http\Middleware\CheckTypeOP;
 use App\Http\Middleware\PegawaiMiddleware;
 use Illuminate\Foundation\Application;
@@ -42,6 +46,19 @@ return Application::configure(basePath: dirname(__DIR__))
             PegawaiMiddleware::class,
         ]);
 
+        //Mapping Muat 
+        $middleware->appendToGroup('Mapping', [
+            CheckTypeMM::class,
+        ]);
+    
+        $middleware->appendToGroup('admin', [
+            AdminMiddleware::class,
+        ]);
+    
+        $middleware->appendToGroup('pegawai', [
+            PegawaiMiddleware::class,
+        ]);
+
         //Open-Packing
         $middleware->appendToGroup('Open-Packing', [
             CheckTypeOP::class,
@@ -54,6 +71,37 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('pegawai', [
             PegawaiMiddleware::class,
         ]);
+
+        //Supply
+        $middleware->appendToGroup('Supply', [
+            CheckSupp::class,
+        ]);
+    
+        $middleware->appendToGroup('admin', [
+            AdminMiddleware::class,
+        ]);
+    
+        $middleware->appendToGroup('pegawai', [
+            PegawaiMiddleware::class,
+        ]);
+
+        //Packing-List
+        $middleware->appendToGroup('Packing-List', [
+            CheckList::class,
+        ]);
+    
+        $middleware->appendToGroup('admin', [
+            AdminMiddleware::class,
+        ]);
+    
+        $middleware->appendToGroup('pegawai', [
+            PegawaiMiddleware::class,
+        ]);
+        //Administrator
+        $middleware->appendToGroup('Administrator', [
+            CheckTypeADM::class,
+        ]);
+        
     })
     
     ->withExceptions(function (Exceptions $exceptions) {

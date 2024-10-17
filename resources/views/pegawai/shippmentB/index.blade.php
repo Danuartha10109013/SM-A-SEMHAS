@@ -51,10 +51,22 @@ Shippment B || Pegawai
                           <h4 class="card-title">Shippment B</h4>
                        </div>
                     </div>
-                    <div class="iq-card-body">
-                       <p>All data of Shippment type B <a href="{{ route('download.file', ['file' => 'ShippmentB.xlsx']) }}">
-                        Download Template
-                    </a> </p>
+                    <div class="iq-card-body d-flex justify-content-between align-items-center">
+                        <p>All data of Shipment type B
+                            <a href="{{ route('download.file', ['file' => 'ShippmentB.xlsx']) }}">
+                                Download Template
+                            </a>
+                        </p>
+                        
+                        <form class="form-inline" method="GET" action="{{ route('Ship-Mark.admin.shipment-b') }}">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" value="{{$search}}" placeholder="Search by no SO">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                        <table class="table">
                           <thead>
                              <tr>

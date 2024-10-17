@@ -6,17 +6,23 @@ use App\Imports\ShippmentAImport;
 use App\Imports\ShippmentBImport;
 use App\Models\ShipB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel; // Import this
 
 use function PHPSTORM_META\type;
 
 class ShippmentB extends Controller
 {
-    public function index(){
-        $data  = ShipB::select('type')->distinct()->get();
-        // dd($pembeda);
-        // $data = ShipB::where('type',$pembeda)->get();
-        return view('pegawai.shippmentb.index', compact('data'));
+    
+    public function index(Request $request){
+        $search = $request->search;
+        if ($search) {
+            $data = ShipB::where('type', 'LIKE', '%' . $search . '%')->select('type')->distinct()->get();
+        } else {
+            // If no search query, retrieve distinct 'type' values
+            $data = ShipB::select('type')->distinct()->get();
+        }
+        return view('pegawai.shippmentb.index', compact('data','search'));
     }
 
     public function add(){
@@ -47,8 +53,12 @@ class ShippmentB extends Controller
         ]);
 
         ShipB::create($validated);
-
-        return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Shippment added successfully');
+        if(Auth::user()->role == 0){
+            return redirect()->route('Ship-Mark.admin.shipment-b')->with('success', 'Shippment added successfully');
+        }else{
+            
+            return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Shippment added successfully');
+        }
     }
 
     public function edit($id)
@@ -80,13 +90,24 @@ class ShippmentB extends Controller
         $shippmentA = ShipB::findOrFail($id);
         $shippmentA->update($request->all());
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'ShippmentA updated successfully');
+        if(Auth::user()->role == 0){
+            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'ShippmentA updated successfully');
+        }else{
+
+            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'ShippmentA updated successfully');
+        }
     }
 
-    public function show($id){
-        $data = ShipB::where('type', $id)->get();
+    public function show(Request $request,$id){
+        $search = $request->search;
+        if ($search) {
+            $data = ShipB::where('type', $id)->where('atribute', 'LIKE', '%' . $search . '%')->get();
+        } else {
+            // If no search query, retrieve distinct 'type' values
+            $data = ShipB::where('type', $id)->get();
+        }
         $type= ShipB::select('type')->distinct()->where('type',$id)->value('type');
-        return view('pegawai.shippmentb.show', compact('data','type'));
+        return view('pegawai.shippmentb.show', compact('data','type','id','search'));
     }
 
     public function print($id){
@@ -128,7 +149,13 @@ class ShippmentB extends Controller
         Excel::import(new ShippmentBImport($request->satuan_berat,$newType),$request->file('shipmentb'));
 ;
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Data berhasil ditambahkan');
+        if(Auth::user()->role == 0){
+            return redirect()->route('Ship-Mark.admin.shipment-b')->with('success', 'Data berhasil ditambahkan');
+        }else{
+
+            return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Data berhasil ditambahkan');
+        }
+
     }
 
     public function destroy($id)
@@ -137,7 +164,12 @@ class ShippmentB extends Controller
         $shippmenta = ShipB::findOrFail($id);
         $shippmenta->delete();
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'Shippmenta deleted successfully');
+        if(Auth::user()->role == 0){
+            return redirect()->route('Ship-Mark.admin.shipment-b-show',$back)->with('success', 'Shippmenta deleted successfully');
+        }else{
+
+            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'Shippmenta deleted successfully');
+        }
     }
     public function destroyA($type)
     {
@@ -146,6 +178,11 @@ class ShippmentB extends Controller
         $shippmenta = ShipB::findOrFail($type);
         $shippmenta->delete();
 
-        return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Shippmenta deleted successfully');
+        if(Auth::user()->role == 0){
+            return redirect()->route('Ship-Mark.admin.shipment-b')->with('success', 'Shippmenta deleted successfully');
+        }else{
+
+            return redirect()->route('Ship-Mark.pegawai.shipment-b')->with('success', 'Shippmenta deleted successfully');
+        }
     }
 }

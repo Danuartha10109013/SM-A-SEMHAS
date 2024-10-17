@@ -43,49 +43,15 @@ class LoginController extends Controller
 
     // Autentikasi berhasil
     Auth::login($user);
+    if ($user->role == 0){
 
-    // Check user type
-    switch ($user->type) {
-        case "Ship-Mark":
-            // Check user role
-            if ($user->role == 0) {
-                return redirect()->route('Ship-Mark.admin.dashboard');
-            } elseif ($user->role == 1) {
-                return redirect()->route('Ship-Mark.pegawai.dashboard');
-            }
-            break;
-    
-        case "Form-Check":
-            if ($user->role == 0 ) {
-                // return view('welcome')
-                return redirect()->route('Form-Check.admin.dashboard');
-            }
-            elseif($user->role == 1){
-                return redirect()->route('Form-Check.pegawai.dashboard');
-            }
-            break;
-        case "else":
-            // Both types have the same logic, so combine them
-            if ($user->role == 0 ) {
-                return view('welcome');
-            }
-            elseif($user->role == 1){
-                return view('welcome');
-            }
-            break;
-            case "FC&SM":
-                if ($user->role == 0 ) {
-                    // return view('welcome')
-                    return redirect()->route('welcome');
-                }
-                elseif($user->role == 1){
-                    return redirect()->route('welcome');
-                }
-                break;
-    
-        default:
-        return redirect()->route('login')->with('error', 'Type of user is not found');
+        return redirect()->route('welcome')->with('success','Hallo Selamat Datang'.Auth::user()->name);
+    }else{
+
+        return redirect()->route('welcome')->with('success','Hallo Selamat Datang'.Auth::user()->name);
     }
+    // Check user type
+
     
     // Redirect to login if role is not recognized or any other case
     return redirect()->route('login')->with('error', 'Login Gagal.');

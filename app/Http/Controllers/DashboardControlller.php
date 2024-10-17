@@ -6,6 +6,7 @@ use App\Models\CraneM;
 use App\Models\CrcM;
 use App\Models\ForkliftM;
 use App\Models\IngotM;
+use App\Models\PackingM;
 use App\Models\ResinM;
 use App\Models\ShipA;
 use App\Models\ShipB;
@@ -13,6 +14,7 @@ use App\Models\ShipC;
 use App\Models\ShipD;
 use App\Models\TraillerM;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -41,5 +43,29 @@ class DashboardControlller extends Controller
 
     public function fc_pegawai(){
         return view('Form-Check.pages.pegawai.index');
+    }
+    public function op_admin(){
+        $form = PackingM::all()->count();
+        $gm = PackingM::distinct('gm')->count('gm');
+
+        $formattedDate = PackingM::min('created_at');
+        $response = Carbon::parse($formattedDate)->format('d-m-Y');        
+        return view('Open-Packing.pages.admin.index',compact('gm','form','response'));
+    }
+    public function sp_admin(){
+        $form = PackingM::all()->count();
+        $gm = PackingM::distinct('gm')->count('gm');
+
+        $formattedDate = PackingM::min('created_at');
+        $response = Carbon::parse($formattedDate)->format('d-m-Y');        
+        return view('Supply-Bahan.pages.admin.index',compact('gm','form','response'));
+    }
+    public function pl_admin(){
+        $form = PackingM::all()->count();
+        $gm = PackingM::distinct('gm')->count('gm');
+
+        $formattedDate = PackingM::min('created_at');
+        $response = Carbon::parse($formattedDate)->format('d-m-Y');        
+        return view('Packing-List.pages.admin.index',compact('gm','form','response'));
     }
 }

@@ -36,7 +36,17 @@
            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Packing List</span></li>
            <li class="{{ request()->routeIs('Packing-List.admin.list') ? 'active' : '' }}">
                <a href="{{route('Packing-List.admin.list')}}" class="iq-waves-effect" aria-expanded="false">
+                   <i class="mdi mdi-qrcode-scan"></i><span>Hasil Scan</span>
+               </a>
+           </li>
+           <li class="{{ request()->routeIs('Packing-List.admin.hasil') ? 'active' : '' }}">
+               <a href="{{route('Packing-List.admin.hasil')}}" class="iq-waves-effect" aria-expanded="false">
                    <i class="mdi mdi-format-list-checks"></i><span>Packing List</span>
+               </a>
+           </li>
+           <li class="{{ request()->routeIs('Packing-List.admin.database') ? 'active' : '' }}">
+               <a href="{{route('Packing-List.admin.database')}}" class="iq-waves-effect" aria-expanded="false">
+                   <i class="mdi mdi-database"></i><span>Database</span>
                </a>
            </li>
            

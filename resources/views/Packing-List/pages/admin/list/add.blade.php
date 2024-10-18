@@ -1,7 +1,7 @@
 @extends('Packing-List.layout.main')
 
 @section('title')
-    Tambahkan GM ||
+    Tambahkan Packing ||
     @if(Auth::user()->role == 0)
         Admin
     @elseif(Auth::user()->role == 1)
@@ -19,7 +19,7 @@
         @if (Auth::user()->role == 0)
         <form action="{{ route('Packing-List.admin.list.store') }}" method="POST">
         @else
-        <form action="{{ route('Packing-List.pegawai.list.stPacking-List.admin.list.store') }}" method="POST">
+        <form action="{{ route('Packing-List.pegawai.list.store') }}" method="POST">
         @endif
             @csrf
             @method('POST')
@@ -52,17 +52,35 @@
             </div>
 
             <div class="mb-3">
-              <label for="keterangan" class="form-label">Keterangan</label>
-              <select name="keterangan" id="keterangan" class="form-control" required>
-                  <option value="" selected disabled>-- Select Keterangan --</option>
-                  @foreach (range(1, 10) as $num)
-                      <option value="{{ $num }}">{{ $num }}</option>
-                  @endforeach
-                  @foreach (range('A', 'J') as $letter)
-                      <option value="{{ $letter }}">{{ $letter }}</option>
-                  @endforeach
-              </select>
-          </div>
+                <label for="keterangan" class="form-label">Keterangan</label>
+                <select name="keterangan" id="keterangan" class="form-control" required>
+                    <option value="" selected disabled>-- Select Keterangan --</option>
+                    @foreach (range(1, 10) as $num)
+                        <option value="{{ $num }}">{{ $num }}</option>
+                    @endforeach
+                    @foreach (range('A', 'J') as $letter)
+                        <option value="{{ $letter }}">{{ $letter }}</option>
+                    @endforeach
+                    <option value="other">Other</option> <!-- Add this option -->
+                </select>
+            </div>
+            
+            <!-- Input field for custom keterangan -->
+            <div class="mb-3" id="other-keterangan-container" style="display: none;">
+                <label for="other-keterangan" class="form-label">Please specify</label>
+                <input type="text" name="other_keterangan" id="other-keterangan" class="form-control" placeholder="Enter your custom keterangan">
+            </div>
+            <script>
+                document.getElementById('keterangan').addEventListener('change', function() {
+                    var otherKeteranganContainer = document.getElementById('other-keterangan-container');
+                    if (this.value === 'other') {
+                        otherKeteranganContainer.style.display = 'block'; // Show the custom input field
+                    } else {
+                        otherKeteranganContainer.style.display = 'none'; // Hide the custom input field
+                    }
+                });
+            </script>
+                        
 
             <div class="mb-3">
                 <label for="panjang" class="form-label">Panjang</label>

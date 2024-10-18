@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DatabM;
 use App\Models\PackingM;
 use App\Models\ScanM;
 use App\Models\SupplyM;
@@ -29,17 +30,31 @@ class PListController extends Controller
         'attribute'=>'required|string|max:255',
         'kondisi'=>'required|string|max:255',
         'keterangan'=>'required|string|max:255',
+        'tujuan'=>'required|string|max:255',
+        'other_keterangan' => 'nullable|string',
         'panjang'=>'required|integer',
     ]);
-
-    ScanM::create([
-        'attribute' => $request->input('attribute'),
-        'kondisi' => $request->input('kondisi'),
-        'keterangan' => $request->input('keterangan'),
-        'panjang' => $request->input('keterangan'),
-        'user_id' => Auth::user()->id,
-    ]);
-
+    if($request->keterangan == "other"){
+        ScanM::create([
+            'attribute' => $request->input('attribute'),
+            'kondisi' => $request->input('kondisi'),
+            'keterangan' => $request->input('other_keterangan'),
+            'tujuan' => $request->input('tujuan'),
+            'panjang' => $request->input('panjang'),
+            'user_id' => Auth::user()->id,
+        ]);
+        
+    }else{
+        ScanM::create([
+            'attribute' => $request->input('attribute'),
+            'kondisi' => $request->input('kondisi'),
+            'keterangan' => $request->input('keterangan'),
+            'tujuan' => $request->input('tujuan'),
+            'panjang' => $request->input('panjang'),
+            'user_id' => Auth::user()->id,
+        ]);
+    }
+    
     // Redirect back with a success message
     if (Auth::user()->role == 0) {
         return redirect()->route('Packing-List.admin.list', 'Supply created successfully!');
@@ -53,7 +68,7 @@ class PListController extends Controller
 
 
     public function add_gm($gm){
-        return view('Supply-Bahan.pages.admin.supply.add-gm',compact('gm'));
+        return view('Packing-List.pages.admin.list.add-gm',compact('gm'));
     }
 
     public function store_gm(Request $request){
@@ -85,38 +100,50 @@ class PListController extends Controller
     public function show($gm)
     {
         $data = SupplyM::find($gm);
-        return view('Supply-Bahan.pages.admin.supply.show',compact('data','gm'));
+        return view('Packing-List.pages.admin.list.show',compact('data','gm'));
     }
 
     public function edit($id){
-        $data = PackingM::find($id);
-        return view('Supply-Bahan.pages.admin.supply.edit',compact('data'));
+        $data = ScanM::find($id);
+        return view('Packing-List.pages.admin.list.edit',compact('data'));
     }
 
-    public function update(Request $request){
+
+    public function update(Request $request)
+    {
+        // Validate the incoming request
         $request->validate([
-            'gm' => 'required|string|max:255',
-            'attribute' => 'required|string|max:255',
-            'b_label' => 'required|integer',
-            'b_aktual' => 'required|integer',
-            'stiker' => 'nullable|string|max:255',
-            'keterangan' => 'nullable|string|max:255',
+            'attribute' => 'required|string',
+            'kondisi' => 'required|string',
+            'tujuan' => 'required|string',
+            'keterangan' => 'required|string',
+            'other_keterangan' => 'nullable|string',
+            'panjang' => 'required|numeric',
         ]);
 
-        $data = PackingM::find($request->id);
+        // Find the existing PackingList data (assuming you pass an id in the form)
+        $packingList = ScanM::findOrFail($request->id);
 
-        $data->gm = $request->gm;
-        $data->attribute = $request->attribute;
-        $data->b_label = $request->b_label;
-        $data->b_aktual = $request->b_aktual;
-        $data->selisih = $request->b_label - $request->b_aktual;
-        $data->persentase = number_format(($request->b_label * 0.25) / 100, 4);
-        $data->stiker = $request->stiker;
-        $data->keterangan = $request->keterangan;
-        $data->update();
+        // Update the packing list data
+        $packingList->attribute = $request->attribute;
+        $packingList->kondisi = $request->kondisi;
+        $packingList->tujuan = $request->tujuan;
+        if($request->keterangan == "other"){
 
-        return redirect()->route('Supply.admin.packing.show',$request->gm)->with('success','Product Updated');
+            $packingList->keterangan = $request->other_keterangan;
+        }else{
+            $packingList->keterangan = $request->keterangan;
+        }
+        $packingList->panjang = $request->panjang;
+
+        // Save the updated data
+        $packingList->save();
+
+        // Redirect with a success message
+        return redirect()->route('Packing-List.admin.list')->with('success', 'Packing List updated successfully.');
     }
+    
+    
 
     public function delete($id){
         PackingM::find($id)->delete();
@@ -129,6 +156,17 @@ class PListController extends Controller
 
         $date = PackingM::where('gm',$gm)->value('created_at');
 
-        return view('Supply-Bahan.pages.admin.supply.print',compact('data','date'));
+        return view('Packing-List.pages.admin.list.print',compact('data','date'));
+    }
+
+    public function db(){
+        $data = DatabM::all();
+        return view('Packing-List.pages.admin.database.index',compact('data'));
+    }
+    
+    public function hasil(){
+        $data = DatabM::all();
+
+        return view('Packing-List.pages.admin.hasil.index',compact('data'));
     }
 }

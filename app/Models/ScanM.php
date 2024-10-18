@@ -16,5 +16,6 @@ class ScanM extends Model
         'panjang',
         'kondisi',
         'tujuan',
+        'keterangan',
     ];
 }

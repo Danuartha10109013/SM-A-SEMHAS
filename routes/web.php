@@ -468,11 +468,23 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/store/gm',[PListController::class,'store_gm'])->name('list.store.gm');
                 Route::get('/show/{gm}',[PListController::class, 'show'])->name('list.show');
                 Route::get('/edit/{id}',[PListController::class, 'edit'])->name('list.edit');
-                Route::get('/update',[PListController::class, 'update'])->name('list.update');
+                Route::post('/update',[PListController::class, 'update'])->name('list.update');
                 Route::get('/delete/{id}',[PListController::class, 'delete'])->name('list.delete');
                 Route::get('/print/{gm}',[PListController::class, 'print'])->name('list.print');
 
             });
+            Route::prefix('database')->group(function () {
+                Route::get('/',[PListController::class, 'db'])->name('database');
+                Route::get('/add',[PListController::class, 'db_add'])->name('database.add');
+                Route::post('/store',[PListController::class, 'db_store'])->name('database.store');
+            });
+                
+            Route::prefix('hasil')->group(function () {
+                Route::get('/',[PListController::class, 'hasil'])->name('hasil');
+                Route::get('/add',[PListController::class, 'hasil_add'])->name('hasil.add');
+                Route::post('/store',[PListController::class, 'hasil_store'])->name('hasil.store');
+            });
+                
         });
 
     });

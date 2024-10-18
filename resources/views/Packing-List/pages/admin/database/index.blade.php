@@ -20,11 +20,11 @@
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Hasil Scan</h4>
+          <h4 class="card-title">Database</h4>
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
-                <a href="{{ Auth::user()->role == 0 ? route('Packing-List.admin.list.add') : route('Packing-List.pegawai.list.add') }}" 
-                   class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Packing </a>
+                <a href="{{ Auth::user()->role == 0 ? route('Packing-List.admin.database.add') : route('Packing-List.pegawai.database.add') }}" 
+                   class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Database </a>
                 <a href="{{ route('Form-Check.admin.crane.export') }}" 
                    class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
             </div>
@@ -43,24 +43,29 @@
               <thead>
                 <tr>
                   <th> No </th>
+                  <th>  </th>
+                  <th> Nama Produk </th>
+                  <th> QTY </th>
+                  <th> UOM </th>
                   <th> No Coil </th>
-                  <th> Kerangan </th>
-                  <th> Date </th>
-                  <th> Panjang </th>
+                  <th> Storage Bin </th>
+                  <th> Tanggal </th>
                   <th> Action </th>
-                  <th> Kondisi </th>
-                  <th> Tujuan </th>
-                  <th> Responden </th>
+                  <th> Pengirim </th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($data as $d)
                   <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td> {{$d->attribute}} </td>
+                    <td> {{$d->kode}} </td>
                     <td> {{$d->keterangan}} </td>
-                    <td> {{$d->created_at}} </td>
-                    <td>{{$d->panjang}}</td>
+                    <td> {{$d->nama_produk}} </td>
+                    <td> {{$d->qty}} </td>
+                    <td> {{$d->uom}} </td>
+                    <td>{{$d->attribute}}</td>
+                    <td>{{$d->storage_bin}}</td>
+                    <td>{{$d->date}}</td>
                     <td><a href="{{route('Packing-List.admin.list.edit',$d->id)}}">
                       <label class="badge badge-gradient-primary">
                         <i class="fas fa-edit"></i> Edit

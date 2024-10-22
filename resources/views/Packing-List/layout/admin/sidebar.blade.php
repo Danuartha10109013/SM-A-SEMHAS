@@ -39,7 +39,7 @@
                    <i class="mdi mdi-qrcode-scan"></i><span>Hasil Scan</span>
                </a>
            </li>
-           <li class="{{ request()->routeIs('Packing-List.admin.hasil') ? 'active' : '' }}">
+           <li class="{{ request()->routeIs('Packing-List.admin.hasil.group') ? 'active' : '' }}">
                <a href="{{route('Packing-List.admin.hasil')}}" class="iq-waves-effect" aria-expanded="false">
                    <i class="mdi mdi-format-list-checks"></i><span>Packing List</span>
                </a>

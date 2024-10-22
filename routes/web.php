@@ -477,12 +477,22 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/',[PListController::class, 'db'])->name('database');
                 Route::get('/add',[PListController::class, 'db_add'])->name('database.add');
                 Route::post('/store',[PListController::class, 'db_store'])->name('database.store');
+                Route::post('/store-excel',[PListController::class, 'db_store_excel'])->name('database.store.excel');
+                Route::get('/edit/{id}',[PListController::class, 'db_edit'])->name('database.edit');
+                Route::put('/update/{id}',[PListController::class, 'db_update'])->name('database.update');
+                Route::put('/update/{id}',[PListController::class, 'db_update'])->name('database.update');
+                Route::get('/delete/{id}',[PListController::class, 'db_destroy'])->name('database.destroy');
+                Route::delete('/clear',[PListController::class, 'db_clear'])->name('database.clear');
+                Route::get('/confirmation',[PListController::class, 'confir'])->name('database.confir');
+            
             });
                 
             Route::prefix('hasil')->group(function () {
-                Route::get('/',[PListController::class, 'hasil'])->name('hasil');
+                Route::get('/',[PListController::class, 'hasil_group'])->name('hasil');
+                Route::get('/show/{ket}',[PListController::class, 'hasil'])->name('hasil.shows');
                 Route::get('/add',[PListController::class, 'hasil_add'])->name('hasil.add');
                 Route::post('/store',[PListController::class, 'hasil_store'])->name('hasil.store');
+                Route::get('/download',[PListController::class, 'exportexcel'])->name('hasil.export');
             });
                 
         });

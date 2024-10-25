@@ -25,8 +25,8 @@
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Packing-List.admin.list.add') : route('Packing-List.pegawai.list.add') }}" 
                    class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Packing </a>
-                <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+                {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
+                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
             </div>
         
             {{-- <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">
@@ -65,13 +65,9 @@
                       <label class="badge badge-gradient-primary">
                         <i class="fas fa-edit"></i> Edit
                       </label></a>
-                      <a href="">
-                      <label class="badge badge-gradient-success">
-                        <i class="fas fa-eye"></i> Show
-                      </label></a>
-                      <a href="">
-                      <label class="badge badge-gradient-warning">
-                        <i class="fas fa-print"></i> Print
+                      <a href="{{route('Packing-List.admin.list.delete',$d->id)}}">
+                      <label class="badge badge-gradient-danger">
+                        <i class="fas fa-trash"></i> Delete
                       </label></a>
                     </td>
                     <td> {{$d->kondisi}} </td>

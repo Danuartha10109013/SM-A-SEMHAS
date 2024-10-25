@@ -147,10 +147,8 @@ class PListController extends Controller
         return redirect()->route('Packing-List.admin.list')->with('success', 'Packing List updated successfully.');
     }
     
-    
-
     public function delete($id){
-        PackingM::find($id)->delete();
+        ScanM::find($id)->delete();
 
         return redirect()->back()->with('success', 'Data has been deleted');
     }
@@ -194,6 +192,29 @@ class PListController extends Controller
     }
 
     return view('Packing-List.pages.admin.database.index', compact('data', 'search', 'sort', 'direction'));
+}
+    public function db_add(){
+        return view('Packing-List.pages.admin.database.add');
+    }
+
+    public function db_store(Request $request){
+    {
+    $validatedData = $request->validate([
+        'kode' => 'required|string|max:255',
+        'nama_produk' => 'required|string|max:255',
+        'qty' => 'required|string|max:255',
+        'uom' => 'required|string|max:255',
+        'attribute' => 'required|string|max:255',
+        'storage_bin' => 'required|string|max:255',
+        'date' => 'required|date',
+        'user_id' => 'required|integer',
+    ]);
+
+    DatabM::create($validatedData);
+
+    return redirect()->route('Packing-List.admin.database')->with('success', 'Product added successfully!');
+
+    }
 }
 
     public function db_edit($id){

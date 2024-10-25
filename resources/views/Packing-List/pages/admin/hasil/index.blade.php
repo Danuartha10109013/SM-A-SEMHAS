@@ -24,8 +24,8 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
                         
-                        <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                           class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+                        {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
+                           class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
                     </div>
         
                     <form action="{{ route('Packing-List.admin.hasil.shows',$ket) }}" method="GET" class="ml-2" style="display: inline;">
@@ -48,7 +48,6 @@
                                 <th>No Coil</th>
                                 <th>Storage Bin</th>
                                 <th>Tanggal</th>
-                                <th>Action</th>
                                 <th>Pengirim</th>
                                 <th>Panjang</th>
                                 <th>Time</th>
@@ -75,19 +74,7 @@
                                                 <td rowspan="{{ $scanCount }}">{{ $db->attribute }}</td>
                                                 <td rowspan="{{ $scanCount }}">{{ $db->storage_bin }}</td>
                                                 <td rowspan="{{ $scanCount }}">{{ $db->date }}</td>
-                                                <td rowspan="{{ $scanCount }}">
-                                                    <a href="{{ route('Packing-List.admin.list.edit', $d->id) }}">
-                                                        <label class="badge badge-gradient-primary">
-                                                            <i class="fas fa-edit"></i> Edit
-                                                        </label>
-                                                    </a>
-                                                    <a href="">
-                                                        <label class="badge badge-gradient-danger">
-                                                            <i class="fas fa-trash"></i> Delete
-                                                        </label>
-                                                    </a>
-                                                    
-                                                </td>
+                                                
                                                 <td rowspan="{{ $scanCount }}">
                                                     @php
                                                         $name = \App\Models\User::where('id', $d->user_id)->value('name');

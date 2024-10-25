@@ -23,10 +23,8 @@
                 <h4 class="card-title">Hasil Akhir</h4>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
-                        <a href="{{ Auth::user()->role == 0 ? route('Packing-List.admin.hasil.add') : route('Packing-List.pegawai.hasil.add') }}" 
-                           class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Packing</a>
                         <a href="{{ route('Packing-List.admin.hasil.export') }}" 
-                           class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+                           class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export All </a>
                     </div>
         
                     {{-- <form action="{{ route('Packing-List.admin.hasil') }}" method="GET" class="ml-2" style="display: inline;">
@@ -55,15 +53,8 @@
                                 <td>{{$d->keterangan}}</td>
                                 <td>
                                     <a href="{{route('Packing-List.admin.hasil.shows',$d->keterangan)}}">
-                                        <label class="badge badge-gradient-success">
+                                        <label class="btn btn-success">
                                             <i class="fas fa-eye"></i> Show
-                                        </label>
-                                    </a>
-                                    
-                                    
-                                    <a href="">
-                                        <label class="badge badge-gradient-warning">
-                                            <i class="fas fa-print"></i> Print
                                         </label>
                                     </a>
                                 </td>

@@ -11,7 +11,7 @@ class CheckSupp
     {
         // Periksa apakah pengguna adalah pegawai (role = 1)
         if (Auth::check()) {
-            if (in_array(Auth::user()->type, ["Supply"])) {
+            if (in_array(Auth::user()->type, ["Supply","all"])) {
 
             // if (Auth::user()->type == "Ship-Mark"){
                 return $next($request);

@@ -25,8 +25,8 @@
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Packing-List.admin.database.add') : route('Packing-List.pegawai.database.add') }}" 
                    class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Database </a>
-                <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+                {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
+                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
                    <form class="ml-2" action="{{route('Packing-List.admin.database.store.excel')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="excel">

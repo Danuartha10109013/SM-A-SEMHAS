@@ -1,6 +1,6 @@
 @extends('Open-Packing.layout.main')
 @section('title')
-    Tambahkan GM ||
+    Edit Product ||
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)

@@ -25,8 +25,8 @@
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Open-Packing.admin.packing.add.gm',$gm) : route('Open-Packing.pegawai.packing.add') }}" 
                    class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Product</a>
-                <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+                {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
+                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
             </div>
         
             {{-- <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">

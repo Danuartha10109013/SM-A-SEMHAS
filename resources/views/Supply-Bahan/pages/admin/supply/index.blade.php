@@ -24,8 +24,8 @@
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Supply.admin.supply.add') : route('Supply.pegawai.supply.add') }}" 
                    class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 12px">Tambahkan Response</a>
-                <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 12px">Export Excel</a>
+                {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
+                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 12px">Export Excel</a> --}}
             </div>
         
             {{-- <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">

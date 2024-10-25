@@ -20,15 +20,12 @@ class PackingM extends Model
     // Allow mass assignment for the following fields
     protected $fillable = [
         'gm',
-        'attribute',
-        'b_label',
-        'b_aktual',
-        'selisih',
-        'persentase',
-        'stiker',
-        'keterangan',
         'created_at',
         'updated_at',
+        'jenis',
+        'shift_leader',
+        'shift',
+        'operator',
     ];
 
     // Disable auto-incrementing if necessary (optional)

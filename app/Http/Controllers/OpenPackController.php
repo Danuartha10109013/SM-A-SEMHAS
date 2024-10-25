@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PackingDetailM;
 use App\Models\PackingM;
 use Illuminate\Http\Request;
 
@@ -9,21 +10,8 @@ class OpenPackController extends Controller
 {
     public function index(){
         // Select unique 'gm' and aggregate other fields
-        $data = PackingM::selectRaw('gm, 
-                                MIN(attribute) as attribute,
-                                count(attribute) as total,  
-                                MIN(b_label) as b_label, 
-                                MIN(b_aktual) as b_aktual, 
-                                MIN(selisih) as selisih, 
-                                MIN(persentase) as persentase, 
-                                MIN(stiker) as stiker, 
-                                MIN(keterangan) as keterangan, 
-                                MIN(created_at) as created_at')
-                        ->groupBy('gm')
-                        ->get();
-
+        $data = PackingM::select('gm')->distinct()->get();
         
-
         return view('Open-Packing.pages.admin.packing.index', compact('data'));
     }
     
@@ -34,13 +22,25 @@ class OpenPackController extends Controller
     }
 
     public function store(Request $request){
+        // dd($request->all());
         $request->validate([
             'gm' => 'required|string|max:255',
+            'jenis' => 'required|string|max:255',
+            'shift' => 'required|string|max:255',
+            'shift_leader' => 'required|string|max:255',
+            'operator' => 'required|string|max:255',
         ]);
+
+        $shift_leader = $request->shift_leader == 'other' ? $request->other_shift_leader : $request->shift_leader;
 
         PackingM::create([
             'gm' => $request->gm,
+            'jenis' => $request->jenis,
+            'shift' => $request->shift,
+            'shift_leader' => $shift_leader,
+            'operator' => $request->operator,
         ]);
+
 
         return redirect()->route('Open-Packing.admin.packing')->with('success','GM Has Been created');
     }
@@ -60,13 +60,16 @@ class OpenPackController extends Controller
             'keterangan' => 'nullable|string|max:255',
         ]);
 
-        PackingM::create([
-            'gm' => $request->gm,
-            'attribute' => $request->attribute, // Corrected 'atribute' to 'attribute'
+        $cc = PackingM::where('gm',$request->gm)->value('id');
+        // dd($cc);
+
+        PackingDetailM::create([
+            'packing_id' => $cc,
+            'attribute' => $request->attribute, 
             'b_label' => $request->b_label,
             'b_aktual' => $request->b_aktual,
-            'selisih' => $request->b_label - $request->b_aktual, // Corrected calculation
-            'persentase' => number_format(($request->b_label * 0.25) / 100, 4), // Increase decimal precision to 4 places
+            'selisih' => $request->b_label - $request->b_aktual, 
+            'persentase' => number_format(($request->b_label * 0.25) / 100, 4), 
             'stiker' => $request->stiker,
             'keterangan' => $request->keterangan,
         ]);
@@ -77,18 +80,24 @@ class OpenPackController extends Controller
 
     public function show($gm)
     {
-        $data = PackingM::where('gm', $gm)->whereNotNull('attribute')->get();
+        $cc = PackingM::where('gm', $gm)->value('id');
+        // dd($cc);
+        $data = PackingDetailM::where('packing_id',$cc)->get();
+
+        // dd($data);
         return view('Open-Packing.pages.admin.packing.show',compact('data','gm'));
     }
 
     public function edit($id){
-        $data = PackingM::find($id);
-        return view('Open-Packing.pages.admin.packing.edit',compact('data'));
+        $data = PackingDetailM::find($id);
+        $gm = PackingM::where('id',$data->packing_id)->value('gm');
+        // dd($gm);
+        return view('Open-Packing.pages.admin.packing.edit',compact('data','gm'));
     }
 
     public function update(Request $request){
         $request->validate([
-            'gm' => 'required|string|max:255',
+            // 'gm' => 'required|string|max:255',
             'attribute' => 'required|string|max:255',
             'b_label' => 'required|integer',
             'b_aktual' => 'required|integer',
@@ -96,9 +105,10 @@ class OpenPackController extends Controller
             'keterangan' => 'nullable|string|max:255',
         ]);
 
-        $data = PackingM::find($request->id);
+        $data = PackingDetailM::find($request->id);
+        $gm = PackingM::where('id',$data->packing_id)->value('gm');
 
-        $data->gm = $request->gm;
+        // $data->gm = $request->gm;
         $data->attribute = $request->attribute;
         $data->b_label = $request->b_label;
         $data->b_aktual = $request->b_aktual;
@@ -108,20 +118,24 @@ class OpenPackController extends Controller
         $data->keterangan = $request->keterangan;
         $data->update();
 
-        return redirect()->route('Open-Packing.admin.packing.show',$request->gm)->with('success','Product Updated');
+        return redirect()->route('Open-Packing.admin.packing.show',$gm)->with('success','Product Updated');
     }
 
     public function delete($id){
-        PackingM::find($id)->delete();
+        PackingDetailM::find($id)->delete();
 
         return redirect()->back()->with('success', 'Data has been deleted');
     }
 
     public function print($gm){
-        $data = PackingM::where('gm', $gm)->whereNotNull('attribute')->get();
-
+        $data = PackingM::where('gm', $gm)->get();
+        $cc = PackingM::where('gm',$gm)->value('id');
+        $detail = PackingDetailM::where('packing_id',$cc)->get();
         $date = PackingM::where('gm',$gm)->value('created_at');
+        $jenis = PackingM::where('gm',$gm)->value('jenis');
+        $leader = PackingM::where('gm',$gm)->value('shift_leader');
+        
 
-        return view('Open-Packing.pages.admin.packing.print',compact('data','date'));
+        return view('Open-Packing.pages.admin.packing.print',compact('data','detail','date','jenis','leader'));
     }
 }

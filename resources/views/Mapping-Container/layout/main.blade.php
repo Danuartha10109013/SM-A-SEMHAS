@@ -47,9 +47,9 @@
          <!-- Sidebar  -->
          <div class="iq-sidebar">
             @if (Auth::user()->role == 0)
-                @include('Form-Check.layout.admin.sidebar')
+                @include('Mapping-Container.layouts.section.sidebar')
             @elseif (Auth::user()->role == 1)
-                @include('Form-Check.layout.pegawai.sidebar')
+                @include('Mapping-Container.layouts.section.sidebar')
             @endif
          </div>
          <!-- TOP Nav Bar -->

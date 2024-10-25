@@ -1,4 +1,4 @@
-@extends('Form-Check.layout.main')
+@extends('Mapping-Container.layout.main')
 @section('title')
     Form EUP
   @if(Auth::user()->role == 0)

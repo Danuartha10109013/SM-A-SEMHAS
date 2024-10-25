@@ -1,7 +1,7 @@
 @extends('Supply-Bahan.layout.main')
 
 @section('title')
-    Tambahkan GM ||
+    Edit GM ||
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)

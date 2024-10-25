@@ -11,7 +11,8 @@ class CheckTypeMM
     {
         // Periksa apakah pengguna adalah pegawai (role = 1)
         if (Auth::check()) {
-            if (Auth::user()->type == "Mapping"){
+            if (in_array(Auth::user()->type, ["Mapping","Form-Check", "FC&SM", "FC&SM&AD","all"])) {
+
                 return $next($request);
             }
             return response()->view('errors.custom', ['message' => 'Youre not should be in this section'], 403);

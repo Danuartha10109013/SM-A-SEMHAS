@@ -21,6 +21,7 @@ class DatabM extends Model
         'attribute',
         'storage_bin',
         'date',
+        'user_id',
     ];
 
 }

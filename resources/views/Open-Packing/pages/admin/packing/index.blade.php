@@ -41,7 +41,6 @@
               <thead>
                 <tr>
                   <th> No </th>
-                  <th> Date </th>
                   <th> No GM </th>
                   <th> Action </th>
                   <th> Total </th>
@@ -51,7 +50,6 @@
                 @foreach ($data as $d)
                   <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td> {{$d->created_at}} </td>
                     <td> {{$d->gm}} </td>
                     <td><a href="{{route('Open-Packing.admin.packing.add.gm',$d->gm)}}">
                       <label class="badge badge-gradient-primary">
@@ -66,7 +64,12 @@
                         <i class="fas fa-print"></i> Print
                       </label></a>
                     </td>
-                    <td> {{$d->total}} </td>
+                    <td>
+                      @php
+                        $total = \App\Models\PackingM::where('gm',$d->gm)->count();
+                      @endphp
+                      
+                      {{$total}} </td>
 
                     
                   </tr>

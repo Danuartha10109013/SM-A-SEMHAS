@@ -77,6 +77,24 @@
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter name" required>
                     </div>
                     <div class="form-group">
+                        <label for="name">Type</label>
+                        <select type="text" name="type" class="form-control" id="name" placeholder="Enter username" required>
+                            <option value="" selected disabled>--Pilih hak akses--</option>
+                            <option value="SP">Shiping Mark</option>
+                            <option value="MP">Form Check</option>
+                            <option value="FC">Form Check</option>
+                            <option value="OP">Open Packing</option>
+                            <option value="SB">Supply Bahan</option>
+                            <option value="PL">Packing List</option>
+                            <option value="SK">Shipping</option>
+                            <option value="FC&OP">Form Check & Open Packing</option>
+                            <option value="FC&MP">Form Check & Mapping</option>
+                            <option value="FC&SM">Form Check & Shipping Mark</option>
+                            <option value="FC&SM&OP">Form Check & Shipping Mark & Open Packing</option>
+                            <option value="all">Akses Penuh</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="name">Username</label>
                         <input type="text" name="username" class="form-control" id="name" placeholder="Enter username" required>
                     </div>

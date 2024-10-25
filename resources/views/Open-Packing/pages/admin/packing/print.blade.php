@@ -101,7 +101,6 @@
         <img src="{{ asset('Logo_TML.png') }}" alt="Company Logo">
         <div>
             <strong>OPEN</strong>
-            22665
         </div>
     </div>
     <div class="header-title">
@@ -109,7 +108,17 @@
     </div>
     <div class="header-right">
         <p><strong>FM.WH.03.01</strong></p>
+        @if ($jenis == 'CRC')
         <p>CRC / <del>Resin</del> / <del>Alkali</del> <del>Zinc Ingot</del> <del>Alumunium</del> </p>
+        @elseif ($jenis == 'RESIN')
+        <p><del>CRC</del> / Resin / <del>Alkali</del> <del>Zinc Ingot</del> <del>Alumunium</del> </p>
+        @elseif ($jenis == 'ALKALI')
+        <p><del>CRC</del> / <del>Resin</del> / Alkali <del>Zinc Ingot</del> <del>Alumunium</del> </p>
+        @elseif ($jenis == 'ZINC')
+        <p><del>CRC</del> / <del>Resin</del> / <del>Alkali</del> Zinc Ingot <del>Alumunium</del> </p>
+        @elseif ($jenis == 'ALUMUNIUM')
+        <p><del>CRC</del> / <del>Resin</del> / <del>Alkali</del> / <del>Zinc Ingot</del> / Alumunium </p>
+        @endif
         <p style="font-style: italic"><strong> SHIFT: 1 </strong></p>
     </div>
 </div>
@@ -130,7 +139,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($data as $d)
+        @foreach ($detail as $d)
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$d->attribute}}</td>
@@ -144,7 +153,10 @@
         @endforeach
     </tbody>
 </table>
-<p style="text-align: right">Tanggal: {{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}</p>
+<div style="position: space between">
+    <P style="text-align: left"> Shfit Leader : {{$leader}}</P>
+    <p style="text-align: right">Tanggal: {{$date->format('d/m/Y')}}</p>
+</div>
 
 
 <div class="print-button">

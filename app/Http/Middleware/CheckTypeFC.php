@@ -12,7 +12,7 @@ class CheckTypeFC
         // Periksa apakah pengguna adalah pegawai (role = 1)
         if (Auth::check()) {
             // if (Auth::user()->type == "Form-Check" OR "FC&SHP"){
-            if (in_array(Auth::user()->type, ["Form-Check", "FC&SM", "FC&SM&AD"])) {
+            if (in_array(Auth::user()->type, ["Form-Check", "FC&SM", "FC&SM&AD","all"])) {
 
                 return $next($request);
             }

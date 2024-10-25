@@ -22,8 +22,6 @@ class KUserController extends Controller
 
     public function store(Request $request)
     {
-        $type = Auth::user()->type;
-        // dd($request->all());
         // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
@@ -46,7 +44,7 @@ class KUserController extends Controller
             // Debugging to check the stored path
             // dd($avatarPath);  // Check if the path is generated correctly
         }
-
+        $type = $request->type;
         User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -55,6 +53,7 @@ class KUserController extends Controller
             'password' => Hash::make('Tatametal123'), // Replace with the actual password logic
             'role' => $request->input('role'),
             'status' => 1,
+            'type' =>$type,
             'profile' => $avatarPath, // This should be the generated path
         ]);
         

@@ -17,9 +17,11 @@
                 <th>No Coil</th>
                 <th>Storage Bin</th>
                 <th>Tanggal</th>
-                <th>Pengirim</th>
                 <th>Panjang</th>
                 <th>Time</th>
+                <th>Kondisi</th>
+                <th>Tujuan</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
@@ -29,12 +31,14 @@
                     <td>{{ $d->nama_produk }}</td>
                     <td>{{ $d->qty }}</td>
                     <td>{{ $d->uom }}</td>
-                    <td>{{ $d->no_coil }}</td>
+                    <td>{{ $d->attribute }}</td>
                     <td>{{ $d->storage_bin }}</td>
-                    <td>{{ $d->tanggal }}</td>
-                    <td>{{ $d->pengirim }}</td>
+                    <td>{{ $d->date }}</td>
                     <td>{{ $d->panjang }}</td>
-                    <td>{{ $d->time }}</td>
+                    <td>{{ $d->created_at }}</td>
+                    <td>{{ $d->kondisi }}</td>
+                    <td>{{ $d->tujuan }}</td>
+                    <td>{{ $d->keterangan }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -1,7 +1,4 @@
-@extends(Auth::user()->type == "Mapping" ? 'Form-Check.layout.main' : 
-        (Auth::user()->type == "Ship-Mark" ? 'layout.pegawai.main' : 
-         (Auth::user()->type == "Open-Packing" ? 'Open-Packing.layout.main' : 
-         (Auth::user()->type == "Form-Check" ? 'Form-Check.layout.main' : 'Form-Check.layout.main'))))
+@extends('Form-Check.layout.main')
 
 @section('title')
     Profile  @if(Auth::user()->role == 0)

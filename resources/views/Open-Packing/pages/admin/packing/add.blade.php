@@ -37,7 +37,7 @@
                     <option value="Dika">Dika</option>
                     <option value="other">Other</option> <!-- Add this option -->
                 </select>
-            </div>
+              </div>
             
             <!-- Input field for custom keterangan -->
             <div class="mb-3" id="other-keterangan-container" style="display: none;">
@@ -64,7 +64,7 @@
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
-              </div>
+                </div>
               <div class="mb-3">
                   <label for="atribute" class="form-label">Jenis</label>
                   <select type="text" name="jenis" id="atribute" class="form-control" required>

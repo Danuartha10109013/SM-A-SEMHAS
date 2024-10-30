@@ -6,6 +6,7 @@ use App\Http\Middleware\CheckSupp;
 use App\Http\Middleware\CheckType;
 use App\Http\Middleware\CheckTypeADM;
 use App\Http\Middleware\CheckTypeFC;
+use App\Http\Middleware\CheckTypeK;
 use App\Http\Middleware\CheckTypeMM;
 use App\Http\Middleware\CheckTypeOP;
 use App\Http\Middleware\PegawaiMiddleware;
@@ -88,6 +89,18 @@ return Application::configure(basePath: dirname(__DIR__))
         //Packing-List
         $middleware->appendToGroup('Packing-List', [
             CheckList::class,
+        ]);
+    
+        $middleware->appendToGroup('admin', [
+            AdminMiddleware::class,
+        ]);
+    
+        $middleware->appendToGroup('pegawai', [
+            PegawaiMiddleware::class,
+        ]);
+        //Kendaran ck
+        $middleware->appendToGroup('Kendaraan', [
+            CheckTypeK::class,
         ]);
     
         $middleware->appendToGroup('admin', [

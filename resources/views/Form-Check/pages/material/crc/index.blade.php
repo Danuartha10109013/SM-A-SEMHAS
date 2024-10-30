@@ -110,7 +110,6 @@
                     </tbody>
                   </table>
                   <!-- Pagination Links -->
-                  {{ $data->links() }}
                 </div>
               </div>
             </div>

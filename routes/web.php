@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardControlller;
 use App\Http\Controllers\EUPController;
 use App\Http\Controllers\ForkliftController;
 use App\Http\Controllers\InputDataExcel;
+use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\KUserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MappingController;
@@ -495,6 +496,25 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/download',[PListController::class, 'exportexcel'])->name('hasil.export');
             });
                 
+        });
+
+    });
+
+    Route::group(['prefix' => 'Kendaraan', 'middleware' => ['Kendaraan'], 'as' => 'Kendaraan.'], function () {
+        Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+            Route::get('/',[DashboardControlller::class, 'k_admin'])->name('dashboard');
+
+        });
+        Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
+            Route::get('/',[DashboardControlller::class, 'k_pegawai'])->name('dashboard');
+            Route::prefix('check')->group(function () {
+                Route::get('/check',[KendaraanController::class, 'add'])->name('check.add');
+                Route::post('/store',[KendaraanController::class, 'store'])->name('check.store');
+                Route::post('/autosave', [KendaraanController::class, 'autosave'])->name('kendaraan.autosave');
+
+
+            });
+            
         });
 
     });

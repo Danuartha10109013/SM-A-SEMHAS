@@ -274,18 +274,18 @@
             </div>
         </div>
         @endforeach
-        <hr>
+        {{-- <hr> --}}
         <div class="row cc">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <div class="text-center mb-3" style="border: 1px solid #000000; max-width:90%" class="kotak">
-                    <p class="mt-2"><b >KONTAINER</b></p>
+                <div class="text-center mb-0" style="border: 1px solid #000000; max-width:90%" class="kotak">
+                    <p class="mt-3"><b >KONTAINER</b></p>
                 </div>
                 <style>
                      .mapping {
             width: 90%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .mapping td {
             border: 1px solid #000000;
@@ -322,7 +322,7 @@
                             @if($c->a1)
                                <p class="mt-1"><b> {{ $c->a1 }} </b></p>
                                
-                               <img width="30%" src="{{asset('img/'.$c->a1_eye.'.png')}}" alt="{{$c->a1_eye}}">
+                               <img width="40%" src="{{asset('img/'.$c->a1_eye.'.png')}}" alt="{{$c->a1_eye}}">
                             @else
                             {{ $c->a1 }}
                             @endif

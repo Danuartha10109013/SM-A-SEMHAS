@@ -22,6 +22,19 @@
        </div>
     </div>
  </div>
+ @if (request()->routeIs('profile'))
+<div id="sidebar-scrollbar">
+    <nav class="iq-sidebar-menu">
+        <ul id="iq-sidebar-toggle" class="iq-menu">
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Back</span></li>
+
+          <li class="{{ request()->routeIs('Administrator.kelola-user') ? 'active' : '' }}">
+              <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+          </li>
+        </ul>
+    </nav>
+</div>
+@else
  <div id="sidebar-scrollbar">
     <nav class="iq-sidebar-menu">
        <ul id="iq-sidebar-toggle" class="iq-menu">
@@ -51,3 +64,4 @@
     </nav>
     <div class="p-3"></div>
  </div>
+ @endif

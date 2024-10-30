@@ -88,12 +88,16 @@
                             <label>Foto Barang Sesuai</label>
                             <div class="row">
                                 @php
-                                $foto1 = $submission->foto1;
+                                $data = \App\Models\Crc_imageM::where('crc_id',$submission->id)->get();
+                                // $foto1 = $submission->foto1;
 
                                 // Remove double quotes and split the string by '|'
-                                $foto = explode('|', str_replace('"', '', $foto1));
                                 @endphp
-                                @foreach($foto as $f)
+
+                                    @foreach($data as $f)
+                                    @php
+                                        $foto = explode('|', str_replace('"', '', $f->foto));
+                                    @endphp
                                     <div class="col-md-3">
                                         <img src="{{ asset('storage/crc/'.$f) }}" class="img-fluid" alt="Foto Barang">
                                     </div>

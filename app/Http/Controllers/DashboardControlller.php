@@ -6,6 +6,7 @@ use App\Models\CraneM;
 use App\Models\CrcM;
 use App\Models\ForkliftM;
 use App\Models\IngotM;
+use App\Models\KendaraanM;
 use App\Models\PackingM;
 use App\Models\ResinM;
 use App\Models\ShipA;
@@ -67,5 +68,18 @@ class DashboardControlller extends Controller
         $formattedDate = PackingM::min('created_at');
         $response = Carbon::parse($formattedDate)->format('d-m-Y');        
         return view('Packing-List.pages.admin.index',compact('gm','form','response'));
+    }
+
+    public function k_admin(){
+        $gm = null;
+        $form = null;
+        $response = null;
+        return view('Kendaraan.pages.admin.index',compact('gm','form','response'));
+    }
+    
+    public function k_pegawai(){
+        $records= KendaraanM::all();
+        return view('Kendaraan.pages.pegawai.index',compact('records'));
+
     }
 }

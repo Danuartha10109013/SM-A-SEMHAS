@@ -32,7 +32,7 @@ class LoginController extends Controller
     }
 
     // Cek status aktif pengguna
-    if ($user->active == 2) {
+    if ($user->status == 2) {
         return redirect()->back()->with('error', 'Akun Anda tidak aktif.');
     }
 

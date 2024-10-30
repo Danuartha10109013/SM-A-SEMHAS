@@ -41,20 +41,20 @@
                 @csrf
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputUsername1"><b>Checker Pallet</b>
+                        <label for="exampleInputUsername1"><b>Checker Pallet<small style="color: red;">*</small></b>
                         </label>
                         <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
                         <input type="text" class="form-control" id="exampleInputUsername1" value="{{ Auth::user()->name }}" readonly>
                       </div>
 
                     <div class="form-group">
-                        <label for="exampleInputUsername1"><b>Tanggal Pengecekan Pallet</b>
+                        <label for="exampleInputUsername1"><b>Tanggal Pengecekan Pallet<small style="color: red;">*</small></b>
                         </label>
                         <input type="date" name="date" class="form-control" id="exampleInputUsername1" value="" >
                       </div>
 
                       <div class="form-group">
-                        <b>Jenis Pengecekan</b> <br class="mb-3">
+                        <b>Jenis Pengecekan<small style="color: red;">*</small></b> <br class="mb-3">
                         <label><input class="mt-3" type="radio" name="jenis" value="Penerimaan Pallet"> Penerimaan Pallet</label><br>
                         <label><input type="radio" name="jenis" value="Pengecekan Pergantian Shift (Layout Penyimpanan Pallet dan EUP)"> Pengecekan Pergantian Shift (Layout Penyimpanan Pallet dan EUP)</label><br>
                     </div>
@@ -62,7 +62,7 @@
                 <hr class="mt-2">
                     <div class="form-group">
                         <label for="exampleInputPassword1">
-                           <b> Kondisi Kaki Pallet </b><br>
+                           <b> Kondisi Kaki Pallet <small style="color: red;">*</small></b><br>
                         </label>
                 <div class="row mt-3">
                         <div class="col-md-6">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                
+                <hr>
                 <div class="row">
                     <div class="col-md-6">
                         
@@ -95,49 +95,49 @@
                         </div> --}}
                         <div class="form-group">
                           <label for="exampleInputPassword1">
-                           <b> Kondisi Papan Permukaan Pallet </b> <br>
+                           <b> Kondisi Papan Permukaan Pallet <small style="color: red;">*</small></b> <br>
                           </label>
                             <label><input type="checkbox" name="permukaan_pallet" value="Permukaan Papan Rata (Tidak Pecah, Tidak Patah dan Tidak Basah)">
                               <img src="{{asset('pallet3.jpg')}}" width="50%" alt=""><br> Permukaan Papan Rata (Tidak Pecah, Tidak Patah dan Tidak Basah)</label><br>
                         </div>  
-                        
+                        <hr>
                         <div class="form-group">
                           <label for="exampleInputPassword1">
-                           <b> Kondisi Ketebalan Papan Pallet </b> <br>
+                           <b> Kondisi Ketebalan Papan Pallet <small style="color: red;">*</small></b> <br>
                           </label>
                             <label><input type="checkbox" name="ketebalan_pallet" value="Ketebalan Papan (Tidak Pecah, Tidak Patah dan Tidak Basah)">
                               <img src="{{asset('pallet4.png')}}" width="50%" alt=""><br> Ketebalan Papan (Tidak Pecah, Tidak Patah dan Tidak Basah)</label><br>
                         </div>  
-                        
+                        <hr>
                         <div class="form-group">
                           <label for="exampleInputPassword1">
-                            <b>Kondisi Paku pada Pallet </b> <br>
+                            <b>Kondisi Paku pada Pallet <small style="color: red;">*</small></b> <br>
                           </label>
                             <label><input type="checkbox" name="paku_pallet" value="Paku tidak Keluar">
                               <img src="{{asset('pallet4.png')}}" width="50%" alt=""><br> Paku tidak Keluar</label><br>
                         </div>  
-                        
+                        <hr>
                     
                     </div>
                     <div class="col-md-6">
 
                       <div class="form-group">
                         <label for="exampleInputPassword1">
-                         <b> Kondisi Paku pada Pallet </b> <br>
+                         <b> Kondisi Paku pada Pallet <small style="color: red;">*</small></b> <br>
                         </label>
                           <label><input type="checkbox" name="keluar_pallet" value="Paku Keluar">
                             <img src="{{asset('pallet9.png')}}" width="50%" alt=""><br> Paku Keluar</label><br>
                       </div>
-                        
+                        <hr>
                         
                         <div class="form-group">
-                         <b> Kondisi Pallet Sesuai Standar Warehouse TML</b>
+                         <b> Kondisi Pallet Sesuai Standar Warehouse TML <small style="color: red;">*</small></b>
                             <br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="sesuai" value="Ya"> Ya</label><br>
                                 <label><input type="radio" name="sesuai" value="Tidak"> Tidak</label><br>
                         </div>
                         <div class="form-group">
-                          <b>Proses yang dilakukan?</b>
+                          <b>Proses yang dilakukan?<small style="color: red;">*</small></b>
                             <br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="action" value="Pallet diterima"> Pallet diterima</label><br>
                                 <label><input type="radio" name="action" value="Pallet ditolak"> Pallet ditolak</label><br>
@@ -145,7 +145,7 @@
                                 <label><input type="radio" name="action" value="Pallet dilayout OK"> Pallet dilayout OK</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload7"><b>Bukti  Foto </b><br></label>
+                            <label for="fotoUpload7"><b>Bukti  Foto <small style="color: red;">*</small></b><br></label>
                             <input type="file" class="" name="foto7[]" id="fotoUpload7" multiple>
                             <div id="fileList7"></div>
                         </div>     
@@ -169,10 +169,11 @@
                                 }
                             });
                         </script>
+                    <hr>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">
-                       <b> Kondisi Kaki Pallet</b> <br>
+                       <b> Kondisi Kaki Pallet</b> <small style="color: red;">*</small><br>
                       </label>
                       <div class="row">
                         <div class="col-md-6">
@@ -183,13 +184,13 @@
                         <div class="col-md-6">
                           <label><input type="checkbox" name="kaba_asimetris" value="Bentuk kaki bagian atas tidak simetris (Tidak Balok)">
                             <img src="{{asset('pallet6.jpg')}}" width="50%" alt=""><br> Bentuk kaki bagian atas tidak simetris (Tidak Balok)</label><br>
-                      
+                          </div>
                         </div>
-                      </div>
+                        <hr>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">
-                       <b> Kondisi Papan Permukaan Pallet </b><br>
+                       <b> Kondisi Papan Permukaan Pallet <small style="color: red;">*</small></b><br>
                       </label>
                       <div class="row">
                         <div class="col-md-6">

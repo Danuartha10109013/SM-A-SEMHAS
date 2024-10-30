@@ -112,7 +112,7 @@
          @if (Auth::user()->role == 0)
          <a href="{{route('Mapping.admin.shipment')}}" class="menu-item">
         @else
-        <a href="{{route('Mapping.pegawai.shipment')}}" class="menu-item">
+        <a href="" class="menu-item">
          @endif
             <div>
                <i class="mdi mdi-map-marker-path"></i>
@@ -140,20 +140,39 @@
                <div class="menu-title">Open Packing</div>
             </div>
          </a>
+         @if (Auth::user()->role == 0)
         <a href="{{route('Supply.admin.dashboard')}}" class="menu-item">
+           @else
+           <a href="{{route('Supply.pegawai.dashboard')}}" class="menu-item">
+         @endif
             <div>
                <i class="mdi mdi-warehouse"></i>
                <div class="menu-title">Supply Bahan</div>
             </div>
          </a>
+         @if (Auth::user()->role == 0)
         <a href="{{route('Packing-List.admin.dashboard')}}" class="menu-item">
+           @else
+           <a href="{{route('Packing-List.admin.dashboard')}}" class="menu-item">
+         @endif
             <div>
                <i class="mdi mdi-format-list-checks"></i>
                <div class="menu-title">Packing List</div>
             </div>
          </a>
-        
+         @if (Auth::user()->role == 0)
+
+         <a href="{{route('Kendaraan.admin.dashboard')}}" class="menu-item">
+            @else
+            <a href="{{route('Kendaraan.pegawai.dashboard')}}" class="menu-item">
+            @endif
+            <div>
+               <i class="mdi mdi-car"></i>
+               <div class="menu-title">Checklist Kendaraan</div>
+            </div>
+         </a>
       </div>
+      
       <br>
       <div class="menu-container">
 

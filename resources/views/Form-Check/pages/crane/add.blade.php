@@ -42,18 +42,43 @@
                 @csrf
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputUsername1">NAMA OPERATOR CHEKLIST CRANE</label>
+                        <label for="exampleInputUsername1">NAMA OPERATOR CHEKLIST CRANE <small style="color: red;">*</small></label>
                         <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
                         <input type="text" class="form-control" id="exampleInputUsername1" value="{{ Auth::user()->name }}" readonly>
                       </div>
+
+                      <div class="mb-3">
+                        <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
+                        <select type="text" name="shift_leader" id="team" class="form-control" required>
+                          <option value="" selected disabled>--Pilih Shift Leader--</option>
+                          <option value="Danu">Danu</option>
+                          <option value="Riyan H">Riyan H</option>
+                          <option value="Freddy">Freddy</option>
+                          <option value="Dika">Dika</option>
+                          <option value="other">Other</option> <!-- Add this option -->
+                      </select>
+                    </div>
+                  
+                  <!-- Input field for custom keterangan -->
+                  <div class="mb-3" id="other-keterangan-container" style="display: none;">
+                      <label for="other-keterangan" class="form-label">Please specify<small style="color: red;">*</small></label>
+                      <input type="text" name="other_sift_leader" id="other-keterangan" class="form-control" placeholder="Enter new Shift Leader">
+                  </div>
+                  <script>
+                      document.getElementById('team').addEventListener('change', function() {
+                          var otherKeteranganContainer = document.getElementById('other-keterangan-container');
+                          if (this.value === 'other') {
+                              otherKeteranganContainer.style.display = 'block'; // Show the custom input field
+                          } else {
+                              otherKeteranganContainer.style.display = 'none'; // Hide the custom input field
+                          }
+                      });
+                  </script>
                     <div class="form-group">
-                        <label for="exampleInputUsername1">NAMA SHIFT LEADER BERTUGAS</label>
-                        <input type="text" class="form-control" name="shift_leader" id="exampleInputUsername1" required>
-                      </div>
-                    <div class="form-group">
-                        <label for="label">KAPASITAS/AREA CRANE
+                        <label for="label">KAPASITAS/AREA CRANE<small style="color: red;">*</small>
                         </label>
                         <select class="form-control" name="jenis_crane" id="exampleSelectOption" required>
+                            <option value="" selected disabled>--Pilih Kapasistas Crane--</option>
                             <option value="30 Ton" {{ old('jenis_crane') == '30 Ton' ? 'selected' : '' }}>30 Ton</option>
                             <option value="10 Ton" {{ old('jenis_crane') == '10 Ton' ? 'selected' : '' }}>10 Ton</option>
                             <option value="5 Ton L8 (No. 1)" {{ old('jenis_crane') == '5 Ton L8 (No. 1)' ? 'selected' : '' }}>5 Ton L8 (No. 1)</option>
@@ -61,20 +86,21 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="label">SHIFT
+                        <label for="label">SHIFT<small style="color: red;">*</small>
                         </label>
                         <select class="form-control" name="shift" id="exampleSelectOption" required>
+                            <option value="" selected disabled>--Pilih Sift--</option>
                             <option value="1" {{ old('jenis_crane') == '1' ? 'selected' : '' }}>1</option>
                             <option value="2" {{ old('jenis_crane') == '2' ? 'selected' : '' }}>2</option>
                             <option value="3" {{ old('jenis_crane') == '3' ? 'selected' : '' }}>3</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Hari / Tanggal</label>
+                        <label for="exampleInputEmail1">Hari / Tanggal<small style="color: red;">*</small></label>
                         <input type="Date" class="form-control" name="date" id="exampleInputEmail1" >
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Jam Checklist Crane</label>
+                        <label for="exampleInputPassword1">Jam Checklist Crane<small style="color: red;">*</small></label>
                         <input type="time" class="form-control" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                       </div>
                 </div>
@@ -85,9 +111,9 @@
                     <b>O</b>: KONDISI TIDAK BAIK NAMUN MASIH BISA DIGUNAKAN</p>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Start <br>
+                                Pengecekan Tombol Start <small style="color: red;">*</small> <br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -115,9 +141,10 @@
                             <input type="text" class="form-control" name="ket_start" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <hr>
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Switch On-Off <br>
+                                Pengecekan Tombol Switch On-Off <small style="color: red;">*</small> <br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -143,10 +170,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tombol Switch On-Off</label>
                             <input type="text" class="form-control" name="ket_switch" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Up <br>
+                                Pengecekan Tombol Up <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -172,10 +200,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tombol Up</label>
                             <input type="text" class="form-control" name="ket_up" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Down <br>
+                                Pengecekan Tombol Down <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -201,10 +230,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tombol Down</label>
                             <input type="text" class="form-control" name="ket_down" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Cross Travel <br>
+                                Pengecekan Tombol Cross Travel <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -230,10 +260,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tombol Cross Travel</label>
                             <input type="text" class="form-control" name="ket_ctravel" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Long Travel <br>
+                                Pengecekan Tombol Long Travel <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -259,10 +290,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tombol Long Travel</label>
                             <input type="text" class="form-control" name="ket_ltravel" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Emergency <br>
+                                Pengecekan Tombol Emergency <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -288,10 +320,11 @@
                             <label for="exampleInputPassword1">Pengecekan Tombol Emergency</label>
                             <input type="text" class="form-control" name="ket_emergency" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Speed 1 <br>
+                                Pengecekan Tombol Speed 1 <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -317,10 +350,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tombol Speed 1</label>
                             <input type="text" class="form-control" name="ket_speed1" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tombol Speed 2 <br>
+                                Pengecekan Tombol Speed 2 <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -346,10 +380,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tombol Speed 2</label>
                             <input type="text" class="form-control" name="ket_speed2" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Pully Bottom Block<br>
+                                Pengecekan Pully Bottom Block <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -375,10 +410,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Pully Bottom Block</label>
                             <input type="text" class="form-control" name="ket_block" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Lifting Hook Lockert <br>
+                                Pengecekan Lifting Hook Lockert <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -404,14 +440,15 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Wire Rope</label>
                             <input type="text" class="form-control" name="ket_lockert" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+
                     </div>
 
                     
                     <div class="col-md-6">
                         
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Wire Rope <br>
+                                Pengecekan Wire Rope <small style="color: red;">*</small> <br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -438,10 +475,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Wire Rope</label>
                             <input type="text" class="form-control" name="ket_wire" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Lampu Sirine Long Travel <br>
+                                Pengecekan Lampu Sirine Long Travel <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -468,10 +506,11 @@
                             <label for="exampleInputPassword1">Keterangan Pengecekan Lampu Sirine Long Travel</label>
                             <input type="text" class="form-control" name="ket_sltravel" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Sirine Long Travel <br>
+                                Sirine Long Travel <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -498,10 +537,11 @@
                             <label for="exampleInputPassword1">Keterangan Sirine Long Travel</label>
                             <input type="text" class="form-control" name="ket_sirinelt" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Brake Long Travel Saat Tidak Membawa Beban <br>
+                                Brake Long Travel Saat Tidak Membawa Beban <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -528,10 +568,11 @@
                             <label for="exampleInputPassword1">Keterangan Brake Long Travel Saat Tidak Membawa Beban</label>
                             <input type="text" class="form-control" name="ket_brakeno" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Brake Long Travel Saat Membawa Beban <br>
+                                Brake Long Travel Saat Membawa Beban <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -558,10 +599,11 @@
                             <label for="exampleInputPassword1">Keterangan Brake Long Travel Saat Membawa Beban</label>
                             <input type="text" class="form-control" name="ket_brakeya" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Brake Cross Travel Saat Tidak Membawa Beban <br>
+                                Brake Cross Travel Saat Tidak Membawa Beban <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -588,10 +630,11 @@
                             <label for="exampleInputPassword1">Keterangan Brake Cross Travel Saat Tidak Membawa Beban</label>
                             <input type="text" class="form-control" name="ket_bcno" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Brake Cross Travel Saat Membawa Beban <br>
+                                Brake Cross Travel Saat Membawa Beban <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -618,10 +661,11 @@
                             <label for="exampleInputPassword1">Keterangan Brake Cross Travel Saat Membawa Beban</label>
                             <input type="text" class="form-control" name="ket_bcya" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Brake Up-Down Saat Tidak Membawa Beban <br>
+                                Brake Up-Down Saat Tidak Membawa Beban <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -648,10 +692,11 @@
                             <label for="exampleInputPassword1">Keterangan Brake Up-Down Saat Tidak Membawa Beban</label>
                             <input type="text" class="form-control" name="ket_updno" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Brake Up-Down saat Membawa Beban <br>
+                                Brake Up-Down saat Membawa Beban <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -678,10 +723,11 @@
                             <label for="exampleInputPassword1">Keterangan Brake Up-Down saat Membawa Beban</label>
                             <input type="text" class="form-control" name="ket_updya" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Cable/roda Roller untuk Cross Travel <br>
+                                Cable/roda Roller untuk Cross Travel <small style="color: red;">*</small><br>
                                 <b>BERFUNGSI NORMAL</b>
                             </label>
                             <div class="form-check ml-3">
@@ -717,7 +763,11 @@
                             <label for="exampleInputPassword1">CATATAN</label>
                             <input type="text" class="form-control" name="catatan" id="exampleInputPassword1" placeholder="Masukan catatan jika ada">
                         </div>
-                        <div class="form-group p-3 border rounded bg-secondary">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nama MTC yang bertugas<small style="color: red;">*</small></label>
+                            <input type="text" class="form-control" name="mtc" id="exampleInputPassword1" placeholder="Masukan MTC ">
+                        </div>
+                        {{-- <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
                                 NAMA MTC YANG BERTUGAS <br>
                                 <b>BERFUNGSI NORMAL</b>
@@ -735,7 +785,7 @@
                                     O
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 

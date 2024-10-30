@@ -40,7 +40,7 @@ class DatabaseImport implements ToCollection,ToModel
                     $data = new DatabM;
                     $data->kode = $row[1]; // Ensure this is not null
                     $data->nama_produk = $row[2];
-                    $data->qty = $row[9];
+                    $data->qty = str_replace(',', '', $row[9]); // Remove any commas from the qty value
                     $data->uom = $row[10];
                     $data->attribute = $row[11];
                     $data->storage_bin = $row[12];

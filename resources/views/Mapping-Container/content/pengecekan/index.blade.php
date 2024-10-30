@@ -1,4 +1,4 @@
-@extends('Form-Check.layout.main')
+@extends('Mapping-Container.layout.main')
 @section('title')
     Form EUP
   @if(Auth::user()->role == 0)
@@ -104,7 +104,7 @@
                                 name="customer"
                                 aria-label="Username"
                                 aria-describedby="basic-addon41"
-                                value="{{$d->Kepada}}" readonly />
+                                value="{{$d->kepada}}" readonly />
                         </div>
                         @foreach ($pengecekan as $p)
                         <div class="input-group">

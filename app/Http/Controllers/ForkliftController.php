@@ -101,12 +101,18 @@ class ForkliftController extends Controller
             'ket_ban' => 'nullable|string|max:255',
             'ket_fork' => 'nullable|string|max:255',
             'ket_teba' => 'nullable|string|max:255',
+            'other_sift_leader' => 'nullable|string|max:255', // Add validation for other shift leader input
+
         ]);
 
         // Store the validated data
         $checklist = new ForkliftM;
         $checklist->user_id = $request->user_id;
-        $checklist->shift_leader = $request->shift_leader;
+        if($request->shift_leader == 'other'){
+            $checklist->shift_leader = $request->other_sift_leader;
+        }else{
+            $checklist->shift_leader = $request->shift_leader;
+        }
         $checklist->jenis_forklift = $request->jenis_forklift;
         $checklist->shift = $request->shift;
         $checklist->date = $request->date;

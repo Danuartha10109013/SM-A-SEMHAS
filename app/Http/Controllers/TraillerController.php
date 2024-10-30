@@ -102,7 +102,10 @@ class TraillerController extends Controller
         'ket_fancing' => 'nullable|string',
         'ket_triangle' => 'nullable|string',
         'ket_tools' => 'nullable|string',
+        'other_sift_leader' => 'nullable|string|max:255', // Add validation for other shift leader input
     ]);
+
+    $validatedData['shift_leader'] = $request->shift_leader == 'other' ? $request->other_sift_leader : $request->shift_leader;
 
     TraillerM::create($validatedData);
 

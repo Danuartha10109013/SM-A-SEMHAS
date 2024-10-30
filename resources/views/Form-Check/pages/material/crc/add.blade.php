@@ -42,29 +42,30 @@
                 @csrf
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="exampleInputUsername1">PENERIMA</label>
+                        
+                        <label for="exampleInputUsername1">PENERIMA<small style="color: red;">*</small></label>
                         <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
                         <input type="text" class="form-control" id="exampleInputUsername1" value="{{ Auth::user()->name }}" readonly>
                       </div>
                     <div class="form-group">
-                        <label for="exampleInputUsername1">NOMOR DOKUMEN</label>
+                        <label for="exampleInputUsername1">NOMOR DOKUMEN<small style="color: red;">*</small></label>
                         <input type="text" class="form-control" name="shift_leader" id="exampleInputUsername1" required>
                       </div>
                    
                     
                     <div class="form-group">
-                        <label for="exampleInputEmail1">TANGGAL SURAT JALAN</label>
+                        <label for="exampleInputEmail1">TANGGAL SURAT JALAN<small style="color: red;">*</small></label>
                         <input type="Date" class="form-control" name="date" id="exampleInputEmail1" >
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Jam Checklist </label>
+                        <label for="exampleInputPassword1">Jam Checklist <small style="color: red;">*</small></label>
                         <input type="time" class="form-control" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                       </div>
                 </div>
                 <hr class="mt-2">
                     <div class="form-group">
                         <label for="exampleInputPassword1">
-                            PENGIRIM/SUPPLIER <br>
+                            PENGIRIM/SUPPLIER <small style="color: red;">*</small><br>
                         </label>
                 <div class="row mt-3">
                         <div class="col-md-6">
@@ -100,9 +101,9 @@
                         
                         
                         <div class="form-group">
-                            <label for="jumlahDropdown">Jumlah</label>
+                            <label for="jumlahDropdown">Jumlah<small style="color: red;">*</small></label>
                             <select class="form-control" name="ket_awal" id="jumlahDropdown">
-                                <option value="">Pilih jumlah</option>
+                                <option value="" selected disabled>--Pilih jumlah--</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -110,16 +111,16 @@
                                 <option value="5">5</option>
                             </select>
                         </div>
-                        
+                        <hr>
 
                         <div class="form-group">
-                            CUACA <br class="mb-3">
+                            CUACA <small style="color: red;">*</small><br class="mb-3">
                             <label><input class="mt-3" type="radio" name="cuaca" value="Cerah"> Cerah</label><br>
                             <label><input type="radio" name="cuaca" value="Berawan"> Berawan</label><br>
                             <label><input type="radio" name="cuaca" value="Hujan"> Hujan</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload">FOTO <br></label>
+                            <label for="fotoUpload">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto[]" id="fotoUpload" multiple>
                             <div id="fileList"></div>
                         </div>     
@@ -128,14 +129,15 @@
                             <label for="exampleInputPassword1">KETERANGAN</label>
                             <input type="text" class="form-control" name="keterangan" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>  
+                        <hr>
                         
                         <div class="form-group">
-                                BARANG SESUAI SURAT JALAN <br class="mb-3">
+                                BARANG SESUAI SURAT JALAN <small style="color: red;">*</small><br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="sesuai" value="sesuai"> Sesuai</label><br>
                                 <label><input type="radio" name="sesuai" value="tidak sesuai"> Tidak Sesuai</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload1">FOTO <br></label>
+                            <label for="fotoUpload1">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto1[]" id="fotoUpload1" multiple>
                             <div id="fileList1"></div>
                         </div>     
@@ -164,14 +166,15 @@
                             <label for="exampleInputPassword1">KETERANGAN</label>
                             <input type="text" class="form-control" name="keterangan1" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
                         <div class="form-group">
-                                KONDISI KEMASAN BAIK <br class="mb-3">
+                                KONDISI KEMASAN BAIK <small style="color: red;">*</small><br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="baik" value="baik"> Baik</label><br>
                                 <label><input type="radio" name="baik" value="tidak baik"> Tidak Baik</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload2">FOTO <br></label>
+                            <label for="fotoUpload2">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto2[]" id="fotoUpload2" multiple>
                             <div id="fileList2"></div>
                         </div>     
@@ -201,14 +204,15 @@
                             <input type="text" class="form-control" name="keterangan2" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
 
+                        <hr>
 
                         <div class="form-group">
-                                KERING / BASAH <br class="mb-3">
+                                KERING / BASAH <small style="color: red;">*</small><br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="kering" value="Kering/Tidak kena air"> Kering/Tidak kena air</label><br>
                                 <label><input type="radio" name="kering" value="Basah/Terdapat bercak bekas terkena air"> Basah/Terdapat bercak bekas terkena air</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload3">FOTO <br></label>
+                            <label for="fotoUpload3">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto3[]" id="fotoUpload3" multiple>
                             <div id="fileList3"></div>
                         </div>     
@@ -237,15 +241,16 @@
                             <label for="exampleInputPassword1">KETERANGAN</label>
                             <input type="text" class="form-control" name="keterangan3" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            KONDISI PENGIKAT (STRAPPING) KENCANG                            <br class="mb-3">
+                            KONDISI PENGIKAT (STRAPPING) KENCANG    <small style="color: red;">*</small>                        <br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="kencang" value="Kencang"> Kencang</label><br>
                                 <label><input type="radio" name="kencang" value="Tidak kencang/ada yang putus"> Tidak kencang/ada yang putus</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload4">FOTO <br></label>
+                            <label for="fotoUpload4">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto4[]" id="fotoUpload4" multiple>
                             <div id="fileList4"></div>
                         </div>     
@@ -274,15 +279,16 @@
                             <label for="exampleInputPassword1">KETERANGAN</label>
                             <input type="text" class="form-control" name="keterangan4" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
                         
                         <div class="form-group">
-                            JUMLAH SESUAI SURAT JALAN
+                            JUMLAH SESUAI SURAT JALAN<small style="color: red;">*</small>
                             <br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="jumlahin" value="Sesuai"> Sesuai</label><br>
                                 <label><input type="radio" name="jumlahin" value="Tidak Sesuai"> Tidak Sesuai</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload5">FOTO <br></label>
+                            <label for="fotoUpload5">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto5[]" id="fotoUpload5" multiple>
                             <div id="fileList5"></div>
                         </div>     
@@ -311,16 +317,17 @@
                             <label for="exampleInputPassword1">KETERANGAN</label>
                             <input type="text" class="form-control" name="keterangan5" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
                         
                         
                         <div class="form-group">
-                            RANTAI DIALAS KARET BAN LUAR
+                            RANTAI DIALAS KARET BAN LUAR<small style="color: red;">*</small>
                             <br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="alas" value="Di atas alas karet ban"> Di atas alas karet ban</label><br>
                                 <label><input type="radio" name="alas" value="Tidak terdapat alas karet ban"> Tidak terdapat alas karet ban</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload6">FOTO <br></label>
+                            <label for="fotoUpload6">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto6[]" id="fotoUpload6" multiple>
                             <div id="fileList6"></div>
                         </div>     
@@ -350,15 +357,16 @@
                             <label for="exampleInputPassword1">KETERANGAN</label>
                             <input type="text" class="form-control" name="keterangan6" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
                         
                         <div class="form-group">
-                            MENGGUNAKAN SIDE WALL
+                            MENGGUNAKAN SIDE WALL<small style="color: red;">*</small>
                             <br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="wall" value="Menggunakan side wall"> Menggunakan side wall</label><br>
                                 <label><input type="radio" name="wall" value="Tidak menggunakan side wall"> Tidak menggunakan side wall</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload7">FOTO <br></label>
+                            <label for="fotoUpload7">FOTO <small style="color: red;">*</small><br></label>
                             <input type="file" class="" name="foto7[]" id="fotoUpload7" multiple>
                             <div id="fileList7"></div>
                         </div>     
@@ -389,9 +397,10 @@
                             <label for="exampleInputPassword1">KETERANGAN</label>
                             <input type="text" class="form-control" name="keterangan7" id="exampleInputPassword1" placeholder="Masukan keterangan jika ada">
                         </div>
+                        <hr>
 
                         <div class="form-group">
-                            BAN DI GANJAL                          
+                            BAN DI GANJAL            <small style="color: red;">*</small>              
                             <br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="perganjalan" value="Ya"> Ya</label><br>
                                 <label><input type="radio" name="perganjalan" value="Tidak"> Tidak</label><br>

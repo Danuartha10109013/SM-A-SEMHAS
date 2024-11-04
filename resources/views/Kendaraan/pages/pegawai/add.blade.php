@@ -50,15 +50,16 @@
             CHECKLIST KENDARAAN
         </div>
         <form action="{{ route('Kendaraan.pegawai.check.store') }}" enctype="multipart/form-data" method="POST">
-        <div class="no-urut">
+            @csrf
+        
+            <div class="no-urut">
             <p>FM.WH.07.03</p>
-            NO. URUT: <input type="text" name="no_urut" value="1"><br>
+            NO. URUT: <input type="text" name="no_urut" ><br>
             TGL: <input type="text" name="tanggal" value="{{ date('d-m-Y') }}" readonly><br>
             IN (Jam): <input type="text" name="in" value="{{ now()->format('H:i:s') }}" readonly>
         </div>
     </div>
 
-        @csrf
         <table>
             <!-- Section A: Data Ekspedisi -->
             <tr>
@@ -82,13 +83,13 @@
             <tr>
                 <td>2</td>
                 <td>No Mobil (Foto)</td>
-                <td><input type="file" name="no_mobil" required></td>
+                <td><input type="text" name="no_mobil" required> &nbsp;&nbsp;<input type="file" name="no_mobil_foto" ></td>
                 <td><input type="text" name="ket_no_mobil"></td>
             </tr>
             <tr>
                 <td>3</td>
                 <td>No Kontainer (Foto)</td>
-                <td><input type="file" name="no_kontainer" required></td>
+                <td><input type="text" name="no_kontainer" required> &nbsp;&nbsp;<input type="file" name="no_kontainer_foto" ></td>
                 <td><input type="text" name="ket_no_kontainer"></td>
             </tr>
             <tr>
@@ -108,7 +109,7 @@
             <tr>
                 <td>1</td>
                 <td>Nama Sopir/Kenek</td>
-                <td><input type="text" name="nama_sopir" required></td>
+                <td><input type="text" name="nama_sopir" placeholder="" required><small style='color:red'>*</small>  </td>
                 <td><input type="text" name="ket_nama_sopir"></td>
             </tr>
             <tr>

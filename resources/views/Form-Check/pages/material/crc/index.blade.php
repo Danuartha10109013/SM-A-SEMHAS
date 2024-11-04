@@ -29,9 +29,9 @@
       <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex">
             <a href="{{ Auth::user()->role == 0 ? route('Form-Check.admin.crc.add') : route('Form-Check.pegawai.crc.add') }}" 
-               class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+               class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
             <a href="{{ route('Form-Check.admin.forklift.export') }}" 
-               class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+               class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
         </div>
     
         <form action="{{ route('Form-Check.admin.crc') }}" method="GET" class="ml-2" style="display: inline;">
@@ -39,7 +39,7 @@
             <input type="hidden" name="sort" value="{{ $sort }}">
             <input type="hidden" name="direction" value="{{ $direction }}">
             <button style="border: none; padding: 0; cursor: pointer;" type="submit"> 
-                <label class="badge badge-gradient-danger" style="text-decoration: none;">Search</label>
+                <label class="btn btn-danger" style="text-decoration: none;">Search</label>
             </button>
         </form>
     </div>
@@ -94,15 +94,15 @@
                         
                         <td>
                           @if (Auth::user()->role == 0)
-                          <a href="{{route('Form-Check.admin.crc.show', $d->id)}}"> <label class="badge badge-gradient-primary">detail</label></a>
-                           <a href="{{route('Form-Check.admin.crc.print', $d->id)}}"> <label class="badge badge-gradient-success">print</label></a>
+                          <a href="{{route('Form-Check.admin.crc.show', $d->id)}}"> <label class="btn btn-primary">detail</label></a>
+                           <a href="{{route('Form-Check.admin.crc.print', $d->id)}}"> <label class="btn btn-success">print</label></a>
                            <form action="{{ route('Form-Check.admin.crc.destroy', $d->id) }}" method="POST" class="ml-2">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="badge badge-gradient-danger">Hapus</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
                           @else
-                           <a href="{{route('Form-Check.pegawai.crc.show', $d->id)}}"> <label class="badge badge-gradient-primary">detail</label></a>
+                           <a href="{{route('Form-Check.pegawai.crc.show', $d->id)}}"> <label class="btn btn-primary">detail</label></a>
                           @endif
                           </td>
                     </tr>

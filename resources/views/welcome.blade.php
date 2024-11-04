@@ -171,6 +171,17 @@
                <div class="menu-title">Checklist Kendaraan</div>
             </div>
          </a>
+         @if (Auth::user()->role == 0)
+
+         <a href="{{route('Kendaraan.admin.dashboard')}}" class="menu-item">
+            @else
+            <a href="{{route('Kendaraan.pegawai.dashboard')}}" class="menu-item">
+            @endif
+            <div>
+               <i class="mdi mdi-qrcode"></i>
+               <div class="menu-title"> Scan Layout</div>
+            </div>
+         </a>
       </div>
       
       <br>

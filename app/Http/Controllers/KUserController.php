@@ -64,7 +64,7 @@ class KUserController extends Controller
 
     public function edit($id){
         $data = User::find($id);
-        return view('Administrator.user.edit',compact('data'));
+        return view('user.edit',compact('data'));
     }
 
 

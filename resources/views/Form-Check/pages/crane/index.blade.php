@@ -29,17 +29,17 @@
       <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex">
             <a href="{{ Auth::user()->role == 0 ? route('Form-Check.admin.crane.add') : route('Form-Check.pegawai.crane.add') }}" 
-               class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+               class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
             <a href="{{ route('Form-Check.admin.crane.export') }}" 
-               class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
+               class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
         </div>
     
         <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">
             <input type="text" name="search" placeholder="Search By Responden" class="form-control d-inline" style="width: auto; display: inline;" value="{{ $searchTerm }}">
             <input type="hidden" name="sort" value="{{ $sort }}">
             <input type="hidden" name="direction" value="{{ $direction }}">
-            <button style="border: none; padding: 0; cursor: pointer;" type="submit"> 
-                <label class="badge badge-gradient-danger" style="text-decoration: none;">Search</label>
+            <button class="btn btn-success"  type="submit"> 
+                Search
             </button>
         </form>
     </div>
@@ -93,16 +93,16 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if (Auth::user()->role == 0)
-                                                    <a href="{{ route('Form-Check.admin.crane.print', $d->id) }}" class="badge badge-gradient-success mr-2">Print</a>
+                                                    <a href="{{ route('Form-Check.admin.crane.print', $d->id) }}" class="btn btn-success mr-2">Print</a>
                                                     <form action="{{ route('Form-Check.admin.crane.destroy', $d->id) }}" method="POST" class="ml-2" style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="badge badge-gradient-danger" >
-                                                          <label for="" style="border: none; padding: 0; cursor: pointer;">Hapus</label>
+                                                        <button type="submit" class="btn btn-danger" >
+                                                          Hapus
                                                         </button>
                                                     </form>
                                                 @else
-                                                    <a href="{{ route('Form-Check.pegawai.crane.print', $d->id) }}" class="badge badge-gradient-success">Print</a>
+                                                    <a href="{{ route('Form-Check.pegawai.crane.print', $d->id) }}" class="btn btn-success">Print</a>
                                                 @endif
                                             </div>
                                         </td>

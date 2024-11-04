@@ -19,7 +19,7 @@ class KendaraanM extends Model
         'ket_nama_sopir', 'ket_helm', 'ket_celana_panjang', 'ket_baju_lengan_panjang', 
         'ket_sepatu', 'ket_sim', 'ket_masa_berlaku_sim', 'ket_stnk', 'ket_masa_berlaku_stnk', 
         'ket_kir', 'ket_masa_berlaku_kir', 'ket_surat_pengantar_ekspedisi', 
-        'ket_segel', 'user_id'
+        'ket_segel', 'user_id','no_kontainer_foto','no_mobil_foto','jam','tanggal'
     ];
     
 }

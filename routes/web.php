@@ -511,8 +511,8 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/check',[KendaraanController::class, 'add'])->name('check.add');
                 Route::post('/store',[KendaraanController::class, 'store'])->name('check.store');
                 Route::post('/autosave', [KendaraanController::class, 'autosave'])->name('kendaraan.autosave');
-
-
+                Route::put('/update/{id}', [KendaraanController::class, 'update'])->name('kendaraan.update');
+                Route::delete('/delete/{id}', [KendaraanController::class, 'delete'])->name('kendaraan.delete');
             });
             
         });

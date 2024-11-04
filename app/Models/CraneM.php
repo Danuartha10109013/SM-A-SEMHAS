@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CraneM extends Model
 {
     // Specify the table name if it doesn't follow the Laravel naming convention
-    protected $table = 'crane_checklists';
+    protected $table = 'crane';
 
     // Define the fillable fields
     protected $fillable = [

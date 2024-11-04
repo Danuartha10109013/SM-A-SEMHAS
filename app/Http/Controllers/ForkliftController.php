@@ -185,7 +185,7 @@ class ForkliftController extends Controller
     }
     public function exportexcel(){
         $date = now()->format('d-m-Y'); 
-        return Excel::download(new ForkliftExportExcel, $date . '_Crane.xlsx');
+        return Excel::download(new ForkliftExportExcel, $date . '_Forklift.xlsx');
 
     }
 

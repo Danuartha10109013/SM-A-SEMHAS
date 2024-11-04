@@ -1,6 +1,6 @@
 @extends('Mapping-Container.layout.main')
 @section('title')
-    Form EUP
+    Shipment
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)

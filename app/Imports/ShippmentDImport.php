@@ -35,7 +35,7 @@ class ShippmentDImport implements ToCollection,ToModel
         $this->current++;
         // Mengabaikan baris header jika perlu
         if ($this->current > 1) {
-            $count = ShipB::where('atribute', $row[0])->count();
+            $count = ShipD::where('atribute', $row[0])->count();
             // dd($row);
             if (empty($count)) {
                 $shipa = new ShipD;

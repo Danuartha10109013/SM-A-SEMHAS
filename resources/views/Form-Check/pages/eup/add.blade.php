@@ -35,7 +35,7 @@
                     @if (Auth::user()->role == 0)
                     <form action="{{route('Form-Check.admin.eup.create')}}" method="POST" enctype="multipart/form-data">
                     @else
-                        <form action="{{route('Form-Check.pegawai.eup.create')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('Form-Check.pegawai.eup.create')}}" method="POST" enctype="multipart/form-data">
                     @endif
                         @method('POST')
                 @csrf
@@ -82,17 +82,7 @@
                     <div class="col-md-6">
                         
                         
-                        {{-- <div class="form-group">
-                            <label for="jumlahDropdown">Jumlah</label>
-                            <select class="form-control" name="ket_awal" id="jumlahDropdown">
-                                <option value="">Pilih jumlah</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div> --}}
+                        
                         <div class="form-group">
                           <label for="exampleInputPassword1">
                            <b> Kondisi Papan Permukaan Pallet <small style="color: red;">*</small></b> <br>

@@ -109,8 +109,11 @@
                             @endforeach
                         </div>
                     </div>
-                    
+                    @if (Auth::user()->role == 0)
                     <a href="{{ route('Form-Check.admin.eup') }}" class="btn btn-light">Back to List</a>
+                    @else
+                    <a href="{{ route('Form-Check.pegawai.eup') }}" class="btn btn-light">Back to List</a>
+                    @endif
                 </div>
             </div>
         </div>

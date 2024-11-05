@@ -49,7 +49,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $record->created_at->format('d-m-Y') }}</td> 
-                                    <td>{{ $record->jam }}</td> 
+                                    <td>{{ $record->jam }}</td>     
                                     <td>
                                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editModal-{{ $record->id }}">
                                             <i class="fas fa-edit"></i> Edit
@@ -57,8 +57,8 @@
                                         <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $record->id }}">
                                             <i class="fas fa-trash"></i> Delete
                                         </a>
-                                        <a href="" class="btn btn-warning">
-                                            <i class="mdi mdi-export"></i>Export
+                                        <a href="{{route('Kendaraan.pegawai.print',$record->id)}}" class="btn btn-warning">
+                                            <i class="fa fa-print"></i>print
                                         </a>
 
                                         <!-- Delete Modal -->

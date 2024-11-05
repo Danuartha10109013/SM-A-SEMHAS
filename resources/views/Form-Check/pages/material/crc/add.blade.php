@@ -36,7 +36,7 @@
                     @if (Auth::user()->role == 0)
                     <form action="{{route('Form-Check.admin.crc.create')}}" method="POST" enctype="multipart/form-data">
                     @else
-                        <form action="{{route('Form-Check.admin.crc.create')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('Form-Check.pegawai.crc.create')}}" method="POST" enctype="multipart/form-data">
                     @endif
                         @method('POST')
                 @csrf

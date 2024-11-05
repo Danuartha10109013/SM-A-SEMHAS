@@ -26,7 +26,7 @@ Shippment D || Pegawai
                 <a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-d-add')}}">Tambah Data</a>
             
                 <!-- Form Upload File Excel di sebelah kanan -->
-                <form action="{{ route('Ship-Mark.pegawai.add-shippmentb-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                <form action="{{ route('Ship-Mark.pegawai.add-shippmentd-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
                 @endif
                 <!-- Tombol Tambah Data di sebelah kiri -->
                     @csrf

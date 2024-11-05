@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CKendaraanExportExcel;
 use App\Models\KendaraanM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KendaraanController extends Controller
 {
@@ -191,7 +193,7 @@ class KendaraanController extends Controller
     $record->save();
 
     // Redirect or return response
-    return redirect()->route('Kendaraan.pegawai.dashboard')->with('success', 'Record updated successfully.');
+    return redirect()->back()->with('success', 'Record updated successfully.');
 }
 
 public function delete($id)
@@ -208,7 +210,17 @@ public function delete($id)
         $record->delete();
 
         // Redirect back with a success message
-        return redirect()->route('Kendaraan.pegawai.dashboard')->with('success', 'Record deleted successfully.');
+        return redirect()->back()->with('success', 'Record deleted successfully.');
+    }
+
+    public function print($id){
+        $data = KendaraanM::find($id);
+        return view('Kendaraan.pages.admin.print',compact('data'));
+    }
+
+    public function export(){
+        $date = now()->format('d-m-Y'); 
+        return Excel::download(new CKendaraanExportExcel, $date . '_Checklist_Kendaraan.xlsx');
     }
 }
     

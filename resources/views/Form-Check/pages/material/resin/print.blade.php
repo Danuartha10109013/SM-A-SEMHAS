@@ -3,291 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crane Operator Daily Data - Print</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Daily Checklist Material CRC</title>
     <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
         body {
             font-family: Arial, sans-serif;
-            font-size: 10px;
-            margin: 10px;
+            color: #333;
+            line-height: 1.5;
         }
-
-        .header h1 {
-            font-size: 14px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .header h2 {
-            font-size: 10px;
-        }
-
-        table {
+        .container-fluid {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
+            max-width: 210mm;
+            margin: auto;
         }
-
-        table, th, td {
-            border: 1px solid black;
+        h2 {
             text-align: center;
-            padding: 5px;
+            font-size: 20px;
         }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        .notes, .tabelin {
-            font-size: 10px;
-        }
-
-        .signature table {
-            width: 100%;
+        h4 {
+            font-size: 14px;
             margin-top: 5px;
-            border: none;
         }
-
-        .signature table td {
-            border: none;
-            padding: 5px;
+        .photos-wrapper img {
+            width: 80%;
+            max-width: 150px;
+            margin: 5px 0;
         }
-
-        .text-center {
-            text-align: left;
-        }
-
-        .container {
+        .checklist-row {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-bottom: 10px;
         }
-
-        .left {
-            width: 60%;
+        .checklist-column {
+            width: 48%;
         }
-
-        .right {
-            width: 40%;
+        .checklist-container {
+            margin-bottom: 10px;
         }
-
-        .notes {
-            margin: 0;
-        }
-
-        .tabelin table {
-            width: 100%;
-            table-layout: fixed;
-        }
-
-        .tabelin td {
-            height: 30px;
-        }
-
-        .catatan-row td {
-            height: 50px;
-            vertical-align: top;
-        }
-
-        .header {
-            margin-left: 150px; margin-top: -100px;margin-bottom: 40px;
-        }
-
-        .logo {
-            margin-bottom: 20px;
-        }
-
-        .end {
-            text-align: end;
-            margin-top: -90px; 
-            margin-bottom: 80px;
-        }
-
-        @media print {
-            title {
-                display: none;
-            }
-
-            .header {
-                margin-left: 100px; 
-                margin-top: -70px;
-                margin-bottom: 10px;
-            }
-
-            .logo {
-                margin-bottom: 0px;
-                margin-top: 20px;
-            }
-
-            body {
-                margin: 5px;
-                font-size: 12px;
-            }
-
-            table, th, td {
-                padding: 2px;
-            }
-
-            .header h1 {
-                font-size: 14px;
-            }
-
-            .header h2 {
-                font-size: 12px;
-            }
-
-            .notes, .tabelin {
-                font-size: 10px;
-            }
-
-            .container {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .left, .right {
-                display: block;
-                width: 100%;
-            }
-
-            .download-button {
-                display: none;
-            }
+        hr {
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
+    <div class="container-fluid">
+        <h2>Daily Checklist Material Resin</h2>
 
-    <div class="logo">
-        <img width="10%" src="{{asset('Logo TML.png')}}" alt="Logo">
-    </div>
-    <div class="header">
-        <h1>CRANE OPERATOR DAILY DATA</h1>
-        <div class="text-start">
-            <h2>HARI / TANGGAL: {{ $data->date }}</h2>
-            <h2>JENIS FORKLIFT: {{ $data->jenis_forklift }}</h2>
-        </div>
-    </div>
-    <div class="end">
-        <p>FM.MT.09.00</p>
-    </div>
+        <h3>User Information</h3>
+        <p><strong>Checker:</strong> 
+        @php
+            $nama = \App\Models\User::where('id', $submission->user_id)->value('name');
+        @endphp
+        {{ $nama }}</p>
+        <p><strong>Date:</strong> {{ $submission->date }}</p>
+        <p><strong>Document Number:</strong> {{ $submission->shift_leader }}</p>
+        <p><strong>Supplier:</strong> {{ is_array($submission->supplier) ? implode(', ', $submission->supplier) : $submission->supplier }}</p>
+        
+        <hr>
 
-    <table>
-        <thead>
-            <tr>
-                <th>NO</th>
-                <th>ITEM</th>
-                <th>STANDART</th>
-                <th>SHIFT 1</th>
-                <th>SHIFT 2</th>
-                <th>SHIFT 3</th>
-                <th>KETERANGAN</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $items = [
-                    ['awal', 'Pengecekan Hour Meter Awal Shift', 'Level harus di atas L'],
-                    ['akhir', 'Pengecekan Hour Meter Akhir Shift', 'Level harus di atas L'],
-                    ['horn', 'Horn', 'Berfungsi normal'],
-                    ['mundur', 'Alarm Mundur', 'Berfungsi normal'],
-                    ['sein', 'Lampu Sein', 'Menyala'],
-                    ['rotating', 'Lampu Rotating', 'Ada dan menyala'],
-                    ['stop', 'Lampu Stop', 'Menyala kanan dan kiri'],
-                    ['utama', 'Lampu Utama', 'Menyala kanan dan kiri'],
-                    ['connector', 'Battery Connector', 'Connector harus kencang'],
-                    ['accu', 'Level Air Accu (H/L)', 'Level harus di atas L'],
-                    ['parking', 'Brake Parking', 'Berfungsi normal'],
-                    ['brake', 'Brake', 'Berfungsi normal'],
-                    ['oil', 'Engine Oil Level (H/L)', 'Level harus di atas L'],
-                    ['raulic', 'Hydraulic Oil Level (H/L)', 'Level harus di atas L'],
-                    ['chain', 'Kondisi Grease di Chain', 'Terlumasi grease'],
-                    ['allhose', 'Kebocoran Oli (All Hose)', 'Tidak ada kebocoran'],
-                    ['steering', 'Power Steering', 'Berfungsi normal'],
-                    ['belts', 'Kondisi Belts Engine', 'Visual tidak ada yang retak/putus'],
-                    ['cooland', 'Level Cooland (H/L)', 'Level harus di atas L'],
-                    ['transmisi', 'Level Oil Transmisi (H/L)', 'Level harus di atas L'],
-                    ['ban', 'Kondisi Ban', 'Masih terdapat kembangan dan tidak retak'],
-                    ['fork', 'Hydraulic Fork', 'Berfungsi normal'],
-                    ['teba', 'Tekanan Ban (Forklift 23 ton)', '900 Kpa (kgf/cm2)']
-                ];
+        <!-- Checklist Items -->
+        <div class="checklist-row">
+            <!-- Left Column -->
+            <div class="checklist-column">
+                <div class="checklist-container">
+                    <h4>Cuaca: {{ $submission->cuaca }}</h4>
+                    <h4>Tujuan Surat Jalan: {{ $submission->sesuai }}</h4>
+                    <p>Keterangan: {{ $submission->keterangan }}</p>
+                    <div class="photos-wrapper">
+                        @if ($foto->foto && is_array(json_decode($foto->foto)))
+                            @foreach (json_decode($foto->foto) as $fotoin)
+                                <img src="{{ asset('storage/resin/' . $fotoin) }}" alt="Uploaded photo">
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
 
-            @endphp
-            @foreach ($items as $key => $item)
-                <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td style="text-align: left">{{ $item[1] }}</td>
-                    <td>{{ $item[2] }}</td>
-                    @if ($data->shift == 1)
-                        <td>{{ $data->{$item[0]} }}</td>
-                        <td></td>
-                        <td></td>
-                    @elseif ($data->shift == 2)
-                        <td></td>
-                        <td>{{ $data->{$item[0]} }}</td>
-                        <td></td>
-                    @elseif ($data->shift == 3)
-                        <td></td>
-                        <td></td>
-                        <td>{{ $data->{$item[0]} }}</td>
-                    @endif
-                    <td>{{ $data->{"ket_{$item[0]}"} }}</td>
-                </tr>
-            @endforeach
-            <tr class="catatan-row">
-                <td colspan="5" style="border-style: none">
-                    <p style="text-align: left"><span style="margin-right: 10px">Catatan:</span> {{ $data->catatan }}</p>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="container">
-        <div class="left">
-            <div class="notes">
-                <p><strong>KET:</strong></p>
-                <ul>
-                    <li>V : KONDISI BAIK</li>
-                    <li>X : KONDISI TIDAK BAIK DAN CRANE TIDAK BISA DIGUNAKAN</li>
-                    <li>O : KONDISI TIDAK BAIK NAMUN MASIH BISA DIGUNAKAN</li>
-                </ul>
-                <p><strong>NOTE:</strong> JIKA KETERANGAN (X, O) INFORMASI KE MAINTENANCE</p>
-                <p>PENGECEKAN DILAKUKAN AWAL SHIFT/SEBELUM DIGUNAKAN</p>
+                <div class="checklist-container">
+                    <h4>Barang Sesuai Dengan Surat Jalan: {{ $submission->sesuai }}</h4>
+                    <p>Keterangan: {{ $submission->keterangan1 }}</p>
+                    <div class="photos-wrapper">
+                        @if ($foto->foto1 && is_array(json_decode($foto->foto1)))
+                            @foreach (json_decode($foto->foto1) as $fotoin)
+                                <img src="{{ asset('storage/resin/' . $fotoin) }}" alt="Uploaded photo">
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+                
+                <div class="checklist-container">
+                    <h4>Kering / Basah: {{ $submission->kering }}</h4>
+                    <p>Keterangan: {{ $submission->keterangan3 }}</p>
+                    <div class="photos-wrapper">
+                        @if ($foto->foto3 && is_array(json_decode($foto->foto3)))
+                            @foreach (json_decode($foto->foto3) as $fotoin)
+                                <img src="{{ asset('storage/resin/' . $fotoin) }}" alt="Uploaded photo">
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="right">
-            <div class="tabelin">
-                <table>
-                    <thead>
-                        <tr>
-                            <td><b>OPERATOR</b></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                @php
-                                    $nama = \App\Models\User::where('id', $data->user_id)->value('name');
-                                @endphp
-                                {{ $nama }}
-                            </td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <td><b>TEAM LEADER</b></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $data->shift_leader }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Right Column -->
+            <div class="checklist-column">
+                <div class="checklist-container">
+                    <h4>Jumlah Sesuai Surat Jalan: {{ $submission->jumlahin }}</h4>
+                    <p>Keterangan: {{ $submission->keterangan5 }}</p>
+                    <div class="photos-wrapper">
+                        @if ($foto->foto5 && is_array(json_decode($foto->foto5)))
+                            @foreach (json_decode($foto->foto5) as $fotoin)
+                                <img src="{{ asset('storage/resin/' . $fotoin) }}" alt="Uploaded photo">
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+                
+                <div class="checklist-container">
+                    <h4>Drum Tidak Penyok/Bocor: {{ $submission->drum }}</h4>
+                    <p>Keterangan: {{ $submission->keterangan6 }}</p>
+                    <div class="photos-wrapper">
+                        @if ($foto->foto6 && is_array(json_decode($foto->foto6)))
+                            @foreach (json_decode($foto->foto6) as $fotoin)
+                                <img src="{{ asset('storage/resin/' . $fotoin) }}" alt="Uploaded photo">
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </body>
 </html>

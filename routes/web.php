@@ -293,6 +293,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/add', [EUPController::class, 'add'])->name('eup.add');
                 Route::post('/create', [EUPController::class, 'create'])->name('eup.create');
                 Route::get('/print/{id}', [EUPController::class, 'print'])->name('eup.print');
+                Route::get('/export', [EUPController::class, 'export'])->name('eup.export');
                 Route::get('/show/{id}', [EUPController::class, 'show'])->name('eup.show');    
                 Route::delete('/destroy/{id}', [EUPController::class, 'destroy'])->name('eup.destroy');  
             });
@@ -320,6 +321,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::prefix('resin')->group(function () {
                     Route::get('/', [MaterialController::class, 'index_resin'])->name('resin');
                     Route::get('/add', [MaterialController::class, 'add_resin'])->name('resin.add');
+                    Route::get('/export', [MaterialController::class, 'resin_export'])->name('resin.export');
                     Route::post('/create', [MaterialController::class, 'create_resin'])->name('resin.create');
                     Route::get('/print/{id}', [MaterialController::class, 'print_resin'])->name('resin.print');  
                     Route::delete('/destroy/{id}', [MaterialController::class, 'destroy_resin'])->name('resin.destroy');  
@@ -503,10 +505,21 @@ Route::middleware([AutoLogout::class])->group(function () {
     Route::group(['prefix' => 'Kendaraan', 'middleware' => ['Kendaraan'], 'as' => 'Kendaraan.'], function () {
         Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
             Route::get('/',[DashboardControlller::class, 'k_admin'])->name('dashboard');
+            Route::get('/print/{id}',[KendaraanController::class, 'print'])->name('print');
+            Route::get('/export',[KendaraanController::class, 'export'])->name('export');
+            Route::prefix('check')->group(function () {
+                Route::get('/check',[KendaraanController::class, 'add'])->name('check.add');
+                Route::post('/store',[KendaraanController::class, 'store'])->name('check.store');
+                Route::post('/autosave', [KendaraanController::class, 'autosave'])->name('kendaraan.autosave');
+                Route::put('/update/{id}', [KendaraanController::class, 'update'])->name('kendaraan.update');
+                Route::delete('/delete/{id}', [KendaraanController::class, 'delete'])->name('kendaraan.delete');
+            });
 
         });
         Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
             Route::get('/',[DashboardControlller::class, 'k_pegawai'])->name('dashboard');
+            Route::get('/print/{id}',[KendaraanController::class, 'print'])->name('print');
+
             Route::prefix('check')->group(function () {
                 Route::get('/check',[KendaraanController::class, 'add'])->name('check.add');
                 Route::post('/store',[KendaraanController::class, 'store'])->name('check.store');

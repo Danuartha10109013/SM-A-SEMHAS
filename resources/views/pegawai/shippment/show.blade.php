@@ -18,11 +18,19 @@ Shippment A || Pegawai
                         </div>
                     @endif
                     <!-- Tombol Tambah Data di sebelah kiri -->
-                    <a class="btn btn-primary" href="">Tambah Data</a>
+                    @if (Auth::user()->role == 0)
+                    <a class="btn btn-primary" href="{{route('Ship-Mark.admin.shipment-a-add')}}">Tambah Data</a>
+                    @else
+                    <a class="btn btn-primary" href="{{route('Ship-Mark.pegawai.shipment-a-add')}}">Tambah Data</a>
+                    @endif
                 
                     <!-- Form Upload File Excel di sebelah kanan -->
+                    @if (Auth::user()->role == 0)
+                    <form action="{{ route('Ship-Mark.admin.add-shippmenta-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
+                    @else
                     <form action="{{ route('Ship-Mark.pegawai.add-shippmenta-excel') }}" method="post" enctype="multipart/form-data" class="d-flex align-items-center">
-                        @csrf
+                    @endif 
+                     @csrf
                         <input type="file" name="shipmenta" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
                             <option value="KG">KG</option>
@@ -32,10 +40,7 @@ Shippment A || Pegawai
                         <button type="submit" class="btn btn-success">Save</button>
                     </form>
 
-
-                    
                 </div>
-                
                 
                  <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
@@ -44,10 +49,16 @@ Shippment A || Pegawai
                         </div>
                     </div>
                     <div class="iq-card-body d-flex justify-content-between align-items-center">
-                         <a href="{{route('Ship-Mark.pegawai.shipment-a-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
+                        @if (Auth::user()->role == 0)
+                        <a href="{{route('Ship-Mark.admin.shipment-a-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
+                        <form class="form-inline" method="GET" action="{{route('Ship-Mark.admin.shipment-a-show',$id)}}">
+
+                        @else
+                        <a href="{{route('Ship-Mark.pegawai.shipment-a-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
+                        <form class="form-inline" method="GET" action="{{route('Ship-Mark.pegawai.shipment-a-show',$id)}}">
+                        @endif
                     
                         <!-- Search Button aligned to the right -->
-                        <form class="form-inline" method="GET" action="{{route('Ship-Mark.admin.shipment-a-show',$id)}}">
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" value="{{$search}}" placeholder="Search by Atribute">
                                 <div class="input-group-append">

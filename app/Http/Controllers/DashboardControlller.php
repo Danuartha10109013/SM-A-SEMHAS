@@ -71,10 +71,8 @@ class DashboardControlller extends Controller
     }
 
     public function k_admin(){
-        $gm = null;
-        $form = null;
-        $response = null;
-        return view('Kendaraan.pages.admin.index',compact('gm','form','response'));
+        $data = KendaraanM::all();
+        return view('Kendaraan.pages.admin.index',compact('data'));
     }
     
     public function k_pegawai(){

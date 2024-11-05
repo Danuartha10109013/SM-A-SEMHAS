@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EupExportExcel;
 use App\Models\EupM;
 use App\Models\ForkliftM;
 use App\Models\Resin_imageM;
@@ -10,6 +11,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EUPController extends Controller
 {
@@ -83,8 +85,11 @@ class EUPController extends Controller
     $crc->keluar_pallet = $request->keluar_pallet;
     $crc->sesuai = $request->sesuai;
     $crc->action = $request->action;
-    $crc->foto7 = implode('|', $uploadedFiles); // Store file paths with '|' delimiter
-
+    $crc->foto7 = implode('|', $uploadedFiles);
+    $crc->kaba_simetris = $request->kaba_simetris;
+    $crc->kaba_asimetris = $request->kaba_asimetris;
+    $crc->papan_pecah = $request->papan_pecah;
+    $crc->papan_patah = $request->papan_patah;
     // Save the CRC record
     $crc->save();
 
@@ -105,6 +110,16 @@ public function destroy($id){
     public function show($id){
         $submission = EupM::find($id);
         return view('Form-Check.pages.eup.show',compact('submission'));
+    }
+
+    public function print($id){
+        $submission = EupM::find($id);
+        return view('Form-Check.pages.eup.print',compact('submission'));
+    }
+
+    public function export(){
+        $date = now()->format('d-m-Y'); 
+        return Excel::download(new EupExportExcel, $date . '_Eup.xlsx');
     }
 
 }

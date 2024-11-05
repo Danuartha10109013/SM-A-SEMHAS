@@ -42,6 +42,28 @@
     </style>
 </head>
 <body>
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 5px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            width: 100px; /* Adjust the width as needed */
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .no-urut {
+            text-align: right;
+        }
+    </style>
     <div class="header-container">
         <div class="logo">
             <img src="{{ asset('Logo TML.png') }}" alt="Logo">

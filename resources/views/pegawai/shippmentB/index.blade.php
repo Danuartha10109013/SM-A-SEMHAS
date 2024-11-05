@@ -57,8 +57,11 @@ Shippment B || Pegawai
                                 Download Template
                             </a>
                         </p>
-                        
-                        <form class="form-inline" method="GET" action="{{ route('Ship-Mark.admin.shipment-b') }}">
+                        @if (Auth::user()->role == 0)
+                            <form class="form-inline" method="GET" action="{{ route('Ship-Mark.admin.shipment-b') }}">
+                        @else
+                            <form class="form-inline" method="GET" action="{{ route('Ship-Mark.pegawai.shipment-b') }}">
+                        @endif
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" value="{{$search}}" placeholder="Search by no SO">
                                 <div class="input-group-append">

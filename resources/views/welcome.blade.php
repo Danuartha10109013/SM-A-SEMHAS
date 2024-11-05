@@ -101,7 +101,7 @@
         @if (Auth::user()->role == 0)
          <a href="{{route('Ship-Mark.admin.dashboard')}}" class="menu-item">
         @else
-        <a href="{{route('Ship-Mark.admin.dashboard')}}" class="menu-item">
+        <a href="{{route('Ship-Mark.pegawai.dashboard')}}" class="menu-item">
          @endif
             <div>
                <i class="mdi mdi-shipping-pallet"></i>

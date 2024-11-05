@@ -24,7 +24,11 @@ class EupM extends Model
         'keluar_pallet',
         'sesuai',
         'action',
-        'foto7'
+        'foto7',
+        'kaba_asimetris',
+        'kaba_simteris',
+        'papan_patah',
+        'papan_pecah',
     ];
 
     // If `kaki_pallet` or `foto7` will store multiple values, you can handle it in your model using accessors/mutators

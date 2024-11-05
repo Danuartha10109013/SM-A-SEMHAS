@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CrcExportExcel;
+use App\Exports\IngotExportExcel;
+use App\Exports\ResinExportExcel;
 use App\Models\CraneM;
 use App\Models\CrcM;
 use App\Models\Crc_imageM;
@@ -15,6 +18,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MaterialController extends Controller
 {
@@ -153,6 +157,16 @@ class MaterialController extends Controller
         
     }
 
+    public function print_crc($id){
+
+        $submission = CrcM::find($id);
+        $same = $submission->id;
+        $ids = Crc_imageM::where('crc_id',$same)->value('id');
+        $foto= Crc_imageM::find($ids);
+        // dd($foto);
+        return view('Form-Check.pages.material.crc.print',compact('submission','foto'));
+    }
+
     //INGOT
     public function index_ingot(Request $request) {
         $searchTerm = $request->input('search');
@@ -283,6 +297,25 @@ class MaterialController extends Controller
         
     }
 
+    public function print_ingot($id){
+        $submission= IngotM::find($id);
+        $same = $submission->id;
+        $ids = Ingot_imageM::where('ingot_id',$same)->value('id');
+        $foto= Ingot_imageM::find($ids);
+        // dd($foto);
+
+        return view('Form-Check.pages.material.ingot.print',compact('submission','foto'));
+    }
+    public function print_resin($id){
+        $submission= ResinM::find($id);
+        $same = $submission->id;
+        $ids = Resin_imageM::where('resin_id',$same)->value('id');
+        $foto= Resin_imageM::find($ids);
+        // dd($ids);
+
+        return view('Form-Check.pages.material.resin.print',compact('submission','foto'));
+    }
+    
         //RESIN
         public function index_resin(Request $request) {
             $searchTerm = $request->input('search');
@@ -430,5 +463,19 @@ class MaterialController extends Controller
         $data = ResinM::find($id);
         $data->delete();
         return redirect()->back()->with('success', 'Data berhasil Dihapus');
+    }
+
+
+    public function resin_export(){
+        $date = now()->format('d-m-Y'); 
+        return Excel::download(new ResinExportExcel, $date . '_Resin.xlsx');
+    }
+    public function ingot_export(){
+        $date = now()->format('d-m-Y'); 
+        return Excel::download(new IngotExportExcel, $date . '_Resin.xlsx');
+    }
+    public function crc_export(){
+        $date = now()->format('d-m-Y'); 
+        return Excel::download(new CrcExportExcel, $date . '_Resin.xlsx');
     }
 }

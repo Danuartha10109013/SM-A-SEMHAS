@@ -69,11 +69,16 @@
                     <h4>Cuaca {{ $submission->cuaca }}</h4>
                     <p>Keterangan: {{ $submission->keterangan }}</p>
                     <div class="photos-wrapper">
-                        @if ($foto->foto && is_array(json_decode($foto->foto)))
-                            @foreach (json_decode($foto->foto) as $fotoin)
-                                <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
-                            @endforeach
+                        @if ($foto != null)
+                            @if ($foto->foto && is_array(json_decode($foto->foto)))
+                                @foreach (json_decode($foto->foto) as $fotoin)
+                                    <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
+                                @endforeach
+                            @endif
+                        @else
+                            <p>No Photo Available</p>
                         @endif
+
                     </div>
                 </div>
 
@@ -81,10 +86,15 @@
                     <h4>Barang Sesuai Dengan Surat Jalan: {{ $submission->sesuai }}</h4>
                     <p>Keterangan: {{ $submission->keterangan1 }}</p>
                     <div class="photos-wrapper">
-                        @if ($foto->foto1 && is_array(json_decode($foto->foto1)))
-                            @foreach (json_decode($foto->foto1) as $fotoin)
-                                <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
-                            @endforeach
+                        @if ($foto != null)
+
+                            @if ($foto->foto1 && is_array(json_decode($foto->foto1)))
+                                @foreach (json_decode($foto->foto1) as $fotoin)
+                                    <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
+                                @endforeach
+                            @endif
+                        @else
+                        <p>No Photo Available</p>
                         @endif
                     </div>
                 </div>
@@ -96,10 +106,15 @@
                     <h4>Kering / Basah: {{ $submission->kering }}</h4>
                     <p>Keterangan: {{ $submission->keterangan3 }}</p>
                     <div class="photos-wrapper">
-                        @if ($foto->foto3 && is_array(json_decode($foto->foto3)))
-                            @foreach (json_decode($foto->foto3) as $fotoin)
-                                <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
-                            @endforeach
+                        @if ($foto != null)
+
+                            @if ($foto->foto3 && is_array(json_decode($foto->foto3)))
+                                @foreach (json_decode($foto->foto3) as $fotoin)
+                                    <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
+                                @endforeach
+                            @endif
+                        @else
+                        <p>No Photo Available</p>
                         @endif
                     </div>
                 </div>
@@ -108,10 +123,15 @@
                     <h4>Jumlah Sesuai Surat Jalan: {{ $submission->jumlahin }}</h4>
                     <p>Keterangan: {{ $submission->keterangan5 }}</p>
                     <div class="photos-wrapper">
-                        @if ($foto->foto5 && is_array(json_decode($foto->foto5)))
-                            @foreach (json_decode($foto->foto5) as $fotoin)
-                                <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
-                            @endforeach
+                        @if ($foto != null)
+
+                            @if ($foto->foto5 && is_array(json_decode($foto->foto5)))
+                                @foreach (json_decode($foto->foto5) as $fotoin)
+                                    <img src="{{ asset('storage/ingot/' . $fotoin) }}" alt="Uploaded photo">
+                                @endforeach
+                            @endif
+                        @else
+                        <p>No Photo Available</p>
                         @endif
                     </div>
                 </div>

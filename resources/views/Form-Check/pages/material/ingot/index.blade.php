@@ -30,7 +30,7 @@
         <div class="d-flex">
             <a href="{{ Auth::user()->role == 0 ? route('Form-Check.admin.ingot.add') : route('Form-Check.pegawai.ingot.add') }}" 
                class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
-            <a href="{{ route('Form-Check.admin.forklift.export') }}" 
+            <a href="{{ route('Form-Check.admin.ingot.export') }}" 
                class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
         </div>
     

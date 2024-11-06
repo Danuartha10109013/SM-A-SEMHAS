@@ -9,15 +9,19 @@ class CheckList
 {
     public function handle($request, Closure $next)
     {
-        // Periksa apakah pengguna adalah pegawai (role = 1)
+        // Check if the user is authenticated
         if (Auth::check()) {
-            if (in_array(Auth::user()->type, ["PList","all"])) {
+            // Check if the user's type JSON field contains "PList" or "all"
+            $user = Auth::user();
+            $type = json_decode($user->type, true); // Decode the JSON type field
 
-            // if (Auth::user()->type == "Ship-Mark"){
+            if (is_array($type) && (in_array("PL", $type) || in_array("all", $type))) {
                 return $next($request);
             }
-            return response()->view('errors.custom', ['message' => 'Youre not should be in this section'], 403);
+
+            return response()->view('errors.custom', ['message' => 'You are not authorized to access this section'], 403);
         }
-        return redirect('/');; // Ganti dengan kode status atau rute yang sesuai
+
+        return redirect('/'); // Redirect to home if the user is not authenticated
     }
 }

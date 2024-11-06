@@ -209,6 +209,7 @@ class MaterialController extends Controller
         $validated = $request->validate([
             'user_id' => 'required|integer',
             'shift_leader' => 'required|string',
+            'jalan' => 'required|string',
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
             'supplier' => 'required|array',
@@ -235,6 +236,7 @@ class MaterialController extends Controller
         $data = [
             'user_id' => $request->input('user_id'),
             'shift_leader' => $request->input('shift_leader'),
+            'jalan' => $request->input('jalan'),
             'date' => $request->input('date'),
             'time' => $request->input('time'),
             'supplier' => json_encode($request->input('supplier')), // Convert array to JSON
@@ -472,10 +474,10 @@ class MaterialController extends Controller
     }
     public function ingot_export(){
         $date = now()->format('d-m-Y'); 
-        return Excel::download(new IngotExportExcel, $date . '_Resin.xlsx');
+        return Excel::download(new IngotExportExcel, $date . '_Ingot.xlsx');
     }
     public function crc_export(){
         $date = now()->format('d-m-Y'); 
-        return Excel::download(new CrcExportExcel, $date . '_Resin.xlsx');
+        return Excel::download(new CrcExportExcel, $date . '_CrC.xlsx');
     }
 }

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\CraneM;
 use App\Models\CrcM;
+use App\Models\DatabM;
 use App\Models\ForkliftM;
 use App\Models\IngotM;
 use App\Models\KendaraanM;
 use App\Models\PackingM;
 use App\Models\ResinM;
+use App\Models\ScanM;
 use App\Models\ShipA;
 use App\Models\ShipB;
 use App\Models\ShipC;
@@ -62,10 +64,10 @@ class DashboardControlller extends Controller
         return view('Supply-Bahan.pages.admin.index',compact('gm','form','response'));
     }
     public function pl_admin(){
-        $form = PackingM::all()->count();
-        $gm = PackingM::distinct('gm')->count('gm');
+        $form = DatabM::all()->count();
+        $gm = ScanM::distinct('keterangan')->count('keterangan');
 
-        $formattedDate = PackingM::min('created_at');
+        $formattedDate = DatabM::min('created_at');
         $response = Carbon::parse($formattedDate)->format('d-m-Y');        
         return view('Packing-List.pages.admin.index',compact('gm','form','response'));
     }

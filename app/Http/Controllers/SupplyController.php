@@ -47,16 +47,27 @@ class SupplyController extends Controller
             $uploadedPhotos[] = $fileName;
         }
     }
+    if ($request->shift_leader == 'other'){
 
-    // Create a new Supply record in the database
-    SupplyM::create([
-        'created_at' => $request->input('date'),
-        'shift_leader' => $request->input('shift_leader'),
-        'shift' => $request->input('shift'),
-        'supply' => $request->input('supply'),
-        'foto' => json_encode($uploadedPhotos), // Save photos as JSON
-        'user_id' => Auth::user()->id, // Save the currently authenticated user's ID
-    ]);
+        SupplyM::create([
+            'created_at' => $request->input('date'),
+            'shift_leader' => $request->input('other_sift_leader'),
+            'shift' => $request->input('shift'),
+            'supply' => $request->input('supply'),
+            'foto' => json_encode($uploadedPhotos), // Save photos as JSON
+            'user_id' => Auth::user()->id, // Save the currently authenticated user's ID
+        ]);
+    }else{
+        // Create a new Supply record in the database
+        SupplyM::create([
+            'created_at' => $request->input('date'),
+            'shift_leader' => $request->input('shift_leader'),
+            'shift' => $request->input('shift'),
+            'supply' => $request->input('supply'),
+            'foto' => json_encode($uploadedPhotos), // Save photos as JSON
+            'user_id' => Auth::user()->id, // Save the currently authenticated user's ID
+        ]);
+    }
 
     // Redirect back with a success message
     if (Auth::user()->role == 0) {

@@ -12,8 +12,10 @@ class CheckTypeADM
     {
         // Periksa apakah pengguna adalah pegawai (role = 1)
         if (Auth::check()) {
+            $user = Auth::user();
+            $type = json_decode($user->type, true); // Decode the JSON type field
 
-            if (in_array(Auth::user()->type, ["Administrator","FC&SM&AD","all"])){
+            if (is_array($type) && (in_array("AD", $type) || in_array("all", $type))) {
                 return $next($request);
             }
             return response()->view('errors.custom', ['message' => 'Youre not should be in this section'], 403);

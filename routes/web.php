@@ -303,6 +303,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::prefix('crc')->group(function () {
                     Route::get('/', [MaterialController::class, 'index_crc'])->name('crc');
                     Route::get('/add', [MaterialController::class, 'add_crc'])->name('crc.add');
+                    Route::get('/export', [MaterialController::class, 'crc_export'])->name('crc.export');
                     Route::post('/create', [MaterialController::class, 'create_crc'])->name('crc.create');
                     Route::get('/print/{id}', [MaterialController::class, 'print_crc'])->name('crc.print');    
                     Route::get('/show/{id}', [MaterialController::class, 'show_crc'])->name('crc.show');    
@@ -312,6 +313,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::prefix('ingot')->group(function () {
                     Route::get('/', [MaterialController::class, 'index_ingot'])->name('ingot');
                     Route::get('/add', [MaterialController::class, 'add_ingot'])->name('ingot.add');
+                    Route::get('/export', [MaterialController::class, 'ingot_export'])->name('ingot.export');
                     Route::post('/create', [MaterialController::class, 'create_ingot'])->name('ingot.create');
                     Route::get('/print/{id}', [MaterialController::class, 'print_ingot'])->name('ingot.print');   
                     Route::delete('/destroy/{id}', [MaterialController::class, 'destroy_ingot'])->name('ingot.destroy');  

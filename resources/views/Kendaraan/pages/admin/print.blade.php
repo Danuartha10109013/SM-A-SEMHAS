@@ -236,6 +236,10 @@
     @endif
 
     <button class="button-print" onclick="window.print();">Print</button>
-
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 </body>
 </html>

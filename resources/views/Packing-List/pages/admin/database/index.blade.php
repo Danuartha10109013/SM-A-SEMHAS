@@ -24,13 +24,13 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Packing-List.admin.database.add') : route('Packing-List.pegawai.database.add') }}" 
-                   class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Database </a>
+                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Database </a>
                 {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
+                   class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
                    <form class="ml-2" action="{{route('Packing-List.admin.database.store.excel')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="excel">
-                    <button type="submit" class="badge badge-gradient-success">Save</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                    </form>
             </div>
         
@@ -39,7 +39,7 @@
               <input type="hidden" name="sort" value="{{ request('sort') }}">
               <input type="hidden" name="direction" value="{{ request('direction') }}">
               <button type="submit" style="border: none; padding: 0; cursor: pointer;"> 
-                  <label class="badge badge-gradient-danger" style="text-decoration: none;">Search</label>
+                  <label class="btn btn-danger" style="text-decoration: none;">Search</label>
               </button>
           </form>
           
@@ -84,11 +84,11 @@
                     <td>{{$d->storage_bin}}</td>
                     <td>{{$d->date}}</td>
                     <td><a href="{{route('Packing-List.admin.database.edit',$d->id)}}">
-                      <label class="badge badge-gradient-primary">
+                      <label class="btn btn-primary">
                         <i class="fas fa-edit"></i> Edit
                       </label></a>
                       <a href="{{route('Packing-List.admin.database.destroy',$d->id)}}">
-                      <label class="badge badge-gradient-danger">
+                      <label class="btn btn-danger">
                         <i class="fas fa-trash"></i> delete
                       </label></a>
                       

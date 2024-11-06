@@ -76,24 +76,8 @@
                         <label for="name">Name</label>
                         <input type="text" name="name" class="form-control" id="name" placeholder="Enter name" required>
                     </div>
-                    <div class="form-group">
-                        <label for="name">Type</label>
-                        <select type="text" name="type" class="form-control" id="name" placeholder="Enter username" required>
-                            <option value="" selected disabled>--Pilih hak akses--</option>
-                            <option value="SP">Shiping Mark</option>
-                            <option value="MP">Form Check</option>
-                            <option value="FC">Form Check</option>
-                            <option value="OP">Open Packing</option>
-                            <option value="SB">Supply Bahan</option>
-                            <option value="PL">Packing List</option>
-                            <option value="SK">Shipping</option>
-                            <option value="FC&OP">Form Check & Open Packing</option>
-                            <option value="FC&MP">Form Check & Mapping</option>
-                            <option value="FC&SM">Form Check & Shipping Mark</option>
-                            <option value="FC&SM&OP">Form Check & Shipping Mark & Open Packing</option>
-                            <option value="all">Akses Penuh</option>
-                        </select>
-                    </div>
+                    
+                    
                     <div class="form-group">
                         <label for="name">Username</label>
                         <input type="text" name="username" class="form-control" id="name" placeholder="Enter username" required>
@@ -101,6 +85,56 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group ml-5">
+                        <label for="type">Type</label>
+                        <div id="type">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="SP" id="typeSP">
+                                        <label class="form-check-label" for="typeSP">Shipping Mark</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="MP" id="typeMP">
+                                        <label class="form-check-label" for="typeMP">Mapping</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="FC" id="typeFC">
+                                        <label class="form-check-label" for="typeFC">Form Check</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="OP" id="typeOP">
+                                        <label class="form-check-label" for="typeOP">Open Packing</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="SB" id="typeSB">
+                                        <label class="form-check-label" for="typeSB">Supply Bahan</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="PL" id="typePL">
+                                        <label class="form-check-label" for="typePL">Packing List</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="CK" id="typePL">
+                                        <label class="form-check-label" for="typePL">Checklist Kendaraan</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="SL" id="typePL">
+                                        <label class="form-check-label" for="typePL">Scan Layout</label>
+                                    </div>
+                                   
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="all" id="typeAll">
+                                        <label class="form-check-label" for="typeAll">Akses Penuh</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="role">Role</label>

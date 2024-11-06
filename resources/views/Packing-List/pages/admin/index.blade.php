@@ -33,7 +33,7 @@
           <div class="card bg-gradient-danger card-img-holder text-white">
             <div class="card-body">
               <img src="{{asset('vendorfc/src/assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Total GM <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+              <h4 class="font-weight-normal mb-3">Total Keterangan <i class="mdi mdi-chart-line mdi-24px float-end"></i>
               </h4>
               <h2 class="mb-5">{{$gm}}</h2>
               <h6 class="card-text">......</h6>
@@ -44,7 +44,7 @@
           <div class="card bg-gradient-info card-img-holder text-white">
             <div class="card-body">
               <img src="{{asset('vendorfc/src/assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Total Product <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+              <h4 class="font-weight-normal mb-3">Total Database <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
               </h4>
               <h2 class="mb-5">{{$form}}</h2>
               <h6 class="card-text">......</h6>

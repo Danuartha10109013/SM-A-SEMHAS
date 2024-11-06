@@ -26,19 +26,48 @@
               @php
                 $date = \Carbon\Carbon::now()->format('Y-m-d');
               @endphp
-                <label for="atribute" class="form-label">Date</label>
+                <label for="atribute" class="form-label">Date<small style="color: red;">*</small></label>
                 <input type="date" name="date" id="atribute" value="{{$date}}" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="atribute" class="form-label">Shift Leader</label>
-                <input type="text" name="shift_leader" id="atribute" class="form-control" required>
-            </div>
+              <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
+              <select type="text" name="shift_leader" id="team" class="form-control" required>
+                <option value="" selected disabled>--Pilih Shift Leader--</option>
+                <option value="Danu">Danu</option>
+                <option value="Riyan H">Riyan H</option>
+                <option value="Freddy">Freddy</option>
+                <option value="Dika">Dika</option>
+                <option value="other">Other</option> <!-- Add this option -->
+            </select>
+          </div>
+        
+        <!-- Input field for custom keterangan -->
+        <div class="mb-3" id="other-keterangan-container" style="display: none;">
+            <label for="other-keterangan" class="form-label">Please specify<small style="color: red;">*</small></label>
+            <input type="text" name="other_sift_leader" id="other-keterangan" class="form-control" placeholder="Enter new Shift Leader">
+        </div>
+        <script>
+            document.getElementById('team').addEventListener('change', function() {
+                var otherKeteranganContainer = document.getElementById('other-keterangan-container');
+                if (this.value === 'other') {
+                    otherKeteranganContainer.style.display = 'block'; // Show the custom input field
+                } else {
+                    otherKeteranganContainer.style.display = 'none'; // Hide the custom input field
+                }
+            });
+        </script>
+            <div class="form-group mb-3">
+              <label for="label">SHIFT<small style="color: red;">*</small>
+              </label>
+              <select class="form-control" name="shift" id="exampleSelectOption" required>
+                  <option value="" selected disabled>--Pilih Sift--</option>
+                  <option value="1" {{ old('jenis_crane') == '1' ? 'selected' : '' }}>1</option>
+                  <option value="2" {{ old('jenis_crane') == '2' ? 'selected' : '' }}>2</option>
+                  <option value="3" {{ old('jenis_crane') == '3' ? 'selected' : '' }}>3</option>
+              </select>
+          </div>
             <div class="mb-3">
-                <label for="atribute" class="form-label">Shift</label>
-                <input type="text" name="shift" id="atribute" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label for="atribute" class="form-label">Jenis Supply</label>
+              <label for="atribute" class="form-label">Jenis Supply <small style="color: red;">*</small></label>
               <select name="supply" id="atribute" class="form-select" required>
                   <option value="" selected disabled>--Pilih Jenis Supply--</option>
                   <option value="Ingot">Ingot</option>
@@ -47,7 +76,7 @@
               </select>
           </div>
           <div class="mb-3">
-            <label for="fotoUpload1">FOTO <br></label>
+            <label for="fotoUpload1">FOTO <small style="color: red;">*</small><br></label>
             <input type="file" class="" name="foto1[]" id="fotoUpload1" multiple>
             <div id="fileList1"></div>
         </div>     

@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\CrcM;
 use App\Models\EupM;
 use App\Models\KendaraanM;
 use App\Models\ResinM;
@@ -18,7 +19,7 @@ class CrcExportExcel implements FromView, ShouldAutoSize
 
     public function __construct()
     {
-        $this->data = ResinM::all();
+        $this->data = CrcM::all();
     }
 
     public function view() : View

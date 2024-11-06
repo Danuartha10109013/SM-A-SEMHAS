@@ -23,9 +23,9 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Supply.admin.supply.add') : route('Supply.pegawai.supply.add') }}" 
-                   class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 12px">Tambahkan Response</a>
+                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 12px">Tambahkan Response</a>
                 {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                   class="badge badge-gradient-success" style="text-decoration: none; font-size: 12px">Export Excel</a> --}}
+                   class="btn btn-success" style="text-decoration: none; font-size: 12px">Export Excel</a> --}}
             </div>
         
             {{-- <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">
@@ -33,7 +33,7 @@
                 <input type="hidden" name="sort" value="{{ $sort }}">
                 <input type="hidden" name="direction" value="{{ $direction }}">
                 <button style="border: none; padding: 0; cursor: pointer;" type="submit"> 
-                    <label class="badge badge-gradient-danger" style="text-decoration: none;">Search</label>
+                    <label class="btn btn-danger" style="text-decoration: none;">Search</label>
                 </button>
             </form> --}}
         </div>
@@ -61,11 +61,11 @@
                     <td> {{$d->shift_leader}} </td>
                     <td>
                       <a href="{{route('Supply.admin.supply.show',$d->id)}}">
-                      <label class="badge badge-gradient-success">
+                      <label class="btn btn-success">
                         <i class="fas fa-eye"></i> Show
                       </label></a>
                       <a href="{{route('Supply.admin.supply.print',$d->id)}}">
-                      <label class="badge badge-gradient-warning">
+                      <label class="btn btn-warning">
                         <i class="fas fa-print"></i> Print
                       </label></a>
                     </td>

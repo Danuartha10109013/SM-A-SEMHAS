@@ -13,6 +13,7 @@ class IngotM extends Model
     protected $fillable = [
         'user_id',
         'shift_leader',
+        'jalan',
         'date',
         'time',
         'supplier',

@@ -20,47 +20,46 @@ class KUserController extends Controller
         return view('user.index',compact('data'));
     }
 
-    public function store(Request $request)
-    {
-        // Validate the incoming request
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'role' => 'required|integer',
-            'username' => 'required|string|max:255|unique:users,username',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+   public function store(Request $request)
+{
+    // Validate the incoming request
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'role' => 'required|integer',
+        'username' => 'required|string|max:255|unique:users,username',
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        // Handle avatar upload
-        // Handle avatar upload
-        $avatarPath = null;
-        if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $name = $request->username . '/' . uniqid() . '.' . $file->getClientOriginalExtension();
-            
-            // Store the avatar in the 'avatars' directory with the custom name
-            $avatarPath = $file->storeAs('avatars', $name, 'public');
-            
-            // Debugging to check the stored path
-            // dd($avatarPath);  // Check if the path is generated correctly
-        }
-        $type = $request->type;
-        User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'username' => $request->input('username'),
-            'type' => $type,
-            'password' => Hash::make('Tatametal123'), // Replace with the actual password logic
-            'role' => $request->input('role'),
-            'status' => 1,
-            'type' =>$type,
-            'profile' => $avatarPath, // This should be the generated path
-        ]);
+    // Handle avatar upload
+    $avatarPath = null;
+    if ($request->hasFile('avatar')) {
+        $file = $request->file('avatar');
+        $name = $request->username . '/' . uniqid() . '.' . $file->getClientOriginalExtension();
         
-
-        // Redirect back with a success message
-        return redirect()->route('Administrator.kelola-user')->with('success', 'User added successfully.');
+        // Store the avatar in the 'avatars' directory with the custom name
+        $avatarPath = $file->storeAs('avatars', $name, 'public');
     }
+
+    // Convert the 'type' array to JSON format
+    $typeJson = json_encode($request->input('type'));
+
+    // Create the user record in the database
+    User::create([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'username' => $request->input('username'),
+        'type' => $typeJson, // Store type as JSON
+        'password' => Hash::make('Tatametal123'), // Replace with the actual password logic
+        'role' => $request->input('role'),
+        'status' => 1,
+        'profile' => $avatarPath, // This should be the generated path
+    ]);
+
+    // Redirect back with a success message
+    return redirect()->route('Administrator.kelola-user')->with('success', 'User added successfully.');
+}
+
 
     public function edit($id){
         $data = User::find($id);
@@ -73,28 +72,31 @@ class KUserController extends Controller
         // Validate the incoming request data
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id, // Exclude current user
+            'email' => 'required|email|unique:users,email,' . $id,
             'role' => 'required|integer',
-            'username' => 'required|string|max:255|unique:users,username,' . $id, // Exclude current user
+            'username' => 'required|string|max:255|unique:users,username,' . $id,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type' => 'nullable|array', // Validate type as an array if provided
+            'type.*' => 'string', // Each item in the type array should be a string
         ]);
-        
+
         // Find the user by ID
         $user = User::findOrFail($id);
 
         // Update user data
-        
-        if($request->password == null){
-            $user->name = $request->input('name');
-            $user->username = $request->input('username');
-            $user->email = $request->input('email');
-            $user->role = $request->input('role');
-        }else{
-            $user->name = $request->input('name');
-            $user->username = $request->input('username');
-            $user->email = $request->input('email');
-            $user->role = $request->input('role');
-            $user->password = Hash::make( $request->input('password'));
+        $user->name = $request->input('name');
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->role = $request->input('role');
+
+        // Update password only if provided
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // Handle 'type' field as JSON
+        if ($request->has('type')) {
+            $user->type = json_encode($request->input('type')); // Store selected types as JSON
         }
 
         // Handle avatar upload
@@ -106,19 +108,15 @@ class KUserController extends Controller
 
             // Get the uploaded file
             $file = $request->file('avatar');
-
-            // Create a custom name for the avatar
             $name = $request->username . '/' . uniqid() . '.' . $file->getClientOriginalExtension();
-            
-            // Store the avatar in the 'avatars' directory with the custom name
+
+            // Store the avatar in the 'avatars' directory
             $avatarPath = $file->storeAs('avatars', $name, 'public');
-            
-            // Assign the new path to the user
             $user->profile = $avatarPath;
         }
 
         // Save the updated user
-        $user->save(); // Use save instead of update
+        $user->save();
 
         // Redirect back with success message
         return redirect()->route('Administrator.kelola-user')->with('success', 'User updated successfully!');

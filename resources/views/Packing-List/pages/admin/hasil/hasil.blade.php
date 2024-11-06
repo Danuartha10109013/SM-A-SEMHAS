@@ -24,7 +24,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
                         <a href="{{ route('Packing-List.admin.hasil.export') }}" 
-                           class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export All </a>
+                           class="btn btn-success" style="text-decoration: none; font-size: 15px">Export All </a>
                     </div>
         
                     {{-- <form action="{{ route('Packing-List.admin.hasil') }}" method="GET" class="ml-2" style="display: inline;">
@@ -32,7 +32,7 @@
                         <input type="hidden" name="sort" value="{{ request('sort') }}">
                         <input type="hidden" name="direction" value="{{ request('direction') }}">
                         <button type="submit" style="border: none; padding: 0; cursor: pointer;"> 
-                            <label class="badge badge-gradient-danger" style="text-decoration: none;">Search</label>
+                            <label class="btn btn-danger" style="text-decoration: none;">Search</label>
                         </button>
                     </form> --}}
                 </div>

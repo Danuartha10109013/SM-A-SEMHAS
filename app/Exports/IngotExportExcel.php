@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\EupM;
+use App\Models\IngotM;
 use App\Models\KendaraanM;
 use App\Models\ResinM;
 use Illuminate\Contracts\View\View;
@@ -18,7 +19,7 @@ class IngotExportExcel implements FromView, ShouldAutoSize
 
     public function __construct()
     {
-        $this->data = ResinM::all();
+        $this->data = IngotM::all();
     }
 
     public function view() : View

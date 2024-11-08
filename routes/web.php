@@ -17,6 +17,7 @@ use App\Http\Controllers\OpenPackController;
 use App\Http\Controllers\PListController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScanLayoutController;
 use App\Http\Controllers\ShippmentA;
 use App\Http\Controllers\ShippmentB;
 use App\Http\Controllers\ShippmentC;
@@ -61,7 +62,7 @@ Route::middleware([AutoLogout::class])->group(function () {
         Route::get('k-user/add',[KUserController::class,'add'])->name('kelola-user.add');
         Route::post('k-user/store',[KUserController::class,'store'])->name('kelola-user.store');
         Route::get('k-user/edit/{id}',[KUserController::class,'edit'])->name('kelola-user.edit');
-        Route::put('k-user/update/{id}',[KUserController::class,'update'])->name('kelola-user.update');
+        Route::put('k-user/update/{id}',[KUserController::class,'up date'])->name('kelola-user.update');
         Route::delete('k-user/delete/{id}',[KUserController::class,'destroy'])->name('kelola-user.delete');
     });
 
@@ -284,6 +285,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/create', [TraillerController::class, 'create'])->name('trailler.create');
                 Route::get('/print/{id}', [TraillerController::class, 'print'])->name('trailler.print');
                 Route::delete('/destroy/{id}', [TraillerController::class, 'destroy'])->name('trailler.destroy');
+                Route::get('/export', [TraillerController::class, 'export'])->name('trailler.export');
 
             });
             
@@ -489,6 +491,10 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/delete/{id}',[PListController::class, 'db_destroy'])->name('database.destroy');
                 Route::delete('/clear',[PListController::class, 'db_clear'])->name('database.clear');
                 Route::get('/confirmation',[PListController::class, 'confir'])->name('database.confir');
+                Route::prefix('gm')->group(function () {
+                    Route::get('/',[PListController::class, 'db_gm'])->name('gm');
+                    Route::get('/add',[PListController::class, 'db_add_gm'])->name('gm.add');
+                });
             
             });
                 
@@ -504,6 +510,7 @@ Route::middleware([AutoLogout::class])->group(function () {
 
     });
 
+    //Kendaraan
     Route::group(['prefix' => 'Kendaraan', 'middleware' => ['Kendaraan'], 'as' => 'Kendaraan.'], function () {
         Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
             Route::get('/',[DashboardControlller::class, 'k_admin'])->name('dashboard');
@@ -529,6 +536,29 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::put('/update/{id}', [KendaraanController::class, 'update'])->name('kendaraan.update');
                 Route::delete('/delete/{id}', [KendaraanController::class, 'delete'])->name('kendaraan.delete');
             });
+            
+        });
+
+    });
+
+    //Scan-Layout
+    Route::group(['prefix' => 'Scan-Layout', 'middleware' => ['Scan-Layout'], 'as' => 'Scan-Layout.'], function () {
+        Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+            Route::get('/',[DashboardControlller::class, 'a_scan'])->name('dashboard');
+            
+            Route::prefix('scan')->group(function () {
+                Route::get('/',[ScanLayoutController::class, 'index'])->name('scan');
+                Route::get('/add',[ScanLayoutController::class, 'add'])->name('scan.add');
+                Route::get('/export',[ScanLayoutController::class, 'export'])->name('scan.export');
+                Route::post('/store',[ScanLayoutController::class, 'store'])->name('scan.store');
+                Route::put('/update/{id}',[ScanLayoutController::class, 'update'])->name('scan.update');
+                Route::delete('/delete/{id}',[ScanLayoutController::class, 'delete'])->name('scan.delete');
+
+            });
+            
+        });
+        Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
+            Route::get('/',[DashboardControlller::class, 'k_pegawai'])->name('dashboard');
             
         });
 

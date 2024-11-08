@@ -14,7 +14,7 @@
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <label class="badge badge-gradient-primary">
+                    <label class="btn btn-primary">
                         <a style="text-decoration: none; font-size: 15px;color:white" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</a>
                     </label>
                     <h4 class="card-title">Daftar Pegawai</h4>
@@ -37,8 +37,8 @@
                                     </td>
                                     <td> {{$d->email}} </td>
                                     <td>
-                                        <label class="badge badge-gradient-success"><a style="color: white" href="{{route('Administrator.kelola-user.edit',$d->id)}}">Edit</a></label>
-                                        <label class="badge badge-gradient-danger">
+                                        <label class="btn btn-success"><a style="color: white" href="{{route('Administrator.kelola-user.edit',$d->id)}}">Edit</a></label>
+                                        <label class="btn btn-danger">
                                           <form action="{{ route('Administrator.kelola-user.delete', $d->id) }}" method="POST" style="display: inline;">
                                               @csrf
                                               @method('DELETE')

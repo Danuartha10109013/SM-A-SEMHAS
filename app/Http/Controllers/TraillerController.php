@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TraillerExportExcel;
 use App\Models\TraillerM;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TraillerController extends Controller
 {
@@ -44,7 +46,7 @@ class TraillerController extends Controller
     $validatedData = $request->validate([
         'user_id' => 'required|exists:users,id',
         'shift_leader' => 'nullable|string',
-        'mtc_name' => 'nullable|string',
+        'mtc' => 'nullable|string',
         'jenis_forklift' => 'nullable|string',
         'date' => 'nullable|date',
         'carrier' => 'nullable|string',
@@ -106,6 +108,7 @@ class TraillerController extends Controller
     ]);
 
     $validatedData['shift_leader'] = $request->shift_leader == 'other' ? $request->other_sift_leader : $request->shift_leader;
+    $validatedData['mtc_name']= $request->mtc;
 
     TraillerM::create($validatedData);
 
@@ -121,4 +124,11 @@ class TraillerController extends Controller
         $data = TraillerM::FindOrFail($id);
         return view('Form-Check.pages.trailler.print',compact('data'));
     }
+
+    public function export(){
+        $date = now()->format('d-m-Y'); 
+
+        return Excel::download(new TraillerExportExcel, $date.'Trailler.xlsx');
+    }
+
 }

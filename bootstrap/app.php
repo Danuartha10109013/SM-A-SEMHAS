@@ -10,6 +10,7 @@ use App\Http\Middleware\CheckTypeK;
 use App\Http\Middleware\CheckTypeMM;
 use App\Http\Middleware\CheckTypeOP;
 use App\Http\Middleware\PegawaiMiddleware;
+use App\Http\Middleware\ScanLayout;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -101,6 +102,18 @@ return Application::configure(basePath: dirname(__DIR__))
         //Kendaran ck
         $middleware->appendToGroup('Kendaraan', [
             CheckTypeK::class,
+        ]);
+    
+        $middleware->appendToGroup('admin', [
+            AdminMiddleware::class,
+        ]);
+    
+        $middleware->appendToGroup('pegawai', [
+            PegawaiMiddleware::class,
+        ]);
+        //Scan Lyout
+        $middleware->appendToGroup('Scan-Layout', [
+            ScanLayout::class,
         ]);
     
         $middleware->appendToGroup('admin', [

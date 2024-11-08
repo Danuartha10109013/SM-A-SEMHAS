@@ -38,34 +38,20 @@
 <div id="sidebar-scrollbar">
    <nav class="iq-sidebar-menu">
        <ul id="iq-sidebar-toggle" class="iq-menu">
-           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
-           <li class="{{ request()->routeIs('Packing-List.admin.dashboard') ? 'active' : '' }}">
-               <a href="{{route('Packing-List.admin.dashboard')}}" class="iq-waves-effect">
+           {{-- <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+           <li class="{{ request()->routeIs('Kendaraan.pegawai.dashboard') ? 'active' : '' }}">
+               <a href="{{route('Kendaraan.pegawai.dashboard')}}" class="iq-waves-effect">
                    <i class="ri-home-4-line"></i><span>Dashboard</span>
+               </a>
+           </li> --}}
+           
+           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Checklist Kendaraan</span></li>
+           <li class="{{ request()->routeIs('Kendaraan.pegawai.dashboard') ? 'active' : '' }}">
+               <a href="{{route('Kendaraan.pegawai.dashboard')}}" class="iq-waves-effect" aria-expanded="false">
+                   <i class="mdi mdi-car"></i><span>Checklist</span>
                </a>
            </li>
            
-           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Packing List</span></li>
-           <li class="{{ request()->routeIs('Packing-List.admin.list') ? 'active' : '' }}">
-               <a href="{{route('Packing-List.admin.list')}}" class="iq-waves-effect" aria-expanded="false">
-                   <i class="mdi mdi-qrcode-scan"></i><span>Scan</span>
-               </a>
-           </li>
-           <li class="{{ request()->routeIs('Packing-List.admin.hasil') ? 'active' : '' }}">
-               <a href="{{route('Packing-List.admin.hasil')}}" class="iq-waves-effect" aria-expanded="false">
-                   <i class="mdi mdi-format-list-checks"></i><span>Hasil Packing List</span>
-               </a>
-           </li>
-           <li class="{{ request()->routeIs('Packing-List.admin.database') ? 'active' : '' }}">
-               <a href="{{route('Packing-List.admin.database')}}" class="iq-waves-effect" aria-expanded="false">
-                   <i class="mdi mdi-database"></i><span>Database GS</span>
-               </a>
-           </li>
-           <li class="{{ request()->routeIs('Packing-List.admin.gm') ? 'active' : '' }}">
-               <a href="{{route('Packing-List.admin.gm')}}" class="iq-waves-effect" aria-expanded="false">
-                   <i class="mdi mdi-database"></i><span>Database GM</span>
-               </a>
-           </li>
            
            
            

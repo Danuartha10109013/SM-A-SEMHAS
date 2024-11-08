@@ -183,12 +183,12 @@ class PListController extends Controller
 
     // Check if there's a search query, if so filter based on the 'attribute' field
     if ($search) {
-        $data = DatabM::where('attribute', 'LIKE', '%' . $search . '%')
+        $data = DatabM::where('storage_bin','!=','WH-L03-COIL')->where('attribute', 'LIKE', '%' . $search . '%')
             ->orderBy($sort, $direction) // Apply sorting
             ->get();
     } else {
         // If no search query, retrieve all records with sorting
-        $data = DatabM::orderBy($sort, $direction)->get();
+        $data = DatabM::where('storage_bin','!=','WH-L03-COIL')->orderBy($sort, $direction)->get();
     }
 
     return view('Packing-List.pages.admin.database.index', compact('data', 'search', 'sort', 'direction'));
@@ -284,5 +284,41 @@ class PListController extends Controller
         $date = now()->format('d-m-Y'); 
         return Excel::download(new HasilAkhir, $date . '_Packing_List.xlsx');
 
+    }
+
+    public function db_gm(Request $request){
+        // Get the search query from the request
+    $search = $request->input('search');
+    
+    // Get sort and direction from the request, with default values
+    $sort = $request->input('sort', 'date'); // Default sort by 'date'
+    $direction = $request->input('direction', 'asc');
+
+    // Validate direction to be either 'asc' or 'desc'
+    if (!in_array($direction, ['asc', 'desc'])) {
+        $direction = 'asc'; // Set to default if invalid
+    }
+
+    // Validate sort column (ensure it's a valid column name)
+    $validSortColumns = ['kode', 'nama_produk', 'qty', 'uom', 'attribute', 'storage_bin', 'date', 'user_id']; // Add all valid columns here
+    if (!in_array($sort, $validSortColumns)) {
+        $sort = 'date'; // Fallback to default if invalid
+    }
+
+    // Check if there's a search query, if so filter based on the 'attribute' field
+    if ($search) {
+        $data = DatabM::where('storage_bin','WH-L03-COIL')->where('attribute', 'LIKE', '%' . $search . '%')
+            ->orderBy($sort, $direction) // Apply sorting
+            ->get();
+    } else {
+        // If no search query, retrieve all records with sorting
+        $data = DatabM::where('storage_bin','WH-L03-COIL')->orderBy($sort, $direction)->get();
+    }
+
+    return view('Packing-List.pages.admin.database.gm', compact('data', 'search', 'sort', 'direction'));
+    }
+
+    public function db_add_gm(){
+        return view('Packing-List.pages.admin.database.add');
     }
 }

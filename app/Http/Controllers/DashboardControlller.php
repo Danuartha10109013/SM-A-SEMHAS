@@ -10,6 +10,7 @@ use App\Models\IngotM;
 use App\Models\KendaraanM;
 use App\Models\PackingM;
 use App\Models\ResinM;
+use App\Models\ScanLayoutM;
 use App\Models\ScanM;
 use App\Models\ShipA;
 use App\Models\ShipB;
@@ -80,6 +81,12 @@ class DashboardControlller extends Controller
     public function k_pegawai(){
         $records= KendaraanM::all();
         return view('Kendaraan.pages.pegawai.index',compact('records'));
+
+    }
+
+    public function a_scan(){
+        $data = ScanLayoutM::all();
+        return view('Scan-Layout.pages.admin.index',compact('data'));
 
     }
 }

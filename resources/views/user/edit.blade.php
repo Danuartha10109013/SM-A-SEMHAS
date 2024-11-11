@@ -1,4 +1,4 @@
-@extends(Auth::user()->type == "Ship-Mark" ? 'layout.pegawai.main' : 'Form-Check.layout.main')
+@extends('user.layout.main')
 
 @section('title')
 Kelola User @if(Auth::user()->role == 0)

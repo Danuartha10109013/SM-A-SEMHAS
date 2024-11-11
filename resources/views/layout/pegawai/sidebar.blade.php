@@ -29,7 +29,7 @@
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Back</span></li>
 
           <li class="{{ request()->routeIs('Administrator.kelola-user') ? 'active' : '' }}">
-              <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+              <a href="{{ route('Administrator.kelola-user') }}" class="btn btn-primary">Back</a>
           </li>
         </ul>
     </nav>

@@ -15,7 +15,11 @@ class ScanLayoutController extends Controller
     }
 
     public function add(){
-        return view('Scan-Layout.pages.admin.add');
+        if(Auth::user()->role == 0){
+            return view('Scan-Layout.pages.admin.add');
+        }else{
+            return view('Scan-Layout.pages.pegawai.add');
+        }
     }
 
     public function store(Request $request)
@@ -43,7 +47,11 @@ class ScanLayoutController extends Controller
         $packing->save();
 
         // Redirect back with a success message
-        return redirect()->route('Scan-Layout.admin.dashboard')->with('success', 'New Packing has been successfully created.');
+        if(Auth::user()->role = 0){
+            return redirect()->route('Scan-Layout.admin.dashboard')->with('success', 'New Packing has been successfully created.');
+        }else{
+            return redirect()->route('Scan-Layout.pegawai.dashboard')->with('success', 'New Packing has been successfully created.');
+        }
     }
 
     public function update(Request $request, $id)
@@ -73,6 +81,7 @@ class ScanLayoutController extends Controller
         $kendaraan->save();
 
         // Redirect back with a success message
+        
         return redirect()->back()->with('success', 'Kendaraan updated successfully!');
     }
 

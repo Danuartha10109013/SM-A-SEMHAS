@@ -22,6 +22,7 @@ use App\Http\Controllers\ShippmentA;
 use App\Http\Controllers\ShippmentB;
 use App\Http\Controllers\ShippmentC;
 use App\Http\Controllers\ShippmentD;
+use App\Http\Controllers\SIKController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\TraillerController;
 use App\Http\Middleware\AutoLogout;
@@ -62,7 +63,7 @@ Route::middleware([AutoLogout::class])->group(function () {
         Route::get('k-user/add',[KUserController::class,'add'])->name('kelola-user.add');
         Route::post('k-user/store',[KUserController::class,'store'])->name('kelola-user.store');
         Route::get('k-user/edit/{id}',[KUserController::class,'edit'])->name('kelola-user.edit');
-        Route::put('k-user/update/{id}',[KUserController::class,'up date'])->name('kelola-user.update');
+        Route::put('k-user/update/{id}',[KUserController::class,'update'])->name('kelola-user.update');
         Route::delete('k-user/delete/{id}',[KUserController::class,'destroy'])->name('kelola-user.delete');
     });
 
@@ -494,6 +495,12 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::prefix('gm')->group(function () {
                     Route::get('/',[PListController::class, 'db_gm'])->name('gm');
                     Route::get('/add',[PListController::class, 'db_add_gm'])->name('gm.add');
+                    Route::post('/store',[PListController::class, 'db_store_gm'])->name('gm.store');
+                    Route::post('/store/excel',[PListController::class, 'db_store_excel_gm'])->name('gm.excel.store');
+                    Route::get('/edit/{id}',[PListController::class, 'db_edit_gm'])->name('gm.edit');
+                    Route::put('/update/{id}',[PListController::class, 'db_update_gm'])->name('gm.update');
+                    Route::delete('/delete/{id}',[PListController::class, 'db_delete_gm'])->name('gm.delete');
+                    Route::delete('/clear',[PListController::class, 'db_clear_gm'])->name('gm.clear');
                 });
             
             });
@@ -558,10 +565,27 @@ Route::middleware([AutoLogout::class])->group(function () {
             
         });
         Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
-            Route::get('/',[DashboardControlller::class, 'k_pegawai'])->name('dashboard');
+            Route::get('/',[DashboardControlller::class, 'a_scan'])->name('dashboard');
             
+            Route::prefix('scan')->group(function () {
+                Route::get('/',[ScanLayoutController::class, 'index'])->name('scan');
+                Route::get('/add',[ScanLayoutController::class, 'add'])->name('scan.add');
+                Route::get('/export',[ScanLayoutController::class, 'export'])->name('scan.export');
+                Route::post('/store',[ScanLayoutController::class, 'store'])->name('scan.store');
+                Route::put('/update/{id}',[ScanLayoutController::class, 'update'])->name('scan.update');
+                Route::delete('/delete/{id}',[ScanLayoutController::class, 'delete'])->name('scan.delete');
+
+            });
         });
 
     });
 //endautologout
 });
+
+Route::prefix('Surat-Izin-Keluar')->group(function () {
+    Route::get('/',[SIKController::class,'index'])->name('sik');
+    Route::get('/add',[SIKController::class,'add'])->name('sik.add');
+    Route::post('/store',[SIKController::class,'store'])->name('sik.store');
+});
+
+

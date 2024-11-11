@@ -52,10 +52,6 @@
                 </a>
             </li>
             
-            
-            
-            
-            <!-- Tambahkan active di bagian yang lain sesuai kebutuhan -->
         </ul>
     </nav>
     <div class="p-3"></div>

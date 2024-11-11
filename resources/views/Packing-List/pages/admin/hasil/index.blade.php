@@ -59,8 +59,10 @@
                         <tbody>
                             @foreach ($data as $d)
                                 @php
-                                    $scan = \App\Models\DatabM::where('attribute', $d->attribute)->select('kode', 'nama_produk', 'qty', 'uom', 'attribute', 'storage_bin', 'date')->distinct()->get();
+                                    $scan = \App\Models\DatabM::where('attribute', $d->attribute)->select('kode', 'nama_produk', 'qty', 'uom', 'attribute', 'storage_bin','panjang', 'date')->distinct()->get();
                                     $scanCount = $scan->count();
+                                    // dd($scanCount);
+
                                 @endphp
 
                                 @if($scanCount > 0)
@@ -82,7 +84,11 @@
                                                     {{ $name }}
                                                 </td>
                                             @endif
+                                            @if ($d->panjang == null)
+                                            <td rowspan="{{ $scanCount }}">{{ $db->panjang }}</td>
+                                            @else
                                             <td>{{ $d->panjang }}</td>
+                                            @endif
                                             <td>{{ $d->created_at }}</td>
                                             <td>{{ $d->kondisi }}</td>
                                             <td>{{ $d->tujuan }}</td>

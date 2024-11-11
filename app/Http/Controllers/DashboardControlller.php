@@ -21,6 +21,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardControlller extends Controller
 {
@@ -86,7 +87,11 @@ class DashboardControlller extends Controller
 
     public function a_scan(){
         $data = ScanLayoutM::all();
-        return view('Scan-Layout.pages.admin.index',compact('data'));
+        if(Auth::user()->role == 0){
+            return view('Scan-Layout.pages.admin.index',compact('data'));
+        }else{
+            return view('Scan-Layout.pages.pegawai.index',compact('data'));
+        }
 
     }
 }

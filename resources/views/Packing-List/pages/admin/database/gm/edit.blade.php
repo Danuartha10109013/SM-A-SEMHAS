@@ -2,7 +2,7 @@
 
 
 @section('title')
-    Edit Database||
+    Edit Database GM ||
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)
@@ -15,7 +15,7 @@
 <div class="container">
     <h2>Edit Product: {{ $data->nama_produk }}</h2>
 
-    <form action="{{ route('Packing-List.admin.database.update', $data->id) }}" method="POST">
+    <form action="{{ route('Packing-List.admin.gm.update', $data->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -42,6 +42,10 @@
         <div class="form-group">
             <label for="attribute">No Coil:</label>
             <input type="text" class="form-control" id="attribute" name="attribute" value="{{ $data->attribute }}" required>
+        </div>
+        <div class="form-group">
+            <label for="panjang">Panjang:</label>
+            <input type="text" class="form-control" id="panjang" name="panjang" value="{{ $data->panjang }}" required>
         </div>
 
         <div class="form-group">

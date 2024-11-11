@@ -80,11 +80,10 @@
                     }
                 });
             </script>
-                        
 
             <div class="mb-3">
-                <label for="panjang" class="form-label">Panjang</label>
-                <input type="number" name="panjang" id="panjang" class="form-control" required>
+                <label for="panjang" class="form-label">Panjang <small style="color: red">*kosongkan jika itu gm</small></label>
+                <input type="number" name="panjang" id="panjang" class="form-control" >
             </div>
 
             <button type="submit" class="btn btn-primary w-100">Save New GM</button>

@@ -38,19 +38,23 @@
 <div id="sidebar-scrollbar">
    <nav class="iq-sidebar-menu">
        <ul id="iq-sidebar-toggle" class="iq-menu">
-           {{-- <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
-           <li class="{{ request()->routeIs('Kendaraan.pegawai.dashboard') ? 'active' : '' }}">
-               <a href="{{route('Kendaraan.pegawai.dashboard')}}" class="iq-waves-effect">
+           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+           <li class="{{ request()->routeIs('Supply.admin.dashboard') ? 'active' : '' }}">
+               <a href="{{route('Supply.admin.dashboard')}}" class="iq-waves-effect">
                    <i class="ri-home-4-line"></i><span>Dashboard</span>
                </a>
-           </li> --}}
+           </li>
            
-           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Scan Layout</span></li>
-           <li class="{{ request()->routeIs('Scan-Layout.pegawai.dashboard') ? 'active' : '' }}">
-               <a href="{{route('Scan-Layout.pegawai.dashboard')}}" class="iq-waves-effect" aria-expanded="false">
-                   <i class="mdi mdi-page-layout-body"></i><span>Layout</span>
+           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Supply Bahan</span></li>
+           <li class="{{ request()->routeIs('Supply.admin.supply') ? 'active' : '' }}">
+               <a href="{{route('Supply.admin.supply')}}" class="iq-waves-effect" aria-expanded="false">
+                   <i class="mdi mdi-warehouse"></i><span>Supply Bahan</span>
                </a>
            </li>
+           
+           
+           
+           <!-- Tambahkan active di bagian yang lain sesuai kebutuhan -->
        </ul>
    </nav>
    <div class="p-3"></div>

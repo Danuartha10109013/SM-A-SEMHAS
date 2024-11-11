@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\HasilAkhir;
 use App\Imports\DatabaseImport;
+use App\Imports\DatabMImportExcel;
 use App\Models\DatabM;
 use App\Models\PackingM;
 use App\Models\ScanM;
@@ -36,7 +37,7 @@ class PListController extends Controller
         'keterangan'=>'required|string|max:255',
         'tujuan'=>'required|string|max:255',
         'other_keterangan' => 'nullable|string',
-        'panjang'=>'required|integer',
+        'panjang'=>'nullable',
     ]);
     if($request->keterangan == "other"){
         ScanM::create([
@@ -75,7 +76,7 @@ class PListController extends Controller
         return view('Packing-List.pages.admin.list.add-gm',compact('gm'));
     }
 
-    public function store_gm(Request $request){
+    public function db_(Request $request){
         // dd($request->all());
         $request->validate([
             'gm' => 'required|string|max:255',
@@ -319,6 +320,105 @@ class PListController extends Controller
     }
 
     public function db_add_gm(){
-        return view('Packing-List.pages.admin.database.add');
+        return view('Packing-List.pages.admin.database.gm.add');
     }
+
+    public function db_store_gm(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'kode' => 'required|string|max:255',
+            'nama_produk' => 'required|string|max:255',
+            'qty' => 'required|numeric',
+            'panjang' => 'required',
+            'attribute' => 'required|string|max:255',
+            'storage_bin' => 'required|string|max:255',
+            'date' => 'required|date',
+            'uom' => 'required|string|max:255',
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        // Create a new Product instance and fill it with the form data
+        $product = new DatabM();
+        $product->kode = $request->kode;
+        $product->nama_produk = $request->nama_produk;
+        $product->qty = $request->qty;
+        $product->panjang = $request->panjang;
+        $product->attribute = $request->attribute;
+        $product->storage_bin = $request->storage_bin;
+        $product->date = $request->date;
+        $product->uom = $request->uom;
+        $product->user_id = $request->user_id;
+
+        // Save the product to the database
+        $product->save();
+
+        // Redirect back with a success message
+        return redirect()->route('Packing-List.admin.gm')
+            ->with('success', 'Product added successfully!');
+    }
+
+    public function db_edit_gm($id){
+        $data = DatabM::find($id);
+        return view('Packing-List.pages.admin.database.gm.edit',compact('data'));
+    }
+
+    public function db_update_gm(Request $request, $id)
+    {
+        // dd($request->all());
+        // Validate the incoming request data
+        $request->validate([
+            'kode' => 'required|string|max:255',
+            'nama_produk' => 'required|string|max:255',
+            'qty' => 'required|numeric',
+            'uom' => 'required|string|max:255',
+            'attribute' => 'required|string|max:255',
+            'panjang' => 'required',
+            'storage_bin' => 'required|string|max:255',
+            'date' => 'required|date',
+        ]);
+
+        // Find the product by ID
+        $product = DatabM::findOrFail($id);
+
+        // Update the product fields with the form data
+        $product->kode = $request->kode;
+        $product->nama_produk = $request->nama_produk;
+        $product->qty = $request->qty;
+        $product->uom = $request->uom;
+        $product->attribute = $request->attribute;
+        $product->panjang = $request->panjang;
+        $product->storage_bin = $request->storage_bin;
+        $product->date = $request->date;
+
+        // Save the updated product to the database
+        $product->save();
+
+        // Redirect back with a success message
+        return redirect()->route('Packing-List.admin.gm')
+            ->with('success', 'Product updated successfully!');
+    }
+
+    public function db_delete_gm(Request $request,$id){
+        $data = DatabM::find($id);
+        $data->delete();
+        return redirect()->route('Packing-List.admin.gm')->with('success','Data berhasil diperbarui');
+    }
+
+    public function db_store_excel_gm(Request $request) {
+        // dd($request->all());
+        Excel::import(new DatabMImportExcel(), $request->file('excel'));
+        return redirect()->back()->with('success', 'Database Baru Telah ditambahkan');
+    }
+
+    public function db_clear_gm(){
+        $data = DatabM::where('storage_bin','WH-L03-COIL')->get();
+        foreach ($data as $d){
+            $same = DatabM::where('id',$d->id)->value('id');
+            $gm = DatabM::find($same);
+            $gm->delete();
+        }
+        return redirect()->route('Packing-List.admin.gm');
+    }
+    
 }

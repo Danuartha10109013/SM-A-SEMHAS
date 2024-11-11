@@ -1,8 +1,7 @@
 @extends('Scan-Layout.layout.main')
 
-
 @section('title')
-    Add ||
+    Tambahkan Packing ||
     @if(Auth::user()->role == 0)
         Admin
     @elseif(Auth::user()->role == 1)
@@ -13,259 +12,120 @@
 @endsection
 
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Checklist</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 5px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .logo img {
-            width: 100px; /* Adjust the width as needed */
-        }
-        .title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .no-urut {
-            text-align: right;
-        }
-    </style>
-</head>
-<body>
-    <style>
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 5px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .logo img {
-            width: 100px; /* Adjust the width as needed */
-        }
-        .title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .no-urut {
-            text-align: right;
-        }
-    </style>
-    <div class="header-container">
-        <div class="logo">
-            <img src="{{ asset('Logo TML.png') }}" alt="Logo">
-        </div>
-        <div class="title">
-            CHECKLIST KENDARAAN
-        </div>
-        <form action="{{ route('Kendaraan.pegawai.check.store') }}" enctype="multipart/form-data" method="POST">
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Make a New Packing</h3>
+
+    <div class="card shadow p-4">
+        @if (Auth::user()->role == 0)
+        <form action="{{ route('Scan-Layout.admin.scan.store') }}" method="POST">
+        @else
+        <form action="{{ route('Scan-Layout.pegawai.scan.store') }}" method="POST">
+        @endif
             @csrf
-        
-            <div class="no-urut">
-            <p>FM.WH.07.03</p>
-            NO. URUT: <input type="text" name="no_urut" ><br>
-            TGL: <input type="text" name="tanggal" value="{{ date('d-m-Y') }}" readonly><br>
-            IN (Jam): <input type="text" name="in" value="{{ now()->format('H:i:s') }}" readonly>
-        </div>
+            @method('POST')
+            <div class="mb-3 position-relative">
+                <label for="attribute" class="form-label">Atribute Coil</label>
+                <input type="text" name="attribute" id="attribute" class="form-control" required>
+                <button type="button" id="scan-button-attribute" class="btn btn-secondary position-absolute" style="right: 10px; top: 32px;">Scan QR</button>
+            </div>
+
+            <div id="qr-reader-attribute" style="width: 100%; display: none;"></div>
+
+            <div class="mb-3 position-relative">
+                <label for="layout" class="form-label">Layout Penyimpanan</label>
+                <input type="text" name="layout" id="layout" class="form-control" required>
+                <button type="button" id="scan-button-layout" class="btn btn-secondary position-absolute" style="right: 10px; top: 32px;">Scan QR</button>
+            </div>
+
+            <div id="qr-reader-layout" style="width: 100%; display: none;"></div>
+
+            <div class="mb-3">
+                <label for="kondisi" class="form-label">Kondisi</label>
+                <select name="kondisi" id="kondisi" class="form-control" required>
+                    <option value="" selected disabled>-- Select Kondisi --</option>
+                    <option value="BAIK">BAIK</option>
+                    <option value="TIDAK">TIDAK</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="group" class="form-label">Group</label>
+                <select name="group" id="group" class="form-control" required>
+                    <option value="" selected disabled>-- Select group --</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="mb-3" id="other-group-container" style="display: none;">
+                <label for="other-group" class="form-label">Please specify</label>
+                <input type="text" name="other_group" id="other-group" class="form-control" placeholder="Enter your custom group">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Save New GM</button>
+        </form>
     </div>
+</div>
 
-        <table>
-            <!-- Section A: Data Ekspedisi -->
-            <tr>
-                <th></th>
-                <th>DESKRIPSI</th>
-                <th>ISI</th>
-                <th>KET</th>
-            </tr>
-            <tr>
-                <td><strong>A</strong></td>
-                <td><strong>DATA EKSPEDISI:</strong></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Nama Ekspedisi</td>
-                <td><input type="text" name="nama_ekspedisi" required></td>
-                <td><input type="text" name="ket_nama_ekspedisi"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>No Mobil (Foto)</td>
-                <td><input type="text" name="no_mobil" required> &nbsp;&nbsp;<input type="file" name="no_mobil_foto" ></td>
-                <td><input type="text" name="ket_no_mobil"></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>No Kontainer (Foto)</td>
-                <td><input type="text" name="no_kontainer" required> &nbsp;&nbsp;<input type="file" name="no_kontainer_foto" ></td>
-                <td><input type="text" name="ket_no_kontainer"></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Tujuan</td>
-                <td><input type="text" name="tujuan" required></td>
-                <td><input type="text" name="ket_tujuan"></td>
-            </tr>
+<script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
+<script>
+    // Toggle display of custom group input
+    document.getElementById('group').addEventListener('change', function() {
+        const otherGroupContainer = document.getElementById('other-group-container');
+        otherGroupContainer.style.display = this.value === 'other' ? 'block' : 'none';
+    });
 
-            <!-- Section B: Data Driver -->
-            <tr>
-                <td><strong>B</strong></td>
-                <td><strong>DATA DRIVER:</strong></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Nama Sopir/Kenek</td>
-                <td><input type="text" name="nama_sopir" placeholder="" required><small style='color:red'>*</small>  </td>
-                <td><input type="text" name="ket_nama_sopir"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Helm</td>
-                <td>
-                    <select name="helm">
-                        <option value="ADA">ADA</option>
-                        <option value="TIDAK ADA">TIDAK ADA</option>
-                    </select>
-                </td>
-                <td><input type="text" name="ket_helm"></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Celana Panjang</td>
-                <td>
-                    <select name="celana_panjang">
-                        <option value="ADA">ADA</option>
-                        <option value="TIDAK ADA">TIDAK ADA</option>
-                    </select>
-                </td>
-                <td><input type="text" name="ket_celana_panjang"></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Baju Lengan Panjang</td>
-                <td>
-                    <select name="baju_lengan_panjang">
-                        <option value="ADA">ADA</option>
-                        <option value="TIDAK ADA">TIDAK ADA</option>
-                    </select>
-                </td>
-                <td><input type="text" name="ket_baju_lengan_panjang"></td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Sepatu</td>
-                <td>
-                    <select name="sepatu">
-                        <option value="ADA">ADA</option>
-                        <option value="TIDAK ADA">TIDAK ADA</option>
-                    </select>
-                </td>
-                <td><input type="text" name="ket_sepatu"></td>
-            </tr>
+    // QR Code Scanner for Attribute field
+    function initQrScanner(buttonId, readerId, inputField) {
+        const scanButton = document.getElementById(buttonId);
+        const qrReader = document.getElementById(readerId);
+        const input = document.getElementById(inputField);
+        let html5QrCode = null;
+        let scannerIsActive = false;
 
-            <!-- Section C: Kelengkapan Dokumen Supir -->
-            <tr>
-                <td><strong>C</strong></td>
-                <td><strong>KELENGKAPAN DOKUMEN SUPIR:</strong></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>SIM / KTP</td>
-                <td><input type="text" name="sim" required></td>
-                <td><input type="text" name="ket_sim"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Masa Berlaku SIM / KTP</td>
-                <td>
-                    <select name="masa_berlaku_sim">
-                        <option value="YA">YA</option>
-                        <option value="TDK">TDK</option>
-                    </select>
-                </td>
-                <td><input type="date" name="ket_masa_berlaku_sim"></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>STNK</td>
-                <td><input type="text" name="stnk" required></td>
-                <td><input type="text" name="ket_stnk"></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Masa Berlaku STNK</td>
-                <td>
-                    <select name="masa_berlaku_stnk">
-                        <option value="YA">YA</option>
-                        <option value="TDK">TDK</option>
-                    </select>
-                </td>
-                <td><input type="date" name="ket_masa_berlaku_stnk"></td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>KIR</td>
-                <td><input type="text" name="kir" required></td>
-                <td><input type="text" name="ket_kir"></td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>MASA BERLAKU KIR</td>
-                <td>
-                    <select name="masa_berlaku_kir">
-                        <option value="YA">YA</option>
-                        <option value="TDK">TDK</option>
-                    </select>
-                </td>
-                <td><input type="date" name="ket_masa_berlaku_kir"></td>
-            </tr>
-            <tr>
-                <td><strong>D</strong></td>
-                <td><strong>KELENGKAPAN DOKUMEN PENGAMBILAN :</strong></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>SURAT PENGANTAR EKSPEDISI / DO</td>
-                <td><input type="text" name="surat_pengantar_ekspedisi" required></td>
-                <td><input type="text" name="ket_surat_pengantar_ekspedisi"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>SEGEL</td>
-                <td><input type="text" name="segel" required></td>
-                <td><input type="text" name="ket_segel"></td>
-            </tr>
-            
-            <!-- Additional sections follow the same structure -->
-        </table>
-        <br>
-        Responden :     <input type="text" value="{{ Auth::user()->name }}" readonly>
-        <input type="hidden" name="responden" value="{{ Auth::user()->id }}">
-        <br>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+        scanButton.addEventListener('click', () => {
+            input.value = ''; // Clear the input field before scanning
+
+            if (!scannerIsActive) {
+                qrReader.style.display = 'block'; // Show the QR reader
+                html5QrCode = new Html5Qrcode(readerId);
+
+                html5QrCode.start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: 250 },
+                    qrCodeMessage => {
+                        input.value = qrCodeMessage; // Set scanned result to the input field
+                        stopQrScanner();
+                    },
+                    errorMessage => console.log("Scanning failed:", errorMessage)
+                ).catch(err => {
+                    console.error("Error starting QR code scanner:", err);
+                    qrReader.style.display = 'none';
+                });
+
+                scannerIsActive = true;
+            } else {
+                stopQrScanner();
+            }
+        });
+
+        function stopQrScanner() {
+            if (html5QrCode) {
+                html5QrCode.stop().then(() => {
+                    qrReader.style.display = 'none';
+                    scannerIsActive = false;
+                    html5QrCode.clear();
+                }).catch(err => console.error("Error stopping the QR code scanner:", err));
+            }
+        }
+    }
+
+    // Initialize separate scanners for Attribute and Layout fields
+    initQrScanner('scan-button-attribute', 'qr-reader-attribute', 'attribute');
+    initQrScanner('scan-button-layout', 'qr-reader-layout', 'layout');
+</script>
+
 @endsection

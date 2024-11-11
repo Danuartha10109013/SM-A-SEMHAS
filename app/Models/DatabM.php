@@ -22,6 +22,8 @@ class DatabM extends Model
         'storage_bin',
         'date',
         'user_id',
+        'kode',
+        'panjang',
     ];
 
 }

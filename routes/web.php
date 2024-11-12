@@ -27,13 +27,28 @@ use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\TraillerController;
 use App\Http\Middleware\AutoLogout;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
+
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::get('/welcome', [LoginController::class, 'welcome'])->name('welcome');
 Route::post('/login', [LoginController::class, 'proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-use Illuminate\Support\Facades\Response;
+Route::prefix('Surat-Izin-Keluar')->group(function () {
+    Route::get('/',[SIKController::class,'index'])->name('sik');
+    Route::get('/add',[SIKController::class,'add'])->name('sik.add');
+    Route::post('/store',[SIKController::class,'store'])->name('sik.store');
+    Route::get('/delete/{id}',[SIKController::class,'delete'])->name('sik.delete');
+    Route::get('/edit/{id}',[SIKController::class,'edit'])->name('sik.edit');
+    Route::post('/update/{id}',[SIKController::class,'update'])->name('sik.update');
+    Route::get('/print/{id}',[SIKController::class,'print'])->name('sik.print');
+});
+Route::prefix('Security')->group(function () {
+    Route::get('/',[SIKController::class,'security'])->name('security');
+    Route::get('/setujui/{id}',[SIKController::class,'setujui'])->name('security.setujui');
+    Route::post('/store',[SIKController::class,'setujui_store'])->name('security.store');
+});
 
 Route::get('/download/{file}', function($file) {
     $filePath = public_path($file);
@@ -582,10 +597,6 @@ Route::middleware([AutoLogout::class])->group(function () {
 //endautologout
 });
 
-Route::prefix('Surat-Izin-Keluar')->group(function () {
-    Route::get('/',[SIKController::class,'index'])->name('sik');
-    Route::get('/add',[SIKController::class,'add'])->name('sik.add');
-    Route::post('/store',[SIKController::class,'store'])->name('sik.store');
-});
+
 
 

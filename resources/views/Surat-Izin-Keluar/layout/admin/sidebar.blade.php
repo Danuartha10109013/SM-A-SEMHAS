@@ -22,41 +22,21 @@
        </div>
    </div>
 </div>
-@if (request()->routeIs('profile'))
 <div id="sidebar-scrollbar">
     <nav class="iq-sidebar-menu">
         <ul id="iq-sidebar-toggle" class="iq-menu">
-          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Back</span></li>
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Surat</span></li>
 
-          <li class="{{ request()->routeIs('Administrator.kelola-user') ? 'active' : '' }}">
-              <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+          <li class="{{ request()->routeIs('sik') ? 'active' : '' }}">
+              <a href="{{ route('sik') }}" class="btn btn-light">
+                <i class="mdi mdi-mail"></i><span>Surat Izin Keluar</span></a>
+          </li>
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Satpam</span></li>
+
+          <li class="{{ request()->routeIs('security') ? 'active' : '' }}">
+              <a href="{{ route('security') }}" class="btn btn-light">
+                <i class="mdi mdi-security"></i><span>Persetujuan</span></a>
           </li>
         </ul>
     </nav>
 </div>
-@else
-<div id="sidebar-scrollbar">
-   <nav class="iq-sidebar-menu">
-       <ul id="iq-sidebar-toggle" class="iq-menu">
-           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
-           <li class="{{ request()->routeIs('Supply.admin.dashboard') ? 'active' : '' }}">
-               <a href="{{route('Supply.admin.dashboard')}}" class="iq-waves-effect">
-                   <i class="ri-home-4-line"></i><span>Dashboard</span>
-               </a>
-           </li>
-           
-           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Supply Bahan</span></li>
-           <li class="{{ request()->routeIs('Supply.admin.supply') ? 'active' : '' }}">
-               <a href="{{route('Supply.admin.supply')}}" class="iq-waves-effect" aria-expanded="false">
-                   <i class="mdi mdi-warehouse"></i><span>Supply Bahan</span>
-               </a>
-           </li>
-           
-           
-           
-           <!-- Tambahkan active di bagian yang lain sesuai kebutuhan -->
-       </ul>
-   </nav>
-   <div class="p-3"></div>
-</div>
-@endif

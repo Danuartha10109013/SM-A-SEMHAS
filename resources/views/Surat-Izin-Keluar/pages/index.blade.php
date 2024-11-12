@@ -19,9 +19,8 @@
       </nav>
     </div>
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <!-- Left Section: Buttons -->
+        <!-- Filter Dropdown and Add New Button -->
         <div class="d-flex">
-            <!-- Dropdown for Filters -->
             <div class="dropdown mb-3">
                 <button class="btn btn-success dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     Filter By
@@ -31,18 +30,18 @@
                     <li><a href="{{ route('sik', ['filter' => 'month']) }}" class="dropdown-item">Month</a></li>
                     <li><a href="{{ route('sik', ['filter' => 'year']) }}" class="dropdown-item">Year</a></li>
                     <li><a href="{{ route('sik', ['filter' => 'all']) }}" class="dropdown-item">All</a></li>
+                    <li><a href="{{ route('sik', ['filter' => 'keluar']) }}" class="dropdown-item">Sudah Keluar</a></li>
                 </ul>
             </div>
             <a href="{{ route('sik.add') }}" class="btn btn-primary mb-3 ml-3"><i class="fa fa-plus"></i> Make New</a>
         </div>
-        
-        <!-- Right Section: Search Form -->
+    
+        <!-- Search Form -->
         <div class="d-flex align-items-center">
             <form action="{{ route('sik') }}" method="GET" style="display: inline;">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Search By No Pol" style="width: auto;" value="{{ request('search') }}">
-                    <input type="hidden" name="filter" value="{{ request('filter', 'all') }}"> <!-- Pass the current filter value -->
-                    <input type="hidden" name="sort" value="{{ request('sort') }}">
+                    <input type="text" name="search" class="form-control" placeholder="Search By No Pol" value="{{ request('search') }}">
+                    <input type="hidden" name="filter" value="{{ request('filter', 'all') }}">
                     <button type="submit" class="btn btn-danger">
                         <label class="m-0" style="text-decoration: none;">Search</label>
                     </button>
@@ -51,8 +50,6 @@
         </div>
     </div>
     
-    
-
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -91,8 +88,52 @@
                     <td>{{$d->muatan}}</td>
                     <td>{{$d->pemberi_izin}}</td>
                     <td>
-                        <a href="" class="btn btn-warning"><i class="fa fa-print"></i>Cetak</a>
-                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i>Hapus</a>
+                        <a href="{{route('sik.print',$d->id)}}" class="btn btn-warning"><i class="fa fa-print"></i>Cetak</a>
+                        @if ($d->status != 1)
+                            <a href="{{route('sik.edit',$d->id)}}" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a>
+                            <!-- Delete Button to Trigger Modal -->
+                            <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $d->id }}">
+                                <i class="fa fa-trash"></i> Hapus
+                            </a>
+                        @else
+
+                        @endif
+                    
+
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this item?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <a href="#" id="confirmDelete" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const deleteModal = document.getElementById('deleteModal');
+                                deleteModal.addEventListener('show.bs.modal', function(event) {
+                                    // Button that triggered the modal
+                                    const button = event.relatedTarget;
+                                    // Get item ID from data attribute
+                                    const itemId = button.getAttribute('data-id');
+                                    // Update confirm delete link with route
+                                    const confirmDelete = deleteModal.querySelector('#confirmDelete');
+                                    confirmDelete.setAttribute('href', `/Surat-Izin-Keluar/delete/${itemId}`);
+                                });
+                            });
+                        </script>
+
                     </td>
                 </tr>
             @endforeach

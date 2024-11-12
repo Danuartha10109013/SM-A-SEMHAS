@@ -15,7 +15,7 @@
        </div>
        <nav class="navbar navbar-expand-lg navbar-light p-0">
           <div class="navbar-left">
-
+      @if(Auth::user())
           <div class="iq-search-bar d-none d-md-block">
              <form action="#" class="searchbox">
                 <input type="text" class="text search-input" placeholder="Type here to search...">
@@ -66,6 +66,7 @@
                 </div>
              </form>
           </div>
+
        </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-label="Toggle navigation">
           <i class="ri-menu-3-line"></i>
@@ -116,6 +117,8 @@
                 </div>
              </li>
           </ul>
+          @else
+          @endif
        </nav>
        
 

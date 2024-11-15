@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CoilDamageM;
 use App\Models\CraneM;
 use App\Models\CrcM;
 use App\Models\DatabM;
@@ -22,6 +23,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardControlller extends Controller
 {
@@ -94,4 +96,47 @@ class DashboardControlller extends Controller
         }
 
     }
+    
+    public function coil_damage(Request $request) {
+        // Get the distinct years from the 'coil_damage' table
+        $years = DB::table('coil_damage')
+                    ->select(DB::raw('YEAR(created_at) as year'))
+                    ->distinct()
+                    ->orderBy('year', 'desc') // Optional: order the years in descending order
+                    ->get();
+    
+        // Get selected year from the request, or default to the current year
+        $selectedYear = $request->input('year', date('Y'));
+        
+        $month = $request->input('month');
+        
+        $query = DB::table('coil_damage')
+                    ->whereYear('created_at', $selectedYear);
+                    
+        if ($month) {
+            $query->whereMonth('created_at', $month);
+        }
+    
+        // Chart Data
+        $chart = $query->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                        ->groupBy(DB::raw('MONTH(created_at)'))
+                        ->get();
+    
+        // Search data
+        $search = $request->input('search');
+        $data = CoilDamageM::when($search, function($query) use ($search) {
+            return $query->where('attribute', 'like', '%' . $search . '%');
+        })->get();
+    
+        return view('Coil-Damage.pages.admin.index', [
+            'years' => $years,
+            'selectedYear' => $selectedYear,
+            'chart' => $chart,
+            'data' => $data,
+            'selectedMonth' => $month,
+            'search' => $search
+        ]);
+    }
+    
+    
 }

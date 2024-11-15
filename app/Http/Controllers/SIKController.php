@@ -2,35 +2,82 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SIKExport;
 use App\Models\SuratM;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SIKController extends Controller
 {
     public function index(Request $request)
     {
-        // Get the filter and search values from the request
         $filter = $request->get('filter', 'today');
         $search = $request->get('search');
     
-        // Start the query with the base condition
-        $query = SuratM::where('status', '!=', '1');
+        // Initialize empty collections for months and years
+        $months = collect();
+        $years = collect();
+    
+        // Start the query without specific status conditions by default
+        $query = SuratM::query();
     
         // Apply the filter
-        if ($filter == 'today') {
-            $today = now()->toDateString();
-            $query->where('date', $today);
-        } elseif ($filter == 'month') {
-            $monthStart = now()->startOfMonth()->toDateString();
-            $monthEnd = now()->endOfMonth()->toDateString();
-            $query->whereBetween('date', [$monthStart, $monthEnd]);
-        } elseif ($filter == 'year') {
-            $yearStart = now()->startOfYear()->toDateString();
-            $yearEnd = now()->endOfYear()->toDateString();
-            $query->whereBetween('date', [$yearStart, $yearEnd]);
-        }elseif($filter == 'keluar'){
-            $query = SuratM::where('status', '!=', 0);
+        if ($filter === 'today') {
+            $query->whereDate('date', today());
+        } elseif ($filter === 'month') {
+            $selectedMonth = $request->get('month', now()->month);
+            $selectedYear = $request->get('year', now()->year);
+            $query->whereMonth('date', $selectedMonth)->whereYear('date', $selectedYear);
+    
+            // Get distinct months with years
+            $months = SuratM::selectRaw('MONTH(date) as month, YEAR(date) as year')
+                ->distinct()->orderBy('year')->orderBy('month')->get();
+        } elseif ($filter === 'year') {
+            $selectedYear = $request->get('year', now()->year);
+            $query->whereYear('date', $selectedYear);
+    
+            // Get distinct years
+            $years = SuratM::selectRaw('YEAR(date) as year')
+                ->distinct()->orderBy('year')->get();
+        } elseif ($filter === 'keluar') {
+            $query->where('status', 1)->orWhere('status', '!=', 0);
+        }
+    
+        // Apply the search condition if search is provided
+        if ($search) {
+            $query->where('no_kendaraan', 'like', '%' . $search . '%')->
+            orwhere('divisi', 'like', '%' . $search . '%');
+        }
+    
+        // Execute the query to get the filtered and searched data
+        $data = $query->get();
+    
+        return view('Surat-Izin-Keluar.pages.index', compact('data', 'months', 'years', 'filter', 'search'));
+    }
+
+    public function export(Request $request)
+    {
+        // Retrieve filters and search parameters
+        $filter = $request->get('filter', 'today');
+        $search = $request->get('search');
+        $selectedMonth = $request->get('month', now()->month);
+        $selectedYear = $request->get('year', now()->year);
+    
+        // Start the query for Surat data
+        $query = SuratM::query();
+    
+        // Apply the filter
+        if ($filter === 'today') {
+            $query->whereDate('date', today());
+        } elseif ($filter === 'month') {
+            $query->whereMonth('date', $selectedMonth)->whereYear('date', $selectedYear);
+        } elseif ($filter === 'year') {
+            $query->whereYear('date', $selectedYear);
+        } elseif ($filter === 'keluar') {
+            $query->where('status', 1)->orWhere('status', '!=', 0);
         }
     
         // Apply the search condition if search is provided
@@ -38,14 +85,15 @@ class SIKController extends Controller
             $query->where('no_kendaraan', 'like', '%' . $search . '%');
         }
     
-        // Execute the query
+        // Execute the query to get the filtered data
         $data = $query->get();
-    
-        return view('Surat-Izin-Keluar.pages.index', compact('data'));
+        // dd($data);
+        // Return data for export (e.g., as a CSV or Excel file)
+        return Excel::download(new SIKExport($data), 'surat_izin_keluar.xlsx');
     }
+
+     
     
-
-
     public function add(){
         $today = now()->toDateString();
         $currentMonth = now()->format('m');
@@ -62,7 +110,7 @@ class SIKController extends Controller
         $newKodeNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
         // dd($newKodeNumber);
         // Generate the new code with the current date
-        $kode = $newKodeNumber . '/sik/' . $today . '/tml';
+        $kode = $newKodeNumber . '/SIK/' . $today . '/TML';
         
         return view('Surat-Izin-Keluar.pages.cc', compact('kode'));
     }
@@ -78,6 +126,7 @@ class SIKController extends Controller
             'muatan' => 'required|string',
             'pemberi_izin' => 'required|string',
             'signature' => 'required|string', 
+            'divisi' => 'required|string', 
         ]);
 
         $suratIzinKeluar = new SuratM();
@@ -90,6 +139,7 @@ class SIKController extends Controller
         $suratIzinKeluar->muatan = $request->input('muatan');
         $suratIzinKeluar->keperluan = $request->input('keperluan');
         $suratIzinKeluar->pemberi_izin = $request->input('pemberi_izin');
+        $suratIzinKeluar->divisi = $request->input('divisi');
         
         if ($request->has('signature')) {
             $signatureData = $request->input('signature');
@@ -200,7 +250,8 @@ class SIKController extends Controller
      
          // Apply the search condition if search is provided
          if ($search) {
-             $query->where('no_kendaraan', 'like', '%' . $search . '%');
+             $query->where('no_kendaraan', 'like', '%' . $search . '%')->
+             orwhere('divisi', 'like', '%' . $search . '%')->where('status', 0);
          }
      
          // Execute the query

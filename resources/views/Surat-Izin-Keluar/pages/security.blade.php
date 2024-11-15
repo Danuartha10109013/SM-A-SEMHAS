@@ -37,9 +37,9 @@ Persetujuan Security
     
         <!-- Search Form -->
         <div class="d-flex align-items-center">
-            <form action="{{ route('sik') }}" method="GET" style="display: inline;">
+            <form action="{{ route('security') }}" method="GET" style="display: inline;">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Search By No Pol" value="{{ request('search') }}">
+                    <input type="text" name="search" class="form-control" placeholder="No Pol or Divisi" value="{{ request('search') }}">
                     <input type="hidden" name="filter" value="{{ request('filter', 'all') }}">
                     <button type="submit" class="btn btn-danger">
                         <label class="m-0" style="text-decoration: none;">Search</label>

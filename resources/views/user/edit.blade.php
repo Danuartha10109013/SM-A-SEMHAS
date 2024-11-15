@@ -101,6 +101,11 @@ Kelola User @if(Auth::user()->role == 0)
                     <label class="form-check-label" for="typeSL">Scan Layout</label>
                   </div>
                   <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="type[]" value="CD" id="typeSL"
+                           {{ in_array('CD', json_decode($data->type, true) ?? []) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="typeSL">Coil Damage</label>
+                  </div>
+                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="type[]" value="all" id="typeAll"
                            {{ in_array('all', json_decode($data->type, true) ?? []) ? 'checked' : '' }}>
                     <label class="form-check-label" for="typeAll">Akses Penuh</label>

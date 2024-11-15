@@ -24,7 +24,7 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Packing-List.admin.list.add') : route('Packing-List.pegawai.list.add') }}" 
-                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Packing </a>
+                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px"><i class="mdi mdi-qrcode"></i>Scan </a>
                 {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
                    class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
             </div>

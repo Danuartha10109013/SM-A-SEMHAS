@@ -5,23 +5,24 @@
 @section('content')
 <div class="content-wrapper">
     <div class="page-header">
-      <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white me-2">
-          <i class="mdi mdi-home"></i>
-        </span> Surat Izin Keluar
-      </h3>
-      <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item active" aria-current="page">
-            <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-          </li>
-        </ul>
-      </nav>
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white me-2">
+                <i class="mdi mdi-home"></i>
+            </span> Surat Izin Keluar
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                </li>
+            </ul>
+        </nav>
     </div>
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <!-- Filter Dropdown and Add New Button -->
-        <div class="d-flex">
-            <div class="dropdown mb-3">
+    
+    <div class="row mb-3">
+        <!-- Filter Dropdown, Month/Year Selectors, and Add New Button -->
+        <div class="col-12 col-md-5 d-flex flex-wrap mb-2 mt-2">
+            <div class="dropdown  me-2">
                 <button class="btn btn-success dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     Filter By
                 </button>
@@ -33,23 +34,60 @@
                     <li><a href="{{ route('sik', ['filter' => 'keluar']) }}" class="dropdown-item">Sudah Keluar</a></li>
                 </ul>
             </div>
-            <a href="{{ route('sik.add') }}" class="btn btn-primary mb-3 ml-3"><i class="fa fa-plus"></i> Make New</a>
+
+            @if ($filter === 'month' && $months->isNotEmpty())
+                <select onchange="window.location.href=this.value" class="form-select  me-2">
+                    <option>Select Month</option>
+                    @foreach ($months as $month)
+                        <option value="{{ route('sik', ['filter' => 'month', 'month' => $month->month, 'year' => $month->year]) }}"
+                            {{ request('month') == $month->month && request('year') == $month->year ? 'selected' : '' }}>
+                            {{ \Carbon\Carbon::create()->month($month->month)->format('F') }} {{ $month->year }}
+                        </option>
+                    @endforeach
+                </select>
+            @elseif ($filter === 'year' && $years->isNotEmpty())
+                <select onchange="window.location.href=this.value" class="form-select  me-2">
+                    <option>Select Year</option>
+                    @foreach ($years as $year)
+                        <option value="{{ route('sik', ['filter' => 'year', 'year' => $year->year]) }}"
+                            {{ request('year') == $year->year ? 'selected' : '' }}>
+                            {{ $year->year }}
+                        </option>
+                    @endforeach
+                </select>
+            @endif
+            <a href="{{ route('sik.add') }}" class="btn btn-primary ms-0"><i class="fa fa-plus"></i> New</a>
         </div>
-    
+        <div class="col-md-3 mb-2 mt-2">
+            <!-- Export Button -->
+            <div class="">
+                <a href="{{ route('sik.export', [
+                    'filter' => request('filter', 'all'),
+                    'search' => request('search'),
+                    'month' => request('month'),
+                    'year' => request('year')
+                ]) }}" class="btn btn-info">
+                    <i class="fa fa-download"></i> Export
+                </a>
+            </div>
+        </div>
+        
         <!-- Search Form -->
-        <div class="d-flex align-items-center">
-            <form action="{{ route('sik') }}" method="GET" style="display: inline;">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Search By No Pol" value="{{ request('search') }}">
-                    <input type="hidden" name="filter" value="{{ request('filter', 'all') }}">
-                    <button type="submit" class="btn btn-danger">
-                        <label class="m-0" style="text-decoration: none;">Search</label>
-                    </button>
-                </div>
+        <div class="col-12 col-md-4 mb-2 mt-2" >
+            <form action="{{ route('sik') }}" method="GET" class="d-flex">
+                <input type="text" name="search" style="background-color: white" class="form-control" placeholder="No Pol or Divisi" value="{{ request('search') }}">
+                <input type="hidden" name="filter" value="{{ request('filter', 'all') }}">
+                @if (request('filter') === 'month')
+                    <input type="hidden" name="month" value="{{ request('month', now()->month) }}">
+                    <input type="hidden" name="year" value="{{ request('year', now()->year) }}">
+                @elseif (request('filter') === 'year')
+                    <input type="hidden" name="year" value="{{ request('year', now()->year) }}">
+                @endif
+                <button type="submit" class="btn btn-danger ms-2">Search</button>
             </form>
         </div>
     </div>
-    
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -58,6 +96,7 @@
                     <th>Date</th>
                     <th>Status</th>
                     <th>Kode SIK</th>
+                    <th>Divisi</th>
                     <th>Nama / Bagian</th>
                     <th>Keperluan</th>
                     <th>Kendaraan No.</th>
@@ -69,75 +108,35 @@
             </thead>
             <tbody>
                 @foreach ($data as $d)
-                    
-                <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$d->date}}</td>
-                    <td>
-                        @if ($d->status == 0)
-                        <label for="" class="text-danger">Belum Keluar</label>
-                        @else
-                        <label for="" class="text-success">Selesai</label>
-                        @endif
-                    </td>
-                    <td>{{$d->kode_sik}}</td>
-                    <td>{{$d->bagian}}</td>
-                    <td>{{$d->keperluan}}</td>
-                    <td>{{$d->no_kendaraan}}</td>
-                    <td>{{$d->pengemudi}}</td>
-                    <td>{{$d->muatan}}</td>
-                    <td>{{$d->pemberi_izin}}</td>
-                    <td>
-                        <a href="{{route('sik.print',$d->id)}}" class="btn btn-warning"><i class="fa fa-print"></i>Cetak</a>
-                        @if ($d->status != 1)
-                            <a href="{{route('sik.edit',$d->id)}}" class="btn btn-success"><i class="fa fa-edit"></i>Edit</a>
-                            <!-- Delete Button to Trigger Modal -->
-                            <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $d->id }}">
-                                <i class="fa fa-trash"></i> Hapus
-                            </a>
-                        @else
-
-                        @endif
-                    
-
-                        <!-- Delete Confirmation Modal -->
-                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure you want to delete this item?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <a href="#" id="confirmDelete" class="btn btn-danger">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const deleteModal = document.getElementById('deleteModal');
-                                deleteModal.addEventListener('show.bs.modal', function(event) {
-                                    // Button that triggered the modal
-                                    const button = event.relatedTarget;
-                                    // Get item ID from data attribute
-                                    const itemId = button.getAttribute('data-id');
-                                    // Update confirm delete link with route
-                                    const confirmDelete = deleteModal.querySelector('#confirmDelete');
-                                    confirmDelete.setAttribute('href', `/Surat-Izin-Keluar/delete/${itemId}`);
-                                });
-                            });
-                        </script>
-
-                    </td>
-                </tr>
-            @endforeach
-
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $d->date }}</td>
+                        <td>
+                            @if ($d->status == 0)
+                                <label class="text-danger">Belum Keluar</label>
+                            @else
+                                <label class="text-success">Selesai</label>
+                            @endif
+                        </td>
+                        <td>{{ $d->kode_sik }}</td>
+                        <td>{{ $d->divisi }}</td>
+                        <td>{{ $d->bagian }}</td>
+                        <td>{{ $d->keperluan }}</td>
+                        <td>{{ $d->no_kendaraan }}</td>
+                        <td>{{ $d->pengemudi }}</td>
+                        <td>{{ $d->muatan }}</td>
+                        <td>{{ $d->pemberi_izin }}</td>
+                        <td>
+                            <a href="{{ route('sik.print', $d->id) }}" class="btn btn-warning"><i class="fa fa-print"></i> Cetak</a>
+                            @if ($d->status != 1)
+                                <a href="{{ route('sik.edit', $d->id) }}" class="btn btn-success"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="{{route('sik.delete',$d->id)}}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $d->id }}">
+                                    <i class="fa fa-trash"></i> Hapus
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

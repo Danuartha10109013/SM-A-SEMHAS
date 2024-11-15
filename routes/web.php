@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CoilController;
+use App\Http\Controllers\CoilDamageController;
 use App\Http\Controllers\CraneController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardControlller;
@@ -43,6 +44,7 @@ Route::prefix('Surat-Izin-Keluar')->group(function () {
     Route::get('/edit/{id}',[SIKController::class,'edit'])->name('sik.edit');
     Route::post('/update/{id}',[SIKController::class,'update'])->name('sik.update');
     Route::get('/print/{id}',[SIKController::class,'print'])->name('sik.print');
+    Route::get('/export',[SIKController::class,'export'])->name('sik.export');
 });
 Route::prefix('Security')->group(function () {
     Route::get('/',[SIKController::class,'security'])->name('security');
@@ -590,6 +592,35 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::put('/update/{id}',[ScanLayoutController::class, 'update'])->name('scan.update');
                 Route::delete('/delete/{id}',[ScanLayoutController::class, 'delete'])->name('scan.delete');
 
+            });
+        });
+
+    });
+    //Coil Damage
+    Route::group(['prefix' => 'Coil-Damage', 'middleware' => ['Coil-Damage'], 'as' => 'Coil-Damage.'], function () {
+        Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+            Route::get('/',[DashboardControlller::class, 'coil_damage'])->name('dashboard');
+            
+            Route::prefix('damage')->group(function () {
+                Route::get('/',[CoilDamageController::class, 'index'])->name('damage');
+                Route::get('/add',[CoilDamageController::class, 'add'])->name('damage.add');
+                Route::get('/export',[CoilDamageController::class, 'export'])->name('damage.export');
+                Route::post('/store',[CoilDamageController::class, 'store'])->name('damage.store');
+                Route::put('/update/{id}',[CoilDamageController::class, 'update'])->name('damage.update');
+                Route::delete('/delete/{id}',[CoilDamageController::class, 'delete'])->name('damage.delete');
+            });
+            
+        });
+        Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
+            Route::get('/',[DashboardControlller::class, 'coil_damage'])->name('dashboard');
+            
+            Route::prefix('damage')->group(function () {
+                Route::get('/',[CoilDamageController::class, 'index'])->name('damage');
+                Route::get('/add',[CoilDamageController::class, 'add'])->name('damage.add');
+                Route::get('/export',[CoilDamageController::class, 'export'])->name('damage.export');
+                Route::post('/store',[CoilDamageController::class, 'store'])->name('damage.store');
+                Route::put('/update/{id}',[CoilDamageController::class, 'update'])->name('damage.update');
+                Route::delete('/delete/{id}',[CoilDamageController::class, 'delete'])->name('damage.delete');
             });
         });
 

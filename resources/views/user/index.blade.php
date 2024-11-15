@@ -14,9 +14,21 @@
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <label class="btn btn-primary">
-                        <a style="text-decoration: none; font-size: 15px;color:white" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</a>
-                    </label>
+                    <div class="d-flex justify-content-between mb-3">
+                        <!-- Add User Button on the Left -->
+                        <label class="btn btn-primary">
+                            <a style="text-decoration: none; font-size: 15px;color:white" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</a>
+                        </label>
+                    
+                        <!-- Search Form on the Right -->
+                        <form action="{{ route('Administrator.kelola-user') }}" method="GET" class="ml-2 mt-2 text-end" style="display: inline;">
+                            <input type="text" name="search" placeholder="Search By Name" class="form-control d-inline" value="{{$search}}" style="width: auto; display: inline;">
+                            <button class="btn btn-success" type="submit"> 
+                                Search
+                            </button>
+                        </form>
+                    </div>
+                    
                     <h4 class="card-title">Daftar Pegawai</h4>
                     <div class="table-responsive">
                         <table class="table">
@@ -124,6 +136,10 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="type[]" value="SL" id="typePL">
                                         <label class="form-check-label" for="typePL">Scan Layout</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="CD" id="typeCD">
+                                        <label class="form-check-label" for="typeCD">Coil Damage</label>
                                     </div>
                                    
                                     <div class="form-check">

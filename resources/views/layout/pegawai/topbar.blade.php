@@ -15,11 +15,12 @@
        </div>
        <nav class="navbar navbar-expand-lg navbar-light p-0">
           <div class="navbar-left">
-      @if(Auth::user())
+
           <div class="iq-search-bar d-none d-md-block">
              <form action="#" class="searchbox">
                 <input type="text" class="text search-input" placeholder="Type here to search...">
                 <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                @if (Auth::user())
                 <div class="searchbox-datalink">
                    <h6 class="pl-3 pt-3 pb-3">Pages</h6>
                    <ul class="m-0 pl-3 pr-3 pb-3">
@@ -64,6 +65,8 @@
                      @endif
                    </ul>
                 </div>
+                @else
+                @endif
              </form>
           </div>
 
@@ -81,7 +84,9 @@
              
           </div>
           <ul class="navbar-list">
+             
              <li>
+                @if (Auth::user())
                 <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center bg-primary rounded">
                    <img src="{{asset('storage/'.Auth::user()->profile)}}" class="img-fluid rounded mr-3" alt="user">
                    <div class="caption">
@@ -108,17 +113,18 @@
                             </div>
                          </a>
                          
-                        
                          <div class="d-inline-block w-100 text-center p-3">
                             <a class="btn btn-primary dark-btn-primary" href="{{route('logout')}}" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
                          </div>
+                         @else
+                         @endif
+                        
                       </div>
                    </div>
                 </div>
              </li>
           </ul>
-          @else
-          @endif
+
        </nav>
        
 

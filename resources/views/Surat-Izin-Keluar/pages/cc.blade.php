@@ -71,6 +71,20 @@
                         <label for="muatan">Muatan</label>
                         <input type="text" name="muatan" class="form-control" required>
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="divisi">Divisi</label>
+                        <select name="divisi" class="form-control" required>
+                            <option value="" selected disabled>--Select Division--</option>
+                            <option value="WH">WH</option>
+                            <option value="UTY">UTY</option>
+                            <option value="HR & GA">HR & GA</option>
+                            <option value="MTC">MTC</option>
+                            <option value="QA">QA</option>
+                            <option value="PRD">PRD</option>
+                            <option value="SAFETY">SAFETY</option>
+                        </select>
+                    </div>
+                    
                 </div>
             </div>
             <div class="row">

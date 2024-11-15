@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\Adminmiddleware;
+use App\Http\Middleware\CheckCoilD;
 use App\Http\Middleware\CheckList;
 use App\Http\Middleware\CheckSupp;
 use App\Http\Middleware\CheckType;
@@ -114,6 +115,14 @@ return Application::configure(basePath: dirname(__DIR__))
         //Scan Lyout
         $middleware->appendToGroup('Scan-Layout', [
             ScanLayout::class,
+        ]);
+    
+        $middleware->appendToGroup('admin', [
+            AdminMiddleware::class,
+        ]);
+        //Coil-Damage
+        $middleware->appendToGroup('Coil-Damage', [
+            CheckCoilD::class,
         ]);
     
         $middleware->appendToGroup('admin', [

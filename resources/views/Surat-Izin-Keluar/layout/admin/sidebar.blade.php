@@ -1,5 +1,5 @@
 <div class="iq-sidebar-logo d-flex justify-content-between">
-   <a href="{{route('welcome')}}">
+   <a href="{{route('login')}}">
        <div class="iq-light-logo">
            <div class="iq-light-logo">
                <img src="{{asset('Logo TML.png')}}" class="img-fluid" alt="">
@@ -31,7 +31,7 @@
               <a href="{{ route('sik') }}" class="btn btn-light">
                 <i class="mdi mdi-mail"></i><span>Surat Izin Keluar</span></a>
           </li>
-          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Satpam</span></li>
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Security</span></li>
 
           <li class="{{ request()->routeIs('security') ? 'active' : '' }}">
               <a href="{{ route('security') }}" class="btn btn-light">

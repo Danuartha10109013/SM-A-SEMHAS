@@ -11,13 +11,17 @@ use Illuminate\Support\Facades\Validator;
 
 class KUserController extends Controller
 {
-    public function index (){
-        // $bagian = Auth::user()->type;
-        // $data = User::where('type', $bagian)
-        // ->OrWhere('type', 'Form-Check')
-        // ->get();
-        $data= User::all();
-        return view('user.index',compact('data'));
+    public function index (Request $request){
+        $search = $request->input('search');
+        if($search){
+            $data = User::when($search, function($query) use ($search) {
+                return $query->where('name', 'like', '%' . $search . '%');
+            })->get();
+        }else{
+            $data= User::all();
+        }
+       
+        return view('user.index',compact('data','search'));
     }
 
    public function store(Request $request)

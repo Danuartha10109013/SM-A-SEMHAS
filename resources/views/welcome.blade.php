@@ -182,6 +182,17 @@
                <div class="menu-title"> Scan Layout</div>
             </div>
          </a>
+         
+         @if (Auth::user()->role == 0)
+         <a href="{{route('Coil-Damage.admin.dashboard')}}" class="menu-item">
+        @else
+        <a href="{{route('Coil-Damage.pegawai.dashboard')}}" class="menu-item">
+         @endif
+            <div>
+               <i class="mdi mdi-package-variant-closed-remove"></i>
+               <div class="menu-title">Coil Damage</div>
+            </div>
+         </a>
       </div>
       
       <br>

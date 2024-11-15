@@ -7,37 +7,36 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
+            padding: 0;
             background-color: #f0f0f0;
         }
         .container {
-            width: 50%;
-            max-width: 700px;
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #000;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
         }
         h2 {
             text-align: center;
             text-transform: uppercase;
             margin: 0 0 10px 0;
+            font-size: 14px;
         }
         .header {
             text-align: end;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 12px;
         }
         .content {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 12px;
         }
         .label {
             display: inline-block;
             width: 120px;
-            margin-bottom: 15px
+            margin-bottom: 10px;
+            font-size: 12px;
         }
         .line {
             display: inline-block;
@@ -47,15 +46,16 @@
         }
         .signatures {
             display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
+            justify-content: space-between;
+            margin-top: 25px;
+            font-size: 12px;
         }
         .signatures div {
             text-align: center;
             width: 30%;
         }
         .signatures img {
-            max-width: 100px;
+            max-width: 80px;
             margin-top: 10px;
         }
         .signatures p {
@@ -66,42 +66,65 @@
         @media print {
             @page {
                 size: 16.6cm 10.5cm;
-                margin: 1cm;
+                margin: 0.5cm;
                 orientation: landscape;
             }
 
             body {
-                margin: 0;
-                display: block;
+                margin-left: 1cm;
+                padding: 0;
                 background-color: white;
+                display: block;
             }
 
             .container {
                 width: 100%;
-                max-width: 100%;
                 padding: 0;
-                box-shadow: none;
+                box-sizing: border-box;
             }
 
             h2 {
-                font-size: 16px;
+                font-size: 12px;
             }
 
             .header p {
-                font-size: 14px;
+                font-size: 10px;
                 text-align: right;
             }
+            
 
             .content {
-                font-size: 14px;
+                font-size: 10px;
+                line-height: 1.4;
+            }
+
+            .label {
+                font-size: 10px;
+                width: 110px;
+            }
+
+            .line {
+                width: 60%;
+                margin-left: 20px;
             }
 
             .signatures p {
-                font-size: 14px;
+                font-size: 10px;
             }
 
             .signatures img {
-                max-width: 80px;
+                max-width: 60px;
+            }
+
+            /* Adjust layout for better fit */
+            .signatures {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 20px;
+            }
+
+            .signatures div {
+                width: 30%;
             }
         }
     </style>
@@ -112,7 +135,7 @@
             <p>{{$data->date}}</p>
         </div>
         <h2>Surat Ijin Keluar</h2>
-        <p><center>Nomor: {{$data->kode_sik}}</center></p>
+        <p class="nomor"><center style="font-size: 10px">Nomor: {{$data->kode_sik}}</center></p>
 
         <div class="content">
             Dengan ini diijinkan keluar pabrik pada pukul: {{$data->diizinkan}}<br><br>
@@ -126,7 +149,7 @@
         <div class="signatures">
             <div>
                 <p>Pemberi Ijin,<br>
-                    <img src="{{asset($data->pemberi_izin_ttd)}}" alt="">
+                    <img src="{{asset($data->pemberi_izin_ttd)}}" alt=""/>
                 </p>
                 <p>( {{$data->pemberi_izin}} )</p>
             </div>
@@ -138,11 +161,16 @@
             </div>
             <div>
                 <p>Security,<br>
-                    <img src="{{asset($data->satpam_ttd)}}" alt="">
+                    <img src="{{asset($data->satpam_ttd)}}" alt=""/>
                 </p>
                 <p>( {{$data->satpam}} )</p>
             </div>
         </div>
     </div>
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
 </body>
 </html>

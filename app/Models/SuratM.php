@@ -17,6 +17,7 @@ class SuratM extends Model
         'keperluan',
         'no_kendaraan',
         'muatan',
+        'divisi',
         'pemberi_izin',
         'pemberi_izin_ttd',
         'satpam',

@@ -39,7 +39,6 @@
         <th>Berat Coil</th>
         <th>Jenis Handling</th>
         <th>Keterangan</th>
-        <th>Group</th>
       
     </tr>
     @foreach ($data as $d)
@@ -55,7 +54,6 @@
         <td>{{$d->berat_coil}}</td>
         <td>{{$d->jenis_handling}}</td>
         <td>{{$d->keterangan}}</td>
-        <td>GROUP {{$d->group}}</td>
        
         
     </tr>

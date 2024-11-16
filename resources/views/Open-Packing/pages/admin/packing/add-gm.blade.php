@@ -32,33 +32,30 @@
 
               <div class="col-md-6">
                 <div class="mb-3 position-relative">
-                  <label for="attribute" class="form-label">Atribute Coil</label>
+                  <label for="attribute" class="form-label">Atribute Coil <small style="color: red">*</small></label>
                   <input type="text" name="attribute" id="attribute" class="form-control" required>
                   <!-- Scan QR Code Button -->
                   <button type="button" id="scan-button" class="btn btn-secondary position-absolute" style="right: 10px; top: 32px;">Scan QR</button>
               </div>
 
                 <div class="mb-3">
-                  <label for="atribute" class="form-label">Berat Label</label>
-                  <input type="number" name="b_label" id="aktual" class="form-control"  >
+                  <label for="atribute" class="form-label">Berat Label <small style="color: red">*</small></label>
+                  <input type="number" name="b_label" id="aktual" class="form-control"  required>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
-                  <label for="atribute" class="form-label">Stiker</label>
-                  <input type="text" name="stiker" id="aktual" class="form-control"  >
+                  <label for="atribute" class="form-label">Keterangan</label>
+                  <input type="text" name="keterangan" id="aktual" class="form-control"  >
                 </div>
                 <div class="mb-3">
-                  <label for="atribute" class="form-label">Berat Aktual</label>
-                  <input type="number" name="b_aktual" id="atribute" class="form-control"  >
+                  <label for="atribute" class="form-label">Berat Aktual <small style="color: red">*</small></label>
+                  <input type="number" name="b_aktual" id="atribute" class="form-control"  required>
                 </div>
               </div>
             </div>
             
-            <div class="mb-3">
-              <label for="atribute" class="form-label">Keterangan</label>
-              <input type="text" name="keterangan" id="aktual" class="form-control"  >
-            </div>
+            
             
 
             <button type="submit" class="btn btn-primary w-100">Save</button>

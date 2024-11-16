@@ -24,7 +24,7 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Open-Packing.admin.packing.add.gm',$gm) : route('Open-Packing.pegawai.packing.add') }}" 
-                   class="badge badge-gradient-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Product</a>
+                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Product</a>
                 {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
                    class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
             </div>
@@ -39,7 +39,7 @@
             </form> --}}
         </div>
           <div class="table-responsive">
-            <table class="table">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th> No </th>
@@ -48,7 +48,6 @@
                   <th> Berat Aktual </th>
                   <th> Selisih </th>
                   <th> Persentase </th>
-                  <th> Stiker </th>
                   <th> Keterangan </th>
                   <th> Action </th>
                 </tr>
@@ -62,14 +61,13 @@
                     <td> {{$d->b_aktual}} </td>
                     <td> {{$d->selisih}} </td>
                     <td> {{$d->persentase}} </td>
-                    <td> {{$d->stiker}} </td>
                     <td> {{$d->keterangan}} </td>
                     <td><a href="{{route('Open-Packing.admin.packing.edit',$d->id)}}">
-                      <label class="badge badge-gradient-primary">
+                      <label class="btn btn-primary">
                         <i class="fas fa-edit"></i> 
                       </label></a>
                       <a href="{{route('Open-Packing.admin.packing.delete',$d->id)}}">
-                      <label class="badge badge-gradient-danger">
+                      <label class="btn btn-danger">
                         <i class="fas fa-trash"></i>
                       </label></a>
                       

@@ -98,7 +98,7 @@
 
 <div class="header">
     <div class="header-left">
-        <img src="{{ asset('Logo_TML.png') }}" alt="Company Logo">
+        {{-- <img src="{{ asset('Logo_TML.png') }}" alt="Company Logo"> --}}
         <div>
             <strong>OPEN</strong>
         </div>
@@ -138,7 +138,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($detail as $d)
+        @foreach ($data as $d)
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$d->attribute}}</td>

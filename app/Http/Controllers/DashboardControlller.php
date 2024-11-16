@@ -108,13 +108,24 @@ class DashboardControlller extends Controller
         // Get selected year from the request, or default to the current year
         $selectedYear = $request->input('year', date('Y'));
         
+        // Get selected month from the request
         $month = $request->input('month');
-        
+    
+        // Get search term from the request
+        $search = $request->input('search');
+    
+        // Start query with year filter
         $query = DB::table('coil_damage')
                     ->whereYear('created_at', $selectedYear);
-                    
+    
+        // Apply month filter if provided
         if ($month) {
             $query->whereMonth('created_at', $month);
+        }
+    
+        // Apply search filter if provided
+        if ($search) {
+            $query->where('attribute', 'like', '%' . $search . '%');
         }
     
         // Chart Data
@@ -122,11 +133,14 @@ class DashboardControlller extends Controller
                         ->groupBy(DB::raw('MONTH(created_at)'))
                         ->get();
     
-        // Search data
-        $search = $request->input('search');
+        // Fetch search data for the table
         $data = CoilDamageM::when($search, function($query) use ($search) {
             return $query->where('attribute', 'like', '%' . $search . '%');
-        })->get();
+        })->whereYear('created_at', $selectedYear)
+          ->when($month, function($query) use ($month) {
+              return $query->whereMonth('created_at', $month);
+          })
+          ->get();
     
         return view('Coil-Damage.pages.admin.index', [
             'years' => $years,
@@ -137,6 +151,7 @@ class DashboardControlller extends Controller
             'search' => $search
         ]);
     }
+    
     
     
 }

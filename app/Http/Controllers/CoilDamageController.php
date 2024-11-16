@@ -6,6 +6,7 @@ use App\Exports\CoilDamageExportExcel;
 use App\Models\CoilDamageM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CoilDamageController extends Controller
@@ -109,9 +110,37 @@ class CoilDamageController extends Controller
         return redirect()->back()->with('success','Data berhasul dihapus');
     }
 
-    public function export(){
-        $date = now()->format('d-m-Y'); 
-        return Excel::download(new CoilDamageExportExcel,$date . '_Coil_Damage.xlsx');
+    public function export(Request $request)
+{
+    // Get selected year from the request, or default to the current year
+    $selectedYear = $request->input('year', date('Y'));
+
+    // Get selected month from the request
+    $month = $request->input('month');
+
+    // Get search term from the request
+    $search = $request->input('search');
+
+    // Start query with year filter
+    $query = DB::table('coil_damage')
+                ->whereYear('created_at', $selectedYear);
+
+    // Apply month filter if provided
+    if ($month) {
+        $query->whereMonth('created_at', $month);
     }
+
+    // Apply search filter if provided
+    if ($search) {
+        $query->where('attribute', 'like', '%' . $search . '%');
+    }
+
+    // Fetch the data based on the filters
+    $data = $query->get();
+
+    // Export logic (assuming you're using Laravel Excel)
+    return Excel::download(new CoilDamageExportExcel($data), 'coil_damage_report.xlsx');
+}
+
 
 }

@@ -2,18 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OpenPackExportExcel;
 use App\Models\PackingDetailM;
 use App\Models\PackingM;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OpenPackController extends Controller
 {
-    public function index(){
-        // Select unique 'gm' and aggregate other fields
-        $data = PackingM::select('gm')->distinct()->get();
-        
+    public function index(Request $request)
+    {
+        // Mulai query dari model PackingM
+        $query = PackingM::query();
+
+        // Filter berdasarkan rentang tanggal
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
+        }
+
+        // Filter berdasarkan bulan
+        if ($request->filled('month')) {
+            $query->whereMonth('created_at', $request->month);
+        }
+
+        // Filter berdasarkan tahun
+        if ($request->filled('year')) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        // Filter berdasarkan teks pencarian
+        if ($request->filled('search')) {
+            $query->where('gm', 'like', '%' . $request->search . '%');
+        }
+
+        // Ambil data unik 'gm' dengan tanggal pertama yang ditemukan
+        $data = $query->select('gm', DB::raw('MIN(created_at) as created_at'))
+                        ->groupBy('gm')
+                        ->get();
+
+        // Kirim data ke view
         return view('Open-Packing.pages.admin.packing.index', compact('data'));
     }
+    
     
 
     public function add()
@@ -134,8 +165,21 @@ class OpenPackController extends Controller
         $date = PackingM::where('gm',$gm)->value('created_at');
         $jenis = PackingM::where('gm',$gm)->value('jenis');
         $leader = PackingM::where('gm',$gm)->value('shift_leader');
+        $shift = PackingM::where('gm',$gm)->value('shift');
         
 
-        return view('Open-Packing.pages.admin.packing.print',compact('data','detail','date','jenis','leader'));
+        return view('Open-Packing.pages.admin.packing.print',compact('data','detail','date','jenis','leader','shift'));
+    }
+
+    public function download($gm){
+        $data = PackingM::where('gm', $gm)->get();
+        $cc = PackingM::where('gm',$gm)->value('id');
+        $data = PackingDetailM::where('packing_id',$cc)->get();
+        $date = PackingM::where('gm',$gm)->value('created_at');
+        $jenis = PackingM::where('gm',$gm)->value('jenis');
+        $leader = PackingM::where('gm',$gm)->value('shift_leader');
+        $shift = PackingM::where('gm',$gm)->value('shift');
+    return Excel::download(new OpenPackExportExcel($data,$gm,$date,$jenis,$leader,$shift), $gm.'_open_packing-report.xlsx');
+
     }
 }

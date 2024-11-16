@@ -433,6 +433,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/update',[OpenPackController::class, 'update'])->name('packing.update');
                 Route::get('/delete/{id}',[OpenPackController::class, 'delete'])->name('packing.delete');
                 Route::get('/print/{gm}',[OpenPackController::class, 'print'])->name('packing.print');
+                Route::get('/download/{gm}',[OpenPackController::class, 'download'])->name('packing.download');
             });
         });
         Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {

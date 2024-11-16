@@ -29,24 +29,56 @@
       </div>
 
       @if (Auth::user()->role == 0)
-      <a href="{{route('Coil-Damage.admin.damage.add')}}" class="btn btn-primary mb-3"><i class="mdi mdi-plus"></i>New Scan</a>
-      <a href="{{route('Coil-Damage.admin.damage.export')}}" class="btn btn-success mb-3"><i class="mdi mdi-export"></i>Export</a>
-      <form action="{{ route('Coil-Damage.admin.dashboard') }}" method="GET" class="mb-3">
+      <a href="{{ route('Coil-Damage.admin.damage.add') }}" class="btn btn-primary mb-3"><i class="mdi mdi-plus"></i> New Coil</a>
       @else
-      <a href="{{route('Coil-Damage.pegawai.damage.add')}}" class="btn btn-primary mb-3"><i class="mdi mdi-plus"></i>New Scan</a>
-      <a href="{{route('Coil-Damage.pegawai.damage.export')}}" class="btn btn-success mb-3"><i class="mdi mdi-export"></i>Export</a>
-      <form action="{{ route('Coil-Damage.pegawai.dashboard') }}" method="GET" class="mb-3">
+      <a href="{{ route('Coil-Damage.pegawai.damage.add') }}" class="btn btn-primary mb-3"><i class="mdi mdi-plus"></i> New Coil</a>
       @endif
-      <!-- Year Filter Form -->
-        <select name="year" id="year" onchange="this.form.submit()" class="form-select">
-          @foreach($years as $year)
-              <option value="{{ $year->year }}" {{ $selectedYear == $year->year ? 'selected' : '' }}>
-                  {{ $year->year }}
-              </option>
-          @endforeach
-      </select>
-      
+  
+      <!-- Export Form -->
+      @if (Auth::user()->role == 0)
+      <form action="{{ route('Coil-Damage.admin.damage.export') }}" method="GET" class="mb-3">
+      @else
+      <form action="{{ route('Coil-Damage.pegawai.damage.export') }}" method="GET" class="mb-3">
+      @endif
+
+          @csrf
+  
+          <!-- Include the current filter values -->
+          <input type="hidden" name="year" value="{{ $selectedYear }}">
+          <input type="hidden" name="month" value="{{ $selectedMonth }}">
+          <input type="hidden" name="search" value="{{ $search }}">
+  
+          <button type="submit" class="btn btn-success mb-3">
+              <i class="mdi mdi-export"></i> Export
+          </button>
+      </form>
     
+<div class="row">
+  <div class="col-md-7">
+    <!-- Year Filter Form -->
+    <!-- Year Filter Form -->
+    @if (Auth::user()->role == 0)
+    <form action="{{ route('Coil-Damage.admin.dashboard') }}" method="GET">
+    @else
+    <form action="{{ route('Coil-Damage.pegawai.dashboard') }}" method="GET">
+    @endif
+        <select name="year" id="year" onchange="this.form.submit()" class="form-select">
+            @foreach($years as $year)
+                <option value="{{ $year->year }}" {{ $selectedYear == $year->year ? 'selected' : '' }}>
+                    {{ $year->year }}
+                </option>
+            @endforeach
+        </select>
+        <input type="hidden" name="month" value="{{ $selectedMonth }}">
+        <input type="hidden" name="search" value="{{ $search }}">
+    </form>
+
+    <!-- Month Filter Form -->
+    @if (Auth::user()->role == 0)
+    <form action="{{ route('Coil-Damage.admin.dashboard') }}" method="GET">
+    @else
+    <form action="{{ route('Coil-Damage.pegawai.dashboard') }}" method="GET">
+    @endif
         <select name="month" id="month" onchange="this.form.submit()" class="form-select mt-2">
             <option value="">-- Select Month --</option>
             @foreach(range(1, 12) as $month)
@@ -55,7 +87,23 @@
                 </option>
             @endforeach
         </select>
+        <input type="hidden" name="year" value="{{ $selectedYear }}">
+        <input type="hidden" name="search" value="{{ $search }}">
     </form>
+
+    
+  </div>
+  <div class="col-md-5 text-end">
+    <!-- Search Form -->
+    <form action="{{ route('Coil-Damage.admin.dashboard') }}" method="GET" class="d-inline">
+        <input type="hidden" name="year" value="{{ $selectedYear }}">
+        <input type="hidden" name="month" value="{{ $selectedMonth }}">
+        <input type="text" name="search" placeholder="Search By Responden" class="form-control d-inline" value="{{ $search }}" style="width: auto;background-color: white">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+  </div>
+</div>
+
     
 
     <!-- Bar Chart for Coil Damage -->
@@ -132,16 +180,7 @@
             }
         });
     </script>
-    @if (Auth::user()->role == 0)
-    <form action="{{ route('Coil-Damage.admin.dashboard') }}" method="GET" class="ml-2 mt-2 text-end" style="display: inline;">
-    @else
-      <form action="{{ route('Coil-Damage.pegawai.dashboard') }}" method="GET" class="ml-2 mt-2 text-end" style="display: inline;">
-    @endif
-      <input type="text" name="search" placeholder="Search By Responden" class="form-control d-inline" value="{{$search}}" style="width: auto; display: inline;">
-      <button class="btn btn-success"  type="submit"> 
-          Search
-      </button>
-    </form>
+
     
       <div class="card mt-4">
         <div class="card-header">Data Detail</div>

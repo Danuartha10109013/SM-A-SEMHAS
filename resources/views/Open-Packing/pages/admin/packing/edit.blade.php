@@ -42,8 +42,8 @@
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
-                  <label for="atribute" class="form-label">Stiker</label>
-                  <input type="text" name="stiker" id="aktual" class="form-control" value="{{$data->stiker}}" >
+                  <label for="atribute" class="form-label">Keterangan</label>
+                  <input type="text" name="keterangan" id="aktual" class="form-control" value="{{$data->keterangan}}" >
                 </div>
                 <div class="mb-3">
                   <label for="atribute" class="form-label">Berat Aktual</label>
@@ -52,10 +52,7 @@
               </div>
             </div>
             
-            <div class="mb-3">
-              <label for="atribute" class="form-label">Keterangan</label>
-              <input type="text" name="keterangan" id="aktual" class="form-control" value="{{$data->keterangan}}" >
-            </div>
+            
             
 
             <button type="submit" class="btn btn-primary w-100">Save</button>

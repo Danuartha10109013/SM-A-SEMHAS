@@ -25,11 +25,23 @@
 <div id="sidebar-scrollbar">
     <nav class="iq-sidebar-menu">
         <ul id="iq-sidebar-toggle" class="iq-menu">
+            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+            <li class="{{ request()->routeIs('welcome') ? 'active' : '' }}">
+                <a href="{{route('welcome')}}" class="iq-waves-effect">
+                    <i class="ri-home-4-line"></i><span>Dashboard</span>
+                </a>
+            </li>
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Surat</span></li>
 
           <li class="{{ request()->routeIs('sik') ? 'active' : '' }}">
               <a href="{{ route('sik') }}" class="btn btn-light">
                 <i class="mdi mdi-mail"></i><span>Surat Izin Keluar</span></a>
+          </li>
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Izin</span></li>
+
+          <li class="{{ request()->routeIs('pemberi-izin') ? 'active' : '' }}">
+              <a href="{{ route('pemberi-izin') }}" class="btn btn-light">
+                <i class="mdi mdi-security"></i><span>Beri Izin</span></a>
           </li>
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Security</span></li>
 

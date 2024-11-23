@@ -49,11 +49,11 @@ Shippment B || Pegawai
                     <div class="iq-card-body">
                         <div class="iq-card-body d-flex justify-content-between align-items-center">
                             @if (Auth::user()->role == 0)
-                            <a href="{{route('Ship-Mark.admin.shipment-a-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
+                            <a href="{{route('Ship-Mark.admin.shipment-b-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
                             <form class="form-inline" method="GET" action="{{route('Ship-Mark.admin.shipment-b-show',$id)}}">
 
                             @else
-                            <a href="{{route('Ship-Mark.pegawai.shipment-a-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
+                            <a href="{{route('Ship-Mark.pegawai.shipment-b-print', $type)}}" class="text-right mb-2 btn btn-success">Print All in This Collection</a>
                             <form class="form-inline" method="GET" action="{{route('Ship-Mark.pegawai.shipment-b-show',$id)}}">
                             @endif
                                <div class="input-group">

@@ -31,83 +31,87 @@
                 </ul>
             </nav>
         </div>
-
-        <form action="{{ route('sik.store') }}" method="POST" enctype="multipart/form-data" id="sik-form">
-            @csrf
-            @method('POST')
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label for="date">Date</label>
-                        <input type="date" name="date" class="form-control" value="{{ date('Y-m-d') }}" required>
-                    </div>
-        
-                    <div class="form-group mb-3">
-                        <label for="kode_sik">Kode SIK</label>
-                        <input type="text" name="kode_sik" class="form-control" value="{{$kode}}" readonly>
-                    </div>
-        
-                    <div class="form-group mb-3">
-                        <label for="bagian">Nama / Bagian</label>
-                        <input type="text" name="bagian" class="form-control" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="bagian">Keperluan</label>
-                        <input type="text" name="keperluan" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label for="no_kendaraan">Kendaraan No.</label>
-                        <input type="text" name="no_kendaraan" class="form-control" required>
-                    </div>
-        
-                    <div class="form-group mb-3">
-                        <label for="pengemudi">Pengemudi</label>
-                        <input type="text" name="pengemudi" class="form-control" required>
-                    </div>
-        
-                    <div class="form-group mb-3">
-                        <label for="muatan">Muatan</label>
-                        <input type="text" name="muatan" class="form-control" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="divisi">Divisi</label>
-                        <select name="divisi" class="form-control" required>
-                            <option value="" selected disabled>--Select Division--</option>
-                            <option value="WH">WH</option>
-                            <option value="UTY">UTY</option>
-                            <option value="HR & GA">HR & GA</option>
-                            <option value="MTC">MTC</option>
-                            <option value="QA">QA</option>
-                            <option value="PRD">PRD</option>
-                            <option value="SAFETY">SAFETY</option>
-                        </select>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label for="pemberi_izin">Pemberi Izin</label>
-                        <input type="text" name="pemberi_izin" class="form-control" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="row mb-3">
-                        <div class="col-sm-12">
-                            <label for="signature" class="form-label">Tanda Tangan</label>
-                            <canvas id="signature-pad" style="border: 1px solid #ccc; width: 100%; height: 200px;"></canvas>
-                            <button id="clear" title="Clear" type="button" class="btn btn-secondary mt-2">Clear</button>
-                            <input type="hidden" name="signature" id="signature">
+    {{-- <div class="card"> --}}
+        {{-- <div class="card-body"> --}}
+            <form action="{{ route('sik.store') }}" method="POST" enctype="multipart/form-data" id="sik-form">
+                @csrf
+                @method('POST')
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="date">Date</label>
+                            <input type="date" name="date" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" class="form-control" value="{{ date('Y-m-d') }}" required>
+                        </div>
+            
+                        <div class="form-group mb-3">
+                            <label for="kode_sik">Kode SIK</label>
+                            <input type="text" name="kode_sik" class="form-control" value="{{$kode}}" readonly>
+                        </div>
+            
+                        <div class="form-group mb-3">
+                            <label for="bagian">Nama / Bagian</label>
+                            <input type="text" name="bagian" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" class="form-control" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="bagian">Keperluan</label>
+                            <input type="text" name="keperluan" class="form-control" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" required>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="no_kendaraan">Kendaraan No.</label>
+                            <input type="text" name="no_kendaraan" class="form-control" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" required>
+                        </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+                        <div class="form-group mb-3">
+                            <label for="pengemudi">Pengemudi</label>
+                            <input type="text" name="pengemudi" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" class="form-control" required>
+                        </div>
+            
+                        <div class="form-group mb-3">
+                            <label for="muatan">Muatan</label>
+                            <input type="text" name="muatan" class="form-control" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="divisi">Divisi</label>
+                            <select name="divisi" class="form-control" required>
+                                <option value="" selected disabled>--Select Division--</option>
+                                <option value="WH">WH</option>
+                                <option value="UTY">UTY</option>
+                                <option value="HR & GA">HR & GA</option>
+                                <option value="MTC">MTC</option>
+                                <option value="QA">QA</option>
+                                <option value="PRD">PRD</option>
+                                <option value="SAFETY">SAFETY</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                </div>
+                {{-- <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label for="pemberi_izin">Pemberi Izin</label>
+                            <input type="text" name="pemberi_izin" class="form-control" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                <label for="signature" class="form-label">Tanda Tangan</label>
+                                <canvas id="signature-pad" style="border: 1px solid #000000; width: 100%; height: 200px; background-color: white"></canvas>
+                                <button id="clear" title="Clear" type="button" class="btn btn-secondary mt-2">Clear</button>
+                                <input type="hidden" name="signature" id="signature">
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {{-- </div> --}}
+    {{-- </div> --}}
+        
     </div>
 </div>
 

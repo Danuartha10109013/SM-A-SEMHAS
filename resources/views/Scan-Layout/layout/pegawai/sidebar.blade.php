@@ -44,7 +44,12 @@
                    <i class="ri-home-4-line"></i><span>Dashboard</span>
                </a>
            </li> --}}
-           
+           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+            <li class="{{ request()->routeIs('welcome') ? 'active' : '' }}">
+                <a href="{{route('welcome')}}" class="iq-waves-effect">
+                    <i class="ri-home-4-line"></i><span>Dashboard</span>
+                </a>
+            </li>
            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Scan Layout</span></li>
            <li class="{{ request()->routeIs('Scan-Layout.pegawai.dashboard') ? 'active' : '' }}">
                <a href="{{route('Scan-Layout.pegawai.dashboard')}}" class="iq-waves-effect" aria-expanded="false">

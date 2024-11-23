@@ -39,10 +39,10 @@
             <div class="form-group mb-3">
                 <label for="date">Date</label>
                 <input type="time" name="jam" class="form-control" value="{{ now()->format('H:i') }}" required>
-
             </div>
             <input type="text" name="id" value="{{$data->id}}" hidden>
             <div class="row">
+                <!-- Pengemudi Section -->
                 <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label for="pengemudi">Pengemudi</label>
@@ -57,6 +57,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Security Section -->
                 <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label for="security">Security</label>
@@ -80,62 +82,63 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Signature Pad 1 for Pengemudi
-        const canvas1 = document.getElementById('signature-pad');
-        const signaturePad1 = new SignaturePad(canvas1, {
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-            penColor: 'black'
-        });
+        // Function to initialize a signature pad
+        function initializeSignaturePad(canvasId, clearButtonId, hiddenInputId) {
+            const canvas = document.getElementById(canvasId);
+            const clearButton = document.getElementById(clearButtonId);
+            const hiddenInput = document.getElementById(hiddenInputId);
 
-        function resizeCanvas1() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas1.width = canvas1.offsetWidth * ratio;
-            canvas1.height = canvas1.offsetHeight * ratio;
-            canvas1.getContext('2d').scale(ratio, ratio);
-            signaturePad1.clear();
+            const signaturePad = new SignaturePad(canvas, {
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                penColor: 'black'
+            });
+
+            // Resize the canvas dynamically
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                const container = canvas.parentElement; // Use parent container for width
+                const oldData = signaturePad.toData(); // Save the signature data
+
+                canvas.width = container.offsetWidth * ratio;
+                canvas.height = container.offsetHeight * 0.7 * ratio; // Adjust height dynamically
+                const ctx = canvas.getContext('2d');
+                ctx.scale(ratio, ratio);
+
+                // Restore the previous signature data
+                if (oldData.length > 0) {
+                    signaturePad.fromData(oldData);
+                }
+            }
+
+            // Initial resize and attach resize event
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Clear button functionality
+            clearButton.addEventListener('click', () => {
+                signaturePad.clear();
+            });
+
+            return { signaturePad, hiddenInput };
         }
 
-        resizeCanvas1();
-        window.addEventListener('resize', resizeCanvas1);
+        // Initialize signature pads
+        const pengemudiSignature = initializeSignaturePad('signature-pad', 'clear', 'signature');
+        const securitySignature = initializeSignaturePad('signature-pad1', 'clear1', 'signature1');
 
-        document.getElementById('clear').addEventListener('click', () => {
-            signaturePad1.clear();
-        });
-
-        // Signature Pad 2 for Security
-        const canvas2 = document.getElementById('signature-pad1');
-        const signaturePad2 = new SignaturePad(canvas2, {
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-            penColor: 'black'
-        });
-
-        function resizeCanvas2() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas2.width = canvas2.offsetWidth * ratio;
-            canvas2.height = canvas2.offsetHeight * ratio;
-            canvas2.getContext('2d').scale(ratio, ratio);
-            signaturePad2.clear();
-        }
-
-        resizeCanvas2();
-        window.addEventListener('resize', resizeCanvas2);
-
-        document.getElementById('clear1').addEventListener('click', () => {
-            signaturePad2.clear();
-        });
-
-        // Form submission handling
+        // Handle form submission
         document.querySelector('#sik-form').addEventListener('submit', (e) => {
-            if (signaturePad1.isEmpty() || signaturePad2.isEmpty()) {
+            if (pengemudiSignature.signaturePad.isEmpty() || securitySignature.signaturePad.isEmpty()) {
                 alert("Please provide both signatures.");
                 e.preventDefault();
             } else {
-                document.getElementById('signature').value = signaturePad1.toDataURL();
-                document.getElementById('signature1').value = signaturePad2.toDataURL();
+                pengemudiSignature.hiddenInput.value = pengemudiSignature.signaturePad.toDataURL();
+                securitySignature.hiddenInput.value = securitySignature.signaturePad.toDataURL();
             }
         });
     });
 </script>
+
 
 </body>
 </html>

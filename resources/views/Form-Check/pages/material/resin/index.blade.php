@@ -85,7 +85,8 @@
                         <td>
                           @if (Auth::user()->role == 0)
                           <a href="{{route('Form-Check.admin.resin.print', $d->id)}}"> <label class="btn btn-success">print</label></a>
-                          <form action="{{ route('Form-Check.admin.resin.destroy', $d->id) }}" method="POST" class="ml-2">
+                          <a href="{{route('Form-Check.admin.resin.show', $d->id)}}"> <label class="btn btn-primary">Show</label></a>
+                          <form action="{{ route('Form-Check.admin.resin.destroy', $d->id) }}" method="POST" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Hapus</button>

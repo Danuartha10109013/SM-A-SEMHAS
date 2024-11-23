@@ -66,7 +66,7 @@ class OpenPackController extends Controller
 
         PackingM::create([
             'gm' => $request->gm,
-            'jenis' => $request->jenis,
+            // 'jenis' => $request->jenis,
             'shift' => $request->shift,
             'shift_leader' => $shift_leader,
             'operator' => $request->operator,
@@ -94,16 +94,16 @@ class OpenPackController extends Controller
         $cc = PackingM::where('gm',$request->gm)->value('id');
         // dd($cc);
 
-        PackingDetailM::create([
-            'packing_id' => $cc,
-            'attribute' => $request->attribute, 
-            'b_label' => $request->b_label,
-            'b_aktual' => $request->b_aktual,
-            'selisih' => $request->b_label - $request->b_aktual, 
-            'persentase' => number_format(($request->b_label * 0.25) / 100, 4), 
-            'stiker' => $request->stiker,
-            'keterangan' => $request->keterangan,
-        ]);
+        
+        $data = new PackingDetailM();
+        $data->attribute = $request->attribute;
+        $data->b_label = $request->b_label;
+        $data->b_aktual = $request->b_aktual;
+        $data->selisih = $request->b_aktual - $request->b_label;
+        $data->persentase = number_format($data->selisih / $request->b_label * 100, 2);
+        $data->keterangan = $request->keterangan;
+        $data->packing_id = $cc;
+        $data->save();
         
 
         return redirect()->route('Open-Packing.admin.packing')->with('success','Product Has Been created');
@@ -132,7 +132,6 @@ class OpenPackController extends Controller
             'attribute' => 'required|string|max:255',
             'b_label' => 'required|integer',
             'b_aktual' => 'required|integer',
-            'stiker' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string|max:255',
         ]);
 
@@ -143,9 +142,9 @@ class OpenPackController extends Controller
         $data->attribute = $request->attribute;
         $data->b_label = $request->b_label;
         $data->b_aktual = $request->b_aktual;
-        $data->selisih = $request->b_label - $request->b_aktual;
-        $data->persentase = number_format(($request->b_label * 0.25) / 100, 4);
-        $data->stiker = $request->stiker;
+        $data->selisih = $request->b_aktual - $request->b_label;
+        $data->persentase = number_format($data->selisih / $request->b_label * 100, 2);
+
         $data->keterangan = $request->keterangan;
         $data->update();
 
@@ -154,6 +153,20 @@ class OpenPackController extends Controller
 
     public function delete($id){
         PackingDetailM::find($id)->delete();
+
+        return redirect()->back()->with('success', 'Data has been deleted');
+    }
+
+    public function delete_gm($id){
+        $ids = PackingM::where('gm',$id)->value('id'); 
+        $data = PackingM::find($ids);
+        $data->delete();
+
+        $detail = PackingDetailM::where('packing_id',$data->id)->get();
+        foreach ($detail as $d){
+            $hapus = PackingDetailM::find($d->id);
+            $hapus->delete();
+        }
 
         return redirect()->back()->with('success', 'Data has been deleted');
     }

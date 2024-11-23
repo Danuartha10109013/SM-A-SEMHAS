@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Adminmiddleware;
 use App\Http\Middleware\CheckCoilD;
+use App\Http\Middleware\CheckL08;
 use App\Http\Middleware\CheckList;
 use App\Http\Middleware\CheckSupp;
 use App\Http\Middleware\CheckType;
@@ -123,6 +124,18 @@ return Application::configure(basePath: dirname(__DIR__))
         //Coil-Damage
         $middleware->appendToGroup('Coil-Damage', [
             CheckCoilD::class,
+        ]);
+    
+        $middleware->appendToGroup('admin', [
+            AdminMiddleware::class,
+        ]);
+    
+        $middleware->appendToGroup('pegawai', [
+            PegawaiMiddleware::class,
+        ]);
+        //L-08
+        $middleware->appendToGroup('L-08', [
+            CheckL08::class,
         ]);
     
         $middleware->appendToGroup('admin', [

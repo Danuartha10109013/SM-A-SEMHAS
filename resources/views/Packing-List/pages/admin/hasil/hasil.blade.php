@@ -23,18 +23,11 @@
                 <h4 class="card-title">Hasil Akhir</h4>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
-                        <a href="{{ route('Packing-List.admin.hasil.export') }}" 
+                        <a href="{{ route('Packing-List.admin.hasil.exports') }}" 
                            class="btn btn-success" style="text-decoration: none; font-size: 15px">Export All </a>
                     </div>
         
-                    {{-- <form action="{{ route('Packing-List.admin.hasil') }}" method="GET" class="ml-2" style="display: inline;">
-                        <input type="text" name="search" placeholder="Search By Attribute" class="form-control d-inline" style="width: auto;" value="{{ request('search') }}">
-                        <input type="hidden" name="sort" value="{{ request('sort') }}">
-                        <input type="hidden" name="direction" value="{{ request('direction') }}">
-                        <button type="submit" style="border: none; padding: 0; cursor: pointer;"> 
-                            <label class="btn btn-danger" style="text-decoration: none;">Search</label>
-                        </button>
-                    </form> --}}
+                    
                 </div>
                 <div class="table-responsive">
                     <table class="table">

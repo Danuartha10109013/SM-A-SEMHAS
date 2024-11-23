@@ -72,7 +72,7 @@ Persetujuan Security
                     <td>{{$loop->iteration}}</td>
                     <td>{{$d->date}}</td>
                     <td>
-                        @if ($d->status == 0)
+                        @if ($d->status == 1)
                         <label for="" class="text-danger">Belum Keluar</label>
                         @else
                         <label for="" class="text-success">Selesai</label>
@@ -86,7 +86,7 @@ Persetujuan Security
                     <td>{{$d->muatan}}</td>
                     <td>{{$d->pemberi_izin}}</td>
                     <td>
-                        @if ($d->status == 1)
+                        @if ($d->status == 2)
                             @else
                             <a href="{{route('security.setujui',$d->id)}}" class="btn btn-success"><i class="fa fa-check"></i>Setujui</a>
                         @endif

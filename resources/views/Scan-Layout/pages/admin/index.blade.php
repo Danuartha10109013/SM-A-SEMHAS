@@ -66,10 +66,10 @@
                   </td>
                   <td>
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editModal-{{ $d->id }}">
-                      <i class="fa fa-edit"></i> 
+                      <i class="fa fa-edit"></i> Edit
                     </a>
                     <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $d->id }}">
-                      <i class="fa fa-trash"></i> 
+                      <i class="fa fa-trash"></i> Delete
                   </a>
 
                     <!-- Delete Modal -->

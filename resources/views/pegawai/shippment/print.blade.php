@@ -102,7 +102,7 @@
                 </div>
                 <div class="row">
                     <div class="label">WEIGHT</div>
-                    <div class="value">: {{$d->weight}} {{$d->satuan_berat}}</div>
+                    <div class="value">: {{ number_format($d->weight, 0, '.', '.') }} {{$d->satuan_berat}}</div>
                 </div>
                 <div class="row">
                     <div style="font-weight: bold; font-size: 18px; margin-top: 0.9cm;" class="label1">{{$d->destination}}</div>

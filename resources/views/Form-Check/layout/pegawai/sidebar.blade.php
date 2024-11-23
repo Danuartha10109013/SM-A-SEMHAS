@@ -30,12 +30,12 @@
 <div id="sidebar-scrollbar">
    <nav class="iq-sidebar-menu">
        <ul id="iq-sidebar-toggle" class="iq-menu">
-           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
-           <li class="{{ request()->routeIs('Form-Check.pegawai.dashboard') ? 'active' : '' }}">
-               <a href="{{ route('Form-Check.pegawai.dashboard') }}" class="iq-waves-effect">
-                   <i class="ri-home-4-line"></i><span>Dashboard</span>
-               </a>
-           </li>
+        <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+        <li class="{{ request()->routeIs('welcome') ? 'active' : '' }}">
+            <a href="{{route('welcome')}}" class="iq-waves-effect">
+                <i class="ri-home-4-line"></i><span>Dashboard</span>
+            </a>
+        </li>
            
            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Form Checklist</span></li>
            <li class="{{ request()->routeIs('Form-Check.pegawai.crane') ? 'active' : '' }}">

@@ -15,9 +15,11 @@ use App\Http\Controllers\MappingController;
 use App\Http\Controllers\MappingTrukController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\OpenPackController;
+use App\Http\Controllers\PackingL08Controller;
 use App\Http\Controllers\PListController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekapController;
 use App\Http\Controllers\ScanLayoutController;
 use App\Http\Controllers\ShippmentA;
 use App\Http\Controllers\ShippmentB;
@@ -32,7 +34,6 @@ use Illuminate\Support\Facades\Response;
 
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::get('/welcome', [LoginController::class, 'welcome'])->name('welcome');
 Route::post('/login', [LoginController::class, 'proses'])->name('login-proses');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -45,6 +46,11 @@ Route::prefix('Surat-Izin-Keluar')->group(function () {
     Route::post('/update/{id}',[SIKController::class,'update'])->name('sik.update');
     Route::get('/print/{id}',[SIKController::class,'print'])->name('sik.print');
     Route::get('/export',[SIKController::class,'export'])->name('sik.export');
+});
+Route::prefix('Pemberi-Izin')->group(function () {
+    Route::get('/',[SIKController::class,'pemberi_izin'])->name('pemberi-izin');
+    Route::get('/setujui/{id}',[SIKController::class,'pemberi_izin_add'])->name('pemberi-izin.setujui');
+    Route::post('/store/{id}',[SIKController::class,'pemberi_izin_store'])->name('pemberi-izin.store');
 });
 Route::prefix('Security')->group(function () {
     Route::get('/',[SIKController::class,'security'])->name('security');
@@ -67,6 +73,8 @@ Route::get('/download-report/{id}', [CraneController::class, 'downloadReport'])-
 
 
 Route::middleware([AutoLogout::class])->group(function () {
+    
+    Route::get('/welcome', [LoginController::class, 'welcome'])->name('welcome');
 
     //Profile 
     Route::prefix('profile')->group(function () {
@@ -264,7 +272,6 @@ Route::middleware([AutoLogout::class])->group(function () {
             Route::get('/',[DashboardController::class,'index'])->name('dashboard-mapping');
         });
     });
-             
 
     // Form-Check
     Route::group(['prefix' => 'Form-Check', 'middleware' => ['Form-Check'], 'as' => 'Form-Check.'], function () {
@@ -328,7 +335,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                     Route::get('/print/{id}', [MaterialController::class, 'print_crc'])->name('crc.print');    
                     Route::get('/show/{id}', [MaterialController::class, 'show_crc'])->name('crc.show');    
                     Route::delete('/destroy/{id}', [MaterialController::class, 'destroy_crc'])->name('crc.destroy');  
-
+                    
                 });
                 Route::prefix('ingot')->group(function () {
                     Route::get('/', [MaterialController::class, 'index_ingot'])->name('ingot');
@@ -336,9 +343,10 @@ Route::middleware([AutoLogout::class])->group(function () {
                     Route::get('/export', [MaterialController::class, 'ingot_export'])->name('ingot.export');
                     Route::post('/create', [MaterialController::class, 'create_ingot'])->name('ingot.create');
                     Route::get('/print/{id}', [MaterialController::class, 'print_ingot'])->name('ingot.print');   
+                    Route::get('/show/{id}', [MaterialController::class, 'show_ingot'])->name('ingot.show');    
                     Route::delete('/destroy/{id}', [MaterialController::class, 'destroy_ingot'])->name('ingot.destroy');  
-
-                
+                    
+                    
                 });
                 Route::prefix('resin')->group(function () {
                     Route::get('/', [MaterialController::class, 'index_resin'])->name('resin');
@@ -346,6 +354,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                     Route::get('/export', [MaterialController::class, 'resin_export'])->name('resin.export');
                     Route::post('/create', [MaterialController::class, 'create_resin'])->name('resin.create');
                     Route::get('/print/{id}', [MaterialController::class, 'print_resin'])->name('resin.print');  
+                    Route::get('/show/{id}', [MaterialController::class, 'show_resin'])->name('resin.show');    
                     Route::delete('/destroy/{id}', [MaterialController::class, 'destroy_resin'])->name('resin.destroy');  
                 });
             });
@@ -432,6 +441,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/edit/{id}',[OpenPackController::class, 'edit'])->name('packing.edit');
                 Route::get('/update',[OpenPackController::class, 'update'])->name('packing.update');
                 Route::get('/delete/{id}',[OpenPackController::class, 'delete'])->name('packing.delete');
+                Route::get('/delete/gm/{id}',[OpenPackController::class, 'delete_gm'])->name('packing.delete.gm');
                 Route::get('/print/{gm}',[OpenPackController::class, 'print'])->name('packing.print');
                 Route::get('/download/{gm}',[OpenPackController::class, 'download'])->name('packing.download');
             });
@@ -528,7 +538,8 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/show/{ket}',[PListController::class, 'hasil'])->name('hasil.shows');
                 Route::get('/add',[PListController::class, 'hasil_add'])->name('hasil.add');
                 Route::post('/store',[PListController::class, 'hasil_store'])->name('hasil.store');
-                Route::get('/download',[PListController::class, 'exportexcel'])->name('hasil.export');
+                Route::get('/download/{ket}',[PListController::class, 'exportexcel'])->name('hasil.export');
+                Route::get('/download',[PListController::class, 'exportexcels'])->name('hasil.exports');
             });
                 
         });
@@ -597,6 +608,7 @@ Route::middleware([AutoLogout::class])->group(function () {
         });
 
     });
+
     //Coil Damage
     Route::group(['prefix' => 'Coil-Damage', 'middleware' => ['Coil-Damage'], 'as' => 'Coil-Damage.'], function () {
         Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
@@ -626,6 +638,40 @@ Route::middleware([AutoLogout::class])->group(function () {
         });
 
     });
+
+    //Packing L08
+    Route::group(['prefix' => 'L-08', 'middleware' => ['L-08'], 'as' => 'L-08.'], function () {
+        Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+            Route::get('/',[DashboardControlller::class, 'l_08'])->name('dashboard');
+            
+            Route::prefix('damage')->group(function () {
+                Route::get('/',[PackingL08Controller::class, 'index'])->name('damage');
+                Route::get('/add',[PackingL08Controller::class, 'add'])->name('damage.add');
+                Route::get('/export',[PackingL08Controller::class, 'export'])->name('damage.export');
+                Route::post('/store',[PackingL08Controller::class, 'store'])->name('damage.store');
+                Route::put('/update/{id}',[PackingL08Controller::class, 'update'])->name('damage.update');
+                Route::delete('/delete/{id}',[PackingL08Controller::class, 'delete'])->name('damage.delete');
+            });
+            Route::prefix('rekap')->group(function () {
+                Route::get('/',[RekapController::class, 'index'])->name('rekap');
+            });
+            
+        });
+        Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
+            Route::get('/',[DashboardControlller::class, 'l_08'])->name('dashboard');
+            
+            Route::prefix('damage')->group(function () {
+                Route::get('/',[PackingL08Controller::class, 'index'])->name('damage');
+                Route::get('/add',[PackingL08Controller::class, 'add'])->name('damage.add');
+                Route::get('/export',[PackingL08Controller::class, 'export'])->name('damage.export');
+                Route::post('/store',[PackingL08Controller::class, 'store'])->name('damage.store');
+                Route::put('/update/{id}',[PackingL08Controller::class, 'update'])->name('damage.update');
+                Route::delete('/delete/{id}',[PackingL08Controller::class, 'delete'])->name('damage.delete');
+            });
+        });
+
+    });
+
 //endautologout
 });
 

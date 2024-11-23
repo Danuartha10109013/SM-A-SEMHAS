@@ -9,6 +9,7 @@ use App\Models\DatabM;
 use App\Models\ForkliftM;
 use App\Models\IngotM;
 use App\Models\KendaraanM;
+use App\Models\PackingL08M;
 use App\Models\PackingM;
 use App\Models\ResinM;
 use App\Models\ScanLayoutM;
@@ -151,7 +152,122 @@ class DashboardControlller extends Controller
             'search' => $search
         ]);
     }
+
+    public function l_08(Request $request) {
+        // Get the distinct years from the 'coil_damage' table
+        $years = DB::table('packingl08')
+                    ->select(DB::raw('YEAR(created_at) as year'))
+                    ->distinct()
+                    ->orderBy('year', 'desc') // Optional: order the years in descending order
+                    ->get();
     
+        // Get selected year from the request, or default to the current year
+        $selectedYear = $request->input('year', date('Y'));
+        
+        // Get selected month from the request
+        $month = $request->input('month');
+    
+        // Get search term from the request
+        $search = $request->input('search');
+    
+        // Start query with year filter
+        $query = DB::table('packingl08')
+                    ->whereYear('created_at', $selectedYear);
+    
+        // Apply month filter if provided
+        if ($month) {
+            $query->whereMonth('created_at', $month);
+        }
+    
+        // Apply search filter if provided
+        if ($search) {
+            $query->where('attribute', 'like', '%' . $search . '%');
+        }
+    
+        // Chart Data
+        $chart = $query->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+                        ->groupBy(DB::raw('MONTH(created_at)'))
+                        ->get();
+    
+        // Fetch search data for the table
+        $data = PackingL08M::when($search, function($query) use ($search) {
+            return $query->where('attribute', 'like', '%' . $search . '%');
+        })->whereYear('created_at', $selectedYear)
+          ->when($month, function($query) use ($month) {
+              return $query->whereMonth('created_at', $month);
+          })
+          ->get();
+
+          if($selectedYear){
+
+              $data2 = DB::table('packingl08')
+              ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') AS month, `group`, COUNT(attribute) AS count")
+              ->groupBy('month', 'group')
+              ->orderBy('month')
+              ->orderBy('group')->whereYear('created_at', $selectedYear)
+              ->get();
+          }else{
+          $data2 = DB::table('packingl08')
+          ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') AS month, `group`, COUNT(attribute) AS count")
+          ->groupBy('month', 'group')
+          ->orderBy('month')
+          ->orderBy('group')
+          ->get();
+          }
+  
+      $chartData = [];
+      foreach ($data2 as $row) {
+          $chartData[$row->month][$row->group] = $row->count;
+      }
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        if ($startDate && $endDate) {
+            $dataToday = DB::table('packingl08')
+                ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') AS date, `group`, COUNT(attribute) AS count")
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy('date', 'group')
+                ->orderBy('date')
+                ->orderBy('group')
+                ->get();
+        } else {
+            $dataToday = DB::table('packingl08')
+                ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') AS date, `group`, COUNT(attribute) AS count")
+                ->whereDate('created_at', now()->toDateString())
+                ->groupBy('date', 'group')
+                ->orderBy('date')
+                ->orderBy('group')
+                ->get();
+        }
+
+        $chartDataToday = [];
+        foreach ($dataToday as $row) {
+            $chartDataToday[$row->date][$row->group] = $row->count;
+        }
+
+        if($startDate && $endDate ) {
+            $data = PackingL08M::whereBetween('created_at', [$startDate, $endDate])->get();
+        }
+
+        return view('L-08.pages.admin.index', [
+            'years' => $years,
+            'selectedYear' => $selectedYear,
+            'chart' => $chart,
+            'data' => $data,
+            'selectedMonth' => $month,
+            'search' => $search,
+            'chartData' => $chartData,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'chartDataToday' => $chartDataToday,
+        ]);
+    }
+    
+    private function getRandomColor()
+    {
+        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+    }
     
     
 }

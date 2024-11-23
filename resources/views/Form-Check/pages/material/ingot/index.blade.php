@@ -84,8 +84,9 @@
                         
                         <td>
                           @if (Auth::user()->role == 0)
-                           <a href="{{route('Form-Check.admin.ingot.print', $d->id)}}"> <label class="btn btn-success">print</label></a>
-                           <form action="{{ route('Form-Check.admin.ingot.destroy', $d->id) }}" method="POST" class="ml-2">
+                           <a href="{{route('Form-Check.admin.ingot.print', $d->id)}}"> <label class="btn btn-success">Print</label></a>
+                           <a href="{{route('Form-Check.admin.ingot.show', $d->id)}}"> <label class="btn btn-primary">Detail</label></a>
+                           <form action="{{ route('Form-Check.admin.ingot.destroy', $d->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Hapus</button>

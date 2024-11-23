@@ -48,7 +48,7 @@
             text-align: center;
             font-size: 19px;
             font-weight: bolder;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
             border-bottom: 2px solid black;
             padding-bottom: 10px;
         }
@@ -78,7 +78,7 @@
             text-align: left;
             font-weight: bold;
             font-size: 18px;
-            margin-top:0.8cm;
+            margin-top:0.29cm;
         }
 
         .page-break {
@@ -110,11 +110,12 @@
                 </div>
                 <div class="row">
                     <div class="label">GROSS WEGIHT</div>
-                    <div style="margin-left:-2em;" class="value">: {{$d->gros}} {{$d->satuan_berat}}</div>
+                    
+                    <div style="margin-left:-2em;" class="value">: {{ number_format($d->gros, 0, '.', '.') }} {{$d->satuan_berat}}</div>
                 </div>
                 <div class="row">
                     <div class="label">NET WEIGHT</div>
-                    <div class="value">: {{$d->net}} {{$d->satuan_berat}}</div>
+                    <div class="value">: {{ number_format($d->net, 0, '.', '.') }} {{$d->satuan_berat}}</div>
                 </div>
             </div>
             <div class="footer">MADE IN INDONESIA</div>

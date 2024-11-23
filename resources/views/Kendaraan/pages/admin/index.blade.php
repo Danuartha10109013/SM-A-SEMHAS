@@ -28,8 +28,11 @@
         </nav>
       </div>
 
-      <a href="{{route('Kendaraan.admin.export')}}" class="btn btn-primary mb-3"><i class="mdi mdi-export"></i>Export All Data</a>
-
+      <div class="d-flex justify-content-start mb-3">
+        <a href="{{ route('Kendaraan.admin.check.add') }}" class="btn btn-primary me-2"><i class="fa fa-plus"></i> Add New</a>
+        <a href="{{ route('Kendaraan.admin.export') }}" class="btn btn-warning"><i class="mdi mdi-export"></i> Export All Data</a>
+    </div>
+    
       <div class="card">
         <div class="card-body">
           <div class="table-responsive">
@@ -60,15 +63,15 @@
                   </td>
                   <td>
                     <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#viewModal-{{ $d->id }}">
-                      <i class="mdi mdi-eye"></i>
+                      <i class="mdi mdi-eye"></i> Detail
                     </a>
                   
-                    <a href="{{route('Kendaraan.admin.print',$d->id)}}" class="btn btn-warning"><i class="mdi mdi-printer"></i></a>
+                    <a href="{{route('Kendaraan.admin.print',$d->id)}}" class="btn btn-warning"><i class="mdi mdi-printer"></i> Print</a>
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editModal-{{ $d->id }}">
-                      <i class="fa fa-edit"></i> 
+                      <i class="fa fa-edit"></i> Edit
                     </a>
                     <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $d->id }}">
-                      <i class="fa fa-trash"></i> 
+                      <i class="fa fa-trash"></i> Delete
                   </a>
 
                   <div class="modal fade" id="viewModal-{{ $d->id }}" data-bs-backdrop="false" tabindex="-3" aria-labelledby="viewModalLabel-{{ $d->id }}" aria-hidden="true">

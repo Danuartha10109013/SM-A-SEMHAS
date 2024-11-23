@@ -39,12 +39,11 @@
     <nav class="iq-sidebar-menu">
        <ul id="iq-sidebar-toggle" class="iq-menu">
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
-          <li class="active">
-            @if (Auth::user()->role == 0)
-               <a href="{{route('Ship-Mark.admin.dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
-            @else
-               <a href="{{route('Ship-Mark.pegawai.dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
-            @endif
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+          <li class="{{ request()->routeIs('welcome') ? 'active' : '' }}">
+              <a href="{{route('welcome')}}" class="iq-waves-effect">
+                  <i class="ri-home-4-line"></i><span>Dashboard</span>
+              </a>
           </li>
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Shippment</span></li>
           @if (Auth::user()->role == 0)

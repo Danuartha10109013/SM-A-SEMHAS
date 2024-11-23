@@ -28,49 +28,45 @@ class PListController extends Controller
     }
 
     public function store(Request $request)
-{
-    // dd($request->all());
-    // Validate the request data
-    $request->validate([
-        'attribute'=>'required|string|max:255',
-        'kondisi'=>'required|string|max:255',
-        'keterangan'=>'required|string|max:255',
-        'tujuan'=>'required|string|max:255',
-        'other_keterangan' => 'nullable|string',
-        'panjang'=>'nullable',
-    ]);
-    if($request->keterangan == "other"){
-        ScanM::create([
-            'attribute' => $request->input('attribute'),
-            'kondisi' => $request->input('kondisi'),
-            'keterangan' => $request->input('other_keterangan'),
-            'tujuan' => $request->input('tujuan'),
-            'panjang' => $request->input('panjang'),
-            'user_id' => Auth::user()->id,
+    {
+        // dd($request->all());
+        // Validate the request data
+        $request->validate([
+            'attribute'=>'required|string|max:255',
+            'kondisi'=>'required|string|max:255',
+            'keterangan'=>'required|string|max:255',
+            'tujuan'=>'required|string|max:255',
+            'other_keterangan' => 'nullable|string',
+            'panjang'=>'nullable',
         ]);
+        if($request->keterangan == "other"){
+            ScanM::create([
+                'attribute' => $request->input('attribute'),
+                'kondisi' => $request->input('kondisi'),
+                'keterangan' => $request->input('other_keterangan'),
+                'tujuan' => $request->input('tujuan'),
+                'panjang' => $request->input('panjang'),
+                'user_id' => Auth::user()->id,
+            ]);
+            
+        }else{
+            ScanM::create([
+                'attribute' => $request->input('attribute'),
+                'kondisi' => $request->input('kondisi'),
+                'keterangan' => $request->input('keterangan'),
+                'tujuan' => $request->input('tujuan'),
+                'panjang' => $request->input('panjang'),
+                'user_id' => Auth::user()->id,
+            ]);
+        }
         
-    }else{
-        ScanM::create([
-            'attribute' => $request->input('attribute'),
-            'kondisi' => $request->input('kondisi'),
-            'keterangan' => $request->input('keterangan'),
-            'tujuan' => $request->input('tujuan'),
-            'panjang' => $request->input('panjang'),
-            'user_id' => Auth::user()->id,
-        ]);
+        // Redirect back with a success message
+        if (Auth::user()->role == 0) {
+            return redirect()->route('Packing-List.admin.list', 'Supply created successfully!');
+        } else {
+            return redirect()->route('Packing-List.pegawai.list')->with('success', 'Supply created successfully!');
+        }
     }
-    
-    // Redirect back with a success message
-    if (Auth::user()->role == 0) {
-        return redirect()->route('Packing-List.admin.list', 'Supply created successfully!');
-    } else {
-        return redirect()->route('Packing-List.pegawai.list')->with('success', 'Supply created successfully!');
-    }
-}
-
-    
-    
-
 
     public function add_gm($gm){
         return view('Packing-List.pages.admin.list.add-gm',compact('gm'));
@@ -163,60 +159,60 @@ class PListController extends Controller
     }
 
     public function db(Request $request)
-{
-    // Get the search query from the request
-    $search = $request->input('search');
-    
-    // Get sort and direction from the request, with default values
-    $sort = $request->input('sort', 'date'); // Default sort by 'date'
-    $direction = $request->input('direction', 'asc');
+    {
+        // Get the search query from the request
+        $search = $request->input('search');
+        
+        // Get sort and direction from the request, with default values
+        $sort = $request->input('sort', 'date'); // Default sort by 'date'
+        $direction = $request->input('direction', 'asc');
 
-    // Validate direction to be either 'asc' or 'desc'
-    if (!in_array($direction, ['asc', 'desc'])) {
-        $direction = 'asc'; // Set to default if invalid
+        // Validate direction to be either 'asc' or 'desc'
+        if (!in_array($direction, ['asc', 'desc'])) {
+            $direction = 'asc'; // Set to default if invalid
+        }
+
+        // Validate sort column (ensure it's a valid column name)
+        $validSortColumns = ['kode', 'nama_produk', 'qty', 'uom', 'attribute', 'storage_bin', 'date', 'user_id']; // Add all valid columns here
+        if (!in_array($sort, $validSortColumns)) {
+            $sort = 'date'; // Fallback to default if invalid
+        }
+
+        // Check if there's a search query, if so filter based on the 'attribute' field
+        if ($search) {
+            $data = DatabM::where('storage_bin','!=','WH-L03-COIL')->where('attribute', 'LIKE', '%' . $search . '%')
+                ->orderBy($sort, $direction) // Apply sorting
+                ->get();
+        } else {
+            // If no search query, retrieve all records with sorting
+            $data = DatabM::where('storage_bin','!=','WH-L03-COIL')->orderBy($sort, $direction)->get();
+        }
+
+        return view('Packing-List.pages.admin.database.index', compact('data', 'search', 'sort', 'direction'));
     }
 
-    // Validate sort column (ensure it's a valid column name)
-    $validSortColumns = ['kode', 'nama_produk', 'qty', 'uom', 'attribute', 'storage_bin', 'date', 'user_id']; // Add all valid columns here
-    if (!in_array($sort, $validSortColumns)) {
-        $sort = 'date'; // Fallback to default if invalid
-    }
-
-    // Check if there's a search query, if so filter based on the 'attribute' field
-    if ($search) {
-        $data = DatabM::where('storage_bin','!=','WH-L03-COIL')->where('attribute', 'LIKE', '%' . $search . '%')
-            ->orderBy($sort, $direction) // Apply sorting
-            ->get();
-    } else {
-        // If no search query, retrieve all records with sorting
-        $data = DatabM::where('storage_bin','!=','WH-L03-COIL')->orderBy($sort, $direction)->get();
-    }
-
-    return view('Packing-List.pages.admin.database.index', compact('data', 'search', 'sort', 'direction'));
-}
     public function db_add(){
         return view('Packing-List.pages.admin.database.add');
     }
 
     public function db_store(Request $request){
-    {
-    $validatedData = $request->validate([
-        'kode' => 'required|string|max:255',
-        'nama_produk' => 'required|string|max:255',
-        'qty' => 'required|string|max:255',
-        'uom' => 'required|string|max:255',
-        'attribute' => 'required|string|max:255',
-        'storage_bin' => 'required|string|max:255',
-        'date' => 'required|date',
-        'user_id' => 'required|integer',
-    ]);
+        $validatedData = $request->validate([
+            'kode' => 'required|string|max:255',
+            'nama_produk' => 'required|string|max:255',
+            'qty' => 'required|string|max:255',
+            'uom' => 'required|string|max:255',
+            'attribute' => 'required|string|max:255',
+            'storage_bin' => 'required|string|max:255',
+            'date' => 'required|date',
+            'user_id' => 'required|integer',
+        ]);
 
-    DatabM::create($validatedData);
+        DatabM::create($validatedData);
 
-    return redirect()->route('Packing-List.admin.database')->with('success', 'Product added successfully!');
+        return redirect()->route('Packing-List.admin.database')->with('success', 'Product added successfully!');
 
+        
     }
-}
 
     public function db_edit($id){
         $data = DatabM::find($id);
@@ -262,15 +258,23 @@ class PListController extends Controller
     }
 
     
-    public function hasil($ket){
-        
-        $data = ScanM::where('keterangan',$ket)->get();
+    public function hasil(Request $request, $ket)
+    {
+        $query = ScanM::where('keterangan', $ket);
 
-        return view('Packing-List.pages.admin.hasil.index',compact('data','ket'));
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('attribute', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $data = $query->get();
+
+        return view('Packing-List.pages.admin.hasil.index', compact('data', 'ket'));
     }
+
     public function hasil_group(){
         
         $data = ScanM::select('keterangan')->distinct()->get();
+
 
         return view('Packing-List.pages.admin.hasil.hasil',compact('data'));
     }
@@ -281,11 +285,31 @@ class PListController extends Controller
         return redirect()->back()->with('success','Database Baru Telah ditambahkan');
     }
 
-    public function exportexcel(){
-        $date = now()->format('d-m-Y'); 
-        return Excel::download(new HasilAkhir, $date . '_Packing_List.xlsx');
+    public function exportexcel(Request $request, $ket)
+    {
 
+        $query = ScanM::where('keterangan', $ket);
+        
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('attribute', 'LIKE', '%' . $request->search . '%');
+        }
+        
+        $data = $query->get();
+        // dd($data);
+
+        // Pass data to the export view
+        $date = now()->format('d-m-Y'); 
+
+        return Excel::download(new HasilAkhir($ket), $date.'_Packing_List' . $ket . '.xlsx');
     }
+    public function exportexcels(Request $request)
+    {
+
+        $date = now()->format('d-m-Y'); 
+        $ket = null;
+        return Excel::download(new HasilAkhir($ket), $date.'_Packing_List.xlsx');
+    }
+
 
     public function db_gm(Request $request){
         // Get the search query from the request

@@ -24,11 +24,11 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <a href="{{ route('Kendaraan.pegawai.check.add') }}" class="btn btn-primary">
-                            <i class="mdi mdi-plus"></i> Add CK
+                            <i class="mdi mdi-plus"></i> Add Checklist
                         </a>
                     </div>
-                    <form action="" method="GET" class="ml-2">
-                        <input type="text" name="search" placeholder="Search by Date" class="form-control d-inline" style="width: auto;" value="{{ request('search') }}">
+                    <form action="{{route('Kendaraan.pegawai.dashboard')}}" method="GET" class="ml-2">
+                        <input type="text" name="search" placeholder="Search by No Pol" class="form-control d-inline" style="width: auto;" value="{{ request('search') }}">
                         <button type="submit" class="btn btn-danger ml-2">Search</button>
                     </form>
                 </div>

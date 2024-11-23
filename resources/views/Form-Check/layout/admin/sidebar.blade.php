@@ -46,12 +46,12 @@
               </a>
           </li>
           @else
-            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
-            <li class="{{ request()->routeIs('Form-Check.admin.dashboard') ? 'active' : '' }}">
-                <a href="{{route('Form-Check.admin.dashboard')}}" class="iq-waves-effect">
-                    <i class="ri-home-4-line"></i><span>Dashboard</span>
-                </a>
-            </li>
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+          <li class="{{ request()->routeIs('welcome') ? 'active' : '' }}">
+              <a href="{{route('welcome')}}" class="iq-waves-effect">
+                  <i class="ri-home-4-line"></i><span>Dashboard</span>
+              </a>
+          </li>
             
             <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>From Checklist</span></li>
             <li class="{{ request()->routeIs('Form-Check.admin.crane') ? 'active' : '' }}">

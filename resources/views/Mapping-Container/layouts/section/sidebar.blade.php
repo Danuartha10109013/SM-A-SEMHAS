@@ -38,13 +38,19 @@
 <div id="sidebar-scrollbar">
   <nav class="iq-sidebar-menu">
    <ul id="iq-sidebar-toggle" class="iq-menu">
+    <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Home</span></li>
+        <li class="{{ request()->routeIs('welcome') ? 'active' : '' }}">
+            <a href="{{route('welcome')}}" class="iq-waves-effect">
+                <i class="ri-home-4-line"></i><span>Dashboard</span>
+            </a>
+        </li>
       <!-- Shippment Section -->
       <li class="iq-menu-title">
           <i class="ri-subtract-line"></i><span>Shippment</span>
       </li>
       <li class="{{ Route::is('Mapping.admin.shipment') ? 'active' : '' }}">
          <a href="{{ route('Mapping.admin.shipment') }}" class="iq-waves-effect">
-             <i class="ri-home-4-line"></i><span>Shippment</span>
+             <i class="ri-truck-fill"></i><span>Shippment</span>
          </a>
       </li>
       

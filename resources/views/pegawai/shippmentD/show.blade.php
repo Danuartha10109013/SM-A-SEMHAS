@@ -96,12 +96,12 @@ Shippment D || Pegawai
                                     <td>{{$d->satuan_berat}}</td>
                                     <td>
                                         @if (Auth::user()->role == 0)
-                                            <a href="{{route('Ship-Mark.admin.shipment-d-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
-                                            <a href="{{route('Ship-Mark.admin.shipment-d-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
+                                            <a href="{{route('Ship-Mark.admin.shipment-d-printone', $d->atribute)}}" class="btn btn-primary  text-center"><i class="ri-printer-line"></i></a>
+                                            <a href="{{route('Ship-Mark.admin.shipment-d-edit', $d->id)}}" class="btn btn-warning  text-center"><i class="ri-edit-2-line"></i></a>
                                             <a href="{{route('Ship-Mark.admin.shipment-d-delete', $d->id)}}" class="btn btn-danger text-center"><i class="ri-delete-bin-line"></i></a>
                                         @else
-                                            <a href="{{route('Ship-Mark.pegawai.shipment-d-printone', $d->atribute)}}" class="btn btn-primary mr-2 mb-2 text-center"><i class="ri-printer-line"></i></a>
-                                            <a href="{{route('Ship-Mark.pegawai.shipment-d-edit', $d->id)}}" class="btn btn-warning mr-2 mb-2 text-center"><i class="ri-edit-2-line"></i></a>
+                                            <a href="{{route('Ship-Mark.pegawai.shipment-d-printone', $d->atribute)}}" class="btn btn-primary  text-center"><i class="ri-printer-line"></i></a>
+                                            <a href="{{route('Ship-Mark.pegawai.shipment-d-edit', $d->id)}}" class="btn btn-warning  text-center"><i class="ri-edit-2-line"></i></a>
                                             <a href="{{route('Ship-Mark.pegawai.shipment-d-delete', $d->id)}}" class="btn btn-danger text-center"><i class="ri-delete-bin-line"></i></a>
                                         @endif
                                     </td>

@@ -113,8 +113,10 @@
                         <td>{{ $d->date }}</td>
                         <td>
                             @if ($d->status == 0)
-                                <label class="text-danger">Belum Keluar</label>
-                            @else
+                                <label class="text-danger">Menunggu Izin</label>
+                            @elseif ($d->status == 1)
+                                <label class="text-warning">Security</label>
+                                @else
                                 <label class="text-success">Selesai</label>
                             @endif
                         </td>

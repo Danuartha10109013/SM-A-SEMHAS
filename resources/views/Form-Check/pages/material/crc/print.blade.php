@@ -51,7 +51,8 @@
 </head>
 <body>
     <div class="container-fluid">
-        <h2>Daily Checklist Material CRC</h2>
+        <p style="text-align: end">FM.WH.02.01</p>
+        <h2>Daily Checklist Kedatangan Material CRC  </h2>
 
         <h3>User Information</h3>
         <p><strong>Checker:</strong> {{ Auth::user()->name }}</p>

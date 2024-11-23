@@ -57,7 +57,7 @@
                         
                         <th> 
                           <a href="{{ route('Form-Check.admin.forklift', ['sort' => 'jenis_forklift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
-                            Jenis Froklift<i class="fa-solid fa-arrows-up-down"></i>
+                            Jenis Forklift<i class="fa-solid fa-arrows-up-down"></i>
                             @if ($sort === 'jenis_forklift')
                                 <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
                             @endif
@@ -93,21 +93,21 @@
                           <div class="d-flex justify-content-start align-items-center">
                               @if (Auth::user()->role == 0)
                                   <a href="{{ route('Form-Check.admin.forklift.print', $d->id) }}">
-                                      <label class="btn btn-success">Print</label>
+                                      <button class="btn btn-success me-2">Print</button>
                                   </a>
-                                  <form action="{{ route('Form-Check.admin.forklift.destroy', $d->id) }}" method="POST" class="ml-2">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Hapus</button>
-                                </form>
+                                  <form action="{{ route('Form-Check.admin.forklift.destroy', $d->id) }}" method="POST" style="display: inline;">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button type="submit" class="btn btn-danger">Hapus</button>
+                                  </form>
                               @else
                                   <a href="{{ route('Form-Check.pegawai.forklift.print', $d->id) }}">
-                                      <label class="btn btn-success">Print</label>
+                                      <button class="btn btn-success">Print</button>
                                   </a>
                               @endif
-                             
                           </div>
                       </td>
+                      
                       
                       
                       

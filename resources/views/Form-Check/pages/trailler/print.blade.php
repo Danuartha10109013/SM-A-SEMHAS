@@ -159,7 +159,38 @@
 <body>
 
     <div class="logo">
-        <img width="10%" src="{{asset('Logo TML.png')}}" alt="Logo">
+        <style>
+            #zoomable-image {
+                transition: transform 0.3s ease; /* Smooth zoom transition */
+                cursor: pointer; /* Shows pointer cursor on hover */
+                width: 10%;
+            }
+        </style>
+    <div class="container mt-5">
+            <img id="zoomable-image" src="{{ asset('Logo_TML.png') }}" alt="Logo">
+        </div>
+    
+        <script>
+            const img = document.getElementById('zoomable-image');
+    
+            img.addEventListener('wheel', function (e) {
+                e.preventDefault(); // Prevent page scroll
+    
+                const scaleFactor = 0.1; // Scale increment/decrement factor
+                let currentScale = 1;
+    
+                if (e.deltaY < 0) { // Zoom in (scroll up)
+                    currentScale += scaleFactor;
+                } else { // Zoom out (scroll down)
+                    currentScale -= scaleFactor;
+                }
+    
+                // Set a minimum and maximum scale to prevent image from becoming too small or too large
+                currentScale = Math.min(Math.max(0.5, currentScale), 2);
+    
+                img.style.transform = `scale(${currentScale})`;
+            });
+        </script>
     </div>
     <div class="header">
         <h1>CRANE OPERATOR DAILY DATA</h1>

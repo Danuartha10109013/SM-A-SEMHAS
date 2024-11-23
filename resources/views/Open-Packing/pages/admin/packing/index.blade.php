@@ -22,7 +22,7 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
                 <a href="{{ Auth::user()->role == 0 ? route('Open-Packing.admin.packing.add') : route('Open-Packing.pegawai.packing.add') }}" 
-                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan GM</a>
+                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px"><i class="fas fa-plus"></i> Tambahkan GM</a>
                 {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
                    class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
             </div>
@@ -121,12 +121,18 @@
                       </label></a>
                       <a href="{{route('Open-Packing.admin.packing.download',$d->gm)}}">
                       <label class="btn btn-dark">
-                        <i class="fa fa-download"></i> Export
+                        <i class="fa fa-file-excel"></i> Export
+                      </label></a>
+                      <a href="{{route('Open-Packing.admin.packing.delete.gm',$d->gm)}}">
+                      <label class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Delete
                       </label></a>
                     </td>
                     <td>
                       @php
-                        $total = \App\Models\PackingM::where('gm',$d->gm)->count();
+                      $id = \App\Models\PackingM::where('gm',$d->gm)->value('id');
+                        $total = \App\Models\PackingDetailM::where('packing_id',$id)->count();
+                        
                       @endphp
                       
                       {{$total}} </td>

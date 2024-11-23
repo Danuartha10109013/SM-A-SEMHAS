@@ -24,18 +24,19 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex">
                         
-                        {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
-                           class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
                     </div>
         
-                    <form action="{{ route('Packing-List.admin.hasil.shows',$ket) }}" method="GET" class="ml-2" style="display: inline;">
-                        <input type="text" name="search" placeholder="Search By Attribute" class="form-control d-inline" style="width: auto;" value="{{ request('search') }}">
-                        <input type="hidden" name="sort" value="{{ request('sort') }}">
-                        <input type="hidden" name="direction" value="{{ request('direction') }}">
-                        <button type="submit" style="border: none; padding: 0; cursor: pointer;"> 
-                            <label class="btn btn-danger" style="text-decoration: none;">Search</label>
-                        </button>
-                    </form>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{{ route('Packing-List.admin.hasil.export', [$ket, 'search' => request('search')]) }}" class="btn btn-success">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                        </a>
+                        <form action="{{ route('Packing-List.admin.hasil.shows', $ket) }}" method="GET" class="ml-2">
+                            <input type="text" name="search" placeholder="Search By Attribute" class="form-control d-inline" style="width: auto;" value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-danger">Search</button>
+                        </form>
+                    
+                    </div>
+                    
                 </div>
                 <div class="table-responsive">
                     <table class="table">

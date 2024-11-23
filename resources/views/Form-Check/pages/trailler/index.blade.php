@@ -50,7 +50,7 @@
               <div class="card-body">
                 <h4 class="card-title">Recent Response</h4>
                 <div class="table-responsive">
-                  <table class="table ">
+                  <table class="table table-striped">
                     <thead>
                       <tr>
                         <th> No </th>
@@ -85,21 +85,22 @@
                         </td>
                         <td> {{ $d->created_at }} </td>
                         
-                        <td>
-                        @if (Auth::user()->role == 0)
-                        <a class="btn btn-warning ms-2" href="{{route('Form-Check.admin.trailler.print', $d->id)}}"> Print</a>
-                        <br>
-                        <form action="{{ route('Form-Check.admin.trailler.destroy', $d->id) }}" method="POST" >
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger mt-2">Hapus</button>
-                        </form>
-                        @else
-                        <br>
-                        <a class="btn btn-warning" href="{{route('Form-Check.pegawai.trailler.print', $d->id)}}"> Print</a>
-                        @endif
-
-                        </td>
+                        <td class="text-nowrap">
+                          <div class="d-flex justify-content-between align-items-center">
+                              @if (Auth::user()->role == 0)
+                                  <a class="btn btn-success mr-2" href="{{ route('Form-Check.admin.trailler.print', $d->id) }}">Print</a>
+                                  
+                                  <form action="{{ route('Form-Check.admin.trailler.destroy', $d->id) }}" method="POST" style="display: inline;">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button type="submit" class="btn btn-danger">Hapus</button>
+                                  </form>
+                              @else
+                                  <a class="btn btn-success" href="{{ route('Form-Check.pegawai.trailler.print', $d->id) }}">Print</a>
+                              @endif
+                          </div>
+                      </td>
+                      
                     </tr>
                     @endforeach
                     </tbody>

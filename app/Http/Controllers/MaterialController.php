@@ -197,8 +197,8 @@ class MaterialController extends Controller
         return view('Form-Check.pages.material.ingot.add');
     }
     public function show_ingot ($id){
-        
-        return view('Form-Check.pages.material.ingot.add');
+        $submission = IngotM::find($id);
+        return view('Form-Check.pages.material.ingot.detail',compact('submission'));
     }
 
     public function create_ingot(Request $request)
@@ -316,6 +316,11 @@ class MaterialController extends Controller
         // dd($ids);
 
         return view('Form-Check.pages.material.resin.print',compact('submission','foto'));
+    }
+
+    public function show_resin($id){
+        $submission= ResinM::find($id);
+        return view('Form-Check.pages.material.resin.detail',compact('submission'));
     }
     
         //RESIN

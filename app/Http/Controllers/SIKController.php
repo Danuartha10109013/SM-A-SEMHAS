@@ -26,7 +26,7 @@ class SIKController extends Controller
     
         // Apply the filter
         if ($filter === 'today') {
-            $query->whereDate('date', today());
+            $query->whereDate('date', today())->where('status','!=',2);
         } elseif ($filter === 'month') {
             $selectedMonth = $request->get('month', now()->month);
             $selectedYear = $request->get('year', now()->year);
@@ -43,7 +43,7 @@ class SIKController extends Controller
             $years = SuratM::selectRaw('YEAR(date) as year')
                 ->distinct()->orderBy('year')->get();
         } elseif ($filter === 'keluar') {
-            $query->where('status', 1)->orWhere('status', '!=', 0);
+            $query->where('status', 2)->orWhere('status', '!=', 0);
         }
     
         // Apply the search condition if search is provided
@@ -77,7 +77,7 @@ class SIKController extends Controller
         } elseif ($filter === 'year') {
             $query->whereYear('date', $selectedYear);
         } elseif ($filter === 'keluar') {
-            $query->where('status', 1)->orWhere('status', '!=', 0);
+            $query->where('status', 2)->orWhere('status', '!=', 0);
         }
     
         // Apply the search condition if search is provided
@@ -124,8 +124,8 @@ class SIKController extends Controller
             'no_kendaraan' => 'required|string',
             'pengemudi' => 'required|string',
             'muatan' => 'required|string',
-            'pemberi_izin' => 'required|string',
-            'signature' => 'required|string', 
+            'pemberi_izin' => 'nullable|string',
+            'signature' => 'nullable|string', 
             'divisi' => 'required|string', 
         ]);
 
@@ -178,7 +178,7 @@ class SIKController extends Controller
             'no_kendaraan' => 'required|string',
             'pengemudi' => 'required|string',
             'muatan' => 'required|string',
-            'pemberi_izin' => 'required|string',
+            'pemberi_izin' => 'nullable|string',
             'signature' => 'nullable|string', // Signature is optional in case user doesn't change it
         ]);
 
@@ -223,6 +223,96 @@ class SIKController extends Controller
         return view('Surat-Izin-Keluar.pages.print',compact('data'));
     }
 
+    public function pemberi_izin(Request $request){
+        $filter = $request->get('filter', 'today');
+        $search = $request->get('search');
+    
+        // Initialize empty collections for months and years
+        $months = collect();
+        $years = collect();
+    
+        // Start the query without specific status conditions by default
+        $query = SuratM::query();
+    
+        // Apply the filter
+        if ($filter === 'today') {
+            $query->whereDate('date', today())->where('status', 0);
+        } elseif ($filter === 'month') {
+            $selectedMonth = $request->get('month', now()->month);
+            $selectedYear = $request->get('year', now()->year);
+            $query->whereMonth('date', $selectedMonth)->whereYear('date', $selectedYear);
+    
+            // Get distinct months with years
+            $months = SuratM::selectRaw('MONTH(date) as month, YEAR(date) as year')
+                ->distinct()->orderBy('year')->orderBy('month')->get();
+        } elseif ($filter === 'year') {
+            $selectedYear = $request->get('year', now()->year);
+            $query->whereYear('date', $selectedYear);
+    
+            // Get distinct years
+            $years = SuratM::selectRaw('YEAR(date) as year')
+                ->distinct()->orderBy('year')->get();
+        } elseif ($filter === 'keluar') {
+            $query->where('status', 2);
+        }elseif ($filter === 'Diizinkan') {
+            $query->where('status', 1);
+        }
+    
+        // Apply the search condition if search is provided
+        if ($search) {
+            $query->where('no_kendaraan', 'like', '%' . $search . '%')->
+            orwhere('divisi', 'like', '%' . $search . '%');
+        }
+    
+        // Execute the query to get the filtered and searched data
+        $data = $query->get();
+    
+
+        return view('Surat-Izin-Keluar.pages.izin',compact('data','filter','months'));
+    }
+    public function pemberi_izin_add($id){
+        $data = SuratM::find($id);
+
+        return view('Surat-Izin-Keluar.pages.pemberi',compact('data'));
+    }
+    public function pemberi_izin_store(Request $request,$id){
+
+         // dd($request->signature == "sama");
+         $request->validate([
+            'pemberi_izin' => 'required|string',
+            'signature' => 'required|string', // Signature is optional in case user doesn't change it
+        ]);
+
+        $suratIzinKeluar = SuratM::findOrFail($id);
+        $suratIzinKeluar->pemberi_izin = $request->input('pemberi_izin');
+        $suratIzinKeluar->status = 1;
+        if($request->signature == "sama"){
+
+        }else{
+            if ($request->filled('signature')) {
+                $signatureData = $request->input('signature');
+                $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+                $signatureData = base64_decode($signatureData);
+    
+                $signatureFileName = 'signature_' . time() . '.png';
+                
+                // Delete the old signature file if it exists
+                if ($suratIzinKeluar->pemberi_izin_ttd && Storage::disk('public')->exists($suratIzinKeluar->pemberi_izin_ttd)) {
+                    Storage::disk('public')->delete($suratIzinKeluar->pemberi_izin_ttd);
+                }
+                
+                // Store the new signature file
+                Storage::disk('public')->put('signatures/' . $signatureFileName, $signatureData);
+                $suratIzinKeluar->pemberi_izin_ttd = 'storage/signatures/' . $signatureFileName;
+            }
+        }
+        // Handle new signature if provided
+
+        $suratIzinKeluar->save();
+
+        return redirect()->route('pemberi-izin')->with('success','Izin Diberikan');
+    }
+
 
     public function security(Request $request){
          // Get the filter and search values from the request
@@ -230,7 +320,7 @@ class SIKController extends Controller
          $search = $request->get('search');
      
          // Start the query with the base condition
-         $query = SuratM::where('status', 0);
+         $query = SuratM::where('status', 1);
      
          // Apply the filter
          if ($filter == 'today') {
@@ -245,13 +335,16 @@ class SIKController extends Controller
              $yearEnd = now()->endOfYear()->toDateString();
              $query->whereBetween('date', [$yearStart, $yearEnd]);
          }elseif($filter == 'keluar'){
-             $query = SuratM::where('status', '!=', 0);
+             $query = SuratM::where('status',  2);
+         }
+         elseif($filter == 'all'){
+             $query = SuratM::orderBy('created_at','asc');
          }
      
          // Apply the search condition if search is provided
          if ($search) {
              $query->where('no_kendaraan', 'like', '%' . $search . '%')->
-             orwhere('divisi', 'like', '%' . $search . '%')->where('status', 0);
+             orwhere('divisi', 'like', '%' . $search . '%')->where('status', 1);
          }
      
          // Execute the query
@@ -278,7 +371,7 @@ class SIKController extends Controller
         $suratIzinKeluar = SuratM::find($request->id);
         $suratIzinKeluar->satpam = $request->input('security');
         $suratIzinKeluar->diizinkan = $request->input('jam');
-        $suratIzinKeluar->status = 1;
+        $suratIzinKeluar->status = 2;
         
         if ($request->has('signature')) {
             $signatureData = $request->input('signature');

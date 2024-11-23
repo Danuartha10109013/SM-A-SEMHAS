@@ -11,11 +11,11 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(){
-// Controller method
+    public function index()
+    {
 
-    $data = Shipment::all();
-    return view('Mapping-Container.content.dashboard.indexss', compact('data'));
+        $data = Shipment::all();
+        return view('Mapping-Container.content.dashboard.indexss', compact('data'));
 
         // return view('layouts.index');
         // return 'ini dashboard';

@@ -60,8 +60,14 @@
                     <td> {{$d->b_label}} </td>
                     <td> {{$d->b_aktual}} </td>
                     <td> {{$d->selisih}} </td>
-                    <td> {{$d->persentase}} </td>
-                    <td> {{$d->keterangan}} </td>
+                    @if ($d->persentase >= 0)
+                    <td style="color: green">{{$d->persentase}} %</td>
+                    @elseif ($d->persentase <= -0.25)
+                        <td style="color: red">{{$d->persentase}} %</td>
+                    @else
+                        <td style="color: green">{{$d->persentase}} %</td>
+                    @endif
+                    <td>{{$d->keterangan}}</td>
                     <td><a href="{{route('Open-Packing.admin.packing.edit',$d->id)}}">
                       <label class="btn btn-primary">
                         <i class="fas fa-edit"></i> 

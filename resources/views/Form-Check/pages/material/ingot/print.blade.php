@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Daily Checklist Material CRC</title>
+    <title>Daily Checklist Material Ingot</title>
     <style>
         @page {
             size: A4;
@@ -51,7 +51,8 @@
 </head>
 <body>
     <div class="container-fluid">
-        <h2>Daily Checklist Material CRC</h2>
+        <p style="text-align: end">FM.WH.02.01</p>
+        <h2>Daily Checklist Kedatangan Material Ingot</h2>
 
         <h3>User Information</h3>
         <p><strong>Checker:</strong> {{ Auth::user()->name }}</p>

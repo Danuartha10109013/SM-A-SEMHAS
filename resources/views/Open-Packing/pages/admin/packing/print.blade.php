@@ -100,15 +100,15 @@
     <div class="header-left">
         <img src="{{ asset('Logo_TML.png') }}" alt="Company Logo">
         <div>
-            <strong>OPEN</strong>
         </div>
     </div>
     <div class="header-title">
         <h2>PERINTAH OPEN-PACKING</h2>
     </div>
     <div class="header-right">
-        <p><strong>FM.WH.03.01</strong></p>
-        @if ($jenis == 'CRC')
+        <p><strong>FM.WH.03.03</strong></p>
+        <p>CRC</p>
+        {{-- @if ($jenis == 'CRC')
         <p>CRC / <del>Resin</del> / <del>Alkali</del> <del>Zinc Ingot</del> <del>Alumunium</del> </p>
         @elseif ($jenis == 'RESIN')
         <p><del>CRC</del> / Resin / <del>Alkali</del> <del>Zinc Ingot</del> <del>Alumunium</del> </p>
@@ -118,7 +118,7 @@
         <p><del>CRC</del> / <del>Resin</del> / <del>Alkali</del> Zinc Ingot <del>Alumunium</del> </p>
         @elseif ($jenis == 'ALUMUNIUM')
         <p><del>CRC</del> / <del>Resin</del> / <del>Alkali</del> / <del>Zinc Ingot</del> / Alumunium </p>
-        @endif
+        @endif --}}
         <p style="font-style: italic"><strong> SHIFT: {{$shift}} </strong></p>
     </div>
 </div>
@@ -145,8 +145,15 @@
                 <td>{{$d->b_label}}</td>
                 <td>{{$d->b_aktual}}</td>
                 <td>{{$d->selisih}}</td>
-                <td>{{$d->persentase}}</td>
+                @if ($d->persentase >= 0)
+                    <td style="color: green">{{$d->persentase}} %</td>
+                @elseif ($d->persentase <= -0.25)
+                    <td style="color: red">{{$d->persentase}} %</td>
+                @else
+                    <td style="color: green">{{$d->persentase}} %</td>
+                @endif
                 <td>{{$d->keterangan}}</td>
+
             </tr>
         @endforeach
     </tbody>

@@ -91,10 +91,10 @@ class ShippmentB extends Controller
         $shippmentA->update($request->all());
 
         if(Auth::user()->role == 0){
-            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'ShippmentA updated successfully');
+            return redirect()->route('Ship-Mark.admin.shipment-b-show',$back)->with('success', 'Shippment B updated successfully');
         }else{
 
-            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'ShippmentA updated successfully');
+            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'Shippment B updated successfully');
         }
     }
 
@@ -165,10 +165,10 @@ class ShippmentB extends Controller
         $shippmenta->delete();
 
         if(Auth::user()->role == 0){
-            return redirect()->route('Ship-Mark.admin.shipment-b-show',$back)->with('success', 'Shippmenta deleted successfully');
+            return redirect()->route('Ship-Mark.admin.shipment-b-show',$back)->with('success', 'Shippment B deleted successfully');
         }else{
 
-            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'Shippmenta deleted successfully');
+            return redirect()->route('Ship-Mark.pegawai.shipment-b-show',$back)->with('success', 'Shippment B deleted successfully');
         }
     }
     public function destroyA($type)

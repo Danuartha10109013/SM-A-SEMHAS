@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\CoilDamageExportExcel;
 use App\Exports\PackingL08ExportExcel;
 use App\Models\PackingL08M;
+use App\Models\RekapM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,11 @@ class PackingL08Controller extends Controller
         $damage->no_sales = $request->no_sales;
         $damage->user_id = $request->user_id;
 
+        $ids = RekapM::where('attribute',$request->attribute)->value('id');
+        $rekap = RekapM::find($ids);
+        $rekap->packing = 'YES';
+        $rekap->save();
+// dd($ids);
         // Save to database
         if ($damage->save()) {
             if(Auth::user()->role == 0){

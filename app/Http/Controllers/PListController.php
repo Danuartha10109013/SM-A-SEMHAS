@@ -261,15 +261,29 @@ class PListController extends Controller
     public function hasil(Request $request, $ket)
     {
         $query = ScanM::where('keterangan', $ket);
-
+    
+        // Pencarian berdasarkan 'attribute'
         if ($request->has('search') && !empty($request->search)) {
             $query->where('attribute', 'LIKE', '%' . $request->search . '%');
         }
-
+    
+        // Sorting
+        $sort = $request->input('sort', 'attribute'); // Default sort by 'attribute'
+        $direction = $request->input('direction', 'asc'); // Default direction 'asc'
+    
+        // Validasi kolom yang dapat diurutkan
+        $sortableColumns = ['attribute', 'keterangan', 'created_at', 'updated_at'];
+        if (in_array($sort, $sortableColumns)) {
+            $query->orderBy($sort, $direction);
+        }
+    
+        // Ambil data
         $data = $query->get();
-
-        return view('Packing-List.pages.admin.hasil.index', compact('data', 'ket'));
+    
+        return view('Packing-List.pages.admin.hasil.index', compact('data', 'ket', 'sort', 'direction'));
     }
+    
+    
 
     public function hasil_group(){
         
@@ -287,21 +301,14 @@ class PListController extends Controller
 
     public function exportexcel(Request $request, $ket)
     {
-
-        $query = ScanM::where('keterangan', $ket);
-        
-        if ($request->has('search') && !empty($request->search)) {
-            $query->where('attribute', 'LIKE', '%' . $request->search . '%');
-        }
-        
-        $data = $query->get();
-        // dd($data);
-
-        // Pass data to the export view
-        $date = now()->format('d-m-Y'); 
-
-        return Excel::download(new HasilAkhir($ket), $date.'_Packing_List' . $ket . '.xlsx');
+        $search = $request->get('search', null);
+        $sort = $request->get('sort', 'attribute');
+        $direction = $request->get('direction', 'asc');
+    
+        return Excel::download(new HasilAkhir($ket, $search, $sort, $direction), now()->format('d-m-Y') . '_Packing_List_' . $ket . '.xlsx');
     }
+    
+
     public function exportexcels(Request $request)
     {
 

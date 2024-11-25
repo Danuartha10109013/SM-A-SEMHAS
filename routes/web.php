@@ -654,6 +654,8 @@ Route::middleware([AutoLogout::class])->group(function () {
             });
             Route::prefix('rekap')->group(function () {
                 Route::get('/',[RekapController::class, 'index'])->name('rekap');
+                Route::post('/upload',[RekapController::class, 'upload'])->name('rekap.upload');
+                Route::get('/detail/{so}',[RekapController::class, 'detail'])->name('rekap.detail');
             });
             
         });

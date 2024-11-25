@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class RekapM extends Model
 {
     use HasFactory;
+
+    protected $table = 'rekap';
+
+    protected $fillable = [
+        'packing',
+        'attribute',
+        'no_so',
+        'layout',
+        'desc',
+        'net',
+        'gross',
+        'length',
+        'type',
+    ];
 }

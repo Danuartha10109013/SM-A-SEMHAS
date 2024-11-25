@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rekap_m_s', function (Blueprint $table) {
+        Schema::create('rekap', function (Blueprint $table) {
             $table->id();
+            $table->string('attribute')->unique();
+            $table->string('no_so');
+            $table->string('layout');
+            $table->string('desc');
+            $table->string('net');
+            $table->string('gross');
+            $table->string('length');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -22,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rekap_m_s');
+        Schema::dropIfExists('rekap');
     }
 };

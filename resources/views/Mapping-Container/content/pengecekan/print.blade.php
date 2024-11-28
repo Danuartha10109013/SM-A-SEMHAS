@@ -476,7 +476,39 @@
                     @endforeach
                 </table>
             <p class="text-start" style="font-size: 9px;margin-top: -20px"><small style="color: red">*</small>Mapping ini mereferensikan layout koil saat berada di dalam kontainer dari <b>Tampak Atas</b></p>
+            <div class="tablebaru" style="width: 90%; text-align: center;">
+                <table style="width: 100%; border-collapse: collapse; margin: 0 auto; outline: none;">
+                    <tbody>
+                        <tr>
+                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">Team Leader</td>
+                            <td style="border: none; padding: 10px; text-align: center;"></td>
+                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">Checker</td>
+                        </tr>
+                        <tr>
+                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle; display: flex; justify-content: center; align-items: center;">
+                                <img width="50%" src="{{asset($sign->signature)}}" alt="" style="max-width: 100%; height: auto;margin-left: 5em">
+                            </td>
+                            <td style="border: none; padding: 10px; text-align: center;"></td>
+                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle; display: flex; justify-content: center; align-items: center;">
+                                <img width="50%" src="{{asset($sign->signature1)}}" alt="" style="max-width: 100%; height: auto;margin-left: 5em">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">
+                                {{$sign->pegawai}}
+                            </td>
+                            <td style="border: none; padding: 10px; text-align: center;"></td>
+                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">
+                                {{$sign->checker}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            
+            
+            </div>
+
             
             
             <div class="col-md-3"></div>

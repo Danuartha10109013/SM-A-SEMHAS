@@ -12,7 +12,10 @@
 @section('content')
 <div class="container-xxl">
     <h3 class="title text-center">DATA SHIPMENT</h3>
-    <div ><a href="{{route('Mapping.admin.input-excel')}}" class="btn btn-primary text-end mb-3">Buat Shipment</a></div>
+    <div class="mb-3">
+    <a href="{{route('Mapping.admin.input-excel')}}" class="btn btn-primary text-end">Buat Shipment</a>'
+    <a href="{{route('Mapping.admin.create-shipment')}}" class="btn btn-secondary">Input Manual</a>
+    </div>
 <div class="col-12">
     <div class="card">
       <div class="table-responsive">

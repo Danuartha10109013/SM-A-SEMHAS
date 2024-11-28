@@ -26,6 +26,7 @@ class Shipment extends Model
         'kepada',
         'alamat_pengirim',
         'alamat_tujuan',
+        'tare',
     ];
 
     // Primary key disesuaikan dengan tipe data

@@ -9,13 +9,13 @@
         /* Mengatur ukuran kertas menjadi A4 */
         @media print {
             @page {
-                size: legal; /* Tetapkan ukuran kertas ke legal */
+                size: A3; /* Tetapkan ukuran kertas ke legal */
                 margin: 5mm; /* Margin kertas */
             }
 
             /* Memastikan ukuran halaman tidak berubah dan konten mengecil jika meluap */
             body {
-                margin: 0;
+                margin: ;
                 padding: 0;
                 width: 100%; /* Pastikan konten menggunakan lebar penuh */
                 height: 100%; /* Pastikan konten menggunakan tinggi penuh */
@@ -26,6 +26,7 @@
 
             /* Untuk memperkecil konten berdasarkan ukuran halaman */
             .content {
+                margin-left: 10px;
                 width: 100%; /* Pastikan konten memenuhi lebar kertas */
                 height: auto; /* Konten akan menyesuaikan tinggi */
                 transform: scale(1); /* Sesuaikan dengan persentase pengurangan jika melebihi halaman */
@@ -720,6 +721,35 @@
                     @endforeach
                 </table>
                 <p  class="text-start" style="font-size: 9px;margin-top: -25px"><small style="color: red">*</small>Mapping ini mereferensikan layout koil saat berada di dalam kontainer dari <b>Tampak Atas</b></p>
+                <div class="tablebaru" style="width: 90%; text-align: center;">
+                    <table style="width: 100%; border-collapse: collapse; margin: 0 auto; outline: none;">
+                        <tbody>
+                            <tr>
+                                <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">Team Leader</td>
+                                <td style="border: none; padding: 10px; text-align: center;"></td>
+                                <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">Checker</td>
+                            </tr>
+                            <tr>
+                                <td style="border: none; padding: 10px; text-align: center; vertical-align: middle; display: flex; justify-content: center; align-items: center;">
+                                    <img width="40%" src="{{asset($sign->signature)}}" alt="" style="max-width: 100%; height: auto;margin-left: 5em">
+                                </td>
+                                <td style="border: none; padding: 10px; text-align: center;"></td>
+                                <td style="border: none; padding: 10px; text-align: center; vertical-align: middle; display: flex; justify-content: center; align-items: center;">
+                                    <img width="40%" src="{{asset($sign->signature1)}}" alt="" style="max-width: 100%; height: auto;margin-left: 5em">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">
+                                    {{$sign->pegawai}}
+                                </td>
+                                <td style="border: none; padding: 10px; text-align: center;"></td>
+                                <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">
+                                    {{$sign->checker}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <style>
                 .print-btn{

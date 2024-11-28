@@ -47,14 +47,18 @@ if (file_exists($viewPath)) {
         $data=Pengecekan::where('no_gs',$id)->get();
         $coil=MapCoil::where('no_gs', $id)->get();
         $img = Coil::where('no_gs',$id)->pluck('keterangan');
+        $ids=Pengecekan::where('no_gs',$id)->value('id');
+        $sign = Pengecekan::find($ids);
         
-        return view('Mapping-Container.content.pengecekan.print', compact('data','coil', ));
+        return view('Mapping-Container.content.pengecekan.print', compact('data','coil','sign' ));
     }
     public function printtruck($id){
         $data=Pengecekan::where('no_gs',$id)->get();
         $coil=MapCoilTruck::where('no_gs', $id)->get();
         $img = Coil::where('no_gs',$id)->pluck('keterangan');
+        $ids=Pengecekan::where('no_gs',$id)->value('id');
+        $sign = Pengecekan::find($ids);
         
-        return view('Mapping-Container.content.pengecekan.printtruck', compact('data','coil', ));
+        return view('Mapping-Container.content.pengecekan.printtruck', compact('data','coil','sign' ));
     }
 }

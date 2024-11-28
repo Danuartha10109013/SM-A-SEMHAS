@@ -86,5 +86,14 @@ class RekapController extends Controller
     return view('L-08.pages.rekap.detail', compact('data', 'so'));
 }
 
+    public function delete($so){
+        $data = RekapM::where('no_so',$so)->get();
+        // dd($data);
+        foreach($data as $d){
+            $d->delete();
+        }
+        return redirect()->back()->with('success', 'Data So Telah dihapus');
+    }
+
 
 }

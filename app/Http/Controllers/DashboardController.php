@@ -39,60 +39,47 @@ class DashboardController extends Controller
         // dd($request->all());
         $validatedData = $request->validate([
             'no_gs' => 'required|string',
-            'tgl_gs' => 'required|date',
-            'no_so' => 'required|string',
-            'no_po' => 'required|string',
-            'no_do' => 'required|string',
-            'no_container' => 'required|string',
-            'no_seal' => 'required|string',
-            'no_mobil' => 'required|string',
-            'forwarding' => 'required|string',
-            'Kepada' => 'required|string',
-            'alamat_pengirim' => 'required|string',
-            'alamat_tujuan' => 'required|string',
-            ],
-            [
-            'no_gs.required' => 'Filed ini Wajib Diisi',
-            'tgl_gs.required' => 'Filed ini Wajib Diisi',
-            'no_so.required' => 'Filed ini Wajib Diisi',
-            'no_po.required' => 'Filed ini Wajib Diisi',
-            'no_do.required' => 'Filed ini Wajib Diisi',
-            'no_container.required' => 'Filed ini Wajib Diisi',
-            'no_seal.required' => 'Filed ini Wajib Diisi',
-            'no_mobil.required' => 'Filed ini Wajib Diisi',
-            'forwarding.required' => 'Filed ini Wajib Diisi',
-            'Kepada.required' => 'Filed ini Wajib Diisi',
-            'alamat_pengirim.required' => 'Filed ini Wajib Diisi',
-            'alamat_tujuan.required' => 'Filed ini Wajib Diisi',
+            'tgl_gs' => 'nullable|date',
+            'no_so' => 'nullable|string',
+            'no_po' => 'nullable|string',
+            'no_do' => 'nullable|string',
+            'no_container' => 'nullable|string',
+            'no_seal' => 'nullable|string',
+            'no_mobil' => 'nullable|string',
+            'forwarding' => 'nullable|string',
+            'kepada' => 'nullable|string',
+            'alamat_pengirim' => 'nullable|string',
+            'alamat_tujuan' => 'nullable|string',
             ]
         );
 
         $shipment = new Shipment();
-        $shipment->no_gs = $validatedData['no_gs'];
-        $shipment->tgl_gs = $validatedData['tgl_gs'];
-        $shipment->no_so = $validatedData['no_so'];
-        $shipment->no_po = $validatedData['no_po'];
-        $shipment->no_do = $validatedData['no_do'];
-        $shipment->no_container = $validatedData['no_container'];
-        $shipment->no_seal = $validatedData['no_seal'];
-        $shipment->no_mobil = $validatedData['no_mobil'];
-        $shipment->forwarding = $validatedData['forwarding'];
-        $shipment->Kepada = $validatedData['Kepada'];
-        $shipment->alamat_pengirim = $validatedData['alamat_pengirim'];
-        $shipment->alamat_tujuan = $validatedData['alamat_tujuan'];
+        $shipment->no_gs = $request->no_gs;
+        $shipment->tgl_gs = $request->tgl_gs;
+        $shipment->no_so = $request->no_so;
+        $shipment->no_po = $request->no_po;
+        $shipment->no_do = $request->no_do;
+        $shipment->no_container = $request->no_container;
+        $shipment->no_seal = $request->no_seal;
+        $shipment->no_mobil = $request->no_mobil;
+        $shipment->forwarding = $request->forwarding;
+        $shipment->kepada = $request->kepada;
+        $shipment->alamat_pengirim = $request->alamat_pengirim;
+        $shipment->alamat_tujuan = $request->alamat_tujuan;
+        $shipment->tare = $request->tare;
 
         $shipment->save();
 
         $pengecekan = new Pengecekan;
-        $pengecekan->no_gs = $validatedData['no_gs']; 
+        $pengecekan->no_gs = $request->no_gs; 
         $pengecekan->save();
 
         $mapcoil = new MapCoil;
-        $mapcoil->no_gs = $validatedData['no_gs']; 
+        $mapcoil->no_gs = $request->no_gs; 
         $mapcoil->save();
 
         $mapcoil = new MapCoilTruck();
-        $mapcoil->no_gs = $validatedData['no_gs']; 
+        $mapcoil->no_gs = $request->no_gs; 
         $mapcoil->save();
 
         return redirect()->route('Mapping.admin.shipment');

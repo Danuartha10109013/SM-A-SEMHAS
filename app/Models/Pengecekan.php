@@ -40,6 +40,9 @@ class Pengecekan extends Model
             'no_mobil',
             'no_container',
             'tonase_tare',
+            'checker',
+            'signature',
+            'signature1',
         ];
     
     // Pada Model P dan M

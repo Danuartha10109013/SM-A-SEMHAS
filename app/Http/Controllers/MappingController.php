@@ -7,6 +7,7 @@ use App\Models\MapCoil;
 use App\Models\Pengecekan;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MappingController extends Controller
 {
@@ -15,13 +16,14 @@ class MappingController extends Controller
         // Mengambil data Shipment berdasarkan id
         $data = Shipment::where('id',$id)->get();
         $same = Shipment::where('id',$id)->value('no_gs');
+        $tare = Shipment::where('id',$id)->value('tare');
         $coil = Coil::where('no_gs', $same)->get();
         $tonase = Coil::where('no_gs', $same)->sum('berat_produk');
         $pengecekan = Pengecekan::where('no_gs', $same)->get();
         $maps = MapCoil::where('no_gs', $same)->get();
     
         // Mengembalikan view dengan data Shipment yang diambil
-        return view('Mapping-Container.content.pengecekan.index', compact('data','coil', 'tonase','pengecekan','maps'));
+        return view('Mapping-Container.content.pengecekan.index', compact('data','coil', 'tonase','pengecekan','maps','tare'));
     }
 
 
@@ -92,6 +94,10 @@ class MappingController extends Controller
         'c3_eye' => 'nullable|string|max:255',
         'c4_eye' => 'nullable|string|max:255',
         'c5_eye' => 'nullable|string|max:255',
+
+        'checker' => 'nullable|string|max:255',
+        'signature' => 'nullable|string',
+        'signature1' => 'nullable|string',
     ]);
 
     // Pastikan nilai `eye` yang tidak diisi menjadi null
@@ -100,6 +106,29 @@ class MappingController extends Controller
         'b1_eye', 'b2_eye', 'b3_eye', 'b4_eye', 'b5_eye',
         'c1_eye', 'c2_eye', 'c3_eye', 'c4_eye', 'c5_eye'
     ];
+    // dd($request->all());
+
+    if ($request->has('signature')) {
+        $signatureData = $request->input('signature');
+        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+        $signatureData = base64_decode($signatureData);
+
+        $signatureFileName = 'signature_' . time() . '.png';
+        Storage::disk('public')->put('signatures/' . $signatureFileName, $signatureData);
+
+        $validatedData['signature'] = 'storage/signatures/' . $signatureFileName;
+    }
+    if ($request->has('signature1')) {
+        $signatureData1 = $request->input('signature1');
+        $signatureData1 = str_replace('data:image/png;base64,', '', $signatureData1);
+        $signatureData1 = base64_decode($signatureData1);
+
+        $signatureFileName1 = 'signature_' . time() . '.png';
+        Storage::disk('public')->put('signatures/1/' . $signatureFileName1, $signatureData1);
+
+        $validatedData['signature1'] = 'storage/signatures/1/' . $signatureFileName1;
+    }
+
 
     foreach ($fields as $field) {
         if (!array_key_exists($field, $validatedData)) {

@@ -50,6 +50,12 @@
                    <i class="ri-home-4-line"></i><span>Dashboard</span>
                </a>
            </li>
+           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Acuan Packing</span></li>
+            <li class="{{ request()->routeIs('L-08.admin.rekap') ? 'active' : '' }}">
+                <a href="{{route('L-08.pegawai.rekap')}}" class="iq-waves-effect" aria-expanded="false">
+                    <i class="mdi mdi-target-variant"></i><span>Acuan Packing</span>
+                </a>
+            </li>
            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Coil Damage</span></li>
            <li class="{{ request()->routeIs('L-08.pegawai.dashboard') ? 'active' : '' }}">
             <a href="{{route('L-08.pegawai.dashboard')}}" class="iq-waves-effect" aria-expanded="false">

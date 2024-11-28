@@ -1,7 +1,7 @@
 @extends('Mapping-Container.layout.main')
 
 @section('title')
-    Form EUP
+    Input excel ||
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)
@@ -20,7 +20,7 @@
                 <div class="card-header bg-primary text-white">
                     <h5 style="color: white" class="mb-0">Upload File Excel</h5>
                 </div>
-
+                <p>Template untuk Data Shipment. <a href="{{route('download.file','SHIPMENT.xlsx')}}">Klik disini untuk download</a></p>
                 <div class="card-body">
                     <form id="uploadForm" action="{{ route('Mapping.admin.upload-excel') }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -47,6 +47,7 @@
                 <div class="card-header bg-primary text-white">
                     <h5 style="color: white" class="mb-0">Upload File Excel</h5>
                 </div>
+                <p>Template untuk Data COIL. <a href="{{route('download.file','COIL.xlsx')}}">Klik disini untuk download</a></p>
 
                 <div class="card-body">
                     <form id="uploadForm" action="{{ route('Mapping.admin.upload-koil-excel') }}" method="POST" enctype="multipart/form-data">

@@ -656,6 +656,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/',[RekapController::class, 'index'])->name('rekap');
                 Route::post('/upload',[RekapController::class, 'upload'])->name('rekap.upload');
                 Route::get('/detail/{so}',[RekapController::class, 'detail'])->name('rekap.detail');
+                Route::get('/delete/{so}',[RekapController::class, 'delete'])->name('rekap.delete');
             });
             
         });
@@ -669,6 +670,12 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/store',[PackingL08Controller::class, 'store'])->name('damage.store');
                 Route::put('/update/{id}',[PackingL08Controller::class, 'update'])->name('damage.update');
                 Route::delete('/delete/{id}',[PackingL08Controller::class, 'delete'])->name('damage.delete');
+            });
+            Route::prefix('rekap')->group(function () {
+                Route::get('/',[RekapController::class, 'index'])->name('rekap');
+                Route::post('/upload',[RekapController::class, 'upload'])->name('rekap.upload');
+                Route::get('/detail/{so}',[RekapController::class, 'detail'])->name('rekap.detail');
+                Route::get('/delete/{so}',[RekapController::class, 'delete'])->name('rekap.delete');
             });
         });
 

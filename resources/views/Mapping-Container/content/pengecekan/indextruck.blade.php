@@ -1,6 +1,6 @@
 @extends('Mapping-Container.layout.main')
 @section('title')
-    Form EUP
+Form Pengecekan ||
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)
@@ -14,10 +14,15 @@
     <h1 class="app-brand-text demo menu-text fw-bold ms-1 text-center">MAPPING MUAT & CEKLIST TRAILER</h1>
     @foreach ($data as $d)
     <h4 class="app-brand-text demo menu-text fw-bold ms-1 text-center">No Gs : {{$d->no_gs}}</h4>
-    <form action="{{ route('Mapping.admin.store-data-truck', $d->no_gs) }}" method="POST">
+    <form action="{{ route('Mapping.admin.store-data-truck', $d->no_gs) }}" enctype="multipart/form-data" method="POST" id="sik-form">
         @csrf
         <div class="row">
             <!-- Basic -->
+            <style>
+                .input-group{
+                    margin-top: 20px;
+                }
+            </style>
             <div class="col-md-6">
                 <div class="card mb-4">
                     <h5 class="card-header">Step 1</h5>
@@ -98,7 +103,7 @@
                                 name="customer"
                                 aria-label="Username"
                                 aria-describedby="basic-addon41"
-                                value="{{$d->Kepada}}" readonly />
+                                value="{{$d->kepada}}" readonly />
                         </div>
                         @foreach ($pengecekan as $p)
                         <div class="input-group">
@@ -399,20 +404,19 @@
                         </div>
 
                         <div class="input-group">
-                            <span class="input-group-text" id="basic-addon41">Pegawai</span>
-                            <input
-                                type="string"
-                                class="form-control @error('pegawai') is-invalid @enderror"
-                                name="pegawai"
-                                placeholder="Masukan Nama Pegawai"
-                                aria-label="pegawai"
-                                aria-describedby="basic-addon41"
-                                value="{{ $p->pegawai }}" />
-                            @error('pegawai')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                            <span for="atribute" class="input-group-text" id="basic-addon41">Team Lead<small style="color: red;">*</small></span>
+                            <select class="form-control @error('pegawai') is-invalid @enderror"
+                            name="pegawai"
+                            placeholder="Masukan Nama Pegawai"
+                            aria-label="pegawai"
+                            aria-describedby="basic-addon41" type="text" name="pegawai" id="team" class="form-control" required>
+                              <option value="" {{old('pegawai',$p->pegawai) == '' ? 'selected' : ''}}  >--Pilih Shift Leader--</option>
+                              <option value="Danu" {{old('pegawai',$p->pegawai) == 'Danu' ? 'selected' : ''}}>Danu</option>
+                              <option value="Riyan H" {{old('pegawai',$p->pegawai) == 'Riyan H' ? 'selected' : ''}}>Riyan H</option>
+                              <option value="Freddy" {{old('pegawai',$p->pegawai) == 'Freddy' ? 'selected' : ''}}>Freddy</option>
+                              <option value="Dika" {{old('pegawai',$p->pegawai) == 'Dika' ? 'selected' : ''}}>Dika</option>
+                              <option value="other">Other</option> <!-- Add this option -->
+                          </select>
                         </div>
                         
                         <p class="text-center" style="font-weight:bold;">TRAILER / TRUK</p>
@@ -670,7 +674,120 @@
         @endforeach
         
 
+        <div class="row">
+            <!-- Pengemudi Section -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="pengemudi">Team Leader</label>
+                    <input type="text" name="pengemudi" class="form-control" value="{{$p->pegawai}}" readonly>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        @if ($p->signature)
+                        <img src="{{asset($p->signature)}}" alt="">
+                        @else   
+                        <label for="signature" class="form-label">Tanda Tangan TL</label>
+                        <canvas id="signature-pad" style="border: 1px solid #ccc; width: 100%; height: 200px;"></canvas>
+                        <button id="clear" type="button" class="btn btn-secondary mt-2">Clear</button>
+                        <input type="hidden" name="signature" id="signature">
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Section -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label for="security">Checker</label>
+                    <input type="text" name="checker" class="form-control" value="{{Auth::user()->name}}" readonly>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        @if ($p->signature1)
+                        <img src="{{asset($p->signature1)}}" alt="">
+                        @else   
+                        <label for="signature1" class="form-label">Tanda Tangan Checker</label>
+                        <canvas id="signature-pad1" style="border: 1px solid #ccc; width: 100%; height: 200px;"></canvas>
+                        <button id="clear1" type="button" class="btn btn-secondary mt-2">Clear</button>
+                        <input type="hidden" name="signature1" id="signature1">
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Function to initialize a signature pad
+                function initializeSignaturePad(canvasId, clearButtonId, hiddenInputId) {
+                    const canvas = document.getElementById(canvasId);
+                    const clearButton = document.getElementById(clearButtonId);
+                    const hiddenInput = document.getElementById(hiddenInputId);
+        
+                    const signaturePad = new SignaturePad(canvas, {
+                        backgroundColor: 'rgba(255, 255, 255, 0)',
+                        penColor: 'black'
+                    });
+        
+                    // Resize the canvas dynamically
+                    function resizeCanvas() {
+                        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                        const container = canvas.parentElement; // Use parent container for width
+                        const oldData = signaturePad.toData(); // Save the signature data
+        
+                        canvas.width = container.offsetWidth * ratio;
+                        canvas.height = 200 * ratio; // Adjust height to 200px
+                        const ctx = canvas.getContext('2d');
+                        ctx.scale(ratio, ratio);
+        
+                        // Restore the previous signature data
+                        if (oldData.length > 0) {
+                            signaturePad.fromData(oldData);
+                        }
+                    }
+        
+                    // Initial resize and attach resize event
+                    resizeCanvas();
+                    window.addEventListener('resize', resizeCanvas);
+        
+                    // Clear button functionality
+                    clearButton.addEventListener('click', () => {
+                        signaturePad.clear();
+                    });
+        
+                    return { signaturePad, hiddenInput };
+                }
+        
+                // Initialize signature pads for TL and Checker
+                const tlSignature = initializeSignaturePad('signature-pad', 'clear', 'signature'); // For Team Leader
+                const checkerSignature = initializeSignaturePad('signature-pad1', 'clear1', 'signature1'); // For Checker
+        
+                // Handle form submission
+                document.querySelector('#sik-form').addEventListener('submit', (e) => {
+                    let valid = true;
+        
+                    if (tlSignature.signaturePad.isEmpty()) {
+                        alert("Tanda tangan Team Leader diperlukan!");
+                        valid = false;
+                    } else {
+                        tlSignature.hiddenInput.value = tlSignature.signaturePad.toDataURL();
+                    }
+        
+                    if (checkerSignature.signaturePad.isEmpty()) {
+                        alert("Tanda tangan Checker diperlukan!");
+                        valid = false;
+                    } else {
+                        checkerSignature.hiddenInput.value = checkerSignature.signaturePad.toDataURL();
+                    }
+        
+                    if (!valid) {
+                        e.preventDefault(); // Prevent form submission if signatures are missing
+                    }
+                });
+            });
+        </script>
         <button type="submit" class="btn btn-primary mb-5">Simpan</button>
+
             
         @if($p->isComplete())
     <a href="{{route('Mapping.admin.prints',$p->no_gs)}}" class="btn btn-danger mb-5">Cetak</a>
@@ -679,8 +796,9 @@
 @endif
     </form>
 
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
 </div>

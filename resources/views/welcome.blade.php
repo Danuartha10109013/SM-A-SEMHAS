@@ -112,7 +112,7 @@
             @if (Auth::user()->role == 0)
             <a href="{{route('Mapping.admin.shipment')}}" class="menu-item">
          @else
-         <a href="" class="menu-item">
+         <a href="{{route('Mapping.pegawai.shipment')}}" class="menu-item">
             @endif
                <div>
                   <i class="mdi mdi-map-marker-path"></i>

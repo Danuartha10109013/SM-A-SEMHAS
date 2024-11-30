@@ -6,6 +6,7 @@ use App\Models\CoilDamageM;
 use App\Models\CraneM;
 use App\Models\CrcM;
 use App\Models\DatabM;
+use App\Models\EupM;
 use App\Models\ForkliftM;
 use App\Models\IngotM;
 use App\Models\KendaraanM;
@@ -44,13 +45,16 @@ class DashboardControlller extends Controller
 
     public function fcindex(){
         $user = 'a';
-        $form = CraneM::count()+ForkliftM::count()+TraillerM::count()+CrcM::count()+IngotM::count()+ResinM::count();
+        $form = CraneM::count()+ForkliftM::count()+TraillerM::count()+CrcM::count()+IngotM::count()+ResinM::count()+EupM::count();
         $response = User::where('role','!=',1)->count();
         return view('Form-Check.index',compact('user','form','response'));
     }
 
     public function fc_pegawai(){
-        return view('Form-Check.pages.pegawai.index');
+        $user = 'a';
+        $form = CraneM::count()+ForkliftM::count()+TraillerM::count()+CrcM::count()+IngotM::count()+ResinM::count()+EupM::count();
+        $response = User::where('role','!=',1)->count();
+        return view('Form-Check.pages.pegawai.index',compact('form','response'));
     }
     public function op_admin(){
         $form = PackingM::all()->count();

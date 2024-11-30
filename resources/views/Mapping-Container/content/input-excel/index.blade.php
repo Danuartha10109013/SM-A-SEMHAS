@@ -20,7 +20,7 @@
                 <div class="card-header bg-primary text-white">
                     <h5 style="color: white" class="mb-0">Upload File Excel</h5>
                 </div>
-                <p>Template untuk Data Shipment. <a href="{{route('download.file','SHIPMENT.xlsx')}}">Klik disini untuk download</a></p>
+                <p>Template untuk Data Shipment. <a href="{{route('download.file','SHIP_Template.xlsx')}}">Klik disini untuk download</a></p>
                 <div class="card-body">
                     <form id="uploadForm" action="{{ route('Mapping.admin.upload-excel') }}" method="POST" enctype="multipart/form-data">
                         @csrf

@@ -43,7 +43,7 @@
               <td style="color: black" class="text-truncate">{{$c->no_mobil}}</td>
               <td>
                  <a href="{{route('Mapping.admin.coiling',$c->no_gs)}}" class="btn btn-success">Koil</a>
-                 <a href="{{route('Mapping.admin.show-shipment',$c->id)}}" class="btn btn-primary"><i class="ri-eye-line"></i></a>
+                 <a href="{{route('Mapping.admin.show-shipment',$c->id)}}" class="btn btn-primary"><i class="ri-eye-line"></i> Mapping</a>
                  <a href="{{route('Mapping.admin.delete-shipment',$c->no_gs)}}" class="btn btn-danger"><i class="ri-delete-bin-2-line"></i></a>
                 </td>
             </tr>

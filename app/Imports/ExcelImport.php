@@ -47,6 +47,7 @@ class ExcelImport implements ToCollection, ToModel
                 'kepada' => $row[9] ?? null, // Ensure this is filled
                 'alamat_pengirim' => $row[10] ?? null,
                 'alamat_tujuan' => $row[11] ?? null,
+                'tare' => $row[12] ?? null,
             ];
             // dd($shipmentData);
     

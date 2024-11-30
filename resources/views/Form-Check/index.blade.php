@@ -33,8 +33,8 @@
               <img src="{{asset('vendorfc/src/assets/images/dashboard/circle.svg')}}" class="card-img-absolute" alt="circle-image" />
               <h4 class="font-weight-normal mb-3">Total Form <i class="mdi mdi-chart-line mdi-24px float-end"></i>
               </h4>
-              <h2 class="mb-5">4</h2>
-              <h6 class="card-text">Crane, Forklift, Trailer, Material</h6>
+              <h2 class="mb-5">5</h2>
+              <h6 class="card-text">Crane, Forklift, Trailer, Eup, Material</h6>
             </div>
           </div>
         </div>
@@ -60,6 +60,41 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table tale-striped">
+          <thead>
+            <tr>
+              <th class="text-center">Crane</th>
+              <th class="text-center">Forklift</th>
+              <th class="text-center">Trailler</th>
+              <th class="text-center">Eup</th>
+              <th class="text-center">CRC</th>
+              <th class="text-center">Ingot</th>
+              <th class="text-center">Resin/Alkali</th>
+            </tr>
+          </thead>
+          <tbody>
+            @php
+              $crane = \App\Models\CraneM::count();
+              $forklift = \App\Models\ForkliftM::count();
+              $trailler = \App\Models\TraillerM::count();
+              $eup = \App\Models\EupM::count();
+              $crc = \App\Models\CrcM::count();
+              $ingot = \App\Models\IngotM::count();
+              $resin = \App\Models\ResinM::count();
+            @endphp
+            <tr>
+              <td class="text-center">{{$crane}}</td>
+              <td class="text-center">{{$forklift}}</td>
+              <td class="text-center">{{$trailler}}</td>
+              <td class="text-center">{{$eup}}</td>
+              <td class="text-center">{{$crc}}</td>
+              <td class="text-center">{{$ingot}}</td>
+              <td class="text-center">{{$resin}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       {{-- <div class="row">

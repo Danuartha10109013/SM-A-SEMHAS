@@ -19,6 +19,9 @@ class PackingDetailM extends Model
         'persentase',
         'stiker',
         'keterangan',
-        'packing_id',
+        'gm',
+        'operator',
+        'shift',
+        'shift_leader',
     ];
 }

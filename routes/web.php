@@ -234,7 +234,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/', [DashboardController::class, 'index'])->name('shipment');
                 Route::get('/shipment/{id}', [DashboardController::class, 'show'])->name('show-shipment');
                 Route::get('/delete/{id}', [DashboardController::class, 'destroy'])->name('delete-shipment');
-                Route::get('shipmentcreate', [DashboardController::class, 'create'])->name('create-shipment');
+                Route::get('shipmentcreate/{gs}', [DashboardController::class, 'create'])->name('create-shipment');
                 Route::post('shipmentcreated', [DashboardController::class, 'store'])->name('store-shipment');
             });
 
@@ -254,6 +254,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/store/{no_gs}', [MappingController::class, 'store'])->name('store-data');
                 // Route::get('/print/{id}', [PrintController::class, 'print'])->name('print');
                 Route::get('/print/{id}', [PrintController::class, 'view_pdf'])->name('print');
+                Route::get('/print/{id}', [PrintController::class, 'downloadPDF'])->name('print.pdf');
                 Route::get('/prints/{id}', [PrintController::class, 'print'])->name('prints-map');
                 Route::get('/prints-truck/{id}', [PrintController::class, 'printtruck'])->name('prints');
             });
@@ -466,7 +467,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/',[OpenPackController::class, 'index'])->name('packing');
                 Route::get('/add',[OpenPackController::class, 'add'])->name('packing.add');
                 Route::post('/store',[OpenPackController::class,'store'])->name('packing.store');
-                Route::get('/add-gm/{gm}',[OpenPackController::class, 'add_gm'])->name('packing.add.gm');
+                Route::get('/add-gm',[OpenPackController::class, 'add_gm'])->name('packing.add.gm');
                 Route::post('/store/gm',[OpenPackController::class,'store_gm'])->name('packing.store.gm');
                 Route::get('/show/{gm}',[OpenPackController::class, 'show'])->name('packing.show');
                 Route::get('/edit/{id}',[OpenPackController::class, 'edit'])->name('packing.edit');
@@ -475,6 +476,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/delete/gm/{id}',[OpenPackController::class, 'delete_gm'])->name('packing.delete.gm');
                 Route::get('/print/{gm}',[OpenPackController::class, 'print'])->name('packing.print');
                 Route::get('/download/{gm}',[OpenPackController::class, 'download'])->name('packing.download');
+                Route::post('/excel',[OpenPackController::class,'excel'])->name('packing.excel');
             });
         });
         Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {

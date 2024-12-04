@@ -50,8 +50,24 @@ if (file_exists($viewPath)) {
         $ids=Pengecekan::where('no_gs',$id)->value('id');
         $sign = Pengecekan::find($ids);
         
-        return view('Mapping-Container.content.pengecekan.print', compact('data','coil','sign' ));
+        return view('Mapping-Container.content.pengecekan.print', compact('data','coil','sign','id' ));
     }
+
+public function downloadPDF($id)
+{
+    $data=Pengecekan::where('no_gs',$id)->get();
+    $coil=MapCoil::where('no_gs', $id)->get();
+    $img = Coil::where('no_gs',$id)->pluck('keterangan');
+    $ids=Pengecekan::where('no_gs',$id)->value('id');
+    $sign = Pengecekan::find($ids);
+
+    // Muat view dengan data dan set ukuran kertas
+    $pdf = Pdf::loadView('Mapping-Container.content.pengecekan.print', compact('data','coil','sign','id'));
+
+    // Unduh file PDF
+    return $pdf->download('Mapping_Muat_Ceklist_Kontainer.pdf');
+}
+
     public function printtruck($id){
         $data=Pengecekan::where('no_gs',$id)->get();
         $coil=MapCoilTruck::where('no_gs', $id)->get();
@@ -59,6 +75,6 @@ if (file_exists($viewPath)) {
         $ids=Pengecekan::where('no_gs',$id)->value('id');
         $sign = Pengecekan::find($ids);
         
-        return view('Mapping-Container.content.pengecekan.printtruck', compact('data','coil','sign' ));
+        return view('Mapping-Container.content.pengecekan.printtruck', compact('data','coil','sign' ,'id'));
     }
 }

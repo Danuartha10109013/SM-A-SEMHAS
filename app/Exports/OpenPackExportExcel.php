@@ -18,12 +18,11 @@ class OpenPackExportExcel implements FromView,ShouldAutoSize
     use Exportable;
 
 
-    public function __construct($data,$gm,$date,$jenis,$leader,$shift)
+    public function __construct($data,$gm,$date,$leader,$shift)
     {
         $this->data = $data;
         $this->gm = $gm;
         $this->date = $date;
-        $this->jenis = $jenis;
         $this->leader = $leader;
         $this->shift = $shift;
     }

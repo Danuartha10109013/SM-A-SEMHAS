@@ -11,15 +11,30 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+    $start = $request->input('start');
+    $end = $request->input('end');
 
-        $data = Shipment::all();
-        return view('Mapping-Container.content.dashboard.indexss', compact('data'));
+    // Query builder to handle both filters
+    $query = Shipment::query();
 
-        // return view('layouts.index');
-        // return 'ini dashboard';
+    // Apply search filter
+    if ($search) {
+        $query->where('no_gs', 'like', '%' . $search . '%'); // Adjust 'no_gs' based on your table column
     }
+
+    // Apply date range filter
+    if ($start && $end) {
+        $query->whereBetween('created_at', [$start, $end]);
+    }
+
+    $data = $query->get();
+
+    return view('Mapping-Container.content.dashboard.indexss', compact('data'));
+}
+
     public function show($id)
     {
         // Mengambil data Shipment berdasarkan id
@@ -32,8 +47,9 @@ class DashboardController extends Controller
         return view('Mapping-Container.content.dashboard.index', compact('data','coil','pengecekan'));
     }
 
-    public function create(){
-        return view('Mapping-Container.content.dashboard.create');
+    public function create($gs){
+        
+        return view('Mapping-Container.content.dashboard.create',compact('gs'));
     }
     public function store(Request $request){
         // dd($request->all());
@@ -53,8 +69,9 @@ class DashboardController extends Controller
             ]
         );
 
-        $shipment = new Shipment();
-        $shipment->no_gs = $request->no_gs;
+        $ids = Shipment::where('no_gs',$request->no_gs)->value('id');
+
+        $shipment = Shipment::find($ids);
         $shipment->tgl_gs = $request->tgl_gs;
         $shipment->no_so = $request->no_so;
         $shipment->no_po = $request->no_po;
@@ -70,17 +87,6 @@ class DashboardController extends Controller
 
         $shipment->save();
 
-        $pengecekan = new Pengecekan;
-        $pengecekan->no_gs = $request->no_gs; 
-        $pengecekan->save();
-
-        $mapcoil = new MapCoil;
-        $mapcoil->no_gs = $request->no_gs; 
-        $mapcoil->save();
-
-        $mapcoil = new MapCoilTruck();
-        $mapcoil->no_gs = $request->no_gs; 
-        $mapcoil->save();
 
         return redirect()->route('Mapping.admin.shipment');
 

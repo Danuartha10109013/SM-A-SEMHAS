@@ -20,7 +20,7 @@
         <!-- Contoh Input -->
         <div class="mb-3">
             <label for="no_gs" class="form-label"><b>No GS</b></label>
-            <input type="text" placeholder="Input No GS" class="form-control" id="no_gs" name="no_gs" value="{{ old('no_gs') }}" required>
+            <input type="text" placeholder="Input No GS" class="form-control" id="no_gs" name="no_gs" value="{{ $gs }}" readonly    >
         </div>
 
         <div class="mb-3">

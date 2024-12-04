@@ -21,10 +21,7 @@
         @endif
             @csrf
             @method('POST')
-            <div class="mb-3">
-                <label for="atribute" class="form-label">No. GM</label>
-                <input type="text" name="gm" id="atribute" class="form-control" value="{{$gm}}" readonly>
-            </div>
+            
 
             <div class="row">
               
@@ -37,21 +34,19 @@
                   <!-- Scan QR Code Button -->
                   <button type="button" id="scan-button" class="btn btn-secondary position-absolute" style="right: 10px; top: 32px;">Scan QR</button>
               </div>
-
-                <div class="mb-3">
-                  <label for="atribute" class="form-label">Berat Label <small style="color: red">*</small></label>
-                  <input type="number" name="b_label" id="aktual" class="form-control"  required>
-                </div>
+              
+               
               </div>
               <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="atribute" class="form-label">Keterangan</label>
-                  <input type="text" name="keterangan" id="aktual" class="form-control"  >
-                </div>
                 <div class="mb-3">
                   <label for="atribute" class="form-label">Berat Aktual <small style="color: red">*</small></label>
                   <input type="number" name="b_aktual" id="atribute" class="form-control"  required>
                 </div>
+                <div class="mb-3">
+                  <label for="atribute" class="form-label">Keterangan</label>
+                  <input type="text" name="keterangan" id="aktual" class="form-control"  >
+                </div>
+                
               </div>
             </div>
             

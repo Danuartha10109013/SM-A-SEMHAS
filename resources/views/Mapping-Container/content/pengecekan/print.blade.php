@@ -89,7 +89,7 @@
         }
     </script>
 </head>
-<body>
+<body id="printable-area">
     <div class="container">
         
         @foreach ($data as $d)
@@ -114,8 +114,8 @@
             <img style="width: 10%" src="{{asset('img/Logo_TML.png')}}" alt="Logo">
             <div>
                 <h3><strong>Mapping Muat & Ceklist Kontainer</strong></h3>
-                <p class="text-start"><b>No. GS: {{$d->no_gs}}</b></p>
             </div>
+            <p style="margin-top: -70px;margin-left: 90px">FM.WH.09.04</p>
         </div>
         
         
@@ -250,23 +250,21 @@
                             <th>Terpal</th>
                             <td>{{$d->terpal}}</td>
                         </tr>
-                    </table>
-                </div>
-
-
-                <div class="section">
-                    <table>
                         <tr>
-                            <th>Pegawai <small style="color: red">*</small></th>
-                            <td>{{$d->pegawai}}</td>
+                            <th colspan="2"><center>{{$d->no_gs}}</center></th>
                         </tr>
                     </table>
                 </div>
+
+
+                
 
                 <div class="section">
                     <table>
                         <tr>
                             <th>Catatan <small style="color: red">*</small></th>
+                        </tr>
+                        <tr>
                             <td>{{$d->catatan}}</td>
                         </tr>
                     </table>
@@ -482,7 +480,7 @@
                         <tr>
                             <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">Team Leader</td>
                             <td style="border: none; padding: 10px; text-align: center;"></td>
-                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">Checker</td>
+                            <td style="border: none; padding: 10px; text-align: center; vertical-align: middle;">Opr Forklift</td>
                         </tr>
                         <tr>
                             <td style="border: none; padding: 10px; text-align: center; vertical-align: middle; display: flex; justify-content: center; align-items: center;">
@@ -512,17 +510,29 @@
             
             
             <div class="col-md-3"></div>
-            <div class="text-center mt-4 no-print">
-                <a class="btn btn-primary print-btn" onclick="printPage()">Cetak</a>
-            </div>
+            <button class="no-print btn btn-success mb-2" id="copyBtn">Copy No GS</button>
+            <button class="no-print btn btn-primary" id="printBtn">Print</button>
+
+            <script>
+                // Function to copy $id to clipboard
+                document.getElementById('copyBtn').onclick = function() {
+                    var id = "{{ $id }}"; // Assuming you are passing $id from your Laravel controller to the view
+                    var textarea = document.createElement('textarea');
+                    textarea.value = id;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    alert('ID copied to clipboard!');
+                };
+
+                // Function to trigger the print window
+                document.getElementById('printBtn').onclick = function() {
+                    window.print();
+                };
+            </script>
+                        
         </div>
-        
-       
-        
-
-        
-
-        <!-- Print Button -->
         
     </div>
 </body>

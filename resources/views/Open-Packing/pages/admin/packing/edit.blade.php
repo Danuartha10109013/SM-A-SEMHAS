@@ -23,6 +23,7 @@
             @method('PUT')
             <div class="mb-3">
                 <input type="text" name="id" id="atribute" class="form-control" value="{{$data->id}}" hidden>
+                <input type="text" name="scanner" id="scanner" class="form-control" value="{{Auth::user()->id}}" hidden>
             </div>
             <div class="mb-3">
                 <label for="atribute" class="form-label">No. GM</label>

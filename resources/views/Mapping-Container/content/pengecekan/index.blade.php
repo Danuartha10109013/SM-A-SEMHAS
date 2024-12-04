@@ -300,8 +300,8 @@
                             <span class="input-group-text" id="basic-addon41">Fumigasi</span>
                             <select class="form-select @error('fumigasi') is-invalid @enderror" name="fumigasi" aria-label="Fumigasi">
                                 <option value="" {{ old('fumigasi',$p->fumigasi) == '' ? 'selected' : '' }} >-- Pilih Kondisi Fumigasi --</option>
-                                <option value="iya" {{ old('fumigasi',$p->fumigasi) == 'iya' ? 'selected' : '' }}>Iya</option>
-                                <option value="tidak" {{ old('fumigasi',$p->fumigasi) == 'tidak' ? 'selected' : '' }}>Tidak</option>
+                                <option value="sudah" {{ old('fumigasi',$p->fumigasi) == 'sudah' ? 'selected' : '' }}>Sudah</option>
+                                <option value="belum" {{ old('fumigasi',$p->fumigasi) == 'belum' ? 'selected' : '' }}>Belum</option>
                             </select>
                             @error('fumigasi')
                                 <div class="invalid-feedback">
@@ -412,7 +412,9 @@
                             aria-label="pegawai"
                             aria-describedby="basic-addon41" type="text" name="pegawai" id="team" class="form-control" required>
                               <option value="" {{old('pegawai',$p->pegawai) == '' ? 'selected' : ''}}  >--Pilih Shift Leader--</option>
-                              <option value="Danu" {{old('pegawai',$p->pegawai) == 'Danu' ? 'selected' : ''}}>Danu</option>
+                              <option value="Panggah S" {{old('pegawai',$p->pegawai) == 'Panggah S' ? 'selected' : ''}}>Panggah S</option>
+                              <option value="Michael" {{old('pegawai',$p->pegawai) == 'Michael' ? 'selected' : ''}}>Michael</option>
+                              <option value="Wahyu Ricci" {{old('pegawai',$p->pegawai) == 'Wahyu Ricci' ? 'selected' : ''}}>Wahyu Ricci</option>
                               <option value="Riyan H" {{old('pegawai',$p->pegawai) == 'Riyan H' ? 'selected' : ''}}>Riyan H</option>
                               <option value="Freddy" {{old('pegawai',$p->pegawai) == 'Freddy' ? 'selected' : ''}}>Freddy</option>
                               <option value="Dika" {{old('pegawai',$p->pegawai) == 'Dika' ? 'selected' : ''}}>Dika</option>

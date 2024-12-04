@@ -23,8 +23,9 @@
             <p>No GM : {{$gm}}</p>
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
-                <a href="{{ Auth::user()->role == 0 ? route('Open-Packing.admin.packing.add.gm',$gm) : route('Open-Packing.pegawai.packing.add') }}" 
-                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Product</a>
+
+                {{-- <a href="{{ Auth::user()->role == 0 ? route('Open-Packing.admin.packing.add.gm',$gm) : route('Open-Packing.pegawai.packing.add') }}" 
+                   class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan Product</a> --}}
                 {{-- <a href="{{ route('Form-Check.admin.crane.export') }}" 
                    class="badge badge-gradient-success" style="text-decoration: none; font-size: 15px">Export Excel</a> --}}
             </div>

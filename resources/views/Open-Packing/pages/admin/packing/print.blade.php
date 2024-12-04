@@ -159,6 +159,7 @@
     </tbody>
 </table>
 <div style="position: space between">
+    
     <P style="text-align: left"> Shfit Leader : {{$leader}}</P>
     <p style="text-align: right">Tanggal: {{$date->format('d/m/Y')}}</p>
 </div>

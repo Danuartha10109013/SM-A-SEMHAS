@@ -17,6 +17,7 @@ class MappingController extends Controller
         $data = Shipment::where('id',$id)->get();
         $same = Shipment::where('id',$id)->value('no_gs');
         $tare = Shipment::where('id',$id)->value('tare');
+        // dd($tare);
         $coil = Coil::where('no_gs', $same)->get();
         $tonase = Coil::where('no_gs', $same)->sum('berat_produk');
         $pengecekan = Pengecekan::where('no_gs', $same)->get();
@@ -64,6 +65,7 @@ class MappingController extends Controller
         'catatan' => 'nullable|string',
         'no_gs' => 'required|string',
         'pegawai' => 'nullable|string',
+        'ekspedisi' => 'nullable|string',
         'a1' => 'nullable|string|max:255',
         'a2' => 'nullable|string|max:255',
         'a3' => 'nullable|string|max:255',
@@ -107,28 +109,49 @@ class MappingController extends Controller
         'c1_eye', 'c2_eye', 'c3_eye', 'c4_eye', 'c5_eye'
     ];
     // dd($request->all());
+    $pengecekan = Pengecekan::where('no_gs', $no_gs)->firstOrFail();
+// Mengecek apakah ada input tanda tangan dan data tidak kosong
+if ($request->has('signature') && !empty($request->input('signature'))) {
+    // Jika ada data tanda tangan baru, simpan gambar tanda tangan yang baru
+    $signatureData = $request->input('signature');
+    $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
+    $signatureData = base64_decode($signatureData);
 
-    if ($request->has('signature')) {
-        $signatureData = $request->input('signature');
-        $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
-        $signatureData = base64_decode($signatureData);
+    // Menentukan nama file berdasarkan waktu
+    $signatureFileName = 'signature_' . time() . '.png';
+    Storage::disk('public')->put('signatures/' . $signatureFileName, $signatureData);
 
-        $signatureFileName = 'signature_' . time() . '.png';
-        Storage::disk('public')->put('signatures/' . $signatureFileName, $signatureData);
-
-        $validatedData['signature'] = 'storage/signatures/' . $signatureFileName;
+    // Menyimpan path file tanda tangan baru
+    $validatedData['signature'] = 'storage/signatures/' . $signatureFileName;
+} else {
+    // Jika tidak ada tanda tangan baru, pertahankan tanda tangan yang lama
+    if ($pengecekan->signature) {
+        // Jika tanda tangan sudah ada, tidak mengubah apa-apa
+        $validatedData['signature'] = $pengecekan->signature;
     }
-    if ($request->has('signature1')) {
-        $signatureData1 = $request->input('signature1');
-        $signatureData1 = str_replace('data:image/png;base64,', '', $signatureData1);
-        $signatureData1 = base64_decode($signatureData1);
+}
 
-        $signatureFileName1 = 'signature_' . time() . '.png';
-        Storage::disk('public')->put('signatures/1/' . $signatureFileName1, $signatureData1);
+if ($request->has('signature1') && !empty($request->input('signature1'))) {
+    // Jika ada data tanda tangan baru untuk signature1, simpan gambar tanda tangan yang baru
+    $signatureData1 = $request->input('signature1');
+    $signatureData1 = str_replace('data:image/png;base64,', '', $signatureData1);
+    $signatureData1 = base64_decode($signatureData1);
 
-        $validatedData['signature1'] = 'storage/signatures/1/' . $signatureFileName1;
+    // Menentukan nama file berdasarkan waktu
+    $signatureFileName1 = 'signature1_' . time() . '.png';
+    Storage::disk('public')->put('signatures/1/' . $signatureFileName1, $signatureData1);
+
+    // Menyimpan path file tanda tangan baru
+    $validatedData['signature1'] = 'storage/signatures/1/' . $signatureFileName1;
+} else {
+    // Jika tidak ada tanda tangan baru, pertahankan tanda tangan yang lama
+    if ($pengecekan->signature1) {
+        // Jika tanda tangan sudah ada, tidak mengubah apa-apa
+        $validatedData['signature1'] = $pengecekan->signature1;
     }
+}
 
+    
 
     foreach ($fields as $field) {
         if (!array_key_exists($field, $validatedData)) {
@@ -137,7 +160,6 @@ class MappingController extends Controller
     }
 
     // Update data di model Pengecekan
-    $pengecekan = Pengecekan::where('no_gs', $no_gs)->firstOrFail();
     $pengecekan->update($validatedData);
 
     // Update data di model MapCoil

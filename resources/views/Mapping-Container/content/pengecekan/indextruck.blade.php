@@ -115,7 +115,7 @@ Form Pengecekan ||
                                 placeholder="Ketikan Kota / Negara tujuan"
                                 aria-label="Kota / Negara"
                                 aria-describedby="basic-addon41"
-                                value="{{$p->kota_negara }}" />
+                                value="-" />
                             @error('kota_negara')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -128,10 +128,8 @@ Form Pengecekan ||
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon41">Lantai</span>
                             <select class="form-select @error('lantai') is-invalid @enderror" name="lantai" aria-label="Floor Rating">
-                                <option value="" {{ old('lantai', $p->lantai) == '' ? 'selected' : '' }}>-- Pilih Kondisi Lantai --</option>
-                                <option value="bagus" {{ old('lantai', $p->lantai) == 'bagus' ? 'selected' : '' }}>Bagus</option>
-                                <option value="kurang_bagus" {{ old('lantai', $p->lantai) == 'kurang_bagus' ? 'selected' : '' }}>Kurang Bagus</option>
-                                <option value="jelek" {{ old('lantai', $p->lantai) == 'jelek' ? 'selected' : '' }}>Jelek</option>
+                                <option value="-" {{ old('lantai', $p->lantai) == '' ? 'selected' : '' }}>-- - --</option>
+             
                             </select>
                             @error('lantai')
                                 <div class="invalid-feedback">
@@ -143,10 +141,8 @@ Form Pengecekan ||
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon41">Dinding</span>
                             <select class="form-select @error('dinding') is-invalid @enderror" name="dinding" aria-label="Floor Rating">
-                                <option value="" {{ old('dinding', $p->dinding) == '' ? 'selected' : '' }}>-- Pilih Kondisi Dinding --</option>
-                                <option value="bagus" {{ old('dinding', $p->dinding) == 'bagus' ? 'selected' : '' }}>Bagus</option>
-                                <option value="kurang_bagus" {{ old('dinding', $p->dinding) == 'kurang_bagus' ? 'selected' : '' }}>Kurang Bagus</option>
-                                <option value="jelek" {{ old('dinding', $p->dinding) == 'jelek' ? 'selected' : '' }}>Jelek</option>
+                                <option value="-" {{ old('dinding', $p->dinding) == '' ? 'selected' : '' }}>-- - --</option>
+
                             </select>
                             @error('dinding')
                                 <div class="invalid-feedback">
@@ -158,9 +154,8 @@ Form Pengecekan ||
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon41">Pengunci Kontainer</span>
                             <select class="form-select @error('pengunci_kontainer') is-invalid @enderror" name="pengunci_kontainer" aria-label="Pengunci Kontainer">
-                                <option value="" {{ old('pengunci_kontainer', $p->pengunci_kontainer) == '' ? 'selected' : '' }} >-- Pilih Tipe Pengunci --</option>
-                                <option value="4_pengunci" {{ old('pengunci_kontainer', $p->pengunci_kontainer) == '4_pengunci' ? 'selected' : '' }}>4 Pengunci</option>
-                                <option value="<4_pengunci" {{ old('pengunci_kontainer', $p->pengunci_kontainer) == '<4_pengunci' ? 'selected' : '' }}>< 4 Pengunci</option>
+                                <option value="-" {{ old('pengunci_kontainer', $p->pengunci_kontainer) == '' ? 'selected' : '' }} >-- - --</option>
+
                             </select>
                             @error('pengunci_kontainer')
                                 <div class="invalid-feedback">
@@ -171,16 +166,10 @@ Form Pengecekan ||
 
                         <div class="card demo-vertical-spacing demo-only-element">
                             <div class="row">
-                                <input type="hidden" name="sapu" value="">
                                 <div class="col-md-4">
                                     <span>Disapu</span>
                                     <div class="form-check">
-                                        <input class="form-check-input @error('sapu') is-invalid @enderror" type="radio" id="sapuSudah" name="sapu" value="sudah" {{ old('sapu',$p->sapu) == 'sudah' ? 'checked' : '' }} >
-                                        <label class="form-check-label" for="sapuSudah">Sudah</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('sapu') is-invalid @enderror" type="radio" id="sapuBelum" name="sapu" value="belum" {{ old('sapu',$p->sapu) == 'belum' ? 'checked' : '' }} >
-                                        <label class="form-check-label" for="sapuBelum">Belum</label>
+                                        <input type="text" name="sapu" value="-" hidden>
                                     </div>
                                     @error('sapu')
                                         <div class="invalid-feedback">
@@ -194,12 +183,7 @@ Form Pengecekan ||
                                     <input type="hidden" name="vacum" value="">
                                     <span>Vacum</span>
                                     <div class="form-check">
-                                        <input class="form-check-input @error('vacum') is-invalid @enderror" type="radio" id="vacumSudah" name="vacum" value="sudah" {{ old('vacum',$p->vacum) == 'sudah' ? 'checked' : '' }} >
-                                        <label class="form-check-label" for="vacumSudah">Sudah</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('vacum') is-invalid @enderror" type="radio" id="vacumBelum" name="vacum" value="belum" {{ old('vacum',$p->vacum) == 'belum' ? 'checked' : '' }} >
-                                        <label class="form-check-label" for="vacumBelum">Belum</label>
+                                        <input type="text" name="vacum" value="-" hidden>
                                     </div>
                                     @error('vacum')
                                         <div class="invalid-feedback">
@@ -211,12 +195,7 @@ Form Pengecekan ||
                                     <input type="hidden" name="disemprot" value="">
                                     <span>Disemprot</span>
                                     <div class="form-check">
-                                        <input class="form-check-input @error('disemprot') is-invalid @enderror" type="radio" id="disemprotSudah" name="disemprot" value="sudah" {{ old('disemprot',$p->disemprot) == 'sudah' ? 'checked' : '' }} >
-                                        <label class="form-check-label" for="disemprotSudah">Sudah</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input @error('disemprot') is-invalid @enderror" type="radio" id="disemprotBelum" name="disemprot" value="belum" {{ old('disemprot',$p->disemprot) == 'belum' ? 'checked' : '' }} >
-                                        <label class="form-check-label" for="disemprotBelum">Belum</label>
+                                        <input type="text" name="disemprot" value="-" hidden>
                                     </div>
                                     @error('disemprot')
                                         <div class="invalid-feedback">
@@ -236,7 +215,7 @@ Form Pengecekan ||
                                 placeholder="0"
                                 aria-label="Choke"
                                 aria-describedby="basic-addon41"
-                                value="{{ $p->choke }}" />
+                                value="0" />
                             @error('choke')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -253,7 +232,7 @@ Form Pengecekan ||
                                 placeholder="0"
                                 aria-label="Stopper"
                                 aria-describedby="basic-addon41"
-                                value="{{ $p->stopper }}" />
+                                value="0" />
                             @error('stopper')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -270,7 +249,7 @@ Form Pengecekan ||
                                 placeholder="0"
                                 aria-label="Sling"
                                 aria-describedby="basic-addon41"
-                                value="{{ $p->sling }}" />
+                                value="0" />
                             @error('sling')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -287,7 +266,7 @@ Form Pengecekan ||
                                 placeholder="0"
                                 aria-label="Silica Gel"
                                 aria-describedby="basic-addon41"
-                                value="{{ $p->silica_gel }}" />
+                                value="0" />
                             @error('silica_gel')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -298,9 +277,8 @@ Form Pengecekan ||
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon41">Fumigasi</span>
                             <select class="form-select @error('fumigasi') is-invalid @enderror" name="fumigasi" aria-label="Fumigasi">
-                                <option value="" {{ old('fumigasi',$p->fumigasi) == '' ? 'selected' : '' }} >-- Pilih Kondisi Fumigasi --</option>
-                                <option value="sudah" {{ old('fumigasi',$p->fumigasi) == 'sudah' ? 'selected' : '' }}>Sudah</option>
-                                <option value="belum" {{ old('fumigasi',$p->fumigasi) == 'belum' ? 'selected' : '' }}>Belum</option>
+                                <option value="-" {{ old('fumigasi',$p->fumigasi) == '' ? 'selected' : '' }} >-- - --</option>
+
                             </select>
                             @error('fumigasi')
                                 <div class="invalid-feedback">
@@ -676,7 +654,6 @@ Form Pengecekan ||
         </div>
         @endforeach
         
-
         <div class="row">
             <!-- Pengemudi Section -->
             <div class="col-md-6">
@@ -686,33 +663,33 @@ Form Pengecekan ||
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-12">
-                        @if ($p->signature)
-                        <img src="{{asset($p->signature)}}" alt="">
-                        @else   
                         <label for="signature" class="form-label">Tanda Tangan TL</label>
                         <canvas id="signature-pad" style="border: 1px solid #ccc; width: 100%; height: 200px;"></canvas>
                         <button id="clear" type="button" class="btn btn-secondary mt-2">Clear</button>
                         <input type="hidden" name="signature" id="signature">
+                        <!-- Menampilkan tanda tangan yang ada jika tersedia -->
+                        @if ($p->signature)
+                            <img src="{{ asset($p->signature) }}" alt="Tanda Tangan Team Leader" class="mt-2" />
                         @endif
                     </div>
                 </div>
             </div>
-
+        
             <!-- Security Section -->
             <div class="col-md-6">
                 <div class="form-group mb-3">
-                    <label for="security">Checker</label>
-                    <input type="text" name="checker" class="form-control" value="{{Auth::user()->name}}" readonly>
+                    <label for="security">OPR Forklift</label>
+                    <input type="text" name="checker" class="form-control" value="{{$p->checker}}">
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-12">
-                        @if ($p->signature1)
-                        <img src="{{asset($p->signature1)}}" alt="">
-                        @else   
-                        <label for="signature1" class="form-label">Tanda Tangan Checker</label>
+                        <label for="signature1" class="form-label">Tanda Tangan Opr Forklift</label>
                         <canvas id="signature-pad1" style="border: 1px solid #ccc; width: 100%; height: 200px;"></canvas>
                         <button id="clear1" type="button" class="btn btn-secondary mt-2">Clear</button>
                         <input type="hidden" name="signature1" id="signature1">
+                        <!-- Menampilkan tanda tangan yang ada jika tersedia -->
+                        @if ($p->signature1)
+                            <img src="{{ asset($p->signature1) }}" alt="Tanda Tangan Opr Forklift" class="mt-2" />
                         @endif
                     </div>
                 </div>
@@ -735,7 +712,7 @@ Form Pengecekan ||
                     // Resize the canvas dynamically
                     function resizeCanvas() {
                         const ratio = Math.max(window.devicePixelRatio || 1, 1);
-                        const container = canvas.parentElement; // Use parent container for width
+                        const container = canvas.parentElement;
                         const oldData = signaturePad.toData(); // Save the signature data
         
                         canvas.width = container.offsetWidth * ratio;
@@ -767,24 +744,17 @@ Form Pengecekan ||
         
                 // Handle form submission
                 document.querySelector('#sik-form').addEventListener('submit', (e) => {
-                    let valid = true;
-        
-                    if (tlSignature.signaturePad.isEmpty()) {
-                        alert("Tanda tangan Team Leader diperlukan!");
-                        valid = false;
-                    } else {
+                    // Only set value if signature is not empty
+                    if (!tlSignature.signaturePad.isEmpty()) {
                         tlSignature.hiddenInput.value = tlSignature.signaturePad.toDataURL();
-                    }
-        
-                    if (checkerSignature.signaturePad.isEmpty()) {
-                        alert("Tanda tangan Checker diperlukan!");
-                        valid = false;
                     } else {
-                        checkerSignature.hiddenInput.value = checkerSignature.signaturePad.toDataURL();
+                        tlSignature.hiddenInput.value = ''; // Clear input if empty
                     }
         
-                    if (!valid) {
-                        e.preventDefault(); // Prevent form submission if signatures are missing
+                    if (!checkerSignature.signaturePad.isEmpty()) {
+                        checkerSignature.hiddenInput.value = checkerSignature.signaturePad.toDataURL();
+                    } else {
+                        checkerSignature.hiddenInput.value = ''; // Clear input if empty
                     }
                 });
             });

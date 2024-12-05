@@ -50,10 +50,10 @@
                     <i class="ri-home-4-line"></i><span>Dashboard</span>
                 </a>
             </li>
-            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Acuan Packing</span></li>
+            <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Rekap</span></li>
             <li class="{{ request()->routeIs('L-08.admin.rekap') ? 'active' : '' }}">
                 <a href="{{route('L-08.admin.rekap')}}" class="iq-waves-effect" aria-expanded="false">
-                    <i class="mdi mdi-target-variant"></i><span>Acuan Packing</span>
+                    <i class="mdi mdi-target-variant"></i><span>Rekap Packing</span>
                 </a>
             </li>
             <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Packing Coil</span></li>

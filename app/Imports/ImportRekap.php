@@ -10,6 +10,12 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class ImportRekap implements ToModel
 {
     private $current = 0;
+    private $keterangan; // Declare the class property
+
+    public function __construct($keterangan)
+    {
+        $this->keterangan = $keterangan; // Assign the constructor value to the class property
+    }
 
     public function model(array $row)
     {
@@ -25,7 +31,7 @@ class ImportRekap implements ToModel
             return null; // Skip rows with empty 'attribute'
         }
 
-        // Check if the attribute already exists in the Coil table
+        // Check if the attribute already exists in the RekapM table
         $attributeExists = RekapM::where('attribute', $row[3])->exists();
         if ($attributeExists) {
             return null; // Skip rows where the attribute already exists
@@ -41,6 +47,7 @@ class ImportRekap implements ToModel
             'gross' => $row[6],
             'length' => $row[7],
             'type' => $row[8],
+            'keterangan' => $this->keterangan, // Use $this->keterangan to access the passed value
         ]);
     }
 }

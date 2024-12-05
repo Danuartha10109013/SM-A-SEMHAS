@@ -44,12 +44,13 @@ class RekapController extends Controller
     {
         // Validate the uploaded file
         $request->validate([
+            'keterangan' => 'nullable',
             'excel' => 'required|file|mimes:xlsx,xls|max:2048', // Ensure it's a valid Excel file with size limit
         ]);
     
         try {
             // Import the Excel file using the ImportRekap class
-            Excel::import(new ImportRekap, $request->file('excel'));
+            Excel::import(new ImportRekap($request->keterangan), $request->file('excel'));
     
             // Redirect back with a success message
             return redirect()->back()->with('success', 'Rekap has been successfully imported.');
@@ -83,7 +84,9 @@ class RekapController extends Controller
     // Execute the query and get the results
     $data = $query->get();
 
-    return view('L-08.pages.rekap.detail', compact('data', 'so'));
+    $keterangan = RekapM::where('no_so',$so)->value('keterangan');
+
+    return view('L-08.pages.rekap.detail', compact('data', 'so', 'keterangan'));
 }
 
     public function delete($so){
@@ -94,6 +97,32 @@ class RekapController extends Controller
         }
         return redirect()->back()->with('success', 'Data So Telah dihapus');
     }
+
+
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        // Validate the 'checked' field (ensuring it's either 0 or 1)
+        $request->validate([
+            'checked' => 'required|boolean',
+        ]);
+
+        // Find the record by ID
+        $rekap = RekapM::findOrFail($id);
+
+        // Update the value of the 'some_column' field based on the checkbox state
+        $rekap->checks = $request->input('checked');
+        
+        try {
+            $rekap->save(); // Save the updated record
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            // Catch any error that happens during the save and return a custom error message
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
 
 
 }

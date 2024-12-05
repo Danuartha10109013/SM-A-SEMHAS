@@ -14,6 +14,7 @@ class Pengecekan extends Model
             'awal_muat',
             'awal_muat1',
             'kota_negara',
+            'ekspedisi',
             'lantai',
             'dinding',
             'pengunci_kontainer',

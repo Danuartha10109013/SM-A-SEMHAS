@@ -66,6 +66,7 @@ class DashboardController extends Controller
             'kepada' => 'nullable|string',
             'alamat_pengirim' => 'nullable|string',
             'alamat_tujuan' => 'nullable|string',
+            'tare' => 'nullable|integer',
             ]
         );
 
@@ -98,6 +99,7 @@ class DashboardController extends Controller
         $coil = Coil::where('no_gs',$id)->delete();
         $pengecekan = MapCoil::where('no_gs',$id)->delete();
         $pengecekantruck = MapCoilTruck::where('no_gs',$id)->delete();
+        $cek = Pengecekan::where('no_gs',$id)->delete();
         return redirect()->back()->with('success','Shipment has been deleted');
     }
 

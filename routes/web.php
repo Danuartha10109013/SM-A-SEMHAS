@@ -689,7 +689,11 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/',[RekapController::class, 'index'])->name('rekap');
                 Route::post('/upload',[RekapController::class, 'upload'])->name('rekap.upload');
                 Route::get('/detail/{so}',[RekapController::class, 'detail'])->name('rekap.detail');
+                Route::put('/rekap/detail/{id}', [RekapController::class, 'update'])->name('rekap.detail.find');
                 Route::get('/delete/{so}',[RekapController::class, 'delete'])->name('rekap.delete');
+                // Route::get('/search', [PackingL08Controller::class, 'search'])->name('rekap.search');
+                Route::get('/search-attributes', [PackingL08Controller::class, 'searchAttributes'])->name('search.attributes');
+
             });
             
         });

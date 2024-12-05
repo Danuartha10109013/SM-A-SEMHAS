@@ -21,5 +21,7 @@ class RekapM extends Model
         'gross',
         'length',
         'type',
+        'keterangan',
+        'checks',
     ];
 }

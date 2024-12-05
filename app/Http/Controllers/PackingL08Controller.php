@@ -21,15 +21,15 @@ class PackingL08Controller extends Controller
     {
         // Validate incoming request data
         $request->validate([
-            'attribute' => 'required|string|max:255',
+            'attribute' => 'required|string|max:255', 
             'kondisi' => 'required|string|max:255',
             'group' => 'required|string|max:255',
             'layout' => 'required|string|max:255',
             'no_sales' => 'required|string|max:255',
-            'other_kondisi' => 'nullable|string|max:255',
-            'other_group' => 'nullable|string|max:255',
-            'other_layout' => 'nullable|string|max:255',
-            'user_id' => 'required|exists:users,id', // Ensure user exists
+            'other_kondisi' => 'nullable|string|max:255', // Only if 'kondisi' is 'other'
+            'other_group' => 'nullable|string|max:255', // Only if 'group' is 'other'
+            'other_layout' => 'nullable|string|max:255', // Only if 'layout' is 'other'
+            'user_id' => 'required|exists:users,id', // Ensure user exists in the system
         ]);
 
         // Determine the final values for 'kondisi', 'group', and 'layout'
@@ -37,7 +37,7 @@ class PackingL08Controller extends Controller
         $group = $request->group === 'other' ? $request->other_group : $request->group;
         $layout = $request->layout === 'other' ? $request->other_layout : $request->layout;
 
-        // Create new Damage record
+        // Create a new record in the 'PackingL08M' table
         $damage = new PackingL08M();
         $damage->attribute = $request->attribute;
         $damage->kondisi = $kondisi;
@@ -46,23 +46,32 @@ class PackingL08Controller extends Controller
         $damage->no_sales = $request->no_sales;
         $damage->user_id = $request->user_id;
 
-        $ids = RekapM::where('attribute',$request->attribute)->value('id');
-        $rekap = RekapM::find($ids);
-        $rekap->packing = 'YES';
-        $rekap->save();
-// dd($ids);
-        // Save to database
+        // Retrieve the corresponding RekapM record based on the 'attribute' field
+        $rekap = RekapM::where('attribute', $request->attribute)->first();
+
+        // If RekapM record is found, update it
+        if ($rekap) {
+            $rekap->packing = 'YES'; // Set packing to YES
+            $rekap->save(); // Save the changes to the RekapM record
+        } else {
+            // Optionally handle cases where the 'attribute' does not match a RekapM entry
+            // For example: log an error, or set default values
+            // Log::error("No RekapM record found for attribute: {$request->attribute}");
+        }
+
+        // Save the damage record to the database
         if ($damage->save()) {
-            if(Auth::user()->role == 0){
+            // Redirect to the appropriate dashboard based on user role
+            if (Auth::user()->role == 0) {
                 return redirect()->route('L-08.admin.dashboard')->with('success', 'Data has been successfully saved.');
-            }else{
+            } else {
                 return redirect()->route('L-08.pegawai.dashboard')->with('success', 'Data has been successfully saved.');
             }
         }
 
+        // If saving the damage record fails, redirect back with an error
         return redirect()->back()->with('error', 'Failed to save data. Please try again.');
     }
-
 
     public function update(Request $request, $id)
 {
@@ -133,4 +142,17 @@ class PackingL08Controller extends Controller
         // Export logic (assuming you're using Laravel Excel)
         return Excel::download(new PackingL08ExportExcel($data), 'packing_l_08_report.xlsx');
     }
+
+    public function searchAttributes(Request $request)
+    {
+        $query = $request->input('query');
+        
+        // Fetch attributes based on query
+        $rekapData = RekapM::where('attribute', 'like', "%$query%")
+            ->get(['attribute', 'layout', 'no_so']); // Only select necessary fields
+    
+        return response()->json($rekapData);
+    }
+    
+
 }

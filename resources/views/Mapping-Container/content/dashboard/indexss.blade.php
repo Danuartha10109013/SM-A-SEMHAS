@@ -51,10 +51,12 @@
               <td style="color: black" class="text-truncate">{{$c->no_seal}}</td>
               <td style="color: black" class="text-truncate">{{$c->no_mobil}}</td>
               <td>
-                 <a href="{{route('Mapping.admin.create-shipment',$c->no_gs)}}" class="btn btn-secondary">Lengkapi Data</a>
-                 <a href="{{route('Mapping.admin.coiling',$c->no_gs)}}" class="btn btn-success">Koil</a>
-                 <a href="{{route('Mapping.admin.show-shipment',$c->id)}}" class="btn btn-primary"><i class="ri-eye-line"></i> Mapping</a>
-                 <a href="{{route('Mapping.admin.delete-shipment',$c->no_gs)}}" class="btn btn-danger"><i class="ri-delete-bin-2-line"></i></a>
+                @if ($c->tare == null || $c->no_container == null || $c->tgl_gs == null || $c->no_mobil == null || $c->kepada == null)
+                <a href="{{route('Mapping.admin.create-shipment',$c->no_gs)}}" class="btn btn-secondary">Lengkapi Data</a>
+                @endif
+                <a href="{{route('Mapping.admin.coiling',$c->no_gs)}}" class="btn btn-success">Koil</a>
+                <a href="{{route('Mapping.admin.show-shipment',$c->id)}}" class="btn btn-primary"><i class="ri-eye-line"></i> Mapping</a>
+                <a href="{{route('Mapping.admin.delete-shipment',$c->no_gs)}}" class="btn btn-danger"><i class="ri-delete-bin-2-line"></i></a>
                 </td>
             </tr>
             @endforeach

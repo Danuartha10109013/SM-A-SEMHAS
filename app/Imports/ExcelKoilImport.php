@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 class ExcelKoilImport implements ToCollection, ToModel
 {
     private $current = 0;
-    private $isFirstProcessed = false; // To track the first data row
+    private $lastProcessedNoGs = null; // To track the last processed no_gs
 
     /**
     * @param Collection $collection
@@ -33,7 +33,7 @@ class ExcelKoilImport implements ToCollection, ToModel
             $count = Coil::where('kode_produk', $row[1])->count();
             
             if ($count === 0) {
-                $coil = new Coil;
+                $coil = new Coil();
                 $coil->kode_produk = $row[1];
                 $coil->nama_produk = $row[0];
                 $coil->berat_produk = $row[2];
@@ -44,25 +44,26 @@ class ExcelKoilImport implements ToCollection, ToModel
                 $coil->save();
             }
 
-            // Process only for the first data row
-            if (!$this->isFirstProcessed) {
+            // Process new data when no_gs changes
+            $currentNoGs = $row[3];
+            if ($currentNoGs !== $this->lastProcessedNoGs) {
                 $shipment = new Shipment();
-                $shipment->no_gs = $row[3]; 
+                $shipment->no_gs = $currentNoGs; 
                 $shipment->save();
 
                 $pengecekan = new Pengecekan();
-                $pengecekan->no_gs = $row[3]; 
+                $pengecekan->no_gs = $currentNoGs; 
                 $pengecekan->save();
 
                 $mapcoil = new MapCoil();
-                $mapcoil->no_gs = $row[3]; 
+                $mapcoil->no_gs = $currentNoGs; 
                 $mapcoil->save();
 
                 $mapcoilTruck = new MapCoilTruck();
-                $mapcoilTruck->no_gs = $row[3]; 
+                $mapcoilTruck->no_gs = $currentNoGs; 
                 $mapcoilTruck->save();
 
-                $this->isFirstProcessed = true; // Mark the first row as processed
+                $this->lastProcessedNoGs = $currentNoGs; // Update last processed no_gs
             }
         }
     }

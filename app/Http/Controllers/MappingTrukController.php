@@ -40,7 +40,7 @@ class MappingTrukController extends Controller
         'lantai' => 'nullable|string',
         'dinding' => 'nullable|string',
         'pengunci_kontainer' => 'nullable|string',
-        'sapu' => 'nullable|in:sudah,belum',
+        'sapu' => 'nullable|string',
         'vacum' => 'nullable|string',
         'disemprot' => 'nullable|string',
         'choke' => 'nullable|string',
@@ -85,25 +85,46 @@ class MappingTrukController extends Controller
    
     ];
 
-    if ($request->has('signature')) {
+    $pengecekan = Pengecekan::where('no_gs', $no_gs)->firstOrFail();
+    // Mengecek apakah ada input tanda tangan dan data tidak kosong
+    if ($request->has('signature') && !empty($request->input('signature'))) {
+        // Jika ada data tanda tangan baru, simpan gambar tanda tangan yang baru
         $signatureData = $request->input('signature');
         $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
         $signatureData = base64_decode($signatureData);
 
+        // Menentukan nama file berdasarkan waktu
         $signatureFileName = 'signature_' . time() . '.png';
         Storage::disk('public')->put('signatures/' . $signatureFileName, $signatureData);
 
+        // Menyimpan path file tanda tangan baru
         $validatedData['signature'] = 'storage/signatures/' . $signatureFileName;
+    } else {
+        // Jika tidak ada tanda tangan baru, pertahankan tanda tangan yang lama
+        if ($pengecekan->signature) {
+            // Jika tanda tangan sudah ada, tidak mengubah apa-apa
+            $validatedData['signature'] = $pengecekan->signature;
+        }
     }
-    if ($request->has('signature1')) {
+
+    if ($request->has('signature1') && !empty($request->input('signature1'))) {
+        // Jika ada data tanda tangan baru untuk signature1, simpan gambar tanda tangan yang baru
         $signatureData1 = $request->input('signature1');
         $signatureData1 = str_replace('data:image/png;base64,', '', $signatureData1);
         $signatureData1 = base64_decode($signatureData1);
 
-        $signatureFileName1 = 'signature_' . time() . '.png';
+        // Menentukan nama file berdasarkan waktu
+        $signatureFileName1 = 'signature1_' . time() . '.png';
         Storage::disk('public')->put('signatures/1/' . $signatureFileName1, $signatureData1);
 
+        // Menyimpan path file tanda tangan baru
         $validatedData['signature1'] = 'storage/signatures/1/' . $signatureFileName1;
+    } else {
+        // Jika tidak ada tanda tangan baru, pertahankan tanda tangan yang lama
+        if ($pengecekan->signature1) {
+            // Jika tanda tangan sudah ada, tidak mengubah apa-apa
+            $validatedData['signature1'] = $pengecekan->signature1;
+        }
     }
 
     foreach ($fields as $field) {
@@ -113,7 +134,6 @@ class MappingTrukController extends Controller
     }
 
     // Update data di model Pengecekan
-    $pengecekan = Pengecekan::where('no_gs', $no_gs)->firstOrFail();
     $pengecekan->update($validatedData);
 
     // Update data di model MapCoil

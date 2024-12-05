@@ -58,7 +58,11 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="excelFile" class="form-label">Select Excel File</label>
-                            <input type="file" class="form-control" id="excelFile" name="excel" accept=".xlsx, .xls">
+                            <input type="file" class="form-control" id="excelFile" name="excel" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="excelFile" class="form-label">Keterangan</label>
+                            <textarea type="text" class="form-control" id="excelFile" name="keterangan"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

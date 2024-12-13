@@ -471,6 +471,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/store/gm',[OpenPackController::class,'store_gm'])->name('packing.store.gm');
                 Route::get('/show/{gm}',[OpenPackController::class, 'show'])->name('packing.show');
                 Route::get('/edit/{id}',[OpenPackController::class, 'edit'])->name('packing.edit');
+                Route::put('/checks/{gm}',[OpenPackController::class, 'checks'])->name('packing.checks');
                 Route::get('/update',[OpenPackController::class, 'update'])->name('packing.update');
                 Route::get('/delete/{id}',[OpenPackController::class, 'delete'])->name('packing.delete');
                 Route::get('/delete/gm/{id}',[OpenPackController::class, 'delete_gm'])->name('packing.delete.gm');
@@ -491,6 +492,7 @@ Route::middleware([AutoLogout::class])->group(function () {
             });
         });
     });
+
     // Supply
     Route::group(['prefix' => 'Supply', 'middleware' => ['Supply'], 'as' => 'Supply.'], function () {
 
@@ -540,6 +542,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::post('/update',[PListController::class, 'update'])->name('list.update');
                 Route::get('/delete/{id}',[PListController::class, 'delete'])->name('list.delete');
                 Route::get('/print/{gm}',[PListController::class, 'print'])->name('list.print');
+                Route::delete('/clearall',[PListController::class, 'clearall'])->name('list.clearall');
 
             });
             Route::prefix('database')->group(function () {

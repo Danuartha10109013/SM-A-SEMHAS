@@ -86,6 +86,8 @@
                                 JENIS <small style="color: red;">*</small><br class="mb-3">
                                 <label><input class="mt-3" type="radio" name="jenis" value="Alumunium Ingot"> Alumunium Ingot</label><br>
                                 <label><input type="radio" name="jenis" value="Zinc Ingot"> Zinc Ingot</label><br>
+                                <label><input type="radio" id="otjenis"> Other: </label>
+                                       <input type="text" name="jenis" id="otText" disabled><br>
                             </div>
                         </div>
                         
@@ -94,6 +96,10 @@
                 <script>
                     document.getElementById('otherCheckbox').addEventListener('change', function() {
                         var otherText = document.getElementById('otherText');
+                        otherText.disabled = !this.checked;
+                    });
+                    document.getElementById('otjenis').addEventListener('change', function() {
+                        var otherText = document.getElementById('otText');
                         otherText.disabled = !this.checked;
                     });
                 </script>

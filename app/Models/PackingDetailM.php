@@ -23,6 +23,6 @@ class PackingDetailM extends Model
         'operator',
         'shift',
         'shift_leader',
-
+        'checks',
     ];
 }

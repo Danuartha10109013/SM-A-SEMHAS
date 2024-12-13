@@ -44,6 +44,15 @@
                     <option value="other">Other</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="kondisi" class="form-label">Group</label>
+                <select name="group" id="kondisi" class="form-control" required>
+                    <option value="" selected disabled>-- Select Group --</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="LOKAL">LOKAL</option>
+                </select>
+            </div>
 
             <div class="mb-3">
                 <label for="layout" class="form-label">Layout Kontainer</label>

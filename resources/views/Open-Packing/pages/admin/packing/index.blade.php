@@ -171,6 +171,7 @@
                   <th> Action </th>
                   <th> Status </th>
                   <th> Total </th>
+                  <th> Updated Stock </th>
                 </tr>
               </thead>
               <tbody>
@@ -218,10 +219,85 @@
                     <td>
                       @php
                       $total = \App\Models\PackingDetailM::where('gm',$d->gm)->count();
+                      $chec = \App\Models\PackingDetailM::where('gm', $d->gm)
+                              ->distinct()
+                              ->pluck('checks')
+                              ->first(); // Get the first value (or use another method to get a single value if needed)
+
+
                       @endphp
                       
                       {{$total}}
                      </td>
+                     <td class="align-middle text-center">
+                      <form action="{{ route('Open-Packing.admin.packing.checks', $d->gm) }}" method="POST" class="update-form">
+                          @csrf
+                          @method('PUT')
+                          {{-- Debugging nilai $d->checks --}}
+                          @if ($chec == 0 || $chec == null) 
+                            <p class="text-danger">Belum</p>
+                            <input type="checkbox" class="check-input" data-id="{{ $d->gm }}" @checked($chec && $chec != 0) />
+                            @else
+                            <p class="text-success">Sudah</p>
+                          @endif
+
+                      </form>
+                  </td>
+                  
+                  
+                    <script>
+                      document.addEventListener('DOMContentLoaded', function() {
+                        const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+                        if (!csrfMeta) {
+                            console.error('CSRF token meta tag is missing.');
+                            return;
+                        }
+                        const csrfToken = csrfMeta.getAttribute('content');
+
+                        // Attach change event listener to all checkboxes
+                        document.querySelectorAll('.check-input').forEach(function(checkbox) {
+                            checkbox.addEventListener('change', function() {
+                                const form = this.closest('form');
+                                const checked = this.checked ? 1 : 0;
+
+                                // Prepare the payload
+                                const payload = {
+                                    _token: csrfToken,
+                                    _method: 'PUT',
+                                    checked: checked
+                                };
+
+                                // Send AJAX request to update the server
+                                fetch(form.action, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': csrfToken
+                                    },
+                                    body: JSON.stringify(payload)
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Failed to save changes.');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data.success) {
+                                        console.log('Checkbox state updated successfully.');
+                                    } else {
+                                        console.error('Error updating checkbox state:', data.message || 'Unknown error');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                            });
+                        });
+                    });
+
+                    </script>
+                  
 
                     
                   </tr>

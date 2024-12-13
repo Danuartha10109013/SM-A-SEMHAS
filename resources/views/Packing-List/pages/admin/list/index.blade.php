@@ -85,6 +85,47 @@
               </tbody>
             </table>
           </div>
+          <div class="container">
+            <h2>Clear All Data?</h2>
+            <p>Are you sure you want to clear all data? This action cannot be undone.</p>
+        
+            <div class="alert alert-warning">
+                <strong>Warning:</strong> This will remove all records permanently!
+            </div>
+        
+            <!-- Button to trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#clearDataModal">
+                Yes, Clear All Data
+            </button>
+        
+            <!-- Modal -->
+            <div class="modal fade" id="clearDataModal" tabindex="-1" aria-labelledby="clearDataModalLabel" aria-hidden="true" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="clearDataModalLabel">Confirm Clear All Data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to clear all data? This action cannot be undone.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <form action="{{route('Packing-List.admin.list.clearall')}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Yes, Clear All Data</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          
+          <!-- Bootstrap CSS and JS -->
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+          
         </div>
       </div>
     </div>

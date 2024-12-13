@@ -158,6 +158,13 @@ class PListController extends Controller
         return view('Packing-List.pages.admin.list.print',compact('data','date'));
     }
 
+    public function clearall(){
+        // This will delete all records from the DatabM table
+        ScanM::truncate();
+
+        return redirect()->back()->with('success', 'All Data has been cleared');
+    }
+
     public function db(Request $request)
     {
         // Get the search query from the request
@@ -246,9 +253,12 @@ class PListController extends Controller
 
     public function db_clear()
     {
-        // This will delete all records from the DatabM table
-        DatabM::truncate();
-
+        $data = DatabM::where('storage_bin','WH-L03-BJ L1-L10-CBT (3-3-3)')->get();
+        foreach ($data as $d){
+            $same = DatabM::where('id',$d->id)->value('id');
+            $gm = DatabM::find($same);
+            $gm->delete();
+        }
         return redirect()->route('Packing-List.admin.database')->with('success', 'All Data has been cleared');
     }
 

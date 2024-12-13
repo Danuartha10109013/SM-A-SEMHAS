@@ -6,6 +6,7 @@ use App\Exports\OpenPackExportExcel;
 use App\Imports\ImportGM;
 use App\Models\PackingDetailM;
 use App\Models\PackingM;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,8 +40,9 @@ class OpenPackController extends Controller
             $query->where('gm', 'like', '%' . $request->search . '%')
             ;
         }
-        // Ambil data unik 'gm' dengan tanggal pertama yang ditemukan
         $data = $query->select('gm', DB::raw('MIN(created_at) as created_at'))
+        ->whereMonth('created_at', Carbon::now()->month)  // Filter for the current month
+        ->whereYear('created_at', Carbon::now()->year)    // Filter for the current year
         ->groupBy('gm')
         ->get();
 
@@ -130,6 +132,31 @@ class OpenPackController extends Controller
         return view('Open-Packing.pages.admin.packing.edit',compact('data'));
     }
 
+    public function checks(Request $request, $gm)
+    {
+        // Validate incoming request
+        $request->validate([
+            'checked' => 'required|boolean', // Ensure 'checked' is a boolean value
+        ]);
+    
+        // Find the record by gm
+        $data = PackingDetailM::where('gm', $gm)->get();
+    
+        if (!$data) {
+            return response()->json(['success' => false, 'message' => 'Record not found.'], 404);
+        }
+    
+        // Update the 'checks' field
+        foreach($data as $d){
+
+            $d->checks = $request->checked;
+            $d->save();
+        }
+    
+        return response()->json(['success' => true, 'message' => 'Checkbox state updated successfully.']);
+    }
+    
+
     public function update(Request $request){
         $request->validate([
             'gm' => 'nullable|string|max:255',
@@ -180,7 +207,7 @@ class OpenPackController extends Controller
     public function print($gm){
         $data = PackingDetailM::where('gm', $gm)->get();
         $cc = PackingDetailM::where('gm',$gm)->value('id');
-        $detail = PackingDetailM::where('id',$cc)->get();
+        $detail = PackingDetailM::where('gm',$gm)->get();
         $date = PackingDetailM::where('gm',$gm)->value('created_at');
         $jenis = "cc";
         $leader = PackingDetailM::where('gm',$gm)->value('shift_leader');

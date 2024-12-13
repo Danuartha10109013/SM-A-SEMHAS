@@ -78,7 +78,7 @@
                         <label for="label">NO/TYPE FORKLIFT<small style="color: red;">*</small>
                         </label>
                         <select class="form-control" name="jenis_forklift" id="exampleSelectOption" required>
-                            <option value="" selected disabled>--Pilih Kapasistas Crane--</option>
+                            <option value="" selected disabled>--Pilih Kapasistas Forklift--</option>
                             <option value="5 Ton No.3 (EUP)" {{ old('jenis_forklift') == '5 Ton No.3 (EUP)' ? 'selected' : '' }}>5 Ton No.3 (EUP)</option>
                             <option value="5 Ton No.4 (STUFING EXPORT)" {{ old('jenis_forklift') == '5 Ton No.4 (STUFING EXPORT)' ? 'selected' : '' }}>5 Ton No.4 (STUFING EXPORT)</option>
                             <option value="5 Ton No.5 (DELIVERY L3)" {{ old('jenis_forklift') == '5 Ton No.5 (DELIVERY L3)' ? 'selected' : '' }}>5 Ton No.5 (DELIVERY L3)</option>

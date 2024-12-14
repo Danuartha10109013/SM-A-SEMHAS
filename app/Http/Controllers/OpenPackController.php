@@ -43,8 +43,8 @@ class OpenPackController extends Controller
         $data = $query->select('gm', DB::raw('MIN(created_at) as created_at'))
         ->whereMonth('created_at', Carbon::now()->month)  // Filter for the current month
         ->whereYear('created_at', Carbon::now()->year)    // Filter for the current year
-        ->groupBy('gm')
-        ->get();
+        ->groupBy('gm')->orderBy('created_at','desc')
+        ->paginate(10);
 
         // Query untuk mencari berdasarkan 'attribute'
         $attributeSearch = PackingDetailM::query();

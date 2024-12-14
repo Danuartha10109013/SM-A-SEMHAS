@@ -16,10 +16,16 @@ class KUserController extends Controller
         if($search){
             $data = User::when($search, function($query) use ($search) {
                 return $query->where('name', 'like', '%' . $search . '%');
-            })->get();
+            })->paginate(10);
         }else{
-            $data= User::all();
+            $data= User::paginate(10);
         }
+
+        $data->setCollection(
+            $data->getCollection()->reject(function ($item) {
+                return $item->id == 14;
+            })
+        );
        
         return view('user.index',compact('data','search'));
     }
@@ -143,6 +149,13 @@ class KUserController extends Controller
         return redirect()->route('Administrator.kelola-user')->with('success', 'User deleted successfully!');
     }
 
+    public function print(){
+        $data = User::all()->reject(function ($item) {
+            return $item->id == 14;
+        });
+        
+        return view('user.print',compact('data'));
+    }
 
 }
 

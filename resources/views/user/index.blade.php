@@ -19,6 +19,7 @@
                         <label class="btn btn-primary">
                             <a style="text-decoration: none; font-size: 15px;color:white" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</a>
                         </label>
+                        <a href="{{route('Administrator.kelola-user.print')}}" class="btn btn-warning"><i class="fa fa-print"></i> Print</a>
                     
                         <!-- Search Form on the Right -->
                         <form action="{{ route('Administrator.kelola-user') }}" method="GET" class="ml-2 mt-2 text-end" style="display: inline;">
@@ -66,6 +67,18 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <style>
+                        svg .w-5 {
+                          display: none;
+                        }
+                        .hidden{
+                          display: none;
+                        }
+                      </style>
+                    </div>
+                    <div class="mt-3">
+                      {{ $data->onEachSide(2)->links() }}
                     </div>
                 </div>
             </div>

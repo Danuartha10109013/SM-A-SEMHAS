@@ -742,7 +742,7 @@
 
                         <div class="form-group p-3 border rounded bg-light">
                             <label for="exampleInputPassword1" class="text-dark">
-                                Pengecekan Tekanan Ban (Forklift 25 Ton) <small style="color: red;">*</small><br>
+                                Pengecekan Tekanan Ban (Forklift 25 Ton) <br>
                                 <b>900 KPA (KGF/CM2)</b>
                             </label>
                             <div class="form-check ml-3">

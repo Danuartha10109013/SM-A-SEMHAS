@@ -153,7 +153,7 @@
                                 <label><input type="radio" name="sesuai" value="tidak sesuai"> Tidak Sesuai</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload1">FOTO <small style="color: red;">*</small><br></label>
+                            <label for="fotoUpload1">FOTO <br></label>
                             <input type="file" class="" name="foto1[]" id="fotoUpload1" multiple>
                             <div id="fileList1"></div>
                         </div>     
@@ -194,7 +194,7 @@
                             <label><input type="radio" name="kering" value="Basah/Terdapat bercak bekas terkena air"> Basah/Terdapat bercak bekas terkena air</label><br>
                     </div>
                     <div class="mb-3">
-                        <label for="fotoUpload3">FOTO <small style="color: red;">*</small><br></label>
+                        <label for="fotoUpload3">FOTO <br></label>
                         <input type="file" class="" name="foto3[]" id="fotoUpload3" multiple>
                         <div id="fileList3"></div>
                     </div>     
@@ -231,7 +231,7 @@
                                 <label><input type="radio" name="jumlahin" value="Tidak Sesuai"> Tidak Sesuai</label><br>
                         </div>
                         <div class="mb-3">
-                            <label for="fotoUpload5">FOTO <small style="color: red;">*</small><br></label>
+                            <label for="fotoUpload5">FOTO <br></label>
                             <input type="file" class="" name="foto5[]" id="fotoUpload5" multiple>
                             <div id="fileList5"></div>
                         </div>     

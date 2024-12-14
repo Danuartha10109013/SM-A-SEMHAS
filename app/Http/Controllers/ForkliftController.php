@@ -73,7 +73,7 @@ class ForkliftController extends Controller
             'transmisi' => 'required|string|max:255',
             'ban' => 'required|string|max:255',
             'fork' => 'required|string|max:255',
-            'teba' => 'required|string|max:255',
+            'teba' => 'nullable|string|max:255',
             'catatan' => 'nullable|string|max:1000',
             'mtc' => 'nullable|string|max:255',
 

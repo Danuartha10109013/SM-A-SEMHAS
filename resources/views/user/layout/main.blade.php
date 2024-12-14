@@ -47,19 +47,7 @@
       <div class="wrapper">
          <!-- Sidebar  -->
          <div class="iq-sidebar">
-            @if (Auth::user()->type == 'Mapping')
-                @if (Auth::user()->role == 0)
-                    @include('Mapping-Container.layouts.section.sidebar')
-                @elseif (Auth::user()->role == 1)
-                    @include('Mapping-Container.layouts.section.sidebar')
-                @endif
-            @else
-                @if (Auth::user()->role == 0)
-                    @include('Form-Check.layout.admin.sidebar')
-                @elseif (Auth::user()->role == 1)
-                    @include('Form-Check.layout.pegawai.sidebar')
-                @endif
-            @endif
+                 @include('user.layout.sidebar')
          </div>
          <!-- TOP Nav Bar -->
          <div class="iq-top-navbar">

@@ -86,6 +86,7 @@ Route::middleware([AutoLogout::class])->group(function () {
 
         Route::get('k-user',[KUserController::class,'index'])->name('kelola-user');
         Route::get('k-user/add',[KUserController::class,'add'])->name('kelola-user.add');
+        Route::get('k-user/print',[KUserController::class,'print'])->name('kelola-user.print');
         Route::post('k-user/store',[KUserController::class,'store'])->name('kelola-user.store');
         Route::get('k-user/edit/{id}',[KUserController::class,'edit'])->name('kelola-user.edit');
         Route::put('k-user/update/{id}',[KUserController::class,'update'])->name('kelola-user.update');

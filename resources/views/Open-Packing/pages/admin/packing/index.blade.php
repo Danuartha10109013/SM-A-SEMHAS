@@ -305,7 +305,19 @@
                 
               </tbody>
             </table>
+            <style>
+              svg .w-5 {
+                display: none;
+              }
+              .hidden{
+                display: none;
+              }
+            </style>
           </div>
+          <div class="mt-3">
+            {{ $data->onEachSide(2)->links() }}
+          </div>
+        
           @if ( request('search'))
           <h5 class="fw-bold text-center mt-5">Data by Attribute</h5>
           <div class="table-responsive">

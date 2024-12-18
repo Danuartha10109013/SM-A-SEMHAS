@@ -17,13 +17,28 @@ use PhpParser\Node\Stmt\Return_;
 
 class PListController extends Controller
 {
-    public function index(){
+    public function index(Request $request)
+{
+    // Get the search term from the request
+    $searchTerm = $request->input('search');
+
+    // Check if there is a search term and filter the data accordingly
+    if ($searchTerm) {
+        $data = ScanM::where('attribute', 'like', '%' . $searchTerm . '%')->get();
+    } else {
+        // If no search term, get all data
         $data = ScanM::all();
-        return view('Packing-List.pages.admin.list.index',compact('data'));
     }
+
+    // Pass the data and the search term to the view
+    return view('Packing-List.pages.admin.list.index', compact('data', 'searchTerm'));
+}
+
 
     public function add()
     {
+        // $kcp = ScanM::pluck('attribute');
+        // dd($kcp);
         return view('Packing-List.pages.admin.list.add');
     }
 
@@ -39,6 +54,11 @@ class PListController extends Controller
             'other_keterangan' => 'nullable|string',
             'panjang'=>'nullable',
         ]);
+        $kcp = ScanM::pluck('attribute'); // Assuming you want to check the 'attribute' column
+        if ($kcp->contains($request->attribute)) {
+            return redirect()->back()->with('error', 'Attribute Sudah Pernah Di Scan');
+        }
+
         if($request->keterangan == "other"){
             ScanM::create([
                 'attribute' => $request->input('attribute'),

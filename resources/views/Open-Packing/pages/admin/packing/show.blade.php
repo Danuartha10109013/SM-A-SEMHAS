@@ -73,10 +73,51 @@
                       <label class="btn btn-primary">
                         <i class="fas fa-edit"></i> 
                       </label></a>
-                      <a href="{{route('Open-Packing.admin.packing.delete',$d->id)}}">
-                      <label class="btn btn-danger">
+                      <!-- Tombol Hapus -->
+                      <a href="#" 
+                      class="delete-button" 
+                      data-bs-toggle="modal" 
+                      data-bs-target="#deleteModal" 
+                      data-id="{{ $d->id }}"><label class="btn btn-danger">
                         <i class="fas fa-trash"></i>
-                      </label></a>
+                      </label>
+                      </a>
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" data-bs-backdrop="false" data-bs-keyboard="false" aria-hidden="true">
+                      <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          Apakah Anda yakin ingin menghapus data ini?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                          <a href="#" id="confirmDeleteButton" class="btn btn-danger">Hapus</a>
+                        </div>
+                      </div>
+                      </div>
+                      </div>
+
+                      <!-- JavaScript -->
+                      <script>
+                      document.addEventListener('DOMContentLoaded', () => {
+                        const deleteModal = document.getElementById('deleteModal');
+                        const confirmDeleteButton = deleteModal.querySelector('#confirmDeleteButton');
+
+                        document.querySelectorAll('.delete-button').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const id = this.getAttribute('data-id');
+                                const deleteUrl = `{{ route('Open-Packing.admin.packing.delete', ':id') }}`.replace(':id', id);
+                                confirmDeleteButton.setAttribute('href', deleteUrl);
+                            });
+                        });
+                      });
+                      </script>
+
                       
                     </td>
                     

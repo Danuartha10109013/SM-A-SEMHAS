@@ -110,6 +110,10 @@ class CraneController extends Controller
         $data = CraneM::FindOrFail($id);
         return view('Form-Check.pages.crane.print',compact('data'));
     }
+    public function show($id){
+        $data = CraneM::FindOrFail($id);
+        return view('Form-Check.pages.crane.show',compact('data'));
+    }
 
 
 public function downloadReport($id)

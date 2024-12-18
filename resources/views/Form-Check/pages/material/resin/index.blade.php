@@ -86,11 +86,57 @@
                           @if (Auth::user()->role == 0)
                           <a href="{{route('Form-Check.admin.resin.print', $d->id)}}"> <label class="btn btn-success">print</label></a>
                           <a href="{{route('Form-Check.admin.resin.show', $d->id)}}"> <label class="btn btn-primary">Show</label></a>
-                          <form action="{{ route('Form-Check.admin.resin.destroy', $d->id) }}" method="POST" >
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Hapus</button>
-                        </form>
+                          <button type="button" 
+                            class=" btn delete-button" 
+                            data-id="{{ $d->id }}" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteModal">
+                            <label class="btn btn-danger">
+                              Hapus
+                            </label>
+                            </button>
+
+                            <!-- Confirmation Modal (No Backdrop) -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="false">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            Apakah Anda yakin ingin menghapus data ini?
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <form id="deleteForm" method="POST" style="display: inline;">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+
+                            <!-- JavaScript to Dynamically Set the Form Action -->
+                            <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                            const deleteModal = document.getElementById('deleteModal');
+                            const deleteForm = deleteModal.querySelector('#deleteForm');
+
+                            // Attach event listeners to all delete buttons
+                            document.querySelectorAll('.delete-button').forEach(button => {
+                              button.addEventListener('click', function() {
+                                  const id = this.getAttribute('data-id');
+                                  const action = `{{ route('Form-Check.admin.resin.destroy', ':id') }}`.replace(':id', id);
+
+                                  // Dynamically update the form's action
+                                  deleteForm.setAttribute('action', action);
+                              });
+                            });
+                            });
+                            </script>
                           @else
                           <a href="{{route('Form-Check.pegawai.resin.print', $d->id)}}"> <label class="btn btn-success">print</label></a>
                           @endif

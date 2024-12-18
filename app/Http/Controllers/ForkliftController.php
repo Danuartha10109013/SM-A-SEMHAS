@@ -177,6 +177,10 @@ class ForkliftController extends Controller
         $data = ForkliftM::FindOrFail($id);
         return view('Form-Check.pages.forklift.print',compact('data'));
     }
+    public function show($id){
+        $data = ForkliftM::FindOrFail($id);
+        return view('Form-Check.pages.forklift.show',compact('data'));
+    }
 
     public function destroy($id){
         $data = ForkliftM::find($id);

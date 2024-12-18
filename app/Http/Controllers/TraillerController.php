@@ -124,11 +124,21 @@ class TraillerController extends Controller
         $data = TraillerM::FindOrFail($id);
         return view('Form-Check.pages.trailler.print',compact('data'));
     }
+    public function show($id){
+        $data = TraillerM::FindOrFail($id);
+        return view('Form-Check.pages.trailler.show',compact('data'));
+    }
 
     public function export(){
         $date = now()->format('d-m-Y'); 
 
         return Excel::download(new TraillerExportExcel, $date.'Trailler.xlsx');
+    }
+
+    public function destroy($id){
+        $data = TraillerM::find($id);
+        $data->delete();
+        return redirect()->back()->with('success', 'Data berhasil Dihapus');
     }
 
 }

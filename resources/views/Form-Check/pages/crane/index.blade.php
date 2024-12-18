@@ -93,14 +93,59 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if (Auth::user()->role == 0)
+                                                    <a href="{{ route('Form-Check.admin.crane.show', $d->id) }}" class="btn btn-primary mr-2">Detail</a>
                                                     <a href="{{ route('Form-Check.admin.crane.print', $d->id) }}" class="btn btn-success mr-2">Print</a>
-                                                    <form action="{{ route('Form-Check.admin.crane.destroy', $d->id) }}" method="POST" class="ml-2" style="display: inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger" >
-                                                          Hapus
-                                                        </button>
+                                                    <!-- Delete Button -->
+                                                    <button type="button" 
+                                                    class="btn btn-danger delete-button" 
+                                                    data-id="{{ $d->id }}" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#deleteModal">
+                                                    Hapus
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="deleteModal" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    Apakah Anda yakin ingin menghapus data ini?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                    <form id="deleteForm" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Hapus</button>
                                                     </form>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+
+                                                    <!-- JavaScript -->
+                                                    <script>
+                                                    document.addEventListener('DOMContentLoaded', () => {
+                                                    const deleteModal = document.getElementById('deleteModal');
+                                                    const deleteForm = deleteModal.querySelector('#deleteForm');
+
+                                                    // Add event listeners to all delete buttons
+                                                    document.querySelectorAll('.delete-button').forEach(button => {
+                                                    button.addEventListener('click', function() {
+                                                        const id = this.getAttribute('data-id');
+                                                        const action = `{{ route('Form-Check.admin.crane.destroy', ':id') }}`.replace(':id', id);
+
+                                                        // Update the form action dynamically
+                                                        deleteForm.setAttribute('action', action);
+                                                    });
+                                                    });
+                                                    });
+                                                    </script>
+
                                                 @else
                                                     <a href="{{ route('Form-Check.pegawai.crane.print', $d->id) }}" class="btn btn-success">Print</a>
                                                 @endif

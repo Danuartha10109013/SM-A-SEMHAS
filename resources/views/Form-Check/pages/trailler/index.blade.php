@@ -1,6 +1,6 @@
 @extends('Form-Check.layout.main')
 @section('title')
-    Form Crane
+    Form Trailer
   @if(Auth::user()->role == 0)
     Admin
   @elseif(Auth::user()->role == 1)
@@ -16,7 +16,7 @@
         <h3 class="page-title">
           <span class="page-title-icon bg-gradient-primary text-white me-2">
             <i class="mdi mdi-home"></i>
-          </span> Form Trailler
+          </span> Form Trailer
         </h3>
         <nav aria-label="breadcrumb">
           <ul class="breadcrumb">
@@ -88,13 +88,60 @@
                         <td class="text-nowrap">
                           <div class="d-flex justify-content-between align-items-center">
                               @if (Auth::user()->role == 0)
-                                  <a class="btn btn-success mr-2" href="{{ route('Form-Check.admin.trailler.print', $d->id) }}">Print</a>
-                                  
-                                  <form action="{{ route('Form-Check.admin.trailler.destroy', $d->id) }}" method="POST" style="display: inline;">
-                                      @csrf
-                                      @method('DELETE')
-                                      <button type="submit" class="btn btn-danger">Hapus</button>
+                              <a class="btn btn-primary mr-2" href="{{ route('Form-Check.admin.trailler.show', $d->id) }}">Detail</a>
+                              <a class="btn btn-success mr-2" href="{{ route('Form-Check.admin.trailler.print', $d->id) }}">Print</a>
+                              
+                                  <!-- Delete Button -->
+                                  <button type="button" 
+                                  class="btn btn-danger delete-button" 
+                                  data-id="{{ $d->id }}" 
+                                  data-bs-toggle="modal" 
+                                  data-bs-target="#deleteModal">
+                                  Hapus
+                                  </button>
+
+                                  <!-- Confirmation Modal (No Backdrop) -->
+                                  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="false">
+                                  <div class="modal-dialog">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                  <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                  Apakah Anda yakin ingin menghapus data ini?
+                                  </div>
+                                  <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                  <form id="deleteForm" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
                                   </form>
+                                  </div>
+                                  </div>
+                                  </div>
+                                  </div>
+
+                                  <!-- JavaScript to Dynamically Set the Form Action -->
+                                  <script>
+                                  document.addEventListener('DOMContentLoaded', () => {
+                                  const deleteModal = document.getElementById('deleteModal');
+                                  const deleteForm = deleteModal.querySelector('#deleteForm');
+
+                                  // Attach event listeners to all delete buttons
+                                  document.querySelectorAll('.delete-button').forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        const id = this.getAttribute('data-id');
+                                        const action = `{{ route('Form-Check.admin.trailler.destroy', ':id') }}`.replace(':id', id);
+
+                                        // Dynamically update the form's action
+                                        deleteForm.setAttribute('action', action);
+                                    });
+                                  });
+                                  });
+                                  </script>
+
                               @else
                                   <a class="btn btn-success" href="{{ route('Form-Check.pegawai.trailler.print', $d->id) }}">Print</a>
                               @endif

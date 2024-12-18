@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crane Operator Daily Data - Print</title>
+    <title>Trailer Operator Daily Data - Print</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -193,7 +193,7 @@
         </script>
     </div>
     <div class="header">
-        <h1>CRANE OPERATOR DAILY DATA</h1>
+        <h1>TRAILER OPERATOR DAILY DATA</h1>
         <div class="text-start">
             <h2>HARI / TANGGAL: {{ $data->date }}</h2>
             <h2>NO TRAILER/DRIVER: {{ $data->jenis_forklift }}</h2>

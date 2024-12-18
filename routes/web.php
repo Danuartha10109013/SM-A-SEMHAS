@@ -320,6 +320,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/add', [CraneController::class, 'add'])->name('crane.add');
                 Route::post('/create', [CraneController::class, 'create'])->name('crane.create');
                 Route::get('/print/{id}', [CraneController::class, 'print'])->name('crane.print');
+                Route::get('/show/{id}', [CraneController::class, 'show'])->name('crane.show');
                 Route::delete('/destroy/{id}', [CraneController::class, 'destroy'])->name('crane.destroy');
                 Route::get('/export',[CraneController::class, 'exportexcel'])->name('crane.export');
 
@@ -331,6 +332,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/add', [ForkliftController::class, 'add'])->name('forklift.add');
                 Route::post('/create', [ForkliftController::class, 'create'])->name('forklift.create');
                 Route::get('/print/{id}', [ForkliftController::class, 'print'])->name('forklift.print');
+                Route::get('/show/{id}', [ForkliftController::class, 'show'])->name('forklift.show');
                 Route::delete('/destroy/{id}', [ForkliftController::class, 'destroy'])->name('forklift.destroy');
                 Route::get('/export',[ForkliftController::class, 'exportexcel'])->name('forklift.export');
 
@@ -342,6 +344,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/add', [TraillerController::class, 'add'])->name('trailler.add');
                 Route::post('/create', [TraillerController::class, 'create'])->name('trailler.create');
                 Route::get('/print/{id}', [TraillerController::class, 'print'])->name('trailler.print');
+                Route::get('/show/{id}', [TraillerController::class, 'show'])->name('trailler.show');
                 Route::delete('/destroy/{id}', [TraillerController::class, 'destroy'])->name('trailler.destroy');
                 Route::get('/export', [TraillerController::class, 'export'])->name('trailler.export');
 

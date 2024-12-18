@@ -65,10 +65,33 @@
                       <label class="btn btn-primary">
                         <i class="fas fa-edit"></i> Edit
                       </label></a>
-                      <a href="{{route('Packing-List.admin.list.delete',$d->id)}}">
-                      <label class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Delete
-                      </label></a>
+                      <a href="#" 
+                        class="btn " 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#deleteModal{{$d->id}}">
+                        <label class="btn btn-danger">
+                          <i class="fas fa-trash"></i> Delete
+                        </label>
+                      </a>
+
+                      <!-- Modal untuk Setiap Item -->
+                      <div class="modal fade" id="deleteModal{{$d->id}}" tabindex="-1" aria-labelledby="deleteModalLabel{{$d->id}}" aria-hidden="true" data-bs-backdrop="false" data-bs-keyboard="false">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="deleteModalLabel{{$d->id}}">Konfirmasi Hapus</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Apakah Anda yakin ingin menghapus item ini?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                              <a href="{{route('Packing-List.admin.list.delete', $d->id)}}" class="btn btn-danger">Hapus</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </td>
                     <td> {{$d->kondisi}} </td>
                     <td> {{$d->tujuan}} </td>

@@ -79,7 +79,10 @@
         .no-print {
             display: block;
         }
-        
+        td {
+            text-transform: uppercase;
+        }
+
             
         
     </style>
@@ -106,21 +109,22 @@
             }
         
             .header h3, .header p {
-                margin: 0; /* Menghilangkan margin default */
+                margin: 0; 
             }
         </style>
         
         <div class="header">
             <img style="width: 10%" src="{{asset('img/Logo_TML.png')}}" alt="Logo">
-            <div>
-                <h3><strong>Mapping Muat & Ceklist Kontainer</strong></h3>
+            <div><center>
+
+                <h3 style="font-size: 20px;margin-left: 80px"><strong>MAPPING MUAT & CEKLIST KONTAINER & TRAILLER</strong></h3>
+            </center>
             </div>
             <p style="margin-top: -70px;margin-left: 90px">FM.WH.09.04</p>
         </div>
         
         
         <hr>
-        <p class="text-center"><strong>PENGECEKAN</strong></p>
         
         
 

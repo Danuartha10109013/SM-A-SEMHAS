@@ -31,10 +31,10 @@ class ExcelKoilImport implements ToCollection, ToModel
         
         if ($this->current > 1) { // Skip the header row
             $count = Coil::where('kode_produk', $row[1])->count();
-            
-            if ($count === 0) {
+            if ($count == 0) {
                 $coil = new Coil();
                 $coil->kode_produk = $row[1];
+                // dd($coil->kode_produk);  
                 $coil->nama_produk = $row[0];
                 $coil->berat_produk = $row[2];
                 $coil->diameter_produk = null;

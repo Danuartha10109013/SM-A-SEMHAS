@@ -16,7 +16,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form action="/tambah/coil/store" method="POST">
+                <form action="{{route('Mapping.admin.koil.store')}}" method="POST">
                     @csrf
                     <div class="row mb-3">
                         <label for="no_gs" class="col-sm-2 col-form-label">No_GS</label>

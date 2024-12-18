@@ -566,28 +566,81 @@
                                 class="form-select coil-select"
                                 name="{{ $coordinate }}"
                                 aria-label="Floor Rating"
-                                value="{{ old($coordinate, $m->$coordinate) }}"
+                                id="coilSelect-{{ $coordinate }}"
                             >
                                 <option value="">Pilih</option>
                                 @foreach ($coil as $c)
-                                <option value="{{ $c->kode_produk }}" {{ old($coordinate, $m->$coordinate) == $c->kode_produk ? 'selected' : '' }}>
-                                    {{ substr($c->kode_produk, -5) }}
-                                </option>
+                                    <option 
+                                        value="{{ $c->kode_produk }}" 
+                                        {{ old($coordinate, $m->$coordinate) == $c->kode_produk ? 'selected' : '' }}>
+                                        {{ substr($c->kode_produk, -10) }}
+                                    </option>
                                 @endforeach
                             </select>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                const selectElements = document.querySelectorAll(".coil-select");
+
+                                selectElements.forEach((select) => {
+                                    changeBackground(select); // Set background on load
+
+                                    select.addEventListener("change", function () {
+                                        changeBackground(select); // Set background on change
+                                    });
+                                });
+
+                                function changeBackground(element) {
+                                    if (element.value) {
+                                        element.style.backgroundColor = "#d4edda"; // Warna hijau muda
+                                        element.style.color = "#155724"; // Warna teks hijau gelap
+                                    } else {
+                                        element.style.backgroundColor = ""; // Reset ke default
+                                        element.style.color = "";
+                                    }
+                                }
+                            });
+
+                            </script>
+
                             <input type="hidden" name="{{ $coordinate }}_eye" value="null">
                             <select
-                                class="form-select ms-2"
+                                class="form-select ms-2 eye-select"
                                 name="{{ $coordinate }}_eye"
                                 aria-label="Eye Position"
-                                value="{{ old($coordinate . '_eye', $m->{$coordinate . '_eye'}) }}"
-                                
+                                id="eyeSelect-{{ $coordinate }}"
                             >
                                 <option value="">Pilih Posisi</option>
                                 <option value="eye_to_side" {{ old($coordinate . '_eye', $m->{$coordinate . '_eye'}) == 'eye_to_side' ? 'selected' : '' }}>Eye to Side</option>
                                 <option value="eye_to_rear" {{ old($coordinate . '_eye', $m->{$coordinate . '_eye'}) == 'eye_to_rear' ? 'selected' : '' }}>Eye to Rear</option>
                                 <option value="eye_to_sky" {{ old($coordinate . '_eye', $m->{$coordinate . '_eye'}) == 'eye_to_sky' ? 'selected' : '' }}>Eye to Sky</option>
                             </select>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    const eyeSelects = document.querySelectorAll(".eye-select");
+
+                                    // Inisialisasi fungsi saat halaman dimuat
+                                    eyeSelects.forEach((select) => {
+                                        changeBackground(select);
+
+                                        select.addEventListener("change", function () {
+                                            changeBackground(select);
+                                        });
+                                    });
+
+                                    // Fungsi untuk mengubah warna background dan teks
+                                    function changeBackground(element) {
+                                        if (element.value) {
+                                            element.style.backgroundColor = "#d4edda"; // Warna latar hijau muda
+                                            element.style.color = "#155724"; // Warna teks hijau gelap
+                                        } else {
+                                            element.style.backgroundColor = ""; // Reset ke default
+                                            element.style.color = "";
+                                        }
+                                    }
+                                });
+
+                            </script>
                         </div>
                     </div>
                     @if (($i + 1) % 3 == 0)

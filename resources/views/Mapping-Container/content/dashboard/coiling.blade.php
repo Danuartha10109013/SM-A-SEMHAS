@@ -13,7 +13,7 @@
 @section('content')
 <div class="container-xxl">
     <h3 class="title text-center">DATA SHIPMENT</h3>
-    <a class="btn btn-primary mb-3" href="/tambah/coil/{{$same}}">Tambah Koil</a>
+    <a class="btn btn-primary mb-3" href="{{route('Mapping.admin.store',$same)}}">Tambah Koil</a>
 
 <div class="col-12">
     <div class="card">
@@ -39,7 +39,13 @@
               <td class="text-truncate">{{$c->nama_produk}}</td>
               <td class="text-truncate">{{$c->berat_produk}} Kg</td>
               <td>{{$c->keterangan}}</td>
-              <td> <span class="btn btn-danger">Acitvate</span></td>
+              @php
+                $statusClass = $c->status == 0 ? 'danger' : ($c->status == 1 ? 'success' : 'secondary');
+                $statusText = $c->status == 0 ? 'Belum Dikirim' : ($c->status == 1 ? 'Sudah Dikirim' : 'Unknown');
+              @endphp
+              <td>
+                <span class="btn btn-{{ $statusClass }}">{{ $statusText }}</span>
+              </td>
             </tr>
             @endforeach
           </tbody>

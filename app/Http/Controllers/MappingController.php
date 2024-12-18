@@ -108,6 +108,8 @@ class MappingController extends Controller
         'b1_eye', 'b2_eye', 'b3_eye', 'b4_eye', 'b5_eye',
         'c1_eye', 'c2_eye', 'c3_eye', 'c4_eye', 'c5_eye'
     ];
+
+
     // dd($request->all());
     $pengecekan = Pengecekan::where('no_gs', $no_gs)->firstOrFail();
 // Mengecek apakah ada input tanda tangan dan data tidak kosong
@@ -158,6 +160,20 @@ if ($request->has('signature1') && !empty($request->input('signature1'))) {
             $validatedData[$field] = null;
         }
     }
+
+    $feiel = ['a1', 'a2', 'a3', 'a4', 'a5', 'b1', 'b2', 'b3', 'b4', 'b5', 'c1', 'c2', 'c3', 'c4', 'c5'];
+
+    foreach ($feiel as $field) {
+        if ($request->$field) {
+            $coilin = Coil::where('kode_produk', $request->$field)->value('id');
+            if ($coilin) {
+                $coil = Coil::find($coilin);
+                $coil->status = 1;
+                $coil->save();
+            }
+        }
+    }
+    
 
     // Update data di model Pengecekan
     $pengecekan->update($validatedData);

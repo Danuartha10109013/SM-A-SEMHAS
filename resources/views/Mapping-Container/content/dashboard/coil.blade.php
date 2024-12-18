@@ -47,7 +47,13 @@
               <td >{{$c->nama_produk}}</td>
               <td >{{$c->berat_produk}} Kg</td>
               <td>{{$c->keterangan}}</td>
-              <td> <span class="btn btn-danger">Acitvate</span></td>
+              @php
+                $statusClass = $c->status == 0 ? 'danger' : ($c->status == 1 ? 'success' : 'secondary');
+                $statusText = $c->status == 0 ? 'Belum Dikirim' : ($c->status == 1 ? 'Sudah Dikirim' : 'Unknown');
+              @endphp
+              <td>
+                <span class="btn btn-{{ $statusClass }}">{{ $statusText }}</span>
+              </td>
             </tr>
             @endforeach
           </tbody>

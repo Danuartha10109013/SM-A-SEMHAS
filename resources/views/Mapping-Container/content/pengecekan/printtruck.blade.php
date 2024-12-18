@@ -82,6 +82,10 @@
         .section{
             margin-top: -16px;
         }
+
+        td {
+            text-transform: uppercase;
+        }
         
             
         
@@ -117,25 +121,24 @@
         <div class="header">
             <img style="width: 7%;margin-bottom: 5px" src="{{asset('img/Logo_TML.png')}}" alt="Logo">
             <div>
-                <h4 style="margin-bottom: -5px"><strong>Mapping Muat & Ceklist Kontainer</strong></h4>
+                <h4 style="margin-bottom: -5px;font-size: 24px;margin-left: 60px"><strong>MAPPING MUAT & CEKLIST KONTAINER & TRAILLER</strong></h4>
             </div>
             <p style="margin-top: -70px;margin-left: 90px">FM.WH.09.04</p>
 
         </div>
         
         
-        <hr style="margin-top: -3px">
+        <hr style="margin-top: -3px;">
         <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2">
-        <p class="text-center" style="margin-top: -15px"><strong>PENGECEKAN</strong></p>
 
             </div>
             <div class="col-md-5"></div>
         </div>
 
         <div class="row">
-            <div style="flex: 1; margin-right: 10px;">
+            <div style="flex: 1; margin-right: 10px; margin-top: 10px">
                 <div class="section">
                     <table>
                         
@@ -209,7 +212,7 @@
                 </div>
             </div>
 
-            <div style="flex: 1; margin-left: 10px;">
+            <div style="flex: 1; margin-left: 10px; margin-top: 10px">
                 <div class="section">
                     
                     <table>

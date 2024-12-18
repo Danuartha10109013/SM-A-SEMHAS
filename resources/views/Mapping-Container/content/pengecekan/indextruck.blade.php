@@ -509,32 +509,71 @@ Form Pengecekan ||
                                     $coordinateB = 'b' . $i;
                                     $coordinateC = 'c' . $i;
                                 @endphp
+                                
+
+                                <!-- Coordinate Select -->
                                 <label class="fw-bold mb-1">{{ strtoupper($coordinateA) }}</label>
                                 <select
-                                    class="form-select coil-select"
-                                    name="{{ $coordinateA }}"
-                                    aria-label="Floor Rating"
-                                    value="{{ old($coordinateA, $m->$coordinateA) }}"
+                                class="form-select coil-select"
+                                name="{{ $coordinateA }}"
+                                id="select-{{ $coordinateA }}"
+                                aria-label="Floor Rating"
                                 >
-                                    <option value="">Pilih</option>
-                                    @foreach ($coil as $c)
-                                    <option value="{{ $c->kode_produk }}" {{ old($coordinateA, $m->$coordinateA) == $c->kode_produk ? 'selected' : '' }}>
+                                <option value="">Pilih</option>
+                                @foreach ($coil as $c)
+                                    <option 
+                                        value="{{ $c->kode_produk }}" 
+                                        {{ old($coordinateA, $m->$coordinateA) == $c->kode_produk ? 'selected' : '' }}>
                                         {{ substr($c->kode_produk, -5) }}
                                     </option>
-                                    @endforeach
+                                @endforeach
                                 </select>
-                                <input type="hidden" name="{{ $coordinateA }}_eye" value="null">
+
+                                <!-- Eye Select -->
                                 <select
-                                    class="form-select ms-2"
-                                    name="{{ $coordinateA }}_eye"
-                                    aria-label="Eye Position"
-                                    value="{{ old($coordinateA . '_eye', $m->{$coordinateA . '_eye'}) }}"
+                                class="form-select ms-2 eye-select"
+                                name="{{ $coordinateA }}_eye"
+                                id="eyeSelect-{{ $coordinateA }}"
+                                aria-label="Eye Position"
                                 >
-                                    <option value="">Pilih Posisi</option>
-                                    <option value="eye_to_side" {{ old($coordinateA . '_eye', $m->{$coordinateA . '_eye'}) == 'eye_to_side' ? 'selected' : '' }}>Eye to Side</option>
-                                    <option value="eye_to_rear" {{ old($coordinateA . '_eye', $m->{$coordinateA . '_eye'}) == 'eye_to_rear' ? 'selected' : '' }}>Eye to Rear</option>
-                                    <option value="eye_to_sky" {{ old($coordinateA . '_eye', $m->{$coordinateA . '_eye'}) == 'eye_to_sky' ? 'selected' : '' }}>Eye to Sky</option>
+                                <option value="">Pilih Posisi</option>
+                                <option value="eye_to_side" {{ old($coordinateA . '_eye', $m->{$coordinateA . '_eye'}) == 'eye_to_side' ? 'selected' : '' }}>Eye to Side</option>
+                                <option value="eye_to_rear" {{ old($coordinateA . '_eye', $m->{$coordinateA . '_eye'}) == 'eye_to_rear' ? 'selected' : '' }}>Eye to Rear</option>
+                                <option value="eye_to_sky" {{ old($coordinateA . '_eye', $m->{$coordinateA . '_eye'}) == 'eye_to_sky' ? 'selected' : '' }}>Eye to Sky</option>
                                 </select>
+
+                                <!-- JavaScript -->
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Function to apply background color
+                                        function applyBackground(select, bgColor, textColor) {
+                                            if (select.value && select.value !== "") {
+                                                select.style.backgroundColor = bgColor; // Set background
+                                                select.style.color = textColor; // Set text color
+                                            } else {
+                                                select.style.backgroundColor = ""; // Reset background
+                                                select.style.color = ""; // Reset text color
+                                            }
+                                        }
+
+                                        // Coil Select Background
+                                        const coilSelects = document.querySelectorAll(".coil-select");
+                                        coilSelects.forEach((select) => {
+                                            applyBackground(select, "#d4edda", "#155724"); // Light green
+                                            select.addEventListener("change", () => applyBackground(select, "#d4edda", "#155724"));
+                                        });
+
+                                        // Eye Select Background
+                                        const eyeSelects = document.querySelectorAll(".eye-select");
+                                        eyeSelects.forEach((select) => {
+                                            applyBackground(select, "#cce5ff", "#004085"); // Light blue
+                                            select.addEventListener("change", () => applyBackground(select, "#cce5ff", "#004085"));
+                                        });
+                                    });
+                                </script>
+
+
+                                
                             </div>
                         </div>
                         <div class="col-md-4">

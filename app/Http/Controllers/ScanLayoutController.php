@@ -46,10 +46,11 @@ class ScanLayoutController extends Controller
         $packing->user_id = Auth::user()->id; // Track which user submitted this packing data
         $packing->save();
 
+        // dd($packing);
         // Redirect back with a success message
-        if(Auth::user()->role = 0){
+        if(Auth::user()->role == 0){
             return redirect()->route('Scan-Layout.admin.dashboard')->with('success', 'New Packing has been successfully created.');
-        }else{
+        }elseif(Auth::user()->role == 1){
             return redirect()->route('Scan-Layout.pegawai.dashboard')->with('success', 'New Packing has been successfully created.');
         }
     }

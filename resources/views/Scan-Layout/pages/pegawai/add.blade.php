@@ -65,7 +65,7 @@
                 <input type="text" name="other_group" id="other-group" class="form-control" placeholder="Enter your custom group">
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Save New GM</button>
+            <button type="submit" class="btn btn-primary w-100">Save</button>
         </form>
     </div>
 </div>

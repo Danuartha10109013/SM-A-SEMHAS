@@ -163,7 +163,7 @@ class DashboardControlller extends Controller
                     ->select(DB::raw('YEAR(created_at) as year'))
                     ->distinct()
                     ->orderBy('year', 'desc') // Optional: order the years in descending order
-                    ->get();
+                    ->paginate(10);
     
         // Get selected year from the request, or default to the current year
         $selectedYear = $request->input('year', date('Y'));

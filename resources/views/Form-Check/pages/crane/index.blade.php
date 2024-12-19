@@ -155,8 +155,18 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- Pagination Links -->
-                        {{ $data->appends(request()->query())->links() }}
+                        <style>
+                            svg .w-5 {
+                              display: none;
+                            }
+                            .hidden{
+                              display: none;
+                            }
+                          </style>
+                        </div>
+                        <div class="mt-3">
+                          {{ $data->onEachSide(2)->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -77,7 +77,7 @@
         .footer {
             text-align: left;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 18px;
             margin-top: 1.2cm;
         }
 

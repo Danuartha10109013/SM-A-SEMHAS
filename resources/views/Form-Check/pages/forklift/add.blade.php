@@ -35,7 +35,7 @@
                     PENGISIAN FORMULIR DILAKUKAN AWAL SHIFT/SEBELUM DIGUNAKAN </p>
             @if (Auth::user()->role == 0)
             <form action="{{route('Form-Check.admin.forklift.create')}}" method="POST">
-            @else
+            @elseif (Auth::user()->role == 1)
             <form action="{{route('Form-Check.pegawai.forklift.create')}}" method="POST">
             @endif
                 @method('POST')
@@ -746,19 +746,19 @@
                                 <b>900 KPA (KGF/CM2)</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="teba" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="teba" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} >
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="teba" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="teba" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} >
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="teba" id="startO" value="o" {{ old('start') == 'o' ? 'checked' : '' }} required>
+                                <input class="form-check-input" type="radio" name="teba" id="startO" value="o" {{ old('start') == 'o' ? 'checked' : '' }} >
                                 <label class="form-check-label" for="startO">
                                     O
                                 </label>

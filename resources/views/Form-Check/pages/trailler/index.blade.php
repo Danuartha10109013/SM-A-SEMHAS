@@ -43,6 +43,20 @@
             </button>
         </form>
     </div>
+
+    <form action="{{ Auth::user()->role == 0 ? route('Form-Check.admin.trailler') : route('Form-Check.pegawai.trailler') }}">
+      <div class="row mb-3">
+          <div class="col-md-5">
+              <input class="form-control" value="{{$start}}" type="date" name="start">
+          </div>
+          <div class="col-md-5">
+              <input class="form-control" value="{{$end}}" type="date" name="end">
+          </div>
+          <div class="col-md-2 align-middle">
+              <button type="submit" class="btn btn-success">Filter</button>
+          </div>
+      </div>
+  </form>
       
       <div class="row">
         <div class="col-12 grid-margin">
@@ -152,8 +166,18 @@
                     @endforeach
                     </tbody>
                   </table>
-                  <!-- Pagination Links -->
-                  {{ $data->links() }}
+                  <style>
+                    svg .w-5 {
+                      display: none;
+                    }
+                    .hidden{
+                      display: none;
+                    }
+                  </style>
+                </div>
+                <div class="mt-3">
+                  {{ $data->onEachSide(2)->links() }}
+                </div>
                 </div>
               </div>
             </div>

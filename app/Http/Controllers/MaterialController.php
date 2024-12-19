@@ -28,7 +28,8 @@ class MaterialController extends Controller
         $searchTerm = $request->input('search');
         $sort = $request->get('sort', 'id'); // Default sort by 'id'
         $direction = $request->get('direction', 'asc'); // Default direction 'asc'
-    
+        $start = $request->get('start', null);
+        $end = $request->get('end', null);
         // Fetch data with search and sorting applied
         $query = CrcM::query();
     
@@ -36,6 +37,14 @@ class MaterialController extends Controller
         if ($searchTerm) {
             $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
             $query->whereIn('user_id', $results);
+        }
+        // Apply date filtering if start and end dates are provided
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        } elseif ($start) {
+            $query->whereDate('created_at', '>=', $start);
+        } elseif ($end) {
+            $query->whereDate('created_at', '<=', $end);
         }
     
         // Apply sorting
@@ -46,7 +55,7 @@ class MaterialController extends Controller
             $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
             // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
         }
-        return view('Form-Check.pages.material.crc.index', compact('data','searchTerm', 'sort', 'direction'));
+        return view('Form-Check.pages.material.crc.index', compact('data','searchTerm', 'sort', 'direction','start','end'));
     }
     
 
@@ -172,6 +181,8 @@ class MaterialController extends Controller
         $searchTerm = $request->input('search');
         $sort = $request->get('sort', 'id'); // Default sort by 'id'
         $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+        $start = $request->get('start', null);
+        $end = $request->get('end', null);
     
         // Fetch data with search and sorting applied
         $query = IngotM::query();
@@ -182,6 +193,15 @@ class MaterialController extends Controller
             $query->whereIn('user_id', $results);
         }
     
+        // Apply date filtering if start and end dates are provided
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        } elseif ($start) {
+            $query->whereDate('created_at', '>=', $start);
+        } elseif ($end) {
+            $query->whereDate('created_at', '<=', $end);
+        }
+
         // Apply sorting
         if(Auth::user()->role == 0){
             // $data = ForkliftM::paginate(10); // 10 items per page
@@ -190,7 +210,7 @@ class MaterialController extends Controller
             $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
             // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
         }
-        return view('Form-Check.pages.material.ingot.index', compact('data','searchTerm', 'sort', 'direction'));
+        return view('Form-Check.pages.material.ingot.index', compact('data','searchTerm', 'sort', 'direction','start','end'));
     }
     
     public function add_ingot (){
@@ -328,6 +348,8 @@ class MaterialController extends Controller
             $searchTerm = $request->input('search');
         $sort = $request->get('sort', 'id'); // Default sort by 'id'
         $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+        $start = $request->get('start', null);
+        $end = $request->get('end', null);
     
         // Fetch data with search and sorting applied
         $query = ResinM::query();
@@ -336,6 +358,15 @@ class MaterialController extends Controller
         if ($searchTerm) {
             $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
             $query->whereIn('user_id', $results);
+        }
+
+        // Apply date filtering if start and end dates are provided
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        } elseif ($start) {
+            $query->whereDate('created_at', '>=', $start);
+        } elseif ($end) {
+            $query->whereDate('created_at', '<=', $end);
         }
     
         // Apply sorting
@@ -346,7 +377,7 @@ class MaterialController extends Controller
             $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
             // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
         }
-            return view('Form-Check.pages.material.resin.index', compact('data','searchTerm', 'sort', 'direction'));
+            return view('Form-Check.pages.material.resin.index', compact('data','searchTerm', 'sort', 'direction','start','end'));
         }
         
         public function add_resin (){

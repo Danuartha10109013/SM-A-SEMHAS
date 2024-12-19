@@ -16,7 +16,9 @@ class ForkliftController extends Controller
     public function index(Request $request) {
         $searchTerm = $request->input('search');
         $sort = $request->get('sort', 'id'); // Default sort by 'id'
-        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+        $direction = $request->get('direction', 'desc'); // Default direction 'asc'
+        $start = $request->get('start', null);
+        $end = $request->get('end', null);
     
         // Fetch data with search and sorting applied
         $query = ForkliftM::query();
@@ -25,6 +27,15 @@ class ForkliftController extends Controller
         if ($searchTerm) {
             $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
             $query->whereIn('user_id', $results);
+        }
+
+        // Apply date filtering if start and end dates are provided
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        } elseif ($start) {
+            $query->whereDate('created_at', '>=', $start);
+        } elseif ($end) {
+            $query->whereDate('created_at', '<=', $end);
         }
     
         // Apply sorting
@@ -35,7 +46,7 @@ class ForkliftController extends Controller
             $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
             // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
         }
-        return view('Form-Check.pages.forklift.index', compact('data', 'searchTerm', 'sort', 'direction'));
+        return view('Form-Check.pages.forklift.index', compact('data', 'searchTerm', 'sort', 'direction','start','end'));
     }
     
 
@@ -169,8 +180,12 @@ class ForkliftController extends Controller
 
         // Save the checklist to the database
         $checklist->save();
+        if (Auth::user()->role == 0){
+            return redirect()->route('Form-Check.admin.forklift')->with('succes', 'Submission complite');
+        }else{
+            return redirect()->route('Form-Check.pegawai.forklift')->with('succes', 'Submission complite');
 
-        return redirect()->route('Form-Check.admin.forklift')->with('succes', 'Submission complite');
+        }
     }
 
     public function print($id){

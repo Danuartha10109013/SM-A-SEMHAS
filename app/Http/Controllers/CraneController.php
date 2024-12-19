@@ -15,9 +15,11 @@ class CraneController extends Controller
     public function index(Request $request) {
         $searchTerm = $request->input('search');
         $sort = $request->get('sort', 'id'); // Default sort by 'id'
-        $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+        $direction = $request->get('direction', 'desc'); // Default direction 'desc'
+        $start = $request->get('start', null);
+        $end = $request->get('end', null);
     
-        // Fetch data with search and sorting applied
+        // Fetch data with search, date range, and sorting applied
         $query = CraneM::query();
     
         // Apply search if it exists
@@ -26,11 +28,21 @@ class CraneController extends Controller
             $query->whereIn('user_id', $results);
         }
     
+        // Apply date filtering if start and end dates are provided
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        } elseif ($start) {
+            $query->whereDate('created_at', '>=', $start);
+        } elseif ($end) {
+            $query->whereDate('created_at', '<=', $end);
+        }
+    
         // Apply sorting
         $data = $query->orderBy($sort, $direction)->paginate(10);
     
-        return view('Form-Check.pages.crane.index', compact('data', 'searchTerm', 'sort', 'direction'));
+        return view('Form-Check.pages.crane.index', compact('data', 'searchTerm', 'sort', 'direction', 'start', 'end'));
     }
+    
     
     
     
@@ -101,8 +113,11 @@ class CraneController extends Controller
 
     // Create a new CraneChecklist record and store the data
     CraneM::create($validatedData);
-
-    return redirect()->route('Form-Check.admin.crane')->with('success', 'Submission complete');
+    if (Auth::user()->role == 0){
+        return redirect()->route('Form-Check.admin.crane')->with('success', 'Submission complete');
+    }else{
+        return redirect()->route('Form-Check.pegawai.crane')->with('success', 'Submission complete');
+    }
 }
 
 

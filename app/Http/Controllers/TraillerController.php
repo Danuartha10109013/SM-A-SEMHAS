@@ -15,6 +15,8 @@ class TraillerController extends Controller
         $searchTerm = $request->input('search');
         $sort = $request->get('sort', 'id'); // Default sort by 'id'
         $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+        $start = $request->get('start', null);
+        $end = $request->get('end', null);
     
         // Fetch data with search and sorting applied
         $query = TraillerM::query();
@@ -23,6 +25,15 @@ class TraillerController extends Controller
         if ($searchTerm) {
             $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
             $query->whereIn('user_id', $results);
+        }
+
+        // Apply date filtering if start and end dates are provided
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        } elseif ($start) {
+            $query->whereDate('created_at', '>=', $start);
+        } elseif ($end) {
+            $query->whereDate('created_at', '<=', $end);
         }
     
         // Apply sorting
@@ -33,7 +44,7 @@ class TraillerController extends Controller
             $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
             // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
         }
-        return view('Form-Check.pages.trailler.index', compact('data', 'searchTerm', 'sort', 'direction'));
+        return view('Form-Check.pages.trailler.index', compact('data', 'searchTerm', 'sort', 'direction','start','end'));
     }
     
 

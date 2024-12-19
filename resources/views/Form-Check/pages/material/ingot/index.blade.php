@@ -43,6 +43,19 @@
             </button>
         </form>
     </div>
+    <form action="{{ Auth::user()->role == 0 ? route('Form-Check.admin.ingot') : route('Form-Check.pegawai.ingot') }}">
+      <div class="row mb-3">
+          <div class="col-md-5">
+              <input class="form-control" value="{{$start}}" type="date" name="start">
+          </div>
+          <div class="col-md-5">
+              <input class="form-control" value="{{$end}}" type="date" name="end">
+          </div>
+          <div class="col-md-2 align-middle">
+              <button type="submit" class="btn btn-success">Filter</button>
+          </div>
+      </div>
+  </form>
       <div class="row">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -55,7 +68,7 @@
                         <th> No </th>
                         <th> No Dokumen </th>
                         <th> Responden </th>
-                        <th> <a href="{{ route('Form-Check.admin.eup', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                        <th> <a href="{{ route('Form-Check.admin.ingot', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
                           Date<i class="fa-solid fa-arrows-up-down"></i>
                           @if ($sort === 'date')
                               <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -146,7 +159,18 @@
                     </tbody>
                   </table>
                   <!-- Pagination Links -->
-                  {{ $data->links() }}
+                  <style>
+                    svg .w-5 {
+                      display: none;
+                    }
+                    .hidden{
+                      display: none;
+                    }
+                  </style>
+                </div>
+                <div class="mt-3">
+                  {{ $data->onEachSide(2)->links() }}
+                </div>
                 </div>
               </div>
             </div>

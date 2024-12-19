@@ -43,6 +43,20 @@
             </button>
         </form>
     </div>
+
+    <form action="{{ Auth::user()->role == 0 ? route('Form-Check.admin.eup') : route('Form-Check.pegawai.eup') }}">
+      <div class="row mb-3">
+          <div class="col-md-5">
+              <input class="form-control" value="{{$start}}" type="date" name="start">
+          </div>
+          <div class="col-md-5">
+              <input class="form-control" value="{{$end}}" type="date" name="end">
+          </div>
+          <div class="col-md-2 align-middle">
+              <button type="submit" class="btn btn-success">Filter</button>
+          </div>
+      </div>
+  </form>
       
       <div class="row">
         <div class="col-12 grid-margin">

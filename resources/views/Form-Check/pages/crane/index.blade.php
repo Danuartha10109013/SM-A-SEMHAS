@@ -30,11 +30,12 @@
         <div class="d-flex">
             <a href="{{ Auth::user()->role == 0 ? route('Form-Check.admin.crane.add') : route('Form-Check.pegawai.crane.add') }}" 
                class="btn btn-primary mr-2" style="text-decoration: none; font-size: 15px">Tambahkan response</a>
+               
             <a href="{{ route('Form-Check.admin.crane.export') }}" 
                class="btn btn-success" style="text-decoration: none; font-size: 15px">Export Excel</a>
         </div>
     
-        <form action="{{ route('Form-Check.admin.crane') }}" method="GET" class="ml-2" style="display: inline;">
+        <form action="{{ Auth::user()->role == 0 ? route('Form-Check.admin.crane') : route('Form-Check.pegawai.crane') }}" method="GET" class="ml-2" style="display: inline;">
             <input type="text" name="search" placeholder="Search By Responden" class="form-control d-inline" style="width: auto; display: inline;" value="{{ $searchTerm }}">
             <input type="hidden" name="sort" value="{{ $sort }}">
             <input type="hidden" name="direction" value="{{ $direction }}">
@@ -43,6 +44,20 @@
             </button>
         </form>
     </div>
+
+    <form action="{{ Auth::user()->role == 0 ? route('Form-Check.admin.crane') : route('Form-Check.pegawai.crane') }}">
+        <div class="row mb-3">
+            <div class="col-md-5">
+                <input class="form-control" value="{{$start}}" type="date" name="start">
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" value="{{$end}}" type="date" name="end">
+            </div>
+            <div class="col-md-2 align-middle">
+                <button type="submit" class="btn btn-success">Filter</button>
+            </div>
+        </div>
+    </form>
     
     <div class="row">
         <div class="col-12 grid-margin">

@@ -19,6 +19,8 @@ class EUPController extends Controller
         $searchTerm = $request->input('search');
         $sort = $request->get('sort', 'id'); // Default sort by 'id'
         $direction = $request->get('direction', 'asc'); // Default direction 'asc'
+        $start = $request->get('start', null);
+        $end = $request->get('end', null);
     
         // Fetch data with search and sorting applied
         $query = EupM::query();
@@ -27,6 +29,15 @@ class EUPController extends Controller
         if ($searchTerm) {
             $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
             $query->whereIn('user_id', $results);
+        }
+
+        // Apply date filtering if start and end dates are provided
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        } elseif ($start) {
+            $query->whereDate('created_at', '>=', $start);
+        } elseif ($end) {
+            $query->whereDate('created_at', '<=', $end);
         }
     
         // Apply sorting
@@ -38,7 +49,7 @@ class EUPController extends Controller
             // $data = ForkliftM::where('user_id', Auth::user()->id)->paginate(10);
         }
         $suppliers = ['a','b'];
-        return view('Form-Check.pages.eup.index', compact('data','suppliers', 'searchTerm', 'sort', 'direction'));
+        return view('Form-Check.pages.eup.index', compact('data','suppliers', 'searchTerm', 'sort', 'direction','start','end'));
     }
 
     public function add (){

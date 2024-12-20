@@ -407,9 +407,7 @@
                     {{$name}}
                   </td>
                   <td class="align-middle text-start">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editModal-{{ $d->id }}">
-                      <i class="fa fa-edit"></i> 
-                    </a>
+                    
                     <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $d->id }}">
                       <i class="fa fa-trash"></i> 
                   </a>
@@ -443,170 +441,7 @@
                       </div>
                     </div>
 
-                    <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal-{{ $d->id }}" data-backdrop="false" tabindex="-1" aria-labelledby="editModalLabel-{{ $d->id }}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                              @if (Auth::user()->role == 0)
-                              <form action="{{ route('L-08.admin.damage.update', $d->id) }}" enctype="multipart/form-data" method="POST">
-                              @else
-                              <form action="{{ route('L-08.pegawai.damage.update', $d->id) }}" enctype="multipart/form-data" method="POST">
-                              @endif
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editModalLabel-{{ $d->id }}">Edit d</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Attribute field with QR scanner -->
-                                        <div class="form-group position-relative">
-                                            <label for="edit_attribute_{{ $d->id }}">Attribute</label>
-                                            <input type="text" class="form-control" id="edit_attribute_{{ $d->id }}" name="attribute" value="{{ $d->attribute }}">
-                                            <button type="button" id="scan-button-attribute-{{ $d->id }}" class="btn btn-secondary position-absolute" style="right: 10px; top: 32px;">Scan QR</button>
-                                            <div id="qr-reader-attribute-{{ $d->id }}" style="width: 100%; display: none;"></div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                          <label for="kondisi" class="form-label">Kondisi Coil</label>
-                                          <select name="kondisi" id="kondisi" class="form-control" required>
-                                              <option value="" selected disabled>-- Select Kondisi Coil --</option>
-                                              <option value="BAIK" {{ $d->kondisi === 'BAIK' ? 'selected' : '' }}>BAIK</option>
-                                              <option value="DAMAGE REALESE QA" {{ $d->kondisi === 'DAMAGE REALESE QA' ? 'selected' : '' }}>DAMAGE REALESE QA</option>
-                                              <option value="other" {{ $d->kondisi != 'DAMAGE REALESE QA' || 'BAIK' ? 'selected' : '' }}>Other</option>
-                                          </select>
-                                      </div>
-                      
-                                      <div class="mb-3" id="other-kondisi-container" style="display: none;">
-                                          <label for="other-kondisi" class="form-label">Please specify</label>
-                                          <input type="text" name="other_kondisi" id="other-kondisi" class="form-control" placeholder="Enter your custom Kondisi">
-                                      </div>
-                      
-                                      <div class="mb-3">
-                                          <label for="group" class="form-label">Group</label>
-                                          <select name="group" id="group" class="form-control" required>
-                                              <option value="" selected disabled>-- Select Group --</option>
-                                              <option value="A" {{ $d->group === 'A' ? 'selected' : '' }}>A</option>
-                                              <option value="B" {{ $d->group === 'B' ? 'selected' : '' }}>B</option>
-                                              <option value="LOKAL" {{ $d->group === 'LOKAL' ? 'selected' : '' }}>LOKAL</option>
-                                              <option value="other" {{ $d->group != 'A' || 'B' || 'LOKAL' ? 'selected' : '' }}>Other</option>
-                                          </select>
-                                      </div>
-                      
-                                      <div class="mb-3" id="other-group-container" style="display: none;">
-                                          <label for="other-group" class="form-label">Please specify</label>
-                                          <input type="text" name="other_group" id="other-group" class="form-control" placeholder="Enter your custom Group">
-                                      </div>
-                      
-                                      <div class="mb-3">
-                                          <label for="layout" class="form-label">Layout Kontainer</label>
-                                          <select name="layout" id="layout" class="form-control" required>
-                                              <option value="" selected disabled>-- Select layout --</option>
-                                              <option value="K1" {{ $d->group === 'K1' ? 'selected' : '' }}>K1</option>
-                                              <option value="K2" {{ $d->group === 'K2' ? 'selected' : '' }}>K2</option>
-                                              <option value="K3" {{ $d->group === 'K3' ? 'selected' : '' }}>K3</option>
-                                              <option value="K4" {{ $d->group === 'K4' ? 'selected' : '' }}>K4</option>
-                                              <option value="K5" {{ $d->group === 'K5' ? 'selected' : '' }}>K5</option>
-                                              <option value="K6" {{ $d->group === 'K6' ? 'selected' : '' }}>K6</option>
-                                              <option value="K7" {{ $d->group === 'K7' ? 'selected' : '' }}>K7</option>
-                                              <option value="K8" {{ $d->group === 'K8' ? 'selected' : '' }}>K8</option>
-                                              <option value="K9" {{ $d->group === 'K9' ? 'selected' : '' }}>K9</option>
-                                              <option value="K10" {{ $d->group === 'K10' ? 'selected' : '' }}>K10</option>
-                                              <option value="K11" {{ $d->group === 'K11' ? 'selected' : '' }}>K11</option>
-                                              <option value="K12" {{ $d->group === 'K12' ? 'selected' : '' }}>K12</option>
-                                              <option value="K13" {{ $d->group === 'K13' ? 'selected' : '' }}>K13</option>
-                                              <option value="K14" {{ $d->group === 'K14' ? 'selected' : '' }}>K14</option>
-                                              <option value="K15" {{ $d->group === 'K15' ? 'selected' : '' }}>K15</option>
-                                              <option value="other" {{ $d->group === 'other' ? 'selected' : '' }}>Other</option>
-                                          </select>
-                                      </div>
-                      
-                                      <div class="mb-3" id="other-layout-container" style="display: none;">
-                                          <label for="other-layout" class="form-label">Please specify</label>
-                                          <input type="text" name="other_layout" id="other-layout" class="form-control" placeholder="Enter your custom Layout">
-                                      </div>
-                      
-                                      <div class="mb-3 position-relative">
-                                          <label for="no_sales" class="form-label">No Sales</label>
-                                          <input type="text" name="no_sales" id="no_sales" value="{{$d->no_sales}}" class="form-control">
-                                      </div>
-                                        
-
-                                        <!-- QR Code Scanner Script -->
-                                        <script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></>
-                                        <script>
-                                             // Toggle display of custom handling input
-                                            document.getElementById('kondisi').addEventListener('change', function() {
-                                                const otherHandlingContainer = document.getElementById('other-kondisi-container');
-                                                otherHandlingContainer.style.display = this.value === 'other' ? 'block' : 'none';
-                                            });
-                                            document.getElementById('group').addEventListener('change', function() {
-                                                const otherHandlingContainer = document.getElementById('other-group-container');
-                                                otherHandlingContainer.style.display = this.value === 'other' ? 'block' : 'none';
-                                            });
-                                            document.getElementById('layout').addEventListener('change', function() {
-                                                const otherHandlingContainer = document.getElementById('other-layout-container');
-                                                otherHandlingContainer.style.display = this.value === 'other' ? 'block' : 'none';
-                                            });
-
-                                            function initQrScanner(buttonId, readerId, inputId) {
-                                                const scanButton = document.getElementById(buttonId);
-                                                const qrReader = document.getElementById(readerId);
-                                                const input = document.getElementById(inputId);
-                                                let html5QrCode = null;
-                                                let scannerIsActive = false;
-
-                                                scanButton.addEventListener('click', () => {
-                                                    input.value = '';
-
-                                                    if (!scannerIsActive) {
-                                                        qrReader.style.display = 'block';
-                                                        html5QrCode = new Html5Qrcode(readerId);
-
-                                                        html5QrCode.start(
-                                                            { facingMode: "environment" },
-                                                            { fps: 10, qrbox: 250 },
-                                                            qrCodeMessage => {
-                                                                input.value = qrCodeMessage;
-                                                                stopQrScanner();
-                                                            },
-                                                            errorMessage => console.log("Scanning failed:", errorMessage)
-                                                        ).catch(err => {
-                                                            console.error("Error starting QR code scanner:", err);
-                                                            qrReader.style.display = 'none';
-                                                        });
-
-                                                        scannerIsActive = true;
-                                                    } else {
-                                                        stopQrScanner();
-                                                    }
-                                                });
-
-                                                function stopQrScanner() {
-                                                    if (html5QrCode) {
-                                                        html5QrCode.stop().then(() => {
-                                                            qrReader.style.display = 'none';
-                                                            scannerIsActive = false;
-                                                            html5QrCode.clear();
-                                                        }).catch(err => console.error("Error stopping the QR code scanner:", err));
-                                                    }
-                                                }
-                                            }
-
-                                            initQrScanner('scan-button-attribute-{{ $d->id }}', 'qr-reader-attribute-{{ $d->id }}', 'edit_attribute_{{ $d->id }}');
-                                            initQrScanner('scan-button-layout-{{ $d->id }}', 'qr-reader-layout-{{ $d->id }}', 'edit_layout_{{ $d->id }}');
-                                        </script>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                   </td>
                 </tr>
@@ -615,18 +450,7 @@
               </tbody>
             </table>
           </div>
-          <style>
-                    svg .w-5 {
-                      display: none;
-                    }
-                    .hidden{
-                      display: none;
-                    }
-                  </style>
-                </div>
-                <div class="mt-3">
-                  {{ $data->onEachSide(2)->links() }}
-                </div>
+          
         </div>
       </div>
 

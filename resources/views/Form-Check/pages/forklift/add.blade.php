@@ -51,6 +51,7 @@
                         <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
                         <select type="text" name="shift_leader" id="team" class="form-control" required>
                           <option value="" selected disabled>--Pilih Shift Leader--</option>
+                          <option value="Panggah S">Panggah S</option>
                           <option value="Danu">Danu</option>
                           <option value="Riyan H">Riyan H</option>
                           <option value="Freddy">Freddy</option>
@@ -746,24 +747,35 @@
                                 <b>900 KPA (KGF/CM2)</b>
                             </label>
                             <div class="form-check ml-3">
-                                <input class="form-check-input" type="radio" name="teba" id="startX" value="v" {{ old('start') == 'x' ? 'checked' : '' }} >
+                                <input class="form-check-input" type="radio" name="teba" id="startX" value="v" {{ old('teba') == 'v' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="startX">
                                     V
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="teba" id="startV" value="x" {{ old('start') == 'v' ? 'checked' : '' }} >
+                                <input class="form-check-input" type="radio" name="teba" id="startV" value="x" {{ old('teba') == 'x' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="startV">
                                     X
                                 </label>
                             </div>
                             <div class="form-check ml-3 mt-2">
-                                <input class="form-check-input" type="radio" name="teba" id="startO" value="o" {{ old('start') == 'o' ? 'checked' : '' }} >
+                                <input class="form-check-input" type="radio" name="teba" id="startO" value="o" {{ old('teba') == 'o' ? 'checked' : '' }}>
                                 <label class="form-check-label" for="startO">
                                     O
                                 </label>
                             </div>
+                            <button type="button" class="btn btn-outline-secondary mt-3" onclick="clearOptions()">Clear Option</button>
                         </div>
+                        
+                        <script>
+                            function clearOptions() {
+                                const radioButtons = document.getElementsByName('teba');
+                                radioButtons.forEach(radio => {
+                                    radio.checked = false;
+                                });
+                            }
+                        </script>
+                        
                         
                         <div class="form-group">
                             <label for="exampleInputPassword1">Keterangan Pengecekan Tekanan Ban (Forklift 25 Ton)</label>

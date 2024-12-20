@@ -50,6 +50,7 @@
                         <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
                         <select type="text" name="shift_leader" id="team" class="form-control" required>
                           <option value="" selected disabled>--Pilih Shift Leader--</option>
+                          <option value="Panggah S">Panggah S</option>
                           <option value="Danu">Danu</option>
                           <option value="Riyan H">Riyan H</option>
                           <option value="Freddy">Freddy</option>

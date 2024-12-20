@@ -65,9 +65,17 @@
         </div>
       </div>
 
+      <div class="mt-5 text-center">
+        <form action="{{route('Open-Packing.admin.backup')}}">
+          <label for="">Start Date</label>
+          <input type="date" name="start" >
+          <label for="">End Date</label>
+          <input type="date" name="end" >
+          <button type="submit" class="btn btn-primary">Backup Data</button>
+        </form>
+      </div>
       
     </div>
-    
 
 
     </div>

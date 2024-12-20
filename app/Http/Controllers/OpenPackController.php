@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BackupOpenPack;
 use App\Exports\OpenPackExportExcel;
 use App\Imports\ImportGM;
 use App\Models\PackingDetailM;
@@ -15,6 +16,27 @@ use Svg\Tag\Rect;
 
 class OpenPackController extends Controller
 {
+
+    public function backup(Request $request)
+{
+    $start = $request->start;
+    $end = $request->end ?? now(); // Set end to the current date if null
+
+    // Validate that the start date is provided
+    if (!$start) {
+        return redirect()->back()->with('error', 'Start date is required.');
+    }
+
+    // Filter data based on the date range
+    $data = PackingDetailM::where('created_at', '>=', $start)
+    ->where('created_at', '<=', $end)
+    ->get();
+
+    // Download the data as an Excel file
+    return Excel::download(new BackupOpenPack($data,$start,$end), 'open_packing-backup.xlsx');
+}
+
+
     public function index(Request $request)
     {
         // Mulai query dari model PackingM

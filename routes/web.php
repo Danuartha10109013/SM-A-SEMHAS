@@ -473,6 +473,7 @@ Route::middleware([AutoLogout::class])->group(function () {
         
         Route::group(['prefix' => 'admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
             Route::get('/',[DashboardControlller::class, 'op_admin'])->name('dashboard');
+            Route::get('/backup',[OpenPackController::class, 'backup'])->name('backup');
             Route::prefix('packing')->group(function () {
                 Route::get('/',[OpenPackController::class, 'index'])->name('packing');
                 Route::get('/add',[OpenPackController::class, 'add'])->name('packing.add');

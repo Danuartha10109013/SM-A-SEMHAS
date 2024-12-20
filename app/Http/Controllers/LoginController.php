@@ -23,22 +23,25 @@ class LoginController extends Controller
         'password' => 'required',
     ]);
 
+    
     // Mencoba mencari user berdasarkan email
     $user = User::where('email', $request->email)->first();
-
+    
+    $email = $request->email;
     // Jika user tidak ditemukan
     if (!$user) {
-        return redirect()->back()->with('error', 'Email tidak ditemukan.');
+        return redirect()->back()->with('error', 'Email tidak ditemukan.')->with('email', $email);
     }
+
 
     // Cek status aktif pengguna
     if ($user->status == 2) {
-        return redirect()->back()->with('error', 'Akun Anda tidak aktif.');
+        return redirect()->back()->with('error', 'Akun Anda tidak aktif.')->with('email', $email);
     }
 
     // Memeriksa kecocokan password
     if (!Hash::check($request->password, $user->password)) {
-        return redirect()->back()->with('error', 'Password salah.');
+        return redirect()->back()->with('error', 'Password salah.')->with('email', $email);
     }
 
     // Autentikasi berhasil

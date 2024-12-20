@@ -111,7 +111,11 @@
                               @csrf
                               <div class="form-group">
                                  <label for="exampleInputEmail1">Email address</label>
-                                 <input type="email" name="email" class="form-control mb-3" id="exampleInputEmail1" placeholder="Enter email">
+                                 @if(session('email'))
+                                 <input type="email" name="email" class="form-control mb-3" value="{{ session('email') }}" id="exampleInputEmail1" placeholder="Enter email">
+                                 @else
+                                 <input type="email" name="email" class="form-control mb-3"  id="exampleInputEmail1" placeholder="Enter email">
+                                 @endif
                               </div>
                               <div class="form-group">
                                  <label for="exampleInputPassword1">Password</label>

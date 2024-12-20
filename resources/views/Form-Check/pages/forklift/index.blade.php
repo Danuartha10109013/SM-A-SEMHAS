@@ -70,7 +70,11 @@
                         <th> No </th>
                         
                         <th> 
+                          @if (Auth::user()->role==0)
                           <a href="{{ route('Form-Check.admin.forklift', ['sort' => 'jenis_forklift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @else
+                          <a href="{{ route('Form-Check.pegawai.forklift', ['sort' => 'jenis_forklift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @endif
                             Jenis Forklift<i class="fa-solid fa-arrows-up-down"></i>
                             @if ($sort === 'jenis_forklift')
                                 <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -79,7 +83,11 @@
                       </th>
                       <th>Responden</th>
                         <th> 
+                          @if (Auth::user()->role==0)
                           <a href="{{ route('Form-Check.admin.forklift', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @else
+                          <a href="{{ route('Form-Check.pegawai.forklift', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @endif
                             Date<i class="fa-solid fa-arrows-up-down"></i>
                             @if ($sort === 'date')
                                 <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -164,6 +172,9 @@
                                   </script>
 
                               @else
+                                  <a href="{{ route('Form-Check.pegawai.forklift.show', $d->id) }}">
+                                    <button class="btn btn-primary me-2">Detail</button>
+                                </a>
                                   <a href="{{ route('Form-Check.pegawai.forklift.print', $d->id) }}">
                                       <button class="btn btn-success">Print</button>
                                   </a>

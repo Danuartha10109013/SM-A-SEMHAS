@@ -38,7 +38,7 @@ class KUserController extends Controller
         'email' => 'required|email|unique:users,email',
         'role' => 'required|integer',
         'username' => 'required|string|max:255|unique:users,username',
-        'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
     ]);
 
     // Handle avatar upload
@@ -85,7 +85,7 @@ class KUserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'role' => 'required|integer',
             'username' => 'required|string|max:255|unique:users,username,' . $id,
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'type' => 'nullable|array', // Validate type as an array if provided
             'type.*' => 'string', // Each item in the type array should be a string
         ]);

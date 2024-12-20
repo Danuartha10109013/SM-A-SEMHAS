@@ -408,6 +408,8 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/add', [CraneController::class, 'add'])->name('crane.add');
                 Route::post('/create', [CraneController::class, 'create'])->name('crane.create');
                 Route::get('/print/{id}', [CraneController::class, 'print'])->name('crane.print');
+                Route::get('/show/{id}', [CraneController::class, 'show'])->name('crane.show');
+
 
             });
             //foklift
@@ -416,6 +418,8 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/add', [ForkliftController::class, 'add'])->name('forklift.add');
                 Route::post('/create', [ForkliftController::class, 'create'])->name('forklift.create');
                 Route::get('/print/{id}', [ForkliftController::class, 'print'])->name('forklift.print');
+                Route::get('/show/{id}', [ForkliftController::class, 'show'])->name('forklift.show');
+
             });
 
             //trailler
@@ -424,6 +428,8 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/add', [TraillerController::class, 'add'])->name('trailler.add');
                 Route::post('/create', [TraillerController::class, 'create'])->name('trailler.create');
                 Route::get('/print/{id}', [TraillerController::class, 'print'])->name('trailler.print');
+                Route::get('/show/{id}', [TraillerController::class, 'show'])->name('trailler.show');
+
             });
 
             //material

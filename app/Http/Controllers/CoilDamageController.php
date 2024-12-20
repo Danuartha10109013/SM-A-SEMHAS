@@ -24,7 +24,7 @@ class CoilDamageController extends Controller
             'jenis_handling' => 'required|string',
             'other_handling' => 'nullable|string|max:255',
             'foto' => 'required|array', // Expecting multiple files as an array
-            'foto.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each file
+            'foto.*' => 'image|mimes:jpeg,png,jpg,gif,svg', // Validate each file
             'keterangan' => 'nullable|string',
         ]);
 
@@ -67,7 +67,7 @@ class CoilDamageController extends Controller
             'jenis_handling' => 'required|string',
             'other_handling' => 'nullable|string|max:255',
             'foto' => 'nullable|array', // Expecting multiple files as an array
-            'foto.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each file
+            'foto.*' => 'image|mimes:jpeg,png,jpg,gif,svg', // Validate each file
             'keterangan' => 'nullable|string',
         ]);
 

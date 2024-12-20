@@ -68,14 +68,24 @@
                     <thead>
                       <tr>
                         <th> No </th>
-                        <th> <a href="{{ route('Form-Check.admin.trailler', ['sort' => 'jenis_forklift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                        <th> 
+                          @if (Auth::user()->role == 0)
+                          <a href="{{ route('Form-Check.admin.trailler', ['sort' => 'jenis_forklift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @else
+                          <a href="{{ route('Form-Check.pegawai.trailler', ['sort' => 'jenis_forklift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @endif
                           Jenis Trailler<i class="fa-solid fa-arrows-up-down"></i>
                           @if ($sort === 'jenis_forklift')
                               <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
                           @endif
                       </a> </th>
                         <th> Responden </th>
-                        <th> <a href="{{ route('Form-Check.admin.trailler', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                        <th> 
+                          @if (Auth::user()->role == 0)
+                          <a href="{{ route('Form-Check.admin.trailler', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @else
+                          <a href="{{ route('Form-Check.pegawai.trailler', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                          @endif
                           Date<i class="fa-solid fa-arrows-up-down"></i>
                           @if ($sort === 'date')
                               <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -157,6 +167,8 @@
                                   </script>
 
                               @else
+                              <a href="{{ route('Form-Check.pegawai.crane.show', $d->id) }}" class="btn btn-primary mr-2">Detail</a>
+
                                   <a class="btn btn-success" href="{{ route('Form-Check.pegawai.trailler.print', $d->id) }}">Print</a>
                               @endif
                           </div>

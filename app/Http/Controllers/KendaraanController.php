@@ -28,9 +28,9 @@ class KendaraanController extends Controller
             'ket_nama_ekspedisi' => 'nullable|string',
             'no_mobil' => 'required|string',
             'ket_no_mobil' => 'nullable|string',
-            'no_mobil_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'no_mobil_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'no_kontainer' => 'required|string',
-            'no_kontainer_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'no_kontainer_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'ket_no_kontainer' => 'nullable|string',
             'tujuan' => 'required|string',
             'ket_tujuan' => 'nullable|string',
@@ -140,8 +140,8 @@ class KendaraanController extends Controller
         'masa_berlaku_kir' => 'required|string',
         'surat_pengantar_ekspedisi' => 'required|string|max:255',
         'segel' => 'required|string|max:255',
-        'no_mobil_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'no_kontainer_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'no_mobil_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        'no_kontainer_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
     ]);
 
     // Find the record by ID

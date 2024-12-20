@@ -70,7 +70,11 @@
                                 <tr>
                                     <th>No</th>
                                     <th>
+                                        @if (Auth::user()->role==0)
                                         <a href="{{ route('Form-Check.admin.crane', ['sort' => 'jenis_crane', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                        @else
+                                        <a href="{{ route('Form-Check.pegawai.crane', ['sort' => 'jenis_crane', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                        @endif
                                             Jenis Crane<i class="fa-solid fa-arrows-up-down"></i>
                                             @if ($sort === 'jenis_crane')
                                                 <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -78,7 +82,11 @@
                                         </a>
                                     </th>
                                     <th>
+                                        @if (Auth::user()->role==0)
                                         <a href="{{ route('Form-Check.admin.crane', ['sort' => 'shift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                        @else
+                                        <a href="{{ route('Form-Check.pegawai.crane', ['sort' => 'shift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                        @endif
                                             Shift<i class="fa-solid fa-arrows-up-down"></i>
                                             @if ($sort === 'shift')
                                                 <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -87,7 +95,11 @@
                                     </th>
                                     <th>Responden</th>
                                     <th>
+                                        @if (Auth::user()->role==0)
                                         <a href="{{ route('Form-Check.admin.crane', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                        @else
+                                        <a href="{{ route('Form-Check.pegawai.crane', ['sort' => 'date', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
+                                        @endif
                                             Date<i class="fa-solid fa-arrows-up-down"></i>
                                             @if ($sort === 'date')
                                                 <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
@@ -104,7 +116,7 @@
                                         <td>{{ $d->jenis_crane }}</td>
                                         <td>{{ $d->shift }}</td>
                                         <td>{{ $d->user->name ?? 'Unknown' }}</td> <!-- Assuming you set up a relationship -->
-                                        <td>{{ $d->date }}</td>
+                                        <td>{{ $d->created_at }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if (Auth::user()->role == 0)
@@ -162,6 +174,8 @@
                                                     </script>
 
                                                 @else
+                                                <a href="{{ route('Form-Check.pegawai.crane.show', $d->id) }}" class="btn btn-primary mr-2">Detail</a>
+
                                                     <a href="{{ route('Form-Check.pegawai.crane.print', $d->id) }}" class="btn btn-success">Print</a>
                                                 @endif
                                             </div>

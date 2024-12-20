@@ -30,7 +30,7 @@ class SupplyController extends Controller
         'shift' => 'required|string|max:255',
         'supply' => 'required|string',
         'foto1' => 'required',
-        'foto1.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image
+        'foto1.*' => 'image|mimes:jpeg,png,jpg,gif', // Validate each image
     ]);
 
     // Store uploaded files in 'public/storage/supply' directory

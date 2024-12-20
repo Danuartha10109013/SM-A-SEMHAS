@@ -70,7 +70,7 @@ class EUPController extends Controller
         'keluar_pallet' => 'nullable',
         'sesuai' => 'required',
         'action' => 'required',
-        'foto7.*' => 'nullable|file|mimes:jpg,png,jpeg|max:2048', // Max 2MB per file
+        'foto7.*' => 'nullable|file|mimes:jpg,png,jpeg', // Max 2MB per file
     ]);
 
     // Handle file uploads

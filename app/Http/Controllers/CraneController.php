@@ -38,7 +38,13 @@ class CraneController extends Controller
         }
     
         // Apply sorting
-        $data = $query->orderBy($sort, $direction)->paginate(10);
+        if(Auth::user()->role == 0){
+            $data = $query->orderBy($sort, $direction)->paginate(10);
+            
+        }else{
+            $data = $query->where('user_id',Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+
+        }
     
         return view('Form-Check.pages.crane.index', compact('data', 'searchTerm', 'sort', 'direction', 'start', 'end'));
     }

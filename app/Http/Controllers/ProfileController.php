@@ -22,7 +22,7 @@ class ProfileController extends Controller
             'username' => 'required|string|max:255|unique:users,username,' . $id,
             'email' => 'required|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|confirmed|min:8',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for profile image
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif', // Validation for profile image
         ]);
     
         // Find user by ID

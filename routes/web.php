@@ -572,6 +572,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                     Route::get('/add',[PListController::class, 'db_add_gm'])->name('gm.add');
                     Route::post('/store',[PListController::class, 'db_store_gm'])->name('gm.store');
                     Route::post('/store/excel',[PListController::class, 'db_store_excel_gm'])->name('gm.excel.store');
+                    Route::post('/store/excel1',[PListController::class, 'db_store_excel_gm1'])->name('gm.excel.store1');
                     Route::get('/edit/{id}',[PListController::class, 'db_edit_gm'])->name('gm.edit');
                     Route::put('/update/{id}',[PListController::class, 'db_update_gm'])->name('gm.update');
                     Route::delete('/delete/{id}',[PListController::class, 'db_delete_gm'])->name('gm.delete');

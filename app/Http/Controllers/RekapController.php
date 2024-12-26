@@ -30,13 +30,9 @@ class RekapController extends Controller
             ->groupBy('no_so')
             ->count();
     
-        // Get the count of grouped 'no_so' where 'packing' is 'YES'
-        $countdone = RekapM::select('no_so', RekapM::raw('MAX(id) as max_id'))
-            ->groupBy('no_so')
-            ->where('packing', 'YES')
-            ->count();
+        
     
-        return view('L-08.pages.rekap.index', compact('data', 'countall', 'countdone', 'search'));
+        return view('L-08.pages.rekap.index', compact('data', 'countall', 'search'));
     }
     
 

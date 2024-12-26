@@ -35,7 +35,7 @@
         </div>
     
         <form action="{{ route('Form-Check.admin.trailler') }}" method="GET" class="ml-2" style="display: inline;">
-            <input type="text" name="search" placeholder="Search By Responden" class="form-control d-inline" style="width: auto; display: inline;" value="{{ $searchTerm }}">
+            <input type="text" name="search" placeholder="Search By Attribute" class="form-control d-inline" style="width: auto; display: inline;" value="{{ $searchTerm }}">
             <input type="hidden" name="sort" value="{{ $sort }}">
             <input type="hidden" name="direction" value="{{ $direction }}">
             <button class="btn btn-success" type="submit"> 
@@ -74,7 +74,7 @@
                           @else
                           <a href="{{ route('Form-Check.pegawai.trailler', ['sort' => 'jenis_forklift', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc', 'search' => $searchTerm]) }}">
                           @endif
-                          Jenis Trailler<i class="fa-solid fa-arrows-up-down"></i>
+                          Jenis Trailer<i class="fa-solid fa-arrows-up-down"></i>
                           @if ($sort === 'jenis_forklift')
                               <i class="fa fa-sort-{{ $direction === 'asc' ? 'up' : 'down' }}"></i>
                           @endif

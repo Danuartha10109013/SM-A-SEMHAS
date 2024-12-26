@@ -155,23 +155,29 @@ if ($request->has('signature1') && !empty($request->input('signature1'))) {
 
     
 
-    foreach ($fields as $field) {
-        if (!array_key_exists($field, $validatedData)) {
-            $validatedData[$field] = null;
-        }
-    }
+    // foreach ($fields as $field) {
+    //     if (!array_key_exists($field, $validatedData)) {
+    //         $validatedData[$field] = null;
+    //     }
+    // }
 
-    $feiel = ['a1', 'a2', 'a3', 'a4', 'a5', 'b1', 'b2', 'b3', 'b4', 'b5', 'c1', 'c2', 'c3', 'c4', 'c5'];
+    // $feiel = ['a1', 'a2', 'a3', 'a4', 'a5', 'b1', 'b2', 'b3', 'b4', 'b5', 'c1', 'c2', 'c3', 'c4', 'c5'];
 
-    foreach ($feiel as $field) {
-        if ($request->$field) {
-            $coilin = Coil::where('kode_produk', $request->$field)->value('id');
-            if ($coilin) {
-                $coil = Coil::find($coilin);
-                $coil->status = 1;
-                $coil->save();
-            }
-        }
+    // foreach ($feiel as $field) {
+    //     if ($request->$field) {
+    //         $coilin = Coil::where('kode_produk', $request->$field)->value('id');
+    //         if ($coilin) {
+    //             $coil = Coil::find($coilin);
+    //             $coil->status = 1;
+    //             $coil->save();
+    //         }
+    //     }
+    // }
+
+    $coil = Coil::where('no_gs',$no_gs)->get();
+    foreach($coil as $c){
+        $c->status = 1;
+        $c->save();
     }
     
 

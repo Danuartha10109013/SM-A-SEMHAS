@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\HasilAkhir;
 use App\Imports\DatabaseImport;
 use App\Imports\DatabMImportExcel;
+use App\Imports\DatabmImportExcel1;
 use App\Models\DatabM;
 use App\Models\PackingM;
 use App\Models\ScanM;
@@ -469,6 +470,11 @@ class PListController extends Controller
     public function db_store_excel_gm(Request $request) {
         // dd($request->all());
         Excel::import(new DatabMImportExcel(), $request->file('excel'));
+        return redirect()->back()->with('success', 'Database Baru Telah ditambahkan');
+    }
+    public function db_store_excel_gm1(Request $request) {
+        // dd($request->all());
+        Excel::import(new DatabmImportExcel1(), $request->file('excel'));
         return redirect()->back()->with('success', 'Database Baru Telah ditambahkan');
     }
 

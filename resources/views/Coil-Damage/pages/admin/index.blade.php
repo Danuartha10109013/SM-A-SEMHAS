@@ -98,7 +98,7 @@
     <form action="{{ route('Coil-Damage.admin.dashboard') }}" method="GET" class="d-inline">
         <input type="hidden" name="year" value="{{ $selectedYear }}">
         <input type="hidden" name="month" value="{{ $selectedMonth }}">
-        <input type="text" name="search" placeholder="Search By Responden" class="form-control d-inline" value="{{ $search }}" style="width: auto;background-color: white">
+        <input type="text" name="search" placeholder="Search By Attribute" class="form-control d-inline" value="{{ $search }}" style="width: auto;background-color: white">
         <button class="btn btn-success" type="submit">Search</button>
     </form>
   </div>

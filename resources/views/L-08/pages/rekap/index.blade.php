@@ -96,7 +96,14 @@
               <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$d->no_so}}</td>
-                <td>{{$countdone}}</td>
+                <td>@php
+                  // Get the count of grouped 'no_so' where 'packing' is 'YES'
+                $countdone = \App\Models\RekapM::select('no_so', $d->no_so)
+                    ->groupBy('no_so')
+                    ->where('packing', 'YES')
+                    ->count();
+                @endphp
+                {{$countdone}}</td>
                 <td>{{$countall}}</td>
                 <td>
                   @if (Auth::user()->role == 0)

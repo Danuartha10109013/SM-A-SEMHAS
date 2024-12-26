@@ -66,7 +66,7 @@
             </li>
             <li class="{{ request()->routeIs('Form-Check.admin.trailler') ? 'active' : '' }}">
                 <a href="{{route('Form-Check.admin.trailler')}}" class="iq-waves-effect" aria-expanded="false">
-                    <i class="mdi mdi-truck"></i><span>Trailler</span>
+                    <i class="mdi mdi-truck"></i><span>Trailer</span>
                 </a>
             </li>
             <li class="{{ request()->routeIs('Form-Check.admin.eup') ? 'active' : '' }}">

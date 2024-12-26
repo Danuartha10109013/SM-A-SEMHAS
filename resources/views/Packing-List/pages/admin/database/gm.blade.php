@@ -40,8 +40,13 @@
                   <label class="btn btn-danger" style="text-decoration: none;">Search</label>
               </button>
           </form>
-          
         </div>
+        <p>template untuk upload selain dari bravo <a href="{{route('download.file','Template Packing List.xlsx')}}">Download</a>
+          <form class="ml-2" action="{{route('Packing-List.admin.gm.excel.store1')}}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <input type="file" name="excel">
+          <button type="submit" class="btn btn-success">Save</button>
+         </form></p>
           <div class="table-responsive">
             <table class="table">
               <thead>

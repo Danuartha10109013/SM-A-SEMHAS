@@ -377,22 +377,24 @@ class SIKController extends Controller
             $signatureData = $request->input('signature');
             $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
             $signatureData = base64_decode($signatureData);
-
-            $signatureFileName = 'signature_' . time() . '.png';
+        
+            $signatureFileName = 'signature_pengemudi_' . time() . '.png'; // Tambahkan '_pengemudi'
             Storage::disk('public')->put('signatures/' . $signatureFileName, $signatureData);
-
+        
             $suratIzinKeluar->pengemudi_ttd = 'storage/signatures/' . $signatureFileName;
         }
+        
         if ($request->has('signature1')) {
-            $signatureData = $request->input('signature1');
-            $signatureData = str_replace('data:image/png;base64,', '', $signatureData);
-            $signatureData = base64_decode($signatureData);
-
-            $signatureFileName = 'signature_' . time() . '.png';
-            Storage::disk('public')->put('signatures/' . $signatureFileName, $signatureData);
-
-            $suratIzinKeluar->satpam_ttd = 'storage/signatures/' . $signatureFileName;
+            $signatureData1 = $request->input('signature1');
+            $signatureData1 = str_replace('data:image/png;base64,', '', $signatureData1);
+            $signatureData1 = base64_decode($signatureData1);
+        
+            $signatureFileName1 = 'signature_security_' . time() . '.png'; // Tambahkan '_security'
+            Storage::disk('public')->put('signatures/' . $signatureFileName1, $signatureData1);
+        
+            $suratIzinKeluar->satpam_ttd = 'storage/signatures/' . $signatureFileName1;
         }
+        
 
         $suratIzinKeluar->save();
 

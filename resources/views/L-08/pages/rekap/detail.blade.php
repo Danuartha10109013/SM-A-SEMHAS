@@ -33,7 +33,7 @@
         <div class="card-body">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <p style="font-weight: bold; margin: 0;">No SO : {{$so}}</p>
-            <p style="margin: 0;"><strong>Keterangan : </strong> {{$keterangan}}</p>
+            <p style="margin: 0;color: red;text-transform: uppercase;font-weight: bolder"><span style="color: black">Keterangan : </span> {{$keterangan}}</p>
           </div>
           
           <form action="{{ route('L-08.admin.rekap.detail', $so) }}" method="GET">

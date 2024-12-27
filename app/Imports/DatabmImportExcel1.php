@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\DatabM;
 use App\Models\ShipA;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -40,9 +41,22 @@ class DatabMImportExcel1 implements ToCollection,ToModel
                 $data->panjang = $row[7];
 
                 // Convert Excel date format to 'Y-m-d'
-                $data->date = is_numeric($row[6]) 
-                    ? Date::excelToDateTimeObject($row[6])->format('Y-m-d') 
-                    : null;
+
+                $data->date = null;
+
+                // Cek apakah kolom adalah angka (format Excel)
+                if (is_numeric($row[6])) {
+                    $data->date = Date::excelToDateTimeObject($row[6])->format('Y-m-d');
+                }
+                // Cek apakah kolom adalah string dengan format d/m/Y
+                elseif (preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $row[6])) {
+                    try {
+                        $data->date = Carbon::createFromFormat('d/m/Y', $row[6])->format('Y-m-d');
+                    } catch (\Exception $e) {
+                        $data->date = null; // Jika parsing gagal, set null
+                    }
+                }
+
 
                 $data->user_id = Auth::user()->id;
                 $data->save();

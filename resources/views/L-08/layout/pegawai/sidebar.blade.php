@@ -56,10 +56,10 @@
                     <i class="mdi mdi-target-variant"></i><span>Rekap Packing</span>
                 </a>
             </li>
-           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Coil Damage</span></li>
+           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Packing Coil</span></li>
            <li class="{{ request()->routeIs('L-08.pegawai.dashboard') ? 'active' : '' }}">
             <a href="{{route('L-08.pegawai.dashboard')}}" class="iq-waves-effect" aria-expanded="false">
-                <i class="mdi mdi-package-variant-closed-remove"></i><span>Damage</span>
+                <i class="mdi mdi-package-variant-closed"></i><span>Packing</span>
             </a>
         </li>
        </ul>

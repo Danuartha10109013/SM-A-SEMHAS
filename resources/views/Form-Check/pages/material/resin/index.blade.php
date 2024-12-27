@@ -97,17 +97,22 @@
                         
                         <td>
                           @if (Auth::user()->role == 0)
-                          <a href="{{route('Form-Check.admin.resin.print', $d->id)}}"> <label class="btn btn-success">print</label></a>
-                          <a href="{{route('Form-Check.admin.resin.show', $d->id)}}"> <label class="btn btn-primary">Show</label></a>
-                          <button type="button" 
-                            class=" btn delete-button" 
-                            data-id="{{ $d->id }}" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal">
-                            <label class="btn btn-danger">
-                              Hapus
-                            </label>
+                          <div class="d-flex">
+                            <a href="{{route('Form-Check.admin.resin.print', $d->id)}}" class="me-2">
+                                <button class="btn btn-success">Print</button>
+                            </a>
+                            <a href="{{route('Form-Check.admin.resin.show', $d->id)}}" class="me-2">
+                                <button class="btn btn-primary">Show</button>
+                            </a>
+                            <button type="button" 
+                                class="btn btn-danger delete-button me-2" 
+                                data-id="{{ $d->id }}" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal">
+                                Hapus
                             </button>
+                        </div>
+                        
 
                             <!-- Confirmation Modal (No Backdrop) -->
                             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="false">

@@ -107,18 +107,27 @@
                         
                         <td>
                           @if (Auth::user()->role == 0)
-                          <a href="{{route('Form-Check.admin.eup.show', $d->id)}}"> <label class="btn btn-primary">detail</label></a>
-                           <a href="{{route('Form-Check.admin.eup.print', $d->id)}}"> <label class="btn btn-success">print</label></a>
-                          <!-- Delete Button -->
+                          <div class="d-flex gap-2 align-items-center">
+                            <!-- Detail Button -->
+                            <a href="{{ route('Form-Check.admin.eup.show', $d->id) }}">
+                                <button class="btn btn-primary">Detail</button>
+                            </a>
+                        
+                            <!-- Print Button -->
+                            <a href="{{ route('Form-Check.admin.eup.print', $d->id) }}">
+                                <button class="btn btn-success">Print</button>
+                            </a>
+                        
+                            <!-- Delete Button -->
                             <button type="button" 
-                            class="delete-button" 
-                            data-id="{{ $d->id }}" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal">
-                            <label class="btn btn-danger">
-                              Hapus
-                            </label>
+                                class="btn btn-danger delete-button" 
+                                data-id="{{ $d->id }}" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal">
+                                Hapus
                             </button>
+                        </div>
+                        
 
                             <!-- Confirmation Modal (No Backdrop) -->
                             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-bs-backdrop="false">

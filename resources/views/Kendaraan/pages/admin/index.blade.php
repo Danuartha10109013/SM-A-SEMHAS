@@ -29,7 +29,9 @@
       </div>
 
       <div class="d-flex justify-content-start mb-3">
+        @if (Auth::user()->role == 1)
         <a href="{{ route('Kendaraan.admin.check.add') }}" class="btn btn-primary me-2"><i class="fa fa-plus"></i> Add New</a>
+        @endif
         <a href="{{ route('Kendaraan.admin.export') }}" class="btn btn-warning"><i class="mdi mdi-export"></i> Export All Data</a>
     </div>
     

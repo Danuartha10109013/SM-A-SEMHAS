@@ -361,7 +361,7 @@
             </style>
           </div>
           <div class="mt-3">
-            {{ $data->onEachSide(2)->links() }}
+            {{ $data->links() }}
           </div>
         
           @if ( request('search'))

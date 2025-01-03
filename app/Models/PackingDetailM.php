@@ -25,4 +25,5 @@ class PackingDetailM extends Model
         'shift_leader',
         'checks',
     ];
+    
 }

@@ -109,7 +109,7 @@
                     <div style="margin-left:-2em;" class="value">: {{$d->size}}</div>
                 </div>
                 <div class="row">
-                    <div class="label">GROSS WEGIHT</div>
+                    <div class="label">GROSS WEIGHT</div>
                     
                     <div style="margin-left:-2em;" class="value">: {{ number_format($d->gros, 0, '.', '.') }} {{$d->satuan_berat}}</div>
                 </div>

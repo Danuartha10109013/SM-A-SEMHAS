@@ -33,8 +33,8 @@ Shippment B || Pegawai
                         @csrf
                         <input type="file" name="shipmentb" >
                         <select style="margin-left: -60px;margin-right: 10px" name="satuan_berat" id="">
-                            <option value="KGS">KGS</option>
-                            <option value="LBS">LBS</option>
+                            <option value="kgs">kgs</option>
+                            <option value="lbs">lbs</option>
                             <option value="MT">MT</option>
                         </select>
                         <button type="submit" class="btn btn-success">Save</button>

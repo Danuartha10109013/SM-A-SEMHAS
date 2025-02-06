@@ -54,8 +54,8 @@ Edit Shippment B || Pegawai
                 <div class="mb-3">
                     <label for="satuan_berat" class="form-label">Satuan Berat</label>
                     <select class="form-control" name="satuan_berat" id="satuan_berat" required>
-                        <option value="KG" {{ $shippmentA->satuan_berat == 'KGS' ? 'selected' : '' }}>KGS</option>
-                        <option value="LBS" {{ $shippmentA->satuan_berat == 'LBS' ? 'selected' : '' }}>LBS</option>
+                        <option value="KG" {{ $shippmentA->satuan_berat == 'kgs' ? 'selected' : '' }}>kgs</option>
+                        <option value="LBS" {{ $shippmentA->satuan_berat == 'lbs' ? 'selected' : '' }}>lbs</option>
                         <option value="MT" {{ $shippmentA->satuan_berat == 'MT' ? 'selected' : '' }}>MT</option>
                     </select>
                 </div>

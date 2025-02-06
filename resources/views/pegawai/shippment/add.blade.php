@@ -38,9 +38,9 @@ Shippment || Pegawai
                 <div class="mb-3">
                     <label for="satuan_berat" class="form-label">Satuan Berat</label>
                     <select class="form-control" name="satuan_berat" id="">
-                        <option value="KGS">KGS</option>
-                        <option value="LBS">LBS</option>
-                        <option value="MT">MT</option>
+                        <option value="kgs">kgs</option>
+                        <option value="lbs">lbs</option>
+                        <option value="mt">mt</option>
                     </select>
                 </div>
 

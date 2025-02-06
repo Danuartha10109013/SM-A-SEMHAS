@@ -5,7 +5,7 @@ Shippment || Pegawai
 
 @section('content')
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Create Shippment B</h1>
+        <h1 class="text-center mb-4">Create Shippment C</h1>
 
         <div class="card shadow p-4">
             @if (Auth::user()->id == 0)
@@ -55,8 +55,8 @@ Shippment || Pegawai
                 <div class="mb-3">
                     <label for="satuan_berat" class="form-label">Satuan Berat</label>
                     <select class="form-control" name="satuan_berat" id="">
-                        <option value="KGS">KGS</option>
-                        <option value="LBS">LBS</option>
+                        <option value="kgs">kgs</option>
+                        <option value="lbs">lbs</option>
                         <option value="MT">MT</option>
                     </select>
                 </div>

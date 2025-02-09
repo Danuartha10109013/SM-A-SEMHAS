@@ -56,6 +56,10 @@
                           <option value="Riyan H">Riyan H</option>
                           <option value="Freddy">Freddy</option>
                           <option value="Dika">Dika</option>
+                          <option value="Alex (PRD)">Alex (PRD)</option>
+                          <option value="Ary (PRD)">Ary (PRD)</option>
+                          <option value="Arsy (PRD)">Arsy (PRD)</option>
+                          <option value="Ahmed (PRD)">Ahmed (PRD)</option>
                           <option value="other">Other</option> <!-- Add this option -->
                       </select>
                     </div>
@@ -84,6 +88,11 @@
                             <option value="10 Ton" {{ old('jenis_crane') == '10 Ton' ? 'selected' : '' }}>10 Ton</option>
                             <option value="5 Ton L8 (No. 1)" {{ old('jenis_crane') == '5 Ton L8 (No. 1)' ? 'selected' : '' }}>5 Ton L8 (No. 1)</option>
                             <option value="5 Ton L8 (No. 2)" {{ old('jenis_crane') == '5 Ton L8 (No. 2)' ? 'selected' : '' }}>5 Ton L8 (No. 2)</option>
+                            <option value="30 Ton Entry (PRD)" {{ old('jenis_crane') == '30 Ton Entry (PRD)' ? 'selected' : '' }}>30 Ton Entry (PRD)</option>
+                            <option value="7,5 Ton Center (PRD)" {{ old('jenis_crane') == '7,5 Ton Center (PRD)' ? 'selected' : '' }}>7,5 Ton Center (PRD)</option>
+                            <option value="10 Ton POT (PRD)" {{ old('jenis_crane') == '10 Ton POT (PRD)' ? 'selected' : '' }}>10 Ton POT (PRD)</option>
+                            <option value="15 Ton APC (PRD)" {{ old('jenis_crane') == '15 Ton APC (PRD)' ? 'selected' : '' }}>15 Ton APC (PRD)</option>
+                            <option value="15 Ton Exit (PRD)" {{ old('jenis_crane') == '15 Ton Exit (PRD)' ? 'selected' : '' }}>15 Ton Exit (PRD)</option>
                         </select>
                     </div>
                     <div class="form-group">

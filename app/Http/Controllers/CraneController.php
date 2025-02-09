@@ -25,7 +25,8 @@ class CraneController extends Controller
         // Apply search if it exists
         if ($searchTerm) {
             $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
-            $query->whereIn('user_id', $results);
+                $query->whereIn('user_id', $results)
+                    ->orWhere('jenis_crane', 'LIKE', '%' . $searchTerm . '%');
         }
     
         // Apply date filtering if start and end dates are provided

@@ -88,7 +88,9 @@
     </style>
 </head>
 <body>
+
     @foreach ($data as $index => $d)
+
     <div class="shipping-mark-container {{ $index > 0 ? 'page-break' : '' }}">
         <div class="shipping-mark">
             <div class="header">SHIPPING MARK</div>

@@ -164,7 +164,7 @@
                 <div class="iq-card-body">
                    <div class="d-flex d-flex align-items-center justify-content-between">
                       <div>
-                        <img width="50%" src="{{asset('D.png')}}" alt="">
+                        <img width="50%" src="{{asset('E.png')}}" alt="">
 
                           <h2>Shippment E</h2>
                           <p class="fontsize-sm m-0">Generate Shippping Mark Type E</p>

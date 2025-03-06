@@ -41,12 +41,15 @@ class ShippmentE extends Controller
     }
     public function storea(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
-            'atribute' => 'required',
-            'destination' => 'required',
-            'size' => 'required',
-            'type' => 'required',
-            'unicode' => 'required',
+            'attribute' => 'required',
+            'name' => 'required',
+            'no_so' => 'required',
+            'product' => 'required',
+            'pod' => 'required',
+            'weight' => 'required',
+            'satuan_berat' => 'required',
         ]);
 
         ShipE::create($validated);
@@ -71,14 +74,15 @@ class ShippmentE extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->all());
-        $back= ShipE::where('id', $id)->value('type');
+        $back= ShipE::where('id', $id)->value('no_so');
         // Validate the incoming request
         $request->validate([
-            'unicode' => 'required',
-            'atribute' => 'required',
-            'size' => 'required',
-            'destination' => 'required',
-            'type' => 'required',
+            'name' => 'required',
+            'attribute' => 'required',
+            'pod' => 'required',
+            'weight' => 'required',
+            'satuan_berat' => 'required',
+            'no_so' => 'required',
         ]);
 
         // Find the specific ShippmentA and update the record
@@ -109,7 +113,9 @@ class ShippmentE extends Controller
     public function print($id){
         $data = ShipE::where('no_so', $id)->get();
         $type= ShipE::select('no_so')->distinct()->where('no_so',$id)->pluck('no_so');
-        return view('pegawai.shippmentd.print', compact('data','type'));
+        // dd($type);
+        
+        return view('pegawai.shippmente.print', compact('data','type'));
 
     }
     public function printone($id){
@@ -156,10 +162,13 @@ class ShippmentE extends Controller
 
     public function destroy($id)
     {
-        $back= ShipE::where('id', $id)->value('type');
+        $back= ShipE::where('id', $id)->value('no_so');
         $shippmenta = ShipE::findOrFail($id);
         $shippmenta->delete();
 
+        if(ShipE::where('id', $id)->value('no_so')== null ){
+            return redirect()->route('Ship-Mark.admin.shipment-e')->with('success', 'Data pada '. $back . 'Dihapus semua');
+        }
         if(Auth::user()->role == 0){
 
             return redirect()->route('Ship-Mark.admin.shipment-e-show',$back)->with('success', 'Shippment deleted successfully');

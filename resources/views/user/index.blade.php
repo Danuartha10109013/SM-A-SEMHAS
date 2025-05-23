@@ -19,10 +19,10 @@
                         <label class="btn btn-primary">
                             <a style="text-decoration: none; font-size: 15px;color:white" href="#" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</a>
                         </label>
-                        <a href="{{route('Administrator.kelola-user.print')}}" class="btn btn-warning"><i class="fa fa-print"></i> Print</a>
+                        <a href="{{route('superadmin.Administrator.kelola-user.print')}}" class="btn btn-warning"><i class="fa fa-print"></i> Print</a>
                     
                         <!-- Search Form on the Right -->
-                        <form action="{{ route('Administrator.kelola-user') }}" method="GET" class="ml-2 mt-2 text-end" style="display: inline;">
+                        <form action="{{ route('superadmin.Administrator.kelola-user') }}" method="GET" class="ml-2 mt-2 text-end" style="display: inline;">
                             <input type="text" name="search" placeholder="Search By Name" class="form-control d-inline" value="{{$search}}" style="width: auto; display: inline;">
                             <button class="btn btn-success" type="submit"> 
                                 Search
@@ -35,8 +35,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th> No </th>
                                     <th> User </th>
                                     <th> Email </th>
+                                    <th> Divisi </th>
                                     <th> Action </th>
                                     <th> Date Joined </th>
                                     <th> Role </th>
@@ -45,14 +47,16 @@
                             <tbody>
                                 @foreach ($data as $d)
                                 <tr>
+                                    <td>{{$loop->iteration}}</td>
                                     <td>
                                         <img src="{{asset('storage/'.$d->profile)}}" class="me-2" alt="image"> {{$d->name}}
                                     </td>
                                     <td> {{$d->email}} </td>
+                                    <td> {{$d->division}} </td>
                                     <td>
-                                        <label class="btn btn-success"><a style="color: white" href="{{route('Administrator.kelola-user.edit',$d->id)}}">Edit</a></label>
+                                        <label class="btn btn-success"><a style="color: white" href="{{route('superadmin.Administrator.kelola-user.edit',$d->id)}}">Edit</a></label>
                                         <label class="btn btn-danger">
-                                          <form action="{{ route('Administrator.kelola-user.delete', $d->id) }}" method="POST" style="display: inline;">
+                                          <form action="{{ route('superadmin.Administrator.kelola-user.delete', $d->id) }}" method="POST" style="display: inline;">
                                               @csrf
                                               @method('DELETE')
                                               <button type="submit" style="border: none; background: none; color: inherit; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this user?');">
@@ -90,7 +94,7 @@
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('Administrator.kelola-user.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('superadmin.Administrator.kelola-user.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
@@ -111,6 +115,22 @@
                         <label for="email">Email</label>
                         <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
                     </div>
+                    <div class="form-group">
+                        <label for="division">division</label>
+                        <select name="division" id="division" class="form-control" required>
+                            <option value="" selected disabled>--Pilih Divisi--</option>
+                            <option value="Warehouse">Warehouse</option>
+                            <option value="Produksi">Produksi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select name="role" id="role" class="form-control" required onchange="filterTypes()">
+                            <option value="0">Admin</option>
+                            <option value="1">Pegawai</option>
+                        </select>
+                    </div>
+
                     <div class="form-group ml-5">
                         <label for="type">Type</label>
                         <div id="type">
@@ -132,10 +152,6 @@
                                         <input class="form-check-input" type="checkbox" name="type[]" value="OP" id="typeOP">
                                         <label class="form-check-label" for="typeOP">Open Packing</label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="type[]" value="SB" id="typeSB">
-                                        <label class="form-check-label" for="typeSB">Supply Bahan</label>
-                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-check">
@@ -143,35 +159,40 @@
                                         <label class="form-check-label" for="typePL">Packing List</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="type[]" value="CK" id="typePL">
-                                        <label class="form-check-label" for="typePL">Checklist Kendaraan</label>
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="CK" id="typeCK">
+                                        <label class="form-check-label" for="typeCK">Checklist Kendaraan</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="type[]" value="SL" id="typePL">
-                                        <label class="form-check-label" for="typePL">Scan Layout</label>
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="SL" id="typeSL">
+                                        <label class="form-check-label" for="typeSL">Scan Layout</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="type[]" value="CD" id="typeCD">
                                         <label class="form-check-label" for="typeCD">Coil Damage</label>
                                     </div>
-                                   
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="type[]" value="all" id="typeAll">
                                         <label class="form-check-label" for="typeAll">Akses Penuh</label>
                                     </div>
                                 </div>
                             </div>
-                            
-                            
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="role">Role</label>
-                        <select name="role" id="role" class="form-control" required>
-                            <option name="role" value="0">Admin</option>
-                            <option name="role" value="1">Pegawai</option>
-                        </select>
-                    </div>
+
+                    <script>
+                        function filterTypes() {
+                            const role = document.getElementById('role').value;
+                            const allowedForPegawai = ['FC', 'CK', 'SL'];
+
+                            document.querySelectorAll('input[name="type[]"]').forEach(input => {
+                                const shouldShow = role === '0' || allowedForPegawai.includes(input.value);
+                                input.closest('.form-check').style.display = shouldShow ? 'block' : 'none';
+                            });
+                        }
+
+                        // Jalankan saat halaman dimuat
+                        window.onload = filterTypes;
+                    </script>
                     <div class="form-group">
                         <label for="profile">Profile Picture</label>
                         <input type="file" name="avatar" class="form-control" id="profile">

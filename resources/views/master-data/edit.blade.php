@@ -37,13 +37,6 @@ Kelola User @if(Auth::user()->role == 0)
           </div>
 
           <div class="form-group">
-            <label for="division">Divisi</label>
-            <select class="form-control" id="division" name="division" required>
-              <option value="Warehouse" {{ $data->division == 'Warehouse' ? 'selected' : '' }}>Warehouse</option>
-              <option value="Produksi" {{ $data->division == 'Produksi' ? 'selected' : '' }}>Produksi</option>
-            </select>
-          </div>
-          <div class="form-group">
             <label for="role">Role</label>
             <select class="form-control" id="role" name="role" required>
               <option value="0" {{ $data->role == 0 ? 'selected' : '' }}>Admin</option>

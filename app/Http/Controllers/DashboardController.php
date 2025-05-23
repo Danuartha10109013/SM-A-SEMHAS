@@ -13,6 +13,8 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
 {
+    // $errorin;
+
     $search = $request->input('search');
     $start = $request->input('start');
     $end = $request->input('end');
@@ -30,9 +32,9 @@ class DashboardController extends Controller
         $query->whereBetween('created_at', [$start, $end]);
     }
 
-    $data = $query->get();
+    $data = $query->latest()->get();
 
-    return view('Mapping-Container.content.dashboard.indexss', compact('data'));
+    return view('Mapping-Container.content.dashboard.indexss', compact('data',));
 }
 
     public function show($id)

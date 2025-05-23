@@ -12,43 +12,54 @@ use PDF;
 
 class CraneController extends Controller
 {
-    public function index(Request $request) {
-        $searchTerm = $request->input('search');
-        $sort = $request->get('sort', 'id'); // Default sort by 'id'
-        $direction = $request->get('direction', 'desc'); // Default direction 'desc'
-        $start = $request->get('start', null);
-        $end = $request->get('end', null);
-    
-        // Fetch data with search, date range, and sorting applied
-        $query = CraneM::query();
-    
-        // Apply search if it exists
-        if ($searchTerm) {
-            $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
-                $query->whereIn('user_id', $results)
-                    ->orWhere('jenis_crane', 'LIKE', '%' . $searchTerm . '%');
-        }
-    
-        // Apply date filtering if start and end dates are provided
-        if ($start && $end) {
-            $query->whereBetween('created_at', [$start, $end]);
-        } elseif ($start) {
-            $query->whereDate('created_at', '>=', $start);
-        } elseif ($end) {
-            $query->whereDate('created_at', '<=', $end);
-        }
-    
-        // Apply sorting
-        if(Auth::user()->role == 0){
-            $data = $query->orderBy($sort, $direction)->paginate(10);
-            
-        }else{
-            $data = $query->where('user_id',Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+   public function index(Request $request)
+{
+    $searchTerm = $request->input('search');
+    $sort = $request->get('sort', 'id');
+    $direction = $request->get('direction', 'desc');
+    $start = $request->get('start', null);
+    $end = $request->get('end', null);
 
-        }
-    
-        return view('Form-Check.pages.crane.index', compact('data', 'searchTerm', 'sort', 'direction', 'start', 'end'));
+    $div = Auth::user()->division;
+
+    // Base query
+    $query = CraneM::query();
+
+    // Filter by division and jenis_crane
+    if ($div === 'Produksi') {
+        $query->where('jenis_crane', 'LIKE', '%PRD%');
+    } else { // Assume Warehouse or others
+        $query->where('jenis_crane', 'NOT LIKE', '%PRD%');
     }
+
+    // Apply search if it exists
+    if ($searchTerm) {
+        $results = User::where('name', 'LIKE', '%' . $searchTerm . '%')->pluck('id');
+        $query->where(function ($q) use ($results, $searchTerm) {
+            $q->whereIn('user_id', $results)
+              ->orWhere('jenis_crane', 'LIKE', '%' . $searchTerm . '%');
+        });
+    }
+
+    // Apply date filtering if start and/or end is provided
+    if ($start && $end) {
+        $query->whereBetween('created_at', [$start, $end]);
+    } elseif ($start) {
+        $query->whereDate('created_at', '>=', $start);
+    } elseif ($end) {
+        $query->whereDate('created_at', '<=', $end);
+    }
+
+    // Role-based filtering
+    if (Auth::user()->role == 0) {
+        $data = $query->orderBy($sort, $direction)->paginate(10);
+    } else {
+        $data = $query->where('user_id', Auth::user()->id)->orderBy($sort, $direction)->paginate(10);
+    }
+
+    return view('Form-Check.pages.crane.index', compact('data', 'searchTerm', 'sort', 'direction', 'start', 'end'));
+}
+
     
     
     
@@ -113,11 +124,13 @@ class CraneController extends Controller
         'catatan' => 'nullable|string|max:255',
         'mtc' => 'required|string|max:255',
         'other_sift_leader' => 'nullable|string|max:255', // Add validation for other shift leader input
+        'jenis_crane_other' => 'nullable|string|max:255', // Add validation for other shift leader input
     ]);
 
     // Update shift_leader if the 'other' option is selected
     $validatedData['shift_leader'] = $request->shift_leader == 'other' ? $request->other_sift_leader : $request->shift_leader;
-
+    $validatedData['jenis_crane'] = $request->jenis_crane == 'Other' ? $request->jenis_crane_other : $request->jenis_crane;
+    // dd($request->jenis_crane == 'Other' ? $request->jenis_crane_other : $request->jenis_crane);
     // Create a new CraneChecklist record and store the data
     CraneM::create($validatedData);
     if (Auth::user()->role == 0){

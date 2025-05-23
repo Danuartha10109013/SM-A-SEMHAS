@@ -292,7 +292,7 @@ class PListController extends Controller
     public function hasil(Request $request, $ket)
     {
         $query = ScanM::where('keterangan', $ket);
-    
+        // dd($query);
         // Pencarian berdasarkan 'attribute'
         if ($request->has('search') && !empty($request->search)) {
             $query->where('attribute', 'LIKE', '%' . $request->search . '%');
@@ -310,6 +310,7 @@ class PListController extends Controller
     
         // Ambil data
         $data = $query->get();
+        // dd($data);
     
         return view('Packing-List.pages.admin.hasil.index', compact('data', 'ket', 'sort', 'direction'));
     }

@@ -13,6 +13,7 @@ use App\Http\Middleware\CheckTypeMM;
 use App\Http\Middleware\CheckTypeOP;
 use App\Http\Middleware\PegawaiMiddleware;
 use App\Http\Middleware\ScanLayout;
+use App\Http\Middleware\SuperAdmin;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -32,7 +33,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('admin', [
             AdminMiddleware::class,
         ]);
-    
+        $middleware->appendToGroup('superadmin', [
+            SuperAdmin::class,
+        ]);
+        $middleware->appendToGroup('Administrator', [
+            CheckTypeADM::class,
+        ]);
         $middleware->appendToGroup('pegawai', [
             PegawaiMiddleware::class,
         ]);
@@ -146,9 +152,7 @@ return Application::configure(basePath: dirname(__DIR__))
             PegawaiMiddleware::class,
         ]);
         //Administrator
-        $middleware->appendToGroup('Administrator', [
-            CheckTypeADM::class,
-        ]);
+        
         
     })
     

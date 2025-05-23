@@ -44,21 +44,28 @@
                     <div class="form-group">
                       <label for="excelFile">Shift</label>
                       <select type="text" class="form-control" id="excelFile" name="shift" required>
-                        <option value="" selected disabled>--Pilih Shift--</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                       @php
+                                $shift = \App\Models\ShftM::all();
+                            @endphp
+                            <option value="" selected disabled>--Pilih Sift--</option>
+                            @foreach ($shift as $s)
+                                
+                            <option value="{{ $s->shift }}" {{ old('shift') == $s->shift ? 'selected' : '' }}>{{ $s->description }}</option>
+
+                            @endforeach
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
                       <select type="text" name="shift_leader" id="team" class="form-control" required>
-                        <option value="" selected disabled>--Pilih Shift Leader--</option>
-                        <option value="Danu">Danu</option>
-                        <option value="Riyan H">Riyan H</option>
-                        <option value="Freddy">Freddy</option>
-                        <option value="Dika">Dika</option>
-                        <option value="other">Other</option> <!-- Add this option -->
+                        @php
+                            $team_lead = \App\Models\TeamLeadM::where('active',1)->whereJsonContains('type', 'OP')->get()
+                        @endphp
+                          <option value="" selected disabled>--Pilih Shift Leader--</option>
+                          @foreach ($team_lead as $tl)
+                          <option value="{{$tl->name}}">{{$tl->name}}</option>
+                               <!-- Add this option -->
+                               @endforeach
                     </select>
                   </div>
                 
@@ -382,7 +389,9 @@
               </thead>
               <tbody>
                 @if ($att)
-                
+                  {{-- @php
+                    dd($att);
+                  @endphp --}}
                   @foreach ($att as $d)
                     <tr>
                       <td>{{$loop->iteration}}</td>
@@ -398,10 +407,7 @@
                           <td style="color: green">{{$d->persentase}} %</td>
                       @endif
                       <td>{{$d->keterangan}}</td>
-                      <td><a href="{{route('Open-Packing.admin.packing.edit',$d->id)}}">
-                        <label class="btn btn-primary">
-                          <i class="fas fa-edit"></i> 
-                        </label></a>
+                      <td>
 
                         <a href="#" 
                         class="delete-button" 

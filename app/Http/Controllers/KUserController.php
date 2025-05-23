@@ -35,6 +35,7 @@ class KUserController extends Controller
     // Validate the incoming request
     $request->validate([
         'name' => 'required|string|max:255',
+        'division' => 'required|string|in:Warehouse,Produksi',
         'email' => 'required|email|unique:users,email',
         'role' => 'required|integer',
         'username' => 'required|string|max:255|unique:users,username',
@@ -59,6 +60,7 @@ class KUserController extends Controller
         'name' => $request->input('name'),
         'email' => $request->input('email'),
         'username' => $request->input('username'),
+        'division' => $request->input('division'),
         'type' => $typeJson, // Store type as JSON
         'password' => Hash::make('Tatametal123'), // Replace with the actual password logic
         'role' => $request->input('role'),
@@ -67,7 +69,7 @@ class KUserController extends Controller
     ]);
 
     // Redirect back with a success message
-    return redirect()->route('Administrator.kelola-user')->with('success', 'User added successfully.');
+    return redirect()->route('superadmin.Administrator.kelola-user')->with('success', 'User added successfully.');
 }
 
 
@@ -84,6 +86,7 @@ class KUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'role' => 'required|integer',
+            'division' => 'required|string|in:Warehouse,Produksi',
             'username' => 'required|string|max:255|unique:users,username,' . $id,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'type' => 'nullable|array', // Validate type as an array if provided
@@ -98,6 +101,7 @@ class KUserController extends Controller
         $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->role = $request->input('role');
+        $user->division = $request->input('division');
 
         // Update password only if provided
         if ($request->filled('password')) {
@@ -129,7 +133,7 @@ class KUserController extends Controller
         $user->save();
 
         // Redirect back with success message
-        return redirect()->route('Administrator.kelola-user')->with('success', 'User updated successfully!');
+        return redirect()->route('superadmin.Administrator.kelola-user')->with('success', 'User updated successfully!');
     }
 
     public function destroy($id)
@@ -146,7 +150,7 @@ class KUserController extends Controller
         $user->delete();
 
         // Redirect back with a success message
-        return redirect()->route('Administrator.kelola-user')->with('success', 'User deleted successfully!');
+        return redirect()->route('superadmin.Administrator.kelola-user')->with('success', 'User deleted successfully!');
     }
 
     public function print(){

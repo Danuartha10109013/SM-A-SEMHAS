@@ -50,17 +50,15 @@
                       <div class="mb-3">
                         <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
                         <select type="text" name="shift_leader" id="team" class="form-control" required>
+                            @php
+                                $team_lead = \App\Models\TeamLeadM::where('active',1)->whereJsonContains('type', 'FC')->get()
+                            @endphp
                           <option value="" selected disabled>--Pilih Shift Leader--</option>
-                          <option value="Panggah S">Panggah S</option>
-                          <option value="Danu">Danu</option>
-                          <option value="Riyan H">Riyan H</option>
-                          <option value="Freddy">Freddy</option>
-                          <option value="Dika">Dika</option>
-                          <option value="Alex (PRD)">Alex (PRD)</option>
-                          <option value="Ary (PRD)">Ary (PRD)</option>
-                          <option value="Arsy (PRD)">Arsy (PRD)</option>
-                          <option value="Ahmed (PRD)">Ahmed (PRD)</option>
-                          <option value="other">Other</option> <!-- Add this option -->
+                          @foreach ($team_lead as $tl)
+                          <option value="{{$tl->name}}">{{$tl->name}}</option>
+                              
+                          @endforeach
+                         
                       </select>
                     </div>
                   
@@ -80,29 +78,54 @@
                       });
                   </script>
                     <div class="form-group">
-                        <label for="label">KAPASITAS/AREA CRANE<small style="color: red;">*</small>
-                        </label>
-                        <select class="form-control" name="jenis_crane" id="exampleSelectOption" required>
-                            <option value="" selected disabled>--Pilih Kapasistas Crane--</option>
-                            <option value="30 Ton" {{ old('jenis_crane') == '30 Ton' ? 'selected' : '' }}>30 Ton</option>
-                            <option value="10 Ton" {{ old('jenis_crane') == '10 Ton' ? 'selected' : '' }}>10 Ton</option>
-                            <option value="5 Ton L8 (No. 1)" {{ old('jenis_crane') == '5 Ton L8 (No. 1)' ? 'selected' : '' }}>5 Ton L8 (No. 1)</option>
-                            <option value="5 Ton L8 (No. 2)" {{ old('jenis_crane') == '5 Ton L8 (No. 2)' ? 'selected' : '' }}>5 Ton L8 (No. 2)</option>
-                            <option value="30 Ton Entry (PRD)" {{ old('jenis_crane') == '30 Ton Entry (PRD)' ? 'selected' : '' }}>30 Ton Entry (PRD)</option>
-                            <option value="7,5 Ton Center (PRD)" {{ old('jenis_crane') == '7,5 Ton Center (PRD)' ? 'selected' : '' }}>7,5 Ton Center (PRD)</option>
-                            <option value="10 Ton POT (PRD)" {{ old('jenis_crane') == '10 Ton POT (PRD)' ? 'selected' : '' }}>10 Ton POT (PRD)</option>
-                            <option value="15 Ton APC (PRD)" {{ old('jenis_crane') == '15 Ton APC (PRD)' ? 'selected' : '' }}>15 Ton APC (PRD)</option>
-                            <option value="15 Ton Exit (PRD)" {{ old('jenis_crane') == '15 Ton Exit (PRD)' ? 'selected' : '' }}>15 Ton Exit (PRD)</option>
-                        </select>
+                        <label for="label">KAPASITAS/AREA CRANE<small style="color: red;">*</small></label>
+                        <select class="form-control" name="jenis_crane" id="jenisCraneSelect" required>
+                            @php
+                                $div = Auth::user()->division;
+                                $kapasitas = \App\Models\KapasitasM::where('jenis', 'Crane')->where('division',$div)->get();
+                            @endphp
+                            <option value="" selected disabled>--Pilih Kapasitas Crane--</option>
+                            @foreach ($kapasitas as $k)
+                                <option value="{{ $k->name }}" {{ old('jenis_crane') == $k->name ? 'selected' : '' }}>{{ $k->name }}</option>
+                            @endforeach
+                            </select>
+
+                        <!-- Input field for 'Other' -->
+                        <div id="otherCraneInput" style="display: none;">
+                            <label for="other_crane">Kapasitas Crane Lainnya</label>
+                            <input type="text" class="form-control" name="jenis_crane_other" id="otherCrane" placeholder="Ketik kapasitas crane lainnya">
+                        </div>
                     </div>
+
+                    <!-- JavaScript -->
+                    <script>
+                        // Detect when the 'Other' option is selected
+                        document.getElementById('jenisCraneSelect').addEventListener('change', function() {
+                            var otherOption = this.value === 'Other';
+                            var otherCraneInput = document.getElementById('otherCraneInput');
+                            otherCraneInput.style.display = otherOption ? 'block' : 'none';
+                        });
+
+                        // If the value is 'Other' on page load, show the input field
+                        if (document.getElementById('jenisCraneSelect').value === 'Other') {
+                            document.getElementById('otherCraneInput').style.display = 'block';
+                        }
+                    </script>
+
                     <div class="form-group">
                         <label for="label">SHIFT<small style="color: red;">*</small>
                         </label>
                         <select class="form-control" name="shift" id="exampleSelectOption" required>
+                            @php
+                                $shift = \App\Models\ShftM::all();
+                            @endphp
                             <option value="" selected disabled>--Pilih Sift--</option>
-                            <option value="1" {{ old('jenis_crane') == '1' ? 'selected' : '' }}>1</option>
-                            <option value="2" {{ old('jenis_crane') == '2' ? 'selected' : '' }}>2</option>
-                            <option value="3" {{ old('jenis_crane') == '3' ? 'selected' : '' }}>3</option>
+                            @foreach ($shift as $s)
+                                
+                            <option value="{{ $s->shift }}" {{ old('shift') == $s->shift ? 'selected' : '' }}>{{ $s->description }}</option>
+
+                            @endforeach
+                       
                         </select>
                     </div>
                     <div class="form-group">

@@ -26,6 +26,7 @@
     <!-- Plugin css for this page -->
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
 
     <link rel="stylesheet" href="{{asset('vendorfc/src/assets/vendors/font-awesome/css/font-awesome.min.css')}}" />
     {{-- <link rel="stylesheet" href="{{asset('vendorfc/src/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}"> --}}
@@ -47,27 +48,7 @@
       <div class="wrapper">
          <!-- Sidebar  -->
          <div class="iq-sidebar">
-            @if (Auth::user()->type == 'Mapping')
-                @if (Auth::user()->role == 0)
-                    @include('Mapping-Container.layouts.section.sidebar')
-                @elseif (Auth::user()->role == 1)
-                    @include('Mapping-Container.layouts.section.sidebar')
-                @endif
-            @else
-                @if (Auth::user()->role == 0)
-                    @include('Form-Check.layout.admin.sidebar')
-                @elseif (Auth::user()->role == 1)
-                    @include('Form-Check.layout.pegawai.sidebar')
-                @endif
-            @endif
-           @if (Auth::user()->role == 5)
-                @if (Route::is('superadmin.Administrator.*'))
-                    @include('user.layout.sidebar')
-                @else
-                    @include('master-data.layout.sidebar')
-                @endif
-            @endif
-
+                 @include('master-data.layout.sidebar')
          </div>
          <!-- TOP Nav Bar -->
          <div class="iq-top-navbar">

@@ -15,7 +15,7 @@ class CheckTypeADM
             $user = Auth::user();
             $type = json_decode($user->type, true); // Decode the JSON type field
 
-            if (is_array($type) && (in_array("AD", $type) || in_array("all", $type))) {
+            if ($user->role == 5) {
                 return $next($request);
             }
             return response()->view('errors.custom', ['message' => 'Youre not should be in this section'], 403);

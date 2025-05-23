@@ -31,11 +31,21 @@
                      <i class="ri-home-4-line"></i><span>Dashboard</span>
                   </a>
             </li>
-          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Kelola Pegawai</span></li>
+          <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Data Master</span></li>
 
-          <li class="{{ request()->routeIs('superadmin.Administrator.kelola-user') ? 'active' : '' }}">
-              <a  href="{{ route('superadmin.Administrator.kelola-user') }}" class="btn btn-primary">
-               <i class="fa fa-user text-light"></i><span class="text-light">Pegawai</span>
+          <li class="{{ request()->routeIs('superadmin.data-master') ? 'active' : '' }} mb-3">
+              <a  href="{{ route('superadmin.data-master') }}" class="btn btn-secondary">
+               <i class="mdi mdi-database-settings text-light"></i><span class="text-light">All Page</span>
+            </a>
+          </li>
+          <li class="{{ request()->routeIs('superadmin.form-check') ? 'active' : '' }} mb-3">
+              <a  href="{{ route('superadmin.form-check') }}" class="btn btn-secondary">
+               <i class="mdi mdi-checkbox-marked-outline text-light"></i><span class="text-light">Form Check</span>
+            </a>
+          </li>
+          <li class="{{ request()->routeIs('superadmin.kondisi.kondisi') ? 'active' : '' }} mb-3">
+              <a  href="{{ route('superadmin.kondisi.kondisi') }}" class="btn btn-secondary">
+               <i class="mdi mdi-checkbox-marked-outline text-light"></i><span class="text-light">Kondisi</span>
             </a>
           </li>
         </ul>

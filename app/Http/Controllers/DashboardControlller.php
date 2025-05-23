@@ -82,12 +82,12 @@ class DashboardControlller extends Controller
     }
 
     public function k_admin(){
-        $data = KendaraanM::all();
+        $data = KendaraanM::orderBy('created_at', 'desc')->get();
         return view('Kendaraan.pages.admin.index',compact('data'));
     }
     
     public function k_pegawai(){
-        $records= KendaraanM::all();
+        $records= KendaraanM::orderBy('created_at', 'desc')->get();
         return view('Kendaraan.pages.pegawai.index',compact('records'));
 
     }

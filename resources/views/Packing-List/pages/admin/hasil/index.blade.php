@@ -117,7 +117,7 @@
                                 @php
                                     $scan = \App\Models\DatabM::where('attribute', $d->attribute)->select('kode', 'nama_produk', 'qty', 'uom', 'attribute', 'storage_bin','panjang', 'date')->distinct()->get();
                                     $scanCount = $scan->count();
-                                    // dd($scanCount);
+                                    // dd($scan);
 
                                 @endphp
 

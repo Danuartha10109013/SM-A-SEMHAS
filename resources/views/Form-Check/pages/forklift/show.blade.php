@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-8">
                     <h1 style="font-size: 24px;" class="fw fw-bold text-center">
-                        CRANE OPERATOR DAILY CHECKLIST
+                        FORKLIFT OPERATOR DAILY CHECKLIST
                     </h1>
                 </div>
                 <div class="col-md-2">

@@ -89,7 +89,7 @@
    </head>
    <body>
       <div class="judul">
-         <h1 style="font-size: 2em;font-weight: bolder">Sistem Informasi Digital Warehouse</h1>
+         <h1 style="font-size: 2em;font-weight: bolder">Sistem Informasi Manajemen Operasional</h1>
          <h1 style="font-size: 1em">PT. Tata Metal Lestari</h1>
       </div>
 
@@ -97,130 +97,87 @@
          <img src="{{ asset('Logo TML.png') }}" alt="Logo PT Tata Metal Lestari">
       </div>
       @if(Auth::check())
-         <div class="menu-container">
-         @if (Auth::user()->role == 0)
-            <a href="{{route('Ship-Mark.admin.dashboard')}}" class="menu-item">
-         @else
-         <a href="{{route('Ship-Mark.pegawai.dashboard')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-shipping-pallet"></i>
-                  <div class="menu-title">Ship Mark</div>
-               </div>
-            </a>
+      @php
+$akses = json_decode(Auth::user()->type);
 
-            @if (Auth::user()->role == 0)
-            <a href="{{route('Mapping.admin.shipment')}}" class="menu-item">
-         @else
-         <a href="{{route('Mapping.pegawai.shipment')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-map-marker-path"></i>
-                  <div class="menu-title">Mapping</div>
-               </div>
-            </a>
-            @if (Auth::user()->role == 0)
-            <a href="{{route('Form-Check.admin.dashboard')}}" class="menu-item">
-         @else
-         <a href="{{route('Form-Check.pegawai.dashboard')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-checkbox-marked-outline"></i>
-                  <div class="menu-title">Form Check</div>
-               </div>
-            </a>
+// Daftar semua menu dan route-nya
+$menuItems = [
+    "SP"  => ["title" => "Ship Mark", "icon" => "mdi-shipping-pallet", "route" => Auth::user()->role == 0 ? route('Ship-Mark.admin.dashboard') : route('Ship-Mark.pegawai.dashboard')],
+    "MP"  => ["title" => "Mapping", "icon" => "mdi-map-marker-path", "route" => Auth::user()->role == 0 ? route('Mapping.admin.shipment') : route('Mapping.pegawai.shipment')],
+    "FC"  => ["title" => "Form Check", "icon" => "mdi-checkbox-marked-outline", "route" => Auth::user()->role == 0 ? route('Form-Check.admin.dashboard') : route('Form-Check.pegawai.dashboard')],
+    "OP"  => ["title" => "Open Packing", "icon" => "mdi-package-variant-closed-check", "route" => Auth::user()->role == 0 ? route('Open-Packing.admin.dashboard') : route('Open-Packing.pegawai.dashboard')],
+    "PL"  => ["title" => "Packing List", "icon" => "mdi-format-list-checks", "route" => route('Packing-List.admin.dashboard')],
+    "CK"  => ["title" => "Checklist Kendaraan", "icon" => "mdi-car", "route" => Auth::user()->role == 0 ? route('Kendaraan.admin.dashboard') : route('Kendaraan.pegawai.dashboard')],
+    "SL"  => ["title" => "Scan Layout", "icon" => "mdi-qrcode", "route" => Auth::user()->role == 0 ? route('Scan-Layout.admin.dashboard') : route('Scan-Layout.pegawai.dashboard')],
+    "CD"  => ["title" => "Coil Damage", "icon" => "mdi-package-variant-closed-remove", "route" => Auth::user()->role == 0 ? route('Coil-Damage.admin.dashboard') : route('Coil-Damage.pegawai.dashboard')],
+    "L8"  => ["title" => "Packing L08", "icon" => "mdi-numeric-8-box-multiple", "route" => Auth::user()->role == 0 ? route('L-08.admin.dashboard') : route('L-08.pegawai.dashboard')],
+   //  "admin" => ["title" => "Kelola Pegawai", "icon" => "mdi-account", "route" => route('Administrator.kelola-user')],
+];
+@endphp
 
-            @if (Auth::user()->role == 0)
-            <a href="{{route('Open-Packing.admin.dashboard')}}" class="menu-item">
-         @else
-         <a href="{{route('Open-Packing.pegawai.dashboard')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-package-variant-closed-check"></i>
-                  <div class="menu-title">Open Packing</div>
-               </div>
+<div class="menu-container">
+    @foreach ($menuItems as $key => $item)
+        @if (in_array('all', $akses) || in_array($key, $akses) || ($key == 'admin' && Auth::user()->role == 0))
+            <a href="{{ $item['route'] }}" class="menu-item">
+                <div>
+                    <i class="mdi {{ $item['icon'] }}"></i>
+                    <div class="menu-title">{{ $item['title'] }}</div>
+                </div>
             </a>
-            {{-- @if (Auth::user()->role == 0)
-         <a href="{{route('Supply.admin.dashboard')}}" class="menu-item">
-            @else
-            <a href="{{route('Supply.pegawai.dashboard')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-warehouse"></i>
-                  <div class="menu-title">Supply Bahan</div>
-               </div>
-            </a> --}}
-            @if (Auth::user()->role == 0)
-         <a href="{{route('Packing-List.admin.dashboard')}}" class="menu-item">
-            @else
-            <a href="{{route('Packing-List.admin.dashboard')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-format-list-checks"></i>
-                  <div class="menu-title">Packing List</div>
-               </div>
-            </a>
-            @if (Auth::user()->role == 0)
-
-            <a href="{{route('Kendaraan.admin.dashboard')}}" class="menu-item">
-               @else
-               <a href="{{route('Kendaraan.pegawai.dashboard')}}" class="menu-item">
-               @endif
-               <div>
-                  <i class="mdi mdi-car"></i>
-                  <div class="menu-title">Checklist Kendaraan</div>
-               </div>
-            </a>
-            @if (Auth::user()->role == 0)
-
-            <a href="{{route('Scan-Layout.admin.dashboard')}}" class="menu-item">
-               @else
-               <a href="{{route('Scan-Layout.pegawai.dashboard')}}" class="menu-item">
-               @endif
-               <div>
-                  <i class="mdi mdi-qrcode"></i>
-                  <div class="menu-title"> Scan Layout</div>
-               </div>
-            </a>
-            
-            
+        @endif
+    @endforeach
+       
+   
+    @if (Auth::user()->role == 5)
+    <a href="{{route('superadmin.Administrator.kelola-user')}}" class="menu-item">
+       <div>
+          <i class="mdi mdi-account"></i>
+          <div class="menu-title">Kelola Pegawai</div>
          </div>
-         
-         <br>
-         <div class="menu-container">
-            @if (Auth::user()->role == 0)
-            <a href="{{route('Coil-Damage.admin.dashboard')}}" class="menu-item">
-         @else
-         <a href="{{route('Coil-Damage.pegawai.dashboard')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-package-variant-closed-remove"></i>
-                  <div class="menu-title">Coil Damage</div>
-               </div>
-            </a>
-            @if (Auth::user()->role == 0)
-            <a href="{{route('L-08.admin.dashboard')}}" class="menu-item">
-         @else
-         <a href="{{route('L-08.pegawai.dashboard')}}" class="menu-item">
-            @endif
-               <div>
-                  <i class="mdi mdi-numeric-8-box-multiple"></i>
-                  <div class="menu-title">Packing L08</div>
-               </div>
-            </a>
-            <a href="{{route('Administrator.kelola-user')}}" class="menu-item">
-               <div>
-                  <i class="mdi mdi-account"></i>
-                  <div class="menu-title">Kelola Pegawai</div>
-               </div>
-            </a>
-            <a href="{{route('logout')}}" class="menu-item">
-            <div>
-               <i class="mdi mdi-logout"></i>
-               <div class="menu-title">Sign Out</div>
-            </div>
-            </a>
+      </a>
+    <a href="{{route('superadmin.data-master')}}" class="menu-item">
+       <div>
+          <i class="mdi mdi-database-settings"></i>
+          <div class="menu-title">Data Master</div>
          </div>
+      </a>
+      @else
+      <a href="{{route('sik')}}" class="menu-item">
+         <div>
+            <i class="mdi mdi-email"></i>
+            <div class="menu-title">Surat Izin Keluar</div>
+         </div>
+      </a>
+      @endif
+    <a href="{{ route('logout') }}" class="menu-item" id="logout-btn">
+      <div>
+         <i class="mdi mdi-logout"></i>
+         <div class="menu-title">Sign Out</div>
+      </div>
+      </a>
+   </div>
+</div>
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+         <script>
+               document.getElementById('logout-btn').addEventListener('click', function(e) {
+                  e.preventDefault(); // Stop the default link action
+                  const logoutUrl = this.href;
+
+                  Swal.fire({
+                     title: 'Are you sure?',
+                     text: "You will be logged out.",
+                     icon: 'warning',
+                     showCancelButton: true,
+                     confirmButtonColor: '#3085d6',
+                     cancelButtonColor: '#d33',
+                     confirmButtonText: 'Yes, logout'
+                  }).then((result) => {
+                     if (result.isConfirmed) {
+                           window.location.href = logoutUrl;
+                     }
+                  });
+               });
+               </script>
       @else
             <script>window.location = "{{ route('login') }}";</script>
       @endif

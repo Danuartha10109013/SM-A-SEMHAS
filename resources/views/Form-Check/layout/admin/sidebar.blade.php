@@ -38,7 +38,7 @@
 <div id="sidebar-scrollbar">
     <nav class="iq-sidebar-menu">
         <ul id="iq-sidebar-toggle" class="iq-menu">
-          @if (request()->routeIs('Administrator.kelola-user'))
+        @if (request()->routeIs('Administrator.kelola-user'))
           <li class="iq-menu-title"><i class="ri-subtract-line"></i><span>Kelola User</span></li>
           <li class="{{ request()->routeIs('Administrator.kelola-user') ? 'active' : '' }}">
               <a href="{{route('Administrator.kelola-user')}}" class="iq-waves-effect" aria-expanded="false">
@@ -59,40 +59,43 @@
                     <i class="mdi mdi-crane"></i><span>Crane</span>
                 </a>
             </li>
-            <li class="{{ request()->routeIs('Form-Check.admin.forklift') ? 'active' : '' }}">
-                <a href="{{route('Form-Check.admin.forklift')}}" class="iq-waves-effect" aria-expanded="false">
-                    <i class="mdi mdi-forklift"></i><span>Forklift</span>
-                </a>
-            </li>
-            <li class="{{ request()->routeIs('Form-Check.admin.trailler') ? 'active' : '' }}">
-                <a href="{{route('Form-Check.admin.trailler')}}" class="iq-waves-effect" aria-expanded="false">
-                    <i class="mdi mdi-truck"></i><span>Trailer</span>
-                </a>
-            </li>
-            <li class="{{ request()->routeIs('Form-Check.admin.eup') ? 'active' : '' }}">
-                <a href="{{route('Form-Check.admin.eup')}}" class="iq-waves-effect" aria-expanded="false">
-                    <i class="mdi mdi-shipping-pallet"></i><span>EUP</span>
-                </a>
-            </li>
-            
-            <li>
-                <a href="#userinfo" class="iq-waves-effect collapsed {{ request()->routeIs('Form-Check.admin.crc', 'Form-Check.admin.ingot', 'Form-Check.admin.resin') ? 'active' : '' }}" data-toggle="collapse" aria-expanded="false">
-                    <i class="mdi mdi-warehouse"></i><span>Kedatangan Material</span><i class="ri-arrow-right-s-line iq-arrow-right"></i>
-                </a>
-                <ul id="userinfo" class="iq-submenu collapse {{ request()->routeIs('Form-Check.admin.crc', 'Form-Check.admin.ingot', 'Form-Check.admin.resin') ? 'show' : '' }}" data-parent="#iq-sidebar-toggle">
-                    <li class="{{ request()->routeIs('Form-Check.admin.crc') ? 'active' : '' }}">
-                        <a href="{{route('Form-Check.admin.crc')}}"><i class="mdi mdi-barn"></i>CRC</a>
-                    </li>
-                    <li class="{{ request()->routeIs('Form-Check.admin.ingot') ? 'active' : '' }}">
-                        <a href="{{route('Form-Check.admin.ingot')}}"><i class="mdi mdi-gold"></i>INGOT</a>
-                    </li>
-                    <li class="{{ request()->routeIs('Form-Check.admin.resin') ? 'active' : '' }}">
-                        <a href="{{route('Form-Check.admin.resin')}}"><i class="mdi mdi-barrel"></i>RESIN/ALKALI</a>
-                    </li>
-                </ul>
-            </li>
-          @endif
- 
+            @if (Auth::user()->division == 'Warehouse')
+                
+                <li class="{{ request()->routeIs('Form-Check.admin.forklift') ? 'active' : '' }}">
+                    <a href="{{route('Form-Check.admin.forklift')}}" class="iq-waves-effect" aria-expanded="false">
+                        <i class="mdi mdi-forklift"></i><span>Forklift</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('Form-Check.admin.trailler') ? 'active' : '' }}">
+                    <a href="{{route('Form-Check.admin.trailler')}}" class="iq-waves-effect" aria-expanded="false">
+                        <i class="mdi mdi-truck"></i><span>Trailer</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('Form-Check.admin.eup') ? 'active' : '' }}">
+                    <a href="{{route('Form-Check.admin.eup')}}" class="iq-waves-effect" aria-expanded="false">
+                        <i class="mdi mdi-shipping-pallet"></i><span>EUP</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#userinfo" class="iq-waves-effect collapsed {{ request()->routeIs('Form-Check.admin.crc', 'Form-Check.admin.ingot', 'Form-Check.admin.resin') ? 'active' : '' }}" data-toggle="collapse" aria-expanded="false">
+                        <i class="mdi mdi-warehouse"></i><span>Kedatangan Material</span><i class="ri-arrow-right-s-line iq-arrow-right"></i>
+                    </a>
+                    <ul id="userinfo" class="iq-submenu collapse {{ request()->routeIs('Form-Check.admin.crc', 'Form-Check.admin.ingot', 'Form-Check.admin.resin') ? 'show' : '' }}" data-parent="#iq-sidebar-toggle">
+                        <li class="{{ request()->routeIs('Form-Check.admin.crc') ? 'active' : '' }}">
+                            <a href="{{route('Form-Check.admin.crc')}}"><i class="mdi mdi-barn"></i>CRC</a>
+                        </li>
+                        <li class="{{ request()->routeIs('Form-Check.admin.ingot') ? 'active' : '' }}">
+                            <a href="{{route('Form-Check.admin.ingot')}}"><i class="mdi mdi-gold"></i>INGOT</a>
+                        </li>
+                        <li class="{{ request()->routeIs('Form-Check.admin.resin') ? 'active' : '' }}">
+                            <a href="{{route('Form-Check.admin.resin')}}"><i class="mdi mdi-barrel"></i>RESIN/ALKALI</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+                
+        @endif
             
             <!-- Tambahkan active di bagian yang lain sesuai kebutuhan -->
         </ul>

@@ -117,10 +117,37 @@
                                  <input type="email" name="email" class="form-control mb-3"  id="exampleInputEmail1" placeholder="Enter email">
                                  @endif
                               </div>
-                              <div class="form-group">
-                                 <label for="exampleInputPassword1">Password</label>
-                                 <input type="password" name="password" class="form-control mb-3" id="exampleInputPassword1" placeholder="Password">
+                              <!-- Bootstrap CSS (pastikan sudah dimuat di layout utama) -->
+                              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+                              <div class="mb-3">
+                              <label for="password" class="form-label">Password</label>
+                              <div class="input-group">
+                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                 <button class="btn " type="button" id="togglePassword">
+                                    <i class="bi bi-eye-fill"></i>
+                                 </button>
                               </div>
+                              </div>
+
+                              <!-- Bootstrap JS + Bootstrap Icons -->
+                              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                              <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+                              <script>
+                              const togglePassword = document.querySelector("#togglePassword");
+                              const password = document.querySelector("#password");
+
+                              togglePassword.addEventListener("click", function () {
+                                 const type = password.getAttribute("type") === "password" ? "text" : "password";
+                                 password.setAttribute("type", type);
+                                 this.innerHTML = type === "password"
+                                    ? '<i class="bi bi-eye-fill"></i>'
+                                    : '<i class="bi bi-eye-slash-fill"></i>';
+                              });
+                              </script>
+
+
                               <button type="submit" class="btn btn-primary btn-block mt-4">Sign in</button>
                            </form>
                         </div>
@@ -129,7 +156,7 @@
                         <div class="sign-in-detail">
                            <div class="slick-slider11">
                               <div class="item">
-                                <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight: bolder;font-size: 20px">Sistem Informasi Digital Warehouse
+                                <p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-weight: bolder;font-size: 20px">Sistem Informasi Manajemen Operasional
                                 </p>
                               </div>
                               <div class="item mt-5">

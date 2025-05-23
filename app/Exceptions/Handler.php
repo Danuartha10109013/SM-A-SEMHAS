@@ -7,6 +7,8 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Session\TokenMismatchException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -35,6 +37,10 @@ class Handler extends ExceptionHandler
             return response()->view('errors.500', [
                 'exception' => $exception
             ], 500);
+        }
+        // Error 419 - CSRF token mismatch / page expired
+        if ($exception instanceof TokenMismatchException) {
+            return response()->view('errors.419', [], 419);
         }
 
         return parent::render($request, $exception);

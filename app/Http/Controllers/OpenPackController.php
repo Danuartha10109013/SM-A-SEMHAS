@@ -38,49 +38,51 @@ class OpenPackController extends Controller
 
 
 
-    public function index(Request $request)
-    {
-        // Query utama untuk pencarian dan filter
-        $query = PackingDetailM::query();
+   public function index(Request $request)
+{
+    // Query utama untuk pencarian dan filter
+    $query = PackingDetailM::query();
 
-        // Filter berdasarkan rentang tanggal
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
-        }
-
-        // Filter berdasarkan bulan dan tahun
-        if ($request->filled('month') && $request->filled('year')) {
-            $query->whereMonth('created_at', $request->month)
-                  ->whereYear('created_at', $request->year);
-        } elseif ($request->filled('month')) {
-            // Jika hanya bulan yang dipilih
-            $query->whereMonth('created_at', $request->month);
-        } elseif ($request->filled('year')) {
-            // Jika hanya tahun yang dipilih
-            $query->whereYear('created_at', $request->year);
-        }
-
-        // Filter berdasarkan teks pencarian (gm atau attribute)
-        if ($request->filled('search')) {
-            $query->where(function ($subQuery) use ($request) {
-                $subQuery->where('gm', 'like', '%' . $request->search . '%')
-                         ->orWhere('attribute', 'like', '%' . $request->search . '%');
-            });
-        }
-
-        // Data utama
-        $data = $query->select('gm', DB::raw('MIN(created_at) as created_at'))
-            ->groupBy('gm')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10)
-            ->appends($request->all());
-
-        // Data tambahan untuk pencarian 'attribute'
-        $att = $query->get();
-
-        // Kirim data ke view
-        return view('Open-Packing.pages.admin.packing.index', compact('data', 'att'));
+    // Filter berdasarkan rentang tanggal
+    if ($request->filled('start_date') && $request->filled('end_date')) {
+        $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
     }
+
+    // Filter berdasarkan bulan dan tahun
+    if ($request->filled('month') && $request->filled('year')) {
+        $query->whereMonth('created_at', $request->month)
+              ->whereYear('created_at', $request->year);
+    } elseif ($request->filled('month')) {
+        $query->whereMonth('created_at', $request->month);
+    } elseif ($request->filled('year')) {
+        $query->whereYear('created_at', $request->year);
+    }
+
+    // Filter berdasarkan teks pencarian (gm atau attribute)
+    if ($request->filled('search')) {
+        $query->where(function ($subQuery) use ($request) {
+            $subQuery->where('gm', 'like', '%' . $request->search . '%')
+                     ->orWhere('attribute', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    // Clone query sebelum dimodifikasi dengan groupBy/select
+    $attQuery = clone $query;
+
+    // Data utama (grouped)
+    $data = $query->select('gm', DB::raw('MIN(created_at) as created_at'))
+        ->groupBy('gm')
+        ->orderBy('created_at', 'desc')
+        ->paginate(10)
+        ->appends($request->all());
+
+    // Data tambahan untuk pencarian 'attribute' (query asli, tanpa groupBy/select)
+    $att = $attQuery->get();
+    // dd($att);
+
+    return view('Open-Packing.pages.admin.packing.index', compact('data', 'att'));
+}
+
     
 
     public function add()

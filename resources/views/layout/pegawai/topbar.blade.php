@@ -18,7 +18,7 @@
 
           <div class="iq-search-bar d-none d-md-block">
              <p class="mt-3 mb-3 fw-bolder"> 
-               Sistem Informasi Digital Warehouse
+               Sistem Informasi Manajemen Operasional
              </p>
           </div>
 

@@ -35,9 +35,15 @@
             <div class="mb-3">
                 <label for="kondisi" class="form-label">Kondisi</label>
                 <select type="text" name="kondisi" id="kondisi" class="form-control" required>
-                    <option value="" selected disabled>-- Select Kondisi --</option>
-                    <option value="BAIK">BAIK</option>
-                    <option value="DAMAGE RELEASE QA">DAMAGE RELEASE QA</option>
+                    @php
+                        $kondisi = \App\Models\KondisiM::whereJsonContains('type','PL')->get();
+                    @endphp
+                    <option value="" selected disabled>--Pilih Kondisi--</option>
+                    @foreach ($kondisi as $s)
+                        
+                    <option value="{{ $s->kondisi }}" {{ old('kondisi') == $s->kondisi ? 'selected' : '' }}>{{ $s->kondisi }}</option>
+
+                    @endforeach
                 </select>
             </div>
             <div class="mb-3">

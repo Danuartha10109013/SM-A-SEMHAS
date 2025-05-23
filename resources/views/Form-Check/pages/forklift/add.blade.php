@@ -50,13 +50,14 @@
                       <div class="mb-3">
                         <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
                         <select type="text" name="shift_leader" id="team" class="form-control" required>
+                           @php
+                                $team_lead = \App\Models\TeamLeadM::where('active',1)->whereJsonContains('type', 'FC')->get()
+                            @endphp
                           <option value="" selected disabled>--Pilih Shift Leader--</option>
-                          <option value="Panggah S">Panggah S</option>
-                          <option value="Danu">Danu</option>
-                          <option value="Riyan H">Riyan H</option>
-                          <option value="Freddy">Freddy</option>
-                          <option value="Dika">Dika</option>
-                          <option value="other">Other</option> <!-- Add this option -->
+                          @foreach ($team_lead as $tl)
+                          <option value="{{$tl->name}}">{{$tl->name}}</option>
+                              
+                          @endforeach
                       </select>
                     </div>
                   
@@ -79,23 +80,28 @@
                         <label for="label">NO/TYPE FORKLIFT<small style="color: red;">*</small>
                         </label>
                         <select class="form-control" name="jenis_forklift" id="exampleSelectOption" required>
-                            <option value="" selected disabled>--Pilih Kapasistas Forklift--</option>
-                            <option value="5 Ton No.3 (EUP)" {{ old('jenis_forklift') == '5 Ton No.3 (EUP)' ? 'selected' : '' }}>5 Ton No.3 (EUP)</option>
-                            <option value="5 Ton No.4 (STUFING EXPORT)" {{ old('jenis_forklift') == '5 Ton No.4 (STUFING EXPORT)' ? 'selected' : '' }}>5 Ton No.4 (STUFING EXPORT)</option>
-                            <option value="5 Ton No.5 (DELIVERY L3)" {{ old('jenis_forklift') == '5 Ton No.5 (DELIVERY L3)' ? 'selected' : '' }}>5 Ton No.5 (DELIVERY L3)</option>
-                            <option value="5 Ton No.6 (PACKING EXPORT)" {{ old('jenis_forklift') == '5 Ton No.6 (PACKING EXPORT)' ? 'selected' : '' }}>5 Ton No.6 (PACKING EXPORT)</option>
-                            <option value="10 Ton" {{ old('jenis_forklift') == '10 Ton' ? 'selected' : '' }}>10 Ton</option>
-                            <option value="23 Ton" {{ old('jenis_forklift') == '23 Ton' ? 'selected' : '' }}>23 Ton</option>
+                            @php
+                                $kapasitas = \App\Models\KapasitasM::where('jenis', 'Forklift')->get();
+                            @endphp
+                            <option value="" selected disabled>--Pilih Kapasitas Crane--</option>
+                            @foreach ($kapasitas as $k)
+                                <option value="{{ $k->name }}" {{ old('jenis_crane') == $k->name ? 'selected' : '' }}>{{ $k->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="label">SHIFT<small style="color: red;">*</small>
                         </label>
                         <select class="form-control" name="shift" id="exampleSelectOption" required>
-                            <option value="" selected disabled>--Pilih Shift--</option>
-                            <option value="1" {{ old('shift') == '1' ? 'selected' : '' }}>1</option>
-                            <option value="2" {{ old('shift') == '2' ? 'selected' : '' }}>2</option>
-                            <option value="3" {{ old('shift') == '3' ? 'selected' : '' }}>3</option>
+                            @php
+                                $shift = \App\Models\ShftM::all();
+                            @endphp
+                            <option value="" selected disabled>--Pilih Sift--</option>
+                            @foreach ($shift as $s)
+                                
+                            <option value="{{ $s->shift }}" {{ old('shift') == $s->shift ? 'selected' : '' }}>{{ $s->description }}</option>
+
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">

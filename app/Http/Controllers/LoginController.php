@@ -46,7 +46,7 @@ class LoginController extends Controller
 
     // Autentikasi berhasil
     Auth::login($user);
-    if ($user->role == 0){
+    if ($user->role == 0 || $user->role == 5){
 
         return redirect()->route('welcome')->with('success','Hallo Selamat Datang'.Auth::user()->name);
     }else{

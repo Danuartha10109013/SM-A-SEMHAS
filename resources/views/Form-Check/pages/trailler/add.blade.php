@@ -49,13 +49,14 @@
                       <div class="mb-3">
                         <label for="atribute" class="form-label">Team Lead<small style="color: red;">*</small></label>
                         <select type="text" name="shift_leader" id="team" class="form-control" required>
+                          @php
+                                $team_lead = \App\Models\TeamLeadM::where('active',1)->whereJsonContains('type', 'FC')->get()
+                            @endphp
                           <option value="" selected disabled>--Pilih Shift Leader--</option>
-                          <option value="Panggah S">Panggah S</option>
-                          <option value="Danu">Danu</option>
-                          <option value="Riyan H">Riyan H</option>
-                          <option value="Freddy">Freddy</option>
-                          <option value="Dika">Dika</option>
-                          <option value="other">Other</option> <!-- Add this option -->
+                          @foreach ($team_lead as $tl)
+                          <option value="{{$tl->name}}">{{$tl->name}}</option>
+                              
+                          @endforeach <!-- Add this option -->
                       </select>
                     </div>
                   
@@ -81,8 +82,17 @@
                         </label>
                         <select class="form-control" name="jenis_forklift" id="exampleSelectOption" required>
                             <option value="">--Pilih Trailler--</option>
-                            <option value="B 9134 BEA/PAK ANDRI-PAK RIZKI" {{ old('jenis_forklift') == 'B 9134 BEA/PAK ANDRI-PAK RIZKI' ? 'selected' : '' }}>B 9134 BEA/PAK ANDRI-PAK RIZKI</option>
-                            <option value="B 9159 BEA/PAK DASEP-PAK ROHIMAT" {{ old('jenis_forklift') == 'B 9159 BEA/PAK DASEP-PAK ROHIMAT' ? 'selected' : '' }}>B 9159 BEA/PAK DASEP-PAK ROHIMAT</option>
+                            @php
+                                $trailer = \App\Models\TrailerNameM::all();
+                            @endphp
+
+                            @foreach ($trailer as $t)
+                                <option value="{{ $t->no_mobil }}/{{ $t->pengguna }}" 
+                                    {{ old('jenis_forklift') == $t->no_mobil . '/' . $t->pengguna ? 'selected' : '' }}>
+                                    {{ $t->no_mobil }}/{{ $t->pengguna }}
+                                </option>
+                            @endforeach
+
                         </select>
                     </div>
                     

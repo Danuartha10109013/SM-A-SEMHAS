@@ -56,8 +56,37 @@
                 @endif
                 <a href="{{route('Mapping.admin.coiling',$c->no_gs)}}" class="btn btn-success">Koil</a>
                 <a href="{{route('Mapping.admin.show-shipment',$c->id)}}" class="btn btn-primary"><i class="ri-eye-line"></i> Mapping</a>
-                <a href="{{route('Mapping.admin.delete-shipment',$c->no_gs)}}" class="btn btn-danger"><i class="ri-delete-bin-2-line"></i></a>
-                </td>
+                <!-- Tombol Delete -->
+                <button class="btn btn-danger btn-delete" data-url="{{ route('Mapping.admin.delete-shipment', $c->no_gs) }}">
+                  <i class="ri-delete-bin-2-line"></i>
+                </button>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                      document.querySelectorAll('.btn-delete').forEach(function (button) {
+                          button.addEventListener('click', function () {
+                              const url = this.getAttribute('data-url');
+                  
+                              Swal.fire({
+                                  title: 'Yakin ingin menghapus?',
+                                  text: "Data yang dihapus tidak dapat dikembalikan!",
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#d33',
+                                  cancelButtonColor: '#3085d6',
+                                  confirmButtonText: 'Ya, hapus!',
+                                  cancelButtonText: 'Batal'
+                              }).then((result) => {
+                                  if (result.isConfirmed) {
+                                      window.location.href = url;
+                                  }
+                              });
+                          });
+                      });
+                  });
+                  </script>
+                       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+       
+              </td>
             </tr>
             @endforeach
           </tbody>

@@ -5,6 +5,7 @@ use App\Http\Controllers\CoilDamageController;
 use App\Http\Controllers\CraneController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardControlller;
+use App\Http\Controllers\DataMasterController;
 use App\Http\Controllers\EUPController;
 use App\Http\Controllers\ForkliftController;
 use App\Http\Controllers\InputDataExcel;
@@ -83,15 +84,55 @@ Route::middleware([AutoLogout::class])->group(function () {
         Route::put('/update/{id}',[ProfileController::class,'update'])->name('update-profile');
     });
 
-    Route::group(['prefix' => 'Administrator', 'middleware' => ['Administrator'], 'as' => 'Administrator.'], function () {
+    Route::group(['prefix' => 'superadmin', 'middleware' => ['superadmin'], 'as' => 'superadmin.'], function () {
 
-        Route::get('k-user',[KUserController::class,'index'])->name('kelola-user');
-        Route::get('k-user/add',[KUserController::class,'add'])->name('kelola-user.add');
-        Route::get('k-user/print',[KUserController::class,'print'])->name('kelola-user.print');
-        Route::post('k-user/store',[KUserController::class,'store'])->name('kelola-user.store');
-        Route::get('k-user/edit/{id}',[KUserController::class,'edit'])->name('kelola-user.edit');
-        Route::put('k-user/update/{id}',[KUserController::class,'update'])->name('kelola-user.update');
-        Route::delete('k-user/delete/{id}',[KUserController::class,'destroy'])->name('kelola-user.delete');
+        Route::group(['prefix' => 'Administrator', 'middleware' => ['Administrator'], 'as' => 'Administrator.'], function () {
+
+            Route::get('k-user',[KUserController::class,'index'])->name('kelola-user');
+            Route::get('k-user/add',[KUserController::class,'add'])->name('kelola-user.add');
+            Route::get('k-user/print',[KUserController::class,'print'])->name('kelola-user.print');
+            Route::post('k-user/store',[KUserController::class,'store'])->name('kelola-user.store');
+            Route::get('k-user/edit/{id}',[KUserController::class,'edit'])->name('kelola-user.edit');
+            Route::put('k-user/update/{id}',[KUserController::class,'update'])->name('kelola-user.update');
+            Route::delete('k-user/delete/{id}',[KUserController::class,'destroy'])->name('kelola-user.delete');
+        });
+        Route::prefix('data-master')->group(function () {
+            Route::get('/',[DataMasterController::class,'index'])->name('data-master');
+            Route::post('/shifts/store', [DataMasterController::class, 'store'])->name('shifts.store');
+            Route::patch('/shifts/update/{id}', [DataMasterController::class, 'update'])->name('shifts.update');
+            Route::delete('/shifts/delete/{id}', [DataMasterController::class, 'destroy'])->name('shifts.delete');
+            Route::name('teamlead.')->group(function () {
+                Route::post('/', [DataMasterController::class, 'storetl'])->name('store');
+                Route::patch('/{id}', [DataMasterController::class, 'updatetl'])->name('update');
+                Route::delete('/{id}', [DataMasterController::class, 'destroytl'])->name('destroy');
+            });
+
+            Route::prefix('form-check')->group(function () {
+                Route::get('/',[DataMasterController::class,'indexfc'])->name('form-check');
+                Route::prefix('kapasitas')->name('kapasitas.')->group(function () {
+                    Route::post('/store', [DataMasterController::class, 'storekap'])->name('store');
+                    Route::patch('/update/{id}', [DataMasterController::class, 'updatekap'])->name('update');
+                    Route::delete('/delete/{id}', [DataMasterController::class, 'deletekap'])->name('delete');
+                });
+                Route::prefix('trailer')->name('trailer.')->group(function () {
+                    Route::post('/store', [DataMasterController::class, 'storetr'])->name('store');
+                    Route::patch('/update/{id}', [DataMasterController::class, 'updatetr'])->name('update');
+                    Route::delete('/delete/{id}', [DataMasterController::class, 'destroytr'])->name('delete');
+                });
+                Route::prefix('kondisi')->name('kondisi.')->group(function () {
+                    Route::get('/', [DataMasterController::class, 'indexko'])->name('kondisi');
+                    Route::post('/store', [DataMasterController::class, 'storeko'])->name('store');
+                    Route::patch('/update/{id}', [DataMasterController::class, 'updateko'])->name('update');
+                    Route::delete('/delete/{id}', [DataMasterController::class, 'destroyko'])->name('delete');
+                });
+                
+            });
+            Route::prefix('Open-Packing')->group(function () {
+                Route::get('/Open-Packing',[DataMasterController::class,'openPacking'])->name('data-master.Open-Packing');
+                
+            });
+        });
+
     });
 
     // Ship-Mark

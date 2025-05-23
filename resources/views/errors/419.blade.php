@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>500 - Errors</title>
+    <title>419 - Page Expired</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ asset('Logo TML.png') }}"/>
@@ -68,22 +68,9 @@
                 <div class="login100-pic js-tilt" data-tilt>
                     <img width="90%" src="{{ asset('Logo TML side.png') }}" alt="IMG">
                 </div>
-                <div class="container text-center">
-                    <h1 class="text-danger">500 - Internal Server Error</h1>
-                    <p>Oops! Something went wrong on our end. Try refreshing the page or come back later.</p>
-                    
-                    @if(isset($exception) && $exception instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface)
-                        <p class="text-muted">Error Code: {{ $exception->getStatusCode() }}</p>
-                    @else
-                        <p class="text-muted">Error Code: 500</p>
-                    @endif
-                
-                    @if(isset($exception) && $exception->getMessage())
-                        <p class="text-muted">Message: {{ $exception->getMessage() }}</p>
-                    @endif
-                
-                    <a href="{{ url()->previous() }}" class="login100-form-btn">Go Back</a>
-                </div>
+                <h1>419 - Page Expired</h1>
+                <p>Please Restart Your Browaer.</p>
+                <a href="{{ url('/welcome') }}" class="login100-form-btn">Go to Home</a>
             </div>
         </div>
     </div>
@@ -102,5 +89,3 @@
 
 </body>
 </html>
-
-

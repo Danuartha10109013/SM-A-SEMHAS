@@ -22,7 +22,6 @@ class MappingController extends Controller
         $tonase = Coil::where('no_gs', $same)->sum('berat_produk');
         $pengecekan = Pengecekan::where('no_gs', $same)->get();
         $maps = MapCoil::where('no_gs', $same)->get();
-    
         // Mengembalikan view dengan data Shipment yang diambil
         return view('Mapping-Container.content.pengecekan.index', compact('data','coil', 'tonase','pengecekan','maps','tare'));
     }

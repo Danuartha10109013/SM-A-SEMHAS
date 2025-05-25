@@ -180,19 +180,41 @@
                     </div>
 
                     <script>
-                        function filterTypes() {
-                            const role = document.getElementById('role').value;
-                            const allowedForPegawai = ['FC', 'CK', 'SL'];
+    function filterTypes() {
+        const role = document.getElementById('role').value;
+        const division = document.getElementById('division').value;
+        const allowedForPegawai = ['FC', 'CK', 'SL'];
 
-                            document.querySelectorAll('input[name="type[]"]').forEach(input => {
-                                const shouldShow = role === '0' || allowedForPegawai.includes(input.value);
-                                input.closest('.form-check').style.display = shouldShow ? 'block' : 'none';
-                            });
-                        }
+        document.querySelectorAll('input[name="type[]"]').forEach(input => {
+            const type = input.value;
 
-                        // Jalankan saat halaman dimuat
-                        window.onload = filterTypes;
-                    </script>
+            let shouldShow = false;
+
+            if (division === 'Produksi') {
+                // Jika divisi Produksi, hanya tampilkan Form Checklist (FC)
+                shouldShow = type === 'FC';
+            } else {
+                // Jika bukan Produksi
+                if (role === '0') {
+                    // Admin bisa akses semua
+                    shouldShow = true;
+                } else {
+                    // Pegawai hanya yang diperbolehkan
+                    shouldShow = allowedForPegawai.includes(type);
+                }
+            }
+
+            input.closest('.form-check').style.display = shouldShow ? 'block' : 'none';
+        });
+    }
+
+    // Jalankan saat halaman dimuat
+    window.onload = filterTypes;
+
+    // Jalankan juga saat division berubah
+    document.getElementById('division').addEventListener('change', filterTypes);
+</script>
+
                     <div class="form-group">
                         <label for="profile">Profile Picture</label>
                         <input type="file" name="avatar" class="form-control" id="profile">

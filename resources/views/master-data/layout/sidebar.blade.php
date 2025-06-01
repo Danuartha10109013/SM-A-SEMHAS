@@ -45,7 +45,12 @@
           </li>
           <li class="{{ request()->routeIs('superadmin.kondisi.kondisi') ? 'active' : '' }} mb-3">
               <a  href="{{ route('superadmin.kondisi.kondisi') }}" class="btn btn-secondary">
-               <i class="mdi mdi-checkbox-marked-outline text-light"></i><span class="text-light">Kondisi</span>
+               <i class="mdi mdi-arrow-collapse-all text-light"></i><span class="text-light">Kondisi</span>
+            </a>
+          </li>
+          <li class="{{ request()->routeIs('superadmin.division.division') ? 'active' : '' }} mb-3">
+              <a  href="{{ route('superadmin.division.division') }}" class="btn btn-secondary">
+               <i class="mdi mdi-application text-light"></i><span class="text-light">Division</span>
             </a>
           </li>
         </ul>

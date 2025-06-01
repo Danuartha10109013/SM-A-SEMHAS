@@ -119,33 +119,59 @@
                               </div>
                               <!-- Bootstrap CSS (pastikan sudah dimuat di layout utama) -->
                               <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-                              <div class="mb-3">
-                              <label for="password" class="form-label">Password</label>
-                              <div class="input-group">
-                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                                 <button class="btn " type="button" id="togglePassword">
-                                    <i class="bi bi-eye-fill"></i>
-                                 </button>
-                              </div>
-                              </div>
-
-                              <!-- Bootstrap JS + Bootstrap Icons -->
-                              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
                               <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-                              <script>
-                              const togglePassword = document.querySelector("#togglePassword");
-                              const password = document.querySelector("#password");
+                                                            <div class="mb-3">
+                              <label for="password" class="form-label">Password</label>
+                              <div class="password-wrapper">
+                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                 <i class="bi bi-eye-fill toggle-password" id="togglePassword"></i>
+                              </div>
+                              </div>
 
-                              togglePassword.addEventListener("click", function () {
-                                 const type = password.getAttribute("type") === "password" ? "text" : "password";
-                                 password.setAttribute("type", type);
-                                 this.innerHTML = type === "password"
-                                    ? '<i class="bi bi-eye-fill"></i>'
-                                    : '<i class="bi bi-eye-slash-fill"></i>';
+                              <style>
+                              .password-wrapper {
+                              position: relative;
+                              }
+
+                              .password-wrapper input {
+                              padding-right: 40px; /* space for the eye icon */
+                              }
+
+                              .toggle-password {
+                              position: absolute;
+                              right: 10px;
+                              top: 50%;
+                              transform: translateY(-50%);
+                              cursor: pointer;
+                              font-size: 1.2rem;
+                              color: #6c757d;
+                              transition: transform 0.2s ease, color 0.2s ease;
+                              }
+
+                              .toggle-password:hover {
+                              transform: translateY(-50%) scale(1.2);
+                              color: #000;
+                              }
+                              </style>
+
+                              <script>
+                              document.getElementById("togglePassword").addEventListener("click", function () {
+                              const passwordInput = document.getElementById("password");
+                              const icon = this;
+
+                              if (passwordInput.type === "password") {
+                                 passwordInput.type = "text";
+                                 icon.classList.remove("bi-eye-fill");
+                                 icon.classList.add("bi-eye-slash-fill");
+                              } else {
+                                 passwordInput.type = "password";
+                                 icon.classList.remove("bi-eye-slash-fill");
+                                 icon.classList.add("bi-eye-fill");
+                              }
                               });
                               </script>
+
 
 
                               <button type="submit" class="btn btn-primary btn-block mt-4">Sign in</button>

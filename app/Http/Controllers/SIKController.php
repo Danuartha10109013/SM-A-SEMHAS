@@ -6,6 +6,7 @@ use App\Exports\SIKExport;
 use App\Models\SuratM;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,6 +17,8 @@ class SIKController extends Controller
     {
         $filter = $request->get('filter', 'today');
         $search = $request->get('search');
+        $division = Auth::user()->division;
+        // dd($division);
     
         // Initialize empty collections for months and years
         $months = collect();
@@ -48,12 +51,12 @@ class SIKController extends Controller
     
         // Apply the search condition if search is provided
         if ($search) {
-            $query->where('no_kendaraan', 'like', '%' . $search . '%')->
+            $query->where('division',$division)->where('no_kendaraan', 'like', '%' . $search . '%')->
             orwhere('divisi', 'like', '%' . $search . '%');
         }
     
         // Execute the query to get the filtered and searched data
-        $data = $query->get();
+        $data = $query->where('division',$division)->get();
     
         return view('Surat-Izin-Keluar.pages.index', compact('data', 'months', 'years', 'filter', 'search'));
     }
@@ -129,9 +132,14 @@ class SIKController extends Controller
             'divisi' => 'required|string', 
         ]);
 
+        $division = Auth::user()->division;
+        if(!$division){
+            return redirect()->back()->with('error', 'User Not Found');
+        }
         $suratIzinKeluar = new SuratM();
         $suratIzinKeluar->date = $request->input('date');
         $suratIzinKeluar->status = 0;
+        $suratIzinKeluar->division = $division;
         $suratIzinKeluar->kode_sik = $request->input('kode_sik');
         $suratIzinKeluar->bagian = $request->input('bagian');
         $suratIzinKeluar->no_kendaraan = $request->input('no_kendaraan');

@@ -90,7 +90,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <div class="form-check form-check-inline type-checkboxes">
+                                    <div class="ml-3 form-check form-check-inline type-checkboxes">
                                         @php $selectedTypes = json_decode($d->type, true) ?? []; @endphp
                                         @foreach ($typeOptions as $key => $label)
                                             <input class="form-check-input type-checkbox me-2" type="checkbox" id="type_{{ $d->id }}_{{ $key }}" value="{{ $key }}"

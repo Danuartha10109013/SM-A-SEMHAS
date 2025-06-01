@@ -127,13 +127,17 @@ class OpenPackController extends Controller
         ]);
 
         $cc = PackingDetailM::where('attribute',$request->attribute)->value('id');
-        $data = PackingDetailM::find($cc);
-        $data->b_aktual = $request->b_aktual;
-        $data->selisih = $request->b_aktual - $data->b_label;
-        $data->persentase = number_format($data->selisih / $data->b_label * 100, 2);
-        $data->keterangan = $request->keterangan;
-        $data->scanner = Auth::user()->id;
-        $data->save();
+        if($cc){
+            $data = PackingDetailM::find($cc);
+            $data->b_aktual = $request->b_aktual;
+            $data->selisih = $request->b_aktual - $data->b_label;
+            $data->persentase = number_format($data->selisih / $data->b_label * 100, 2);
+            $data->keterangan = $request->keterangan;
+            $data->scanner = Auth::user()->id;
+            $data->save();
+        }else{
+            return redirect()->back()->with('error','Nomor coil tidak ditemukan');
+        }
         
 
         return redirect()->route('Open-Packing.admin.packing.show',$data->gm)->with('success','Product Has Been Scanned');
@@ -177,7 +181,7 @@ class OpenPackController extends Controller
             $d->save();
         }
     
-        return response()->json(['success' => true, 'message' => 'Checkbox state updated successfully.']);
+        return redirect()->back()->with('success' , 'Checkbox state updated successfully.');
     }
     
 
@@ -251,9 +255,9 @@ class OpenPackController extends Controller
     }
 
     public function excel(Request $request){
-        // $request->validate([
-        //     'excel_file' => 'required|file|mimes:xls,xlsx|max:2048', // max size in KB
-        // ]);
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xls,xlsx,csv|max:2048', // max size in KB
+        ]);
         $shift = $request->shift;
         $shift_leader = $request->shift_leader ? $request->shift_leader : $request->other_shift_leader;
 

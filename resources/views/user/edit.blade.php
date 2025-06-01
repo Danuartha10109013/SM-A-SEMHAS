@@ -105,10 +105,12 @@ Kelola User @if(Auth::user()->role == 0)
           <label class="form-check-label" for="typeCD">Coil Damage</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input type-checkbox all-role" type="checkbox" name="type[]" value="all" id="typeAll"
-            {{ in_array('all', json_decode($data->type, true) ?? []) ? 'checked' : '' }}>
-          <label class="form-check-label" for="typeAll">Akses Penuh</label>
+          <input class="form-check-input type-checkbox all-role form-check-only" type="checkbox" name="type[]" value="SIK" id="typeSIK"
+            {{ in_array('SIK', json_decode($data->type, true) ?? []) ? 'checked' : '' }}>
+          <label class="form-check-label" for="typeSIK">Surat Izin Keluar</label>
         </div>
+
+        
       </div>
     </div>
   </div>
@@ -120,34 +122,45 @@ Kelola User @if(Auth::user()->role == 0)
     const divisionSelect = document.getElementById("division");
 
     function updateTypeVisibility() {
-      const roleValue = roleSelect.value;
-      const divisionValue = divisionSelect.value;
+  const roleValue = roleSelect.value;
+  const divisionValue = divisionSelect.value;
 
-      // Sembunyikan semua type terlebih dahulu
-      const allTypes = document.querySelectorAll(".type-checkbox");
-      allTypes.forEach(el => {
-        el.closest('.form-check').style.display = 'none';
+  // Sembunyikan semua type terlebih dahulu
+  const allTypes = document.querySelectorAll(".type-checkbox");
+  allTypes.forEach(el => {
+    el.closest('.form-check').style.display = 'none';
+  });
+
+  // Tampilkan selalu Form Check (FC) di semua kondisi
+  document.querySelectorAll(".form-check-only").forEach(el => {
+    el.closest('.form-check').style.display = 'block';
+  });
+
+  if (divisionValue === 'Produksi') {
+    // Produksi: selain FC disembunyikan
+    return;
+  }
+
+  if (divisionValue === 'Warehouse') {
+    if (roleValue === '0') {
+      // Admin Warehouse: tampilkan semua
+      document.querySelectorAll(".all-role").forEach(el => {
+        el.closest('.form-check').style.display = 'block';
       });
-
-      if (divisionValue === 'Produksi') {
-        // Produksi: hanya tampilkan Form Check (FC)
-        document.querySelectorAll(".form-check-only").forEach(el => {
-          el.closest('.form-check').style.display = 'block';
-        });
-      } else if (divisionValue === 'Warehouse') {
-        if (roleValue === '0') {
-          // Admin Warehouse: tampilkan semua
-          document.querySelectorAll(".all-role").forEach(el => {
-            el.closest('.form-check').style.display = 'block';
-          });
-        } else if (roleValue === '1') {
-          // Pegawai Warehouse: tampilkan hanya pegawai-only dan form-check-only
-          document.querySelectorAll(".pegawai-only, .form-check-only").forEach(el => {
-            el.closest('.form-check').style.display = 'block';
-          });
-        }
-      }
+    } else if (roleValue === '1') {
+      // Pegawai Warehouse: tampilkan pegawai-only
+      document.querySelectorAll(".pegawai-only").forEach(el => {
+        el.closest('.form-check').style.display = 'block';
+      });
     }
+  } else {
+    // Divisi lain-lain: tampilkan all-role dan pegawai-only
+    document.querySelectorAll(".all-role, .pegawai-only").forEach(el => {
+      el.closest('.form-check').style.display = 'block';
+    });
+  }
+}
+
 
     // Panggil saat halaman dimuat
     updateTypeVisibility();

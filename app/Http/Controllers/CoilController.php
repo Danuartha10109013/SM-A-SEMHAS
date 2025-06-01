@@ -16,6 +16,7 @@ class CoilController extends Controller
     }
     public function create($no_gs){
          $same = $no_gs;
+        //  dd($same);
 
         $data = Coil::where('no_gs',$same)->get();
 

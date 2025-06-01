@@ -125,6 +125,12 @@ Route::middleware([AutoLogout::class])->group(function () {
                     Route::patch('/update/{id}', [DataMasterController::class, 'updateko'])->name('update');
                     Route::delete('/delete/{id}', [DataMasterController::class, 'destroyko'])->name('delete');
                 });
+                Route::prefix('division')->name('division.')->group(function () {
+                    Route::get('/', [DataMasterController::class, 'indexdi'])->name('division');
+                    Route::post('/store', [DataMasterController::class, 'storedi'])->name('store');
+                    Route::put('/update/{id}', [DataMasterController::class, 'updatedi'])->name('update');
+                    Route::delete('/delete/{id}', [DataMasterController::class, 'destroydi'])->name('delete');
+                });
                 
             });
             Route::prefix('Open-Packing')->group(function () {
@@ -303,7 +309,7 @@ Route::middleware([AutoLogout::class])->group(function () {
             Route::prefix('coil')->group(function () {
                 Route::get('/coil', [CoilController::class, 'indexs'])->name('coil');
                 Route::get('/coiling/{no_gs}', [CoilController::class, 'index'])->name('coiling');
-                Route::get('/tambah/coil/{no_gs}', [CoilController::class, 'create'])->name('tambahcoil');
+                Route::get('/tambah/coil/add/{no_gs}', [CoilController::class, 'create'])->name('tambahcoil');
                 Route::post('/tambah/coil/store', [CoilController::class, 'store'])->name('koil.store');
             });
             Route::prefix('mapping-truck')->group(function () {
@@ -620,7 +626,7 @@ Route::middleware([AutoLogout::class])->group(function () {
                 Route::get('/edit/{id}',[PListController::class, 'db_edit'])->name('database.edit');
                 Route::put('/update/{id}',[PListController::class, 'db_update'])->name('database.update');
                 Route::put('/update/{id}',[PListController::class, 'db_update'])->name('database.update');
-                Route::get('/delete/{id}',[PListController::class, 'db_destroy'])->name('database.destroy');
+                Route::delete('/delete/{id}',[PListController::class, 'db_destroy'])->name('database.destroy');
                 Route::delete('/clear',[PListController::class, 'db_clear'])->name('database.clear');
                 Route::get('/confirmation',[PListController::class, 'confir'])->name('database.confir');
                 Route::prefix('gm')->group(function () {

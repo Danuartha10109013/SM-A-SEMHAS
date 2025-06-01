@@ -96,8 +96,8 @@
       <div class="gambar">
          <img src="{{ asset('Logo TML.png') }}" alt="Logo PT Tata Metal Lestari">
       </div>
-      @if(Auth::check())
-      @php
+     @if(Auth::check())
+@php
 $akses = json_decode(Auth::user()->type);
 
 // Daftar semua menu dan route-nya
@@ -111,7 +111,6 @@ $menuItems = [
     "SL"  => ["title" => "Scan Layout", "icon" => "mdi-qrcode", "route" => Auth::user()->role == 0 ? route('Scan-Layout.admin.dashboard') : route('Scan-Layout.pegawai.dashboard')],
     "CD"  => ["title" => "Coil Damage", "icon" => "mdi-package-variant-closed-remove", "route" => Auth::user()->role == 0 ? route('Coil-Damage.admin.dashboard') : route('Coil-Damage.pegawai.dashboard')],
     "L8"  => ["title" => "Packing L08", "icon" => "mdi-numeric-8-box-multiple", "route" => Auth::user()->role == 0 ? route('L-08.admin.dashboard') : route('L-08.pegawai.dashboard')],
-   //  "admin" => ["title" => "Kelola Pegawai", "icon" => "mdi-account", "route" => route('Administrator.kelola-user')],
 ];
 @endphp
 
@@ -126,61 +125,69 @@ $menuItems = [
             </a>
         @endif
     @endforeach
-       
-   
-    @if (Auth::user()->role == 5)
-    <a href="{{route('superadmin.Administrator.kelola-user')}}" class="menu-item">
-       <div>
-          <i class="mdi mdi-account"></i>
-          <div class="menu-title">Kelola Pegawai</div>
-         </div>
-      </a>
-    <a href="{{route('superadmin.data-master')}}" class="menu-item">
-       <div>
-          <i class="mdi mdi-database-settings"></i>
-          <div class="menu-title">Data Master</div>
-         </div>
-      </a>
-      @else
-      <a href="{{route('sik')}}" class="menu-item">
-         <div>
+
+    {{-- Tambahan menu SIK --}}
+    @if (in_array('all', $akses) || in_array('SIK', $akses))
+    <a href="{{ route('sik') }}" class="menu-item">
+        <div>
             <i class="mdi mdi-email"></i>
             <div class="menu-title">Surat Izin Keluar</div>
-         </div>
-      </a>
-      @endif
-    <a href="{{ route('logout') }}" class="menu-item" id="logout-btn">
-      <div>
-         <i class="mdi mdi-logout"></i>
-         <div class="menu-title">Sign Out</div>
-      </div>
-      </a>
-   </div>
-</div>
-         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-         <script>
-               document.getElementById('logout-btn').addEventListener('click', function(e) {
-                  e.preventDefault(); // Stop the default link action
-                  const logoutUrl = this.href;
+        </div>
+    </a>
+    @endif
 
-                  Swal.fire({
-                     title: 'Are you sure?',
-                     text: "You will be logged out.",
-                     icon: 'warning',
-                     showCancelButton: true,
-                     confirmButtonColor: '#3085d6',
-                     cancelButtonColor: '#d33',
-                     confirmButtonText: 'Yes, logout'
-                  }).then((result) => {
-                     if (result.isConfirmed) {
-                           window.location.href = logoutUrl;
-                     }
-                  });
-               });
-               </script>
-      @else
-            <script>window.location = "{{ route('login') }}";</script>
-      @endif
+    {{-- Menu khusus Superadmin --}}
+    @if (Auth::user()->role == 5)
+    <a href="{{ route('superadmin.Administrator.kelola-user') }}" class="menu-item">
+        <div>
+            <i class="mdi mdi-account"></i>
+            <div class="menu-title">Kelola Pegawai</div>
+        </div>
+    </a>
+    <a href="{{ route('superadmin.data-master') }}" class="menu-item">
+        <div>
+            <i class="mdi mdi-database-settings"></i>
+            <div class="menu-title">Data Master</div>
+        </div>
+    </a>
+    @endif
+
+    {{-- Logout --}}
+    <a href="{{ route('logout') }}" class="menu-item" id="logout-btn">
+        <div>
+            <i class="mdi mdi-logout"></i>
+            <div class="menu-title">Sign Out</div>
+        </div>
+    </a>
+</div>
+
+{{-- SweetAlert logout confirmation --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault(); // Stop the default link action
+        const logoutUrl = this.href;
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = logoutUrl;
+            }
+        });
+    });
+</script>
+
+@else
+<script>window.location = "{{ route('login') }}";</script>
+@endif
+
       
       <!-- Bootstrap JS -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

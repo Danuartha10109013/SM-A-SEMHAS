@@ -119,8 +119,12 @@
                         <label for="division">division</label>
                         <select name="division" id="division" class="form-control" required>
                             <option value="" selected disabled>--Pilih Divisi--</option>
-                            <option value="Warehouse">Warehouse</option>
-                            <option value="Produksi">Produksi</option>
+                            @php
+                                $division = \App\Models\DivisionM::all();
+                            @endphp
+                            @foreach ($division as $div)
+                            <option value="{{$div->division}}">{{$div->division}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -170,50 +174,55 @@
                                         <input class="form-check-input" type="checkbox" name="type[]" value="CD" id="typeCD">
                                         <label class="form-check-label" for="typeCD">Coil Damage</label>
                                     </div>
+                                    
+                                    <!-- Tambahkan di bagian kolom kanan bawah -->
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="type[]" value="all" id="typeAll">
-                                        <label class="form-check-label" for="typeAll">Akses Penuh</label>
+                                        <input class="form-check-input" type="checkbox" name="type[]" value="SIK" id="typeSIK">
+                                        <label class="form-check-label" for="typeSIK">Surat Izin Keluar</label>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <script>
-    function filterTypes() {
-        const role = document.getElementById('role').value;
-        const division = document.getElementById('division').value;
-        const allowedForPegawai = ['FC', 'CK', 'SL'];
+                        function filterTypes() {
+                            const role = document.getElementById('role').value;
+                            const division = document.getElementById('division').value.toLowerCase();
 
-        document.querySelectorAll('input[name="type[]"]').forEach(input => {
-            const type = input.value;
+                            const allTypes = ['SP', 'MP', 'FC', 'OP', 'PL', 'CK', 'SL', 'CD', 'all', 'SIK'];
+                            const allowedForPegawaiWarehouse = ['FC', 'CK', 'SL'];
 
-            let shouldShow = false;
+                            document.querySelectorAll('input[name="type[]"]').forEach(input => {
+                                const type = input.value;
+                                let show = false;
 
-            if (division === 'Produksi') {
-                // Jika divisi Produksi, hanya tampilkan Form Checklist (FC)
-                shouldShow = type === 'FC';
-            } else {
-                // Jika bukan Produksi
-                if (role === '0') {
-                    // Admin bisa akses semua
-                    shouldShow = true;
-                } else {
-                    // Pegawai hanya yang diperbolehkan
-                    shouldShow = allowedForPegawai.includes(type);
-                }
-            }
+                                if (division === 'warehouse') {
+                                    // Admin: semua tampil; Pegawai: terbatas + SIK
+                                    if (role === '0') {
+                                        show = true; // semua
+                                    } else {
+                                        show = allowedForPegawaiWarehouse.includes(type) || type === 'SIK';
+                                    }
+                                } else if (division === 'produksi') {
+                                    // Produksi hanya FC dan SIK
+                                    show = (type === 'FC' || type === 'SIK');
+                                } else {
+                                    // Divisi lain: hanya SIK
+                                    show = (type === 'SIK');
+                                }
 
-            input.closest('.form-check').style.display = shouldShow ? 'block' : 'none';
-        });
-    }
+                                input.closest('.form-check').style.display = show ? 'block' : 'none';
+                            });
+                        }
 
-    // Jalankan saat halaman dimuat
-    window.onload = filterTypes;
+                        window.onload = filterTypes;
+                        document.getElementById('role').addEventListener('change', filterTypes);
+                        document.getElementById('division').addEventListener('change', filterTypes);
+                    </script>
 
-    // Jalankan juga saat division berubah
-    document.getElementById('division').addEventListener('change', filterTypes);
-</script>
+
 
                     <div class="form-group">
                         <label for="profile">Profile Picture</label>

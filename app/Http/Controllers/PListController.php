@@ -325,11 +325,27 @@ class PListController extends Controller
         return view('Packing-List.pages.admin.hasil.hasil',compact('data'));
     }
 
-    public function db_store_excel(Request $request){
-        // dd($request->all());
-        Excel::import(new DatabaseImport(),$request->file('excel'));
-        return redirect()->back()->with('success','Database Baru Telah ditambahkan');
-    }
+    public function db_store_excel(Request $request)
+{
+     $request->validate([
+        'excel' => 'required|file|mimes:xlsx,xls,csv', // hanya terima file Excel
+    ], [
+        'excel.required' => 'File Excel wajib diunggah.',
+        'excel.file' => 'File yang diunggah harus berupa file.',
+        'excel.mimes' => 'Format file harus .xlsx atau .xls atau .csv.',
+    ]);
+    $import = new DatabaseImport();
+    Excel::import($import, $request->file('excel'));
+
+    $summary = $import->getSummary();
+
+    $message = "{$summary['added']} data berhasil ditambahkan, "
+             . "{$summary['existing']} data sudah ada, "
+             . "{$summary['skipped']} data diabaikan.";
+
+    return redirect()->back()->with('success', $message);
+}
+
 
     public function exportexcel(Request $request, $ket)
     {

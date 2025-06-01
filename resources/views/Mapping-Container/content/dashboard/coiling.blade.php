@@ -12,8 +12,8 @@
 @endsection
 @section('content')
 <div class="container-xxl">
-    <h3 class="title text-center">DATA SHIPMENT</h3>
-    <a class="btn btn-primary mb-3" href="{{route('Mapping.admin.store',$same)}}">Tambah Koil</a>
+    <h3 class="title text-center">DATA COIL - {{$same}}</h3>
+    <a class="btn btn-primary mb-3" href="{{route('Mapping.admin.tambahcoil',$same)}}">Tambah Koil</a>
 
 <div class="col-12">
     <div class="card">

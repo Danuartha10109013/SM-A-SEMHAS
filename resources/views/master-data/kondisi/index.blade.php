@@ -45,7 +45,7 @@
                                         value="{{ $d->kondisi }}">
                                 </td>
                                 <td>
-                                    <div class="form-check form-check-inline type-checkboxes">
+                                    <div class="ml-3 form-check form-check-inline type-checkboxes">
                                         @php $selectedTypes = json_decode($d->type, true) ?? []; @endphp
                                         @foreach ($tipe as $key => $label)
                                             <input class="form-check-input type-checkbox me-2" 

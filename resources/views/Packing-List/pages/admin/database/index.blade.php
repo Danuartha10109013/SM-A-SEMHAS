@@ -93,10 +93,44 @@
                       <label class="btn btn-primary">
                         <i class="fas fa-edit"></i> Edit
                       </label></a>
-                      <a href="{{route('Packing-List.admin.database.destroy',$d->id)}}">
-                      <label class="btn btn-danger">
-                        <i class="fas fa-trash"></i> delete
-                      </label></a>
+                     <a href="javascript:void(0);" 
+   class="btn btn-danger btn-delete" 
+   data-id="{{ $d->id }}">
+   <i class="fas fa-trash"></i> Delete
+</a>
+<form id="delete-form" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  const deleteForm = document.getElementById('delete-form');
+
+  document.querySelectorAll('.btn-delete').forEach(button => {
+    button.addEventListener('click', function () {
+      const id = this.getAttribute('data-id');
+      const url = "{{ url('Packing-List/admin/database/delete') }}/" + id;
+
+      Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: 'Data yang dihapus tidak dapat dikembalikan!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteForm.setAttribute('action', url);
+          deleteForm.submit();
+        }
+      });
+    });
+  });
+</script>
+
                       
                     </td>
                     <td>

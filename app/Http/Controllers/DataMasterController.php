@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DivisionM;
 use App\Models\KapasitasM;
 use App\Models\KondisiM;
 use App\Models\ShftM;
@@ -277,6 +278,57 @@ public function destroyko($id)
 
     return response()->json(['message' => 'Deleted successfully']);
 }
+
+public function indexdi(){
+    $data = DivisionM::all();
+    return view('master-data.division.index',compact('data'));
+}
+
+// Store
+public function storedi(Request $request)
+{
+    $data = $request->only('division', 'keterangan', 'type');
+
+    // Convert type array to JSON
+    $data['type'] = json_encode($data['type'] ?? []);
+
+    $division = DivisionM::create($data);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Data berhasil ditambahkan',
+        'id' => $division->id,
+    ]);
+}
+
+// Update
+public function updatedi(Request $request, $id)
+{
+    $division = DivisionM::findOrFail($id);
+
+    $data = $request->only('division', 'keterangan', 'type');
+    $data['type'] = json_encode($data['type'] ?? []);
+
+    $division->update($data);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Data berhasil diperbarui',
+    ]);
+}
+
+// Delete (no change needed)
+public function destroydi($id)
+{
+    $division = DivisionM::findOrFail($id);
+    $division->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Data berhasil dihapus',
+    ]);
+}
+
 
 
 

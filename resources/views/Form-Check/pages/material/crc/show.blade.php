@@ -28,7 +28,10 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>PENERIMA</label>
-                            <input type="text" class="form-control" value="{{ $submission->user_id }}" readonly>
+                            @php
+                                $user = \App\Models\User::find($submission->user_id);
+                            @endphp
+                            <input type="text" class="form-control" value="{{ $user->name }}" readonly>
                         </div>
                         <div class="form-group">
                             <label>NOMOR DOKUMEN</label>
@@ -41,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label>Jam Checklist</label>
-                            <input type="text" class="form-control" value="{{ $submission->clock_in }}" readonly>
+                            <input type="text" class="form-control" value="{{ $submission->created_at->format('H:i:s') }}" readonly>
                         </div>
 
                         <div class="form-group">
@@ -71,7 +74,7 @@
 
                         <div class="form-group">
                             <label>Keterangan</label>
-                            <input type="text" class="form-control" value="{{ $submission->keterangan }}" readonly>
+                            <input type="text" class="form-control" value="{{ $submission->keterangan ?? '-'}}" readonly>
                         </div>
 
                         <div class="form-group">

@@ -83,7 +83,7 @@
                             @php
                                 $kapasitas = \App\Models\KapasitasM::where('jenis', 'Forklift')->get();
                             @endphp
-                            <option value="" selected disabled>--Pilih Kapasitas Crane--</option>
+                            <option value="" selected disabled>--Pilih Kapasitas Forklift--</option>
                             @foreach ($kapasitas as $k)
                                 <option value="{{ $k->name }}" {{ old('jenis_crane') == $k->name ? 'selected' : '' }}>{{ $k->name }}</option>
                             @endforeach

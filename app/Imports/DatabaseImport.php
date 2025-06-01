@@ -1,59 +1,64 @@
 <?php
-
 namespace App\Imports;
 
 use App\Models\DatabM;
 use App\Models\ShipA;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class DatabaseImport implements ToCollection,ToModel
+class DatabaseImport implements ToCollection, ToModel
 {
     private $current = 0;
-    private $satuan_berat;
+    private $added = 0;
+    private $existing = 0;
+    private $skipped = 0;
 
-    /**
-    * @param Collection $collection
-    */
-    
     public function collection(Collection $collection)
     {
-        $this->current++;
-        // Mengabaikan baris header jika perlu
-        // if ($this->current > 1) {
-        //     dd($collection);
-        // }
+        // Optional, handle preview or header
     }
+
     public function model(array $row)
     {
         $this->current++;
-        // Skip the header row
+
         if ($this->current > 2) {
-            // Check if $row[1] (kode) is not null or empty
             if (!empty($row[1])) {
-                $count = DatabM::where('attribute', $row[11])->count();
-                // dd(strpos($row[12], '10-CBT'));
-                // Only insert if 'attribute' doesn't already exist
-                if ($count == 0 &&  strpos($row[12], '10-CBT') !== false) {
+                $exists = DatabM::where('attribute', $row[11])->exists();
+
+                if (!$exists && strpos($row[12], '10-CBT') !== false) {
                     $data = new DatabM;
-                    $data->kode = $row[1]; // Ensure this is not null
+                    $data->kode = $row[1];
                     $data->nama_produk = $row[2];
-                    $data->qty = str_replace(',', '', $row[9]); // Remove any commas from the qty value
+                    $data->qty = str_replace(',', '', $row[9]);
                     $data->uom = $row[10];
                     $data->attribute = $row[11];
                     $data->storage_bin = $row[12];
-                    $date = \DateTime::createFromFormat('d/m/Y', $row[17]); // Assuming row[8] is the date
+                    $date = \DateTime::createFromFormat('d/m/Y', $row[17]);
                     $data->date = $date ? $date->format('Y-m-d') : null;
                     $data->user_id = Auth::user()->id;
                     $data->save();
+
+                    $this->added++;
+                } else {
+                    $this->existing++;
                 }
             } else {
-                // Handle the case where 'kode' is missing, e.g., log an error or skip the row
-                // You can use logging or throw an exception to catch these cases.
-                \Log::warning("Row skipped due to missing 'kode': " . json_encode($row));
+                $this->skipped++;
+                Log::warning("Skipped row (missing kode): " . json_encode($row));
             }
         }
+    }
+
+    public function getSummary()
+    {
+        return [
+            'added' => $this->added,
+            'existing' => $this->existing,
+            'skipped' => $this->skipped,
+        ];
     }
 }

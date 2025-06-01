@@ -74,7 +74,8 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="divisi">Divisi</label>
-                            <select name="divisi" class="form-control" required>
+                            <input type="text" name="divisi" class="form-control" style="outline-color: black; outline-width: 5px; outline-style: solid; background-color: white;" value="{{Auth::user()->division}}" readonly required>
+                            {{-- <select name="divisi" class="form-control" required>
                                 <option value="" selected disabled>--Select Division--</option>
                                 <option value="WH">WH</option>
                                 <option value="UTY">UTY</option>
@@ -83,7 +84,7 @@
                                 <option value="QA">QA</option>
                                 <option value="PRD">PRD</option>
                                 <option value="SAFETY">SAFETY</option>
-                            </select>
+                            </select> --}}
                         </div>
                         
                     </div>

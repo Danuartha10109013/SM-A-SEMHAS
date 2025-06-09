@@ -42,7 +42,7 @@
          </div>
 
  
-         <div class="iq-right-fixed">
+         {{-- <div class="iq-right-fixed">
             <div class="iq-card mb-0" style="box-shadow: none;">
                <div class="iq-card-header d-flex justify-content-between">
                   <div class="iq-header-title">
@@ -104,7 +104,7 @@
                   </div>
                </div>
             </div>
-         </div>
+         </div> --}}
 
       <!-- Wrapper END -->
       <!-- Footer -->

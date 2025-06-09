@@ -35,7 +35,7 @@ class KUserController extends Controller
     // Validate the incoming request
     $request->validate([
         'name' => 'required|string|max:255',
-        'division' => 'required|string|in:Warehouse,Produksi',
+        'division' => 'required|string',
         'email' => 'required|email|unique:users,email',
         'role' => 'required|integer',
         'username' => 'required|string|max:255|unique:users,username',

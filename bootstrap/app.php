@@ -12,6 +12,7 @@ use App\Http\Middleware\CheckTypeK;
 use App\Http\Middleware\CheckTypeMM;
 use App\Http\Middleware\CheckTypeOP;
 use App\Http\Middleware\PegawaiMiddleware;
+use App\Http\Middleware\RunScheduler;
 use App\Http\Middleware\ScanLayout;
 use App\Http\Middleware\SuperAdmin;
 use Illuminate\Foundation\Application;
@@ -25,6 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+
+         $middleware->append(RunScheduler::class);
+         
         // Group for Ship-Mark users
         $middleware->appendToGroup('Ship-Mark', [
             CheckType::class,

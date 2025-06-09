@@ -31,9 +31,26 @@ use App\Http\Controllers\SIKController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\TraillerController;
 use App\Http\Middleware\AutoLogout;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
+Route::get('/scheduler-run', function () {
+    Artisan::call('schedule:run');
+    return 'Scheduler executed at ' . now();
+});
+Route::get('/country-data/{negara}', function ($negara) {
+    $negara = strtolower($negara);
+    $count = 0;
+
+    $count += ShippmentA::whereRaw('LOWER(destination) LIKE ?', ["%$negara%"])->count();
+    $count += ShippmentB::whereRaw('LOWER(destination) LIKE ?', ["%$negara%"])->count();
+    $count += ShippmentC::whereRaw('LOWER(pod) LIKE ?', ["%$negara%"])->count();
+    $count += ShippmentD::whereRaw('LOWER(destination) LIKE ?', ["%$negara%"])->count();
+    $count += ShippmentE::whereRaw('LOWER(pod) LIKE ?', ["%$negara%"])->count();
+
+    return response()->json(['negara' => $negara, 'total' => $count]);
+});
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'proses'])->name('login-proses');
